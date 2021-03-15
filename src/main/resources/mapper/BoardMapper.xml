@@ -2,7 +2,12 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gada.travelgada.mapper.BoardMapper">
+<mapper namespace="com.gada.travelgada.mapper.TodoMapper">
 
+	<select id="todolist" resultType="com.gada.travelgada.domain.TodoDomain">
+		<![CDATA[
+			select todo_name, complete_flag, todo_title from todo, todo_type
+		]]>
+	</select>
 
 </mapper>

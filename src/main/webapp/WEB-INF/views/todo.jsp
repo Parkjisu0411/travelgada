@@ -14,5 +14,22 @@
 </head>
 <body>
 	<button type="button" class="btn btn-info">일정</button>
+	<div class="container">
+    <table class="table table-hover"  width="100%" cellspacing="0">
+    	<tr>
+			<td>준비물</td>
+			<td>완료 상태</td>
+			<td>카테고리</td>				
+		</tr>
+    
+		<c:forEach items="${todolist }" var="todo">
+			<tr>
+				<td>${todo.todo_name }</td>
+				<td>${todo.complete_flag }</td>
+				<%-- <td>${todo.todo_title }</td> --%>
+						
+			</tr>	
+		</c:forEach>
+	</table>
 </body>
 </html>
