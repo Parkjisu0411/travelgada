@@ -25,7 +25,7 @@
 	
 	<select id="getMember" resultMap="memberMap">
 		select * from member , authorities 
-		where member.user_id = authorities.user_id and users.user_id = #{user_id}
+		where member.member_id = authorities.member_id and member.member_id = #{user_id}
 	</select>
 	
 

@@ -19,8 +19,8 @@ public class MemberVO {
 	private String email;
 	private String phone_num;
 	private String profile_img_path;
+	private int withdrawal_flag;
 	private int withdrawal_code;
-	private int withdrqwal_flag;
 	private String sns_type;
 	private List<AuthVO> authList;
 }
