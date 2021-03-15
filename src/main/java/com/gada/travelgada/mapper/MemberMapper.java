@@ -8,4 +8,8 @@ import com.gada.travelgada.domain.MemberVO;
 public interface MemberMapper {
 	
 	MemberVO getMember(String username);
+
+	void insertAuthorities(MemberVO memberVO);
+
+	void insertMember(MemberVO memberVO);
 }

@@ -28,5 +28,17 @@
 		where member.member_id = authorities.member_id and member.member_id = #{user_id}
 	</select>
 	
+	<insert id="insertMember">
+		<![CDATA[
+			insert into member(member_id, pw, member_name, email, phone_num, profile_img_path, withdrawal_flag) values(#{member_id}, #{pw}, #{member_name}, #{email}, #{phone_num}, #{profile_img_path}, #{withdrawal_flag})
+		]]>
+	</insert>
+	
+	<insert id="insertAuthorities">
+		<![CDATA[
+			insert into authorities(member_id, authority) values (#{member_id}, role_user);
+		]]>
+	</insert>
+	
 
 </mapper>
