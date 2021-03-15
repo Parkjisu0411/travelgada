@@ -1,4 +1,4 @@
-package com.gada.travelgada;
+package com.gada.travelgada.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
