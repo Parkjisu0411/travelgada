@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gada.travelgada.mapper.MemberMapper">
+
+	<resultMap id="memberMap" type="com.gada.travelgada.domain.MemberVO">
+	    <result property="member_id" column="member_id"/>
+	    <result property="pw" column="pw"/>
+	    <result property="member_name" column="member_name"/>
+	    <result property="email" column="email"/>
+	    <result property="phone_num" column="phone_num"/>
+	    <result property="profile_img_path" column="profile_img_path"/>
+	    <result property="withdrawal_code" column="withdrawal_code"/>
+	    <result property="withdrawal_flag" column="withdrawal_flag"/>
+	    <result property="sns_type" column="sns_type"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap id="authMap" type="com.gada.travelgada.domain.AuthVO">
+		<result property="member_id" column="member_id"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<select id="getMember" resultMap="memberMap">
+		select * from member , authorities 
+		where member.user_id = authorities.user_id and users.user_id = #{user_id}
+	</select>
+	
+
+</mapper>

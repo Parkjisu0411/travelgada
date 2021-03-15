@@ -19,6 +19,12 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
+		<!-- junit test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- mysql -->
 		<dependency>
