@@ -21,7 +21,7 @@ public class MemberController {
 	
 	private MemberService memberService;
 	
-	@GetMapping("member")
+	@GetMapping("/member")
 	public ModelAndView signUpForm(ModelAndView mv) {
 		mv.setViewName("member/signUpForm");
 		
@@ -56,6 +56,22 @@ public class MemberController {
 		ResponseEntity<String> entity = null;
 		log.info("Modify Member ID :  " + memberVO.getMember_id());
 		return null;
+	}
+	
+	@GetMapping("/member/login")
+	public ModelAndView loginForm(ModelAndView mv) {
+		log.info("Login Form >>> ");
+		mv.setViewName("member/loginForm");
+		
+		return mv;
+	}
+	
+	@PostMapping("/member/login")
+	public ResponseEntity<String> login(@RequestBody MemberVO memberVO) {
+		log.info("Member Login >>> " + memberVO.getMember_id());
+		ResponseEntity<String> entity = null;
+		
+		return entity;
 	}
 
 }

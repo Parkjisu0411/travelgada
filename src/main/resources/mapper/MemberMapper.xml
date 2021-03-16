@@ -36,7 +36,7 @@
 	
 	<insert id="insertAuthorities">
 		<![CDATA[
-			insert into authorities(member_id, authority) values (#{member_id}, role_user);
+			insert into authorities(member_id, authority) values (#{member_id}, "role_user");
 		]]>
 	</insert>
 	

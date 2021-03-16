@@ -21,10 +21,10 @@ public class MemberDetailsService implements UserDetailsService {
 	private MemberMapper memberMapper;
 
 	@Override
-	public UserDetails loadUserByUsername(String user_id) throws UsernameNotFoundException {
-		log.warn("Load user by user name >>> " + user_id);
+	public UserDetails loadUserByUsername(String member_id) throws UsernameNotFoundException {
+		log.warn("Load user by user name >>> " + member_id);
 
-		MemberVO vo = memberMapper.getMember(user_id);
+		MemberVO vo = memberMapper.selectMember(member_id);
 
 		log.warn("queried by MemberVO mapper: " + vo);
 
