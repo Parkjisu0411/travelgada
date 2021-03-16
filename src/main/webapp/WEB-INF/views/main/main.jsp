@@ -35,8 +35,8 @@
 
     .card-headline {
       text-align: center;
-      margin: 70px;
-      font-size: 2.1em;
+      margin: 50px 50px 70px 70px;
+      font-size: 2.4em;
       font-weight: 900;
     }
 
@@ -46,16 +46,18 @@
       margin: 5px 10px;
     }
 
-    .card-img-top {
-      border-radius: 5px;
-    }
-
     .country-name {
       font-size: 1.1em;
     }
 
     .card-title {
       font-size: 1.1em;
+      margin: 5px;
+    }
+
+    .card-content-hashtag {
+      padding: 10px;
+      margin: 0px 0px 25px 0px;
     }
 
     footer {
@@ -73,12 +75,12 @@
       margin: 100px;
     }
 
-    .card-content-divider-blank {
-      margin: 160px;
+    .card-content-hashtag-divider-blank {
+      margin: 135px;
     }
 
-    .card-content-divider-blank2 {
-      margin: 140px;
+    .card-content-hashtag-divider-blank2 {
+      margin: 135px;
     }
 
     .logo-img {
@@ -90,19 +92,24 @@
     }
 
     .nav-item {
-      padding: 0px 12px;
+      padding: 0px 15px;
     }
 
     .planner-card {
       height: 400px;
       padding: 15px;
       border: 1px solid;
-      border-radius: 5px;
       text-align: center;
+      overflow: hidden;
     }
 
-    hr {
-      border-top: 4px solid #222222;
+    .planner-card:hover {
+      box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .solid {
+      border-top: 2px solid #222222;
       width: 80px;
     }
 
@@ -114,19 +121,67 @@
       text-align: center;
     }
 
-    .diary-card-divider {
-      padding: 0px 0px 50px 50px;
-    }
-
     .profile {
       width: 40px;
       height: 40px;
-      overflow: hidden;
+      object-fit: cover;
       border-radius: 70%;
+      margin: 5px;
     }
 
-    strong {
-      padding: 8px;
+    .nickname {
+      color: black;
+    }
+
+    .nickname:hover {
+      color: black;
+      text-decoration: underline 2px;
+    }
+
+    .card-img-top {
+      object-fit: cover;
+    }
+
+    .col-md {
+      border: 1px solid;
+      padding: 0px;
+      margin: 15px;
+    }
+
+    .col-md:hover {
+      box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .hashtag {
+      color: black;
+    }
+
+    .hashtag:hover {
+      color: black;
+      text-decoration: underline 2px;
+    }
+
+    .planner-hr {
+      border-top: 2px solid #222222;
+    }
+
+    .dummy {
+      margin: 145px;
+    }
+
+    .view-more-p {
+      text-align: right;
+      margin: 0px;
+    }
+
+    .view-more-a {
+      color: black;
+      text-decoration: underline 2px;
+    }
+
+    .view-more-a:hover {
+      color: black;
     }
   </style>
 
@@ -134,7 +189,7 @@
 
 <body>
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
       <a class="navbar-brand" href="#"><img class="logo-img" src="${pageContext.request.contextPath}/resources/logo.png"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -149,8 +204,9 @@
               일정
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">플래너</a>
+              <a class="dropdown-item" href="#">준비물</a>
+              <a class="dropdown-item" href="#">지도</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -159,8 +215,9 @@
               커뮤니티
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Q&A</a>
+              <a class="dropdown-item" href="#">리뷰</a>
+              <a class="dropdown-item" href="#">동행</a>
             </div>
           </li>
           <li class="nav-item">
@@ -172,18 +229,18 @@
               회원정보
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">정보 수정</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">로그아웃</a>
             </div>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="text" aria-label="Search">
+          <button class="btn btn-outline-white btn-sm my-0" type="submit">검색</button>
         </form>
       </div>
+    </div>
   </nav>
 
   <header>
@@ -194,20 +251,19 @@
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
-        <div class="carousel-item active"
-          style="background-image: url('https://source.unsplash.com/LAaSoL0LrYs/1920x1080')">
+        <div class="carousel-item active" style="background-image: url('${pageContext.request.contextPath}/resources/flight.png')">
           <div class="carousel-caption d-none d-md-block">
             <h2 class="display-4">First Slide</h2>
             <p class="lead">This is a description for the first slide.</p>
           </div>
         </div>
-        <div class="carousel-item" style="background-image: url('https://source.unsplash.com/bF2vsubyHcQ/1920x1080')">
+        <div class="carousel-item" style="background-image: url('${pageContext.request.contextPath}/resources/map.jpg')">
           <div class="carousel-caption d-none d-md-block">
             <h2 class="display-4">Second Slide</h2>
             <p class="lead">This is a description for the second slide.</p>
           </div>
         </div>
-        <div class="carousel-item" style="background-image: url('https://source.unsplash.com/szFUQoyvrxM/1920x1080')">
+        <div class="carousel-item" style="background-image: url('${pageContext.request.contextPath}/resources/truck.jpg')">
           <div class="carousel-caption d-none d-md-block">
             <h2 class="display-4">Third Slide</h2>
             <p class="lead">This is a description for the third slide.</p>
@@ -230,30 +286,42 @@
   <section class="planner">
     <h2 class="card-headline">가다에서 여행을 계획해 보세요</h2>
     <div class="container">
+      <p class="view-more-p">
+        <a class="view-more-a" href="#">더 보기</a>
+      </p>
       <div class="row">
         <div class="col-md">
-          <div class="planner-card">
-            <h3 class="add-schedule">일정 추가</h3>
-              <i class="fas fa-plus-circle fa-5x"></i>
+          <div class="planner-card" onclick="location.href='http://google.com';">
+            <div class="dummy"></div>
+            <h4 class="add-schedule">일정 추가</h4>
+            <i class="fal fa-plus fa-3x"></i>
           </div>
         </div>
         <div class="col-md">
           <div class="planner-card">
-            <h3 class="add-schedule">체코 여행</h3>
-            <h1>D-1</h1>
+            <h4 class="add-schedule">체코 여행</h4>
+            <h2>D-3</h2>
+            <hr class="planner-hr">
+            <h5>3월 16일</h5>
+            <p>까를 → 구시가지 광장 → 프라하 성 → 프라하 천문시계 → 성 비투스 대성당 → 브니트르주니 므네스트</p>
+            <h5>3월 17일</h5>
+            <p>댄싱 하우스 → 틴 성모 마리아 교회 → 세들레츠 납골당 → 존 레논 벽 → 프라하 시민 회관 → 바츨라프 광장</p>
           </div>
         </div>
         <div class="col-md">
           <div class="planner-card">
-            <h3 class="add-schedule">슬로베니아 여행</h3>
-            <h1>D+100</h1>
+            <h4 class="add-schedule">무려 30자를 넘는 엄청난 길이의 플래너 제목을 가진 한 가족의 너무너무너무너무너무즐거운 슬로베니아 가족여행</h4>
+            <h2>D+100</h2>
+            <hr class="planner-hr">
+            <h5>대충 날짜</h5>
+            <p>대충 슬로베니아 여행 코스</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="card-content-divider-blank"></section>
+  <section class="card-content-hashtag-divider-blank"></section>
 
   <div class="mb-4">
     <!-- Solid divider -->
@@ -263,6 +331,9 @@
   <section class="recommendation">
     <h2 class="card-headline">가다가 추천하는 여행지</h2>
     <div class="container">
+      <p class="view-more-p">
+        <a class="view-more-a" href="#">더 보기</a>
+      </p>
       <div class="row">
         <div class="col-md">
           <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
@@ -290,93 +361,104 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md">
-          <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
-          <div class="card-body text-center">
-            <span class="country-name">벨기에</span>
-          </div>
-        </div>
-        <div class="col-md">
-          <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-          <div class="card-body text-center">
-            <span class="country-name">스페인</span>
-          </div>
-        </div>
-        <div class="col-md">
-          <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="...">
-          <div class="card-body text-center">
-            <span class="country-name">아일랜드</span>
-          </div>
-        </div>
-        <div class="col-md">
-          <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="...">
-          <div class="card-body text-center">
-            <span class="country-name">이탈리아</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 
-  <section class="card-content-divider-blank2"></section>
+  <section class="card-content-hashtag-divider-blank2"></section>
 
   <div class="mb-4">
-    <!-- Solid divider -->
     <hr class="solid">
   </div>
 
   <section class="diary-card">
-    <h2 class="card-headline">다이어리</h2>
+    <h2 class="card-headline">가다에서 추억을 공유해 보세요</h2>
+    <div class="container">
+      <p class="view-more-p">
+        <a class="view-more-a" href="#">더 보기</a>
+      </p>
+      <div class="row">
+        <div class="col-md">
+          <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="..."
+            style="height: 500px">
+          <div class="card-title" style="padding:20px 0px 0px 0px">
+            <div clas="card-content">
+              <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><a class="nickname" href="#">닉네임</ㅁ=>
+            </div>
+            <div class="card-content-hashtag">
+              <a class="hashtag" href="#">#하늘</a>
+              <a class="hashtag" href="#">#바다</a>
+              <a class="hashtag" href="#">#여행</a>
+              <a class="hashtag" href="#">#친구들</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md">
+          <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="..."
+            style="height: 500px">
+          <div class="card-title" style="padding:20px 0px 0px 0px">
+            <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><a class="nickname" href="#">닉네임</ㅁ=>
+          </div>
+          <div class="card-content-hashtag">
+            <a class="hashtag" href="#">#하늘</a>
+            <a class="hashtag" href="#">#바다</a>
+            <a class="hashtag" href="#">#여행</a>
+            <a class="hashtag" href="#">#친구들</a>
+          </div>
+        </div>
+        <div class="col-md">
+          <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="..."
+            style="height: 500px">
+          <div class="card-title" style="padding:20px 0px 0px 0px">
+            <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><a class="nickname" href="#">닉네임</ㅁ=>
+          </div>
+          <div class="card-content-hashtag">
+            <a class="hashtag" href="#">#하늘</a>
+            <a class="hashtag" href="#">#바다</a>
+            <a class="hashtag" href="#">#여행</a>
+            <a class="hashtag" href="#">#친구들</a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
         <div class="col-md">
           <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="..."
             style="height: 500px">
           <div class="card-title" style="padding:20px 0px 0px 0px">
-            <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><strong>닉네임</strong></div>
-          <div class="card-content">#refresh #몰핀 #몰핀슈즈 #로퍼 #플랫슈즈 #봄스타일링 #단화 #여자신발 #패션</div>
+            <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><a class="nickname" href="#">닉네임</ㅁ=>
+          </div>
+          <div class="card-content-hashtag">
+            <a class="hashtag" href="#">#하늘</a>
+            <a class="hashtag" href="#">#바다</a>
+            <a class="hashtag" href="#">#여행</a>
+            <a class="hashtag" href="#">#친구들</a>
+          </div>
         </div>
         <div class="col-md">
           <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="..."
             style="height: 500px">
-            <div class="card-title" style="padding:20px 0px 0px 0px">
-              <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><strong>닉네임</strong></div>
-            <div class="card-content">#refresh #몰핀 #몰핀슈즈 #로퍼 #플랫슈즈 #봄스타일링 #단화 #여자신발 #패션</div>
+          <div class="card-title" style="padding:20px 0px 0px 0px">
+            <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><a class="nickname" href="#">닉네임</ㅁ=>
+          </div>
+          <div class="card-content-hashtag">
+            <a class="hashtag" href="#">#하늘</a>
+            <a class="hashtag" href="#">#바다</a>
+            <a class="hashtag" href="#">#여행</a>
+            <a class="hashtag" href="#">#친구들</a>
+          </div>
         </div>
         <div class="col-md">
           <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="..."
             style="height: 500px">
-            <div class="card-title" style="padding:20px 0px 0px 0px">
-              <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><strong>닉네임</strong></div>
-            <div class="card-content">#refresh #몰핀 #몰핀슈즈 #로퍼 #플랫슈즈 #봄스타일링 #단화 #여자신발 #패션</div>
-        </div>
-      </div>
-    </div>
-    <section class="diary-card-divider"></section>
-    <div class="container">
-      <div class="row">
-        <div class="col-md">
-          <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="..."
-            style="height: 500px">
-            <div class="card-title" style="padding:20px 0px 0px 0px">
-              <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><strong>닉네임</strong></div>
-            <div class="card-content">#refresh #몰핀 #몰핀슈즈 #로퍼 #플랫슈즈 #봄스타일링 #단화 #여자신발 #패션</div>
-        </div>
-        <div class="col-md">
-          <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="..."
-            style="height: 500px">
-            <div class="card-title" style="padding:20px 0px 0px 0px">
-              <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><strong>닉네임</strong></div>
-            <div class="card-content">#refresh #몰핀 #몰핀슈즈 #로퍼 #플랫슈즈 #봄스타일링 #단화 #여자신발 #패션</div>
-        </div>
-        <div class="col-md">
-          <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="..."
-            style="height: 500px">
-            <div class="card-title" style="padding:20px 0px 0px 0px">
-              <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><strong>닉네임</strong></div>
-            <div class="card-content">#refresh #몰핀 #몰핀슈즈 #로퍼 #플랫슈즈 #봄스타일링 #단화 #여자신발 #패션</div>
+          <div class="card-title" style="padding:20px 0px 0px 0px">
+            <img class="profile" src="${pageContext.request.contextPath}/resources/museum.jpg"><a class="nickname" href="#">닉네임</ㅁ=>
+          </div>
+          <div class="card-content-hashtag">
+            <a class="hashtag" href="#">#하늘</a>
+            <a class="hashtag" href="#">#바다</a>
+            <a class="hashtag" href="#">#여행</a>
+            <a class="hashtag" href="#">#친구들</a>
+          </div>
         </div>
       </div>
     </div>
