@@ -12,4 +12,6 @@ public interface MemberMapper {
 	void insertAuthorities(MemberVO memberVO);
 
 	void insertMember(MemberVO memberVO);
+
+	MemberVO selectMember(String member_id);
 }

@@ -23,9 +23,9 @@
 		<result property="authority" column="authority"/>
 	</resultMap>
 	
-	<select id="getMember" resultMap="memberMap">
+	<select id="selectMember" resultMap="memberMap">
 		select * from member , authorities 
-		where member.member_id = authorities.member_id and member.member_id = #{user_id}
+		where member.member_id = authorities.member_id and member.member_id = #{member_id}
 	</select>
 	
 	<insert id="insertMember">
