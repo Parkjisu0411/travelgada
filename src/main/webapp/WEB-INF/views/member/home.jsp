@@ -11,7 +11,10 @@
 <body>
 <div class = "container">
 	<h1>Home</h1>
-	<p><a href="/member/logout">로그아웃</a></p>
+	<form action="/member/logout" method="POST">
+		<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+		<input type="submit" value="로그아웃" />
+	</form>
 	<p><a href="">유저정보</a></p>
 </div>
 </body>

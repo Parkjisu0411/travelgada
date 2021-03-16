@@ -66,12 +66,20 @@ public class MemberController {
 		return mv;
 	}
 	
-	@PostMapping("/member/login")
-	public ResponseEntity<String> login(@RequestBody MemberVO memberVO) {
-		log.info("Member Login >>> " + memberVO.getMember_id());
-		ResponseEntity<String> entity = null;
-		
-		return entity;
-	}
+//	@PostMapping("/member/login")
+//	public ResponseEntity<String> login(@RequestBody MemberVO memberVO) {
+//		log.info("Member Login >>> " + memberVO.getMember_id());
+//		ResponseEntity<String> entity = null;
+//		
+//		try {
+//			memberService.selectMember(memberVO.getMember_id());
+//			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//		
+//		return entity;
+//	}
 
 }

@@ -28,19 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.formLogin().loginPage("/member/login").permitAll()
 		.and()
-		.logout().logoutUrl("/member/logout").logoutSuccessUrl("/")
+		.logout().logoutUrl("/member/logout").logoutSuccessUrl("/member/login")
 		;
 	}
 
 	@Bean
 	public BCryptPasswordEncoder bcryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
-
-	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
 	}
 
 }
