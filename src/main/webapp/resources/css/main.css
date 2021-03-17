@@ -1,0 +1,212 @@
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+  color: #222222;
+}
+
+/* Notice */
+.covid-19 {
+  background-color: #000000;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.covid-19-link {
+  color: #ffffff;
+}
+
+.covid-19-link:hover {
+  color: #ffffff;
+  text-decoration: underline 2px;
+}
+
+/* Header */
+.carousel-item {
+  height: 100vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* Navbar */
+.navbar {
+  padding: 2px;
+}
+
+.nav-logo-img {
+  max-width: 70px;
+  max-height: 70px;
+}
+
+.nav-item {
+  padding: 0px 15px;
+}
+
+/* Footer */
+footer {
+  background-color: #f5f5f7;
+}
+
+.footer-company-info {
+  text-align: center;
+  padding: 50px;
+  font-size: 14px;
+}
+
+/* Divider */
+.divider-card-solid {
+  border-top: 2px solid #222222;
+  width: 80px;
+}
+
+.divider-card-blank {
+  padding: 70px;
+}
+
+.divider-header-blank {
+  padding: 40px;
+}
+
+/* Card-Common */
+.headline {
+  text-align: center;
+  font-size: 2.4em;
+  font-weight: 900;
+  padding: 30px;
+}
+
+.card-img-top {
+  object-fit: cover;
+  border-radius: 0px;
+  max-height: 500px;
+}
+
+/* planner */
+.planner {
+  text-align: center;
+}
+
+.planner-title {
+  font-weight: 900;
+}
+
+.planner-content {
+  margin: 0px;
+  height: 400px;
+  overflow: hidden;
+  border: 1px solid;
+  padding: 10px;
+  margin: 0px 0px 30px 0px;
+}
+
+.planner-content:hover {
+  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.planner-content-align {
+  margin: 145px;
+}
+
+.planner-divider-solid {
+  border-top: 2px solid #222222;
+}
+
+.planner-d-day {
+  font-size: 2.5em;
+}
+
+.planner-route {
+  font-weight: 500;
+}
+
+/* Card-Recommendation */
+.recommendation-country-name {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.recommendation-content {
+  border: 1px solid;
+  margin: 0px 0px 30px 0px;
+}
+
+.recommendation-content:hover {
+  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Card-Diary */
+.card-diary {
+  border: 1px solid;
+  margin: 0px 0px 30px 0px;
+}
+
+.card-diary:hover {
+  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.diary-profile {
+	margin: 0px 0px 8px 0px;
+}
+
+.diary-profile-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 70%;
+  margin: 0px 5px 0px 0px;
+}
+
+.diary-profile-id {
+  color: #222222;
+  font-weight: 900;
+}
+
+.diary-profile-id:hover {
+  color: #222222;
+  text-decoration: underline 2px;
+}
+
+.diary-text {
+	margin: 0px 0px 6px;
+}
+
+.diary-content {
+  margin: 8px;
+}
+
+.diary-hashtag {
+  color: #222222;
+  font-weight: 900;
+}
+
+.diary-hashtag:hover {
+  color: #222222;
+  text-decoration: underline 2px;
+}
+
+.diary-hashtag-area {
+  margin: 0px 0px 10px 0px;
+}
+
+/* View More */
+.view-more-p {
+  text-align: right;
+  margin: 0px 0px 10px 0px;
+}
+
+.view-more-a {
+  color: #222222;
+  text-decoration: underline 2px;
+}
+
+.view-more-a:hover {
+  color: #222222;
+}
