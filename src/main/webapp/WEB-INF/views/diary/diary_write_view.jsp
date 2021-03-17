@@ -10,17 +10,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-</head>
-<body>
-<!-- 
-1.디데이 가지고 오는 쿼리문 하나 있어야 합니다.
-2.플래너 이름을 가지고 와야 한다. 
-3.그럴려면 쿼리가 어떻게 되어야 할까나요???
-다이어리 이름을 가져와야 하는데 거기서
-
-다이어리 작성 버튼 하나 있어야 하고 
-표를 한 페이지에 네개씩 넣어야 하고  -->
 <!-- 	private int diary_id;
 	private String img_path;
 	private String text;
@@ -28,38 +17,55 @@
 	private Timestamp diary_date;
 	private int planner_id;     -->
 
+</head>
+<body>
+<form action="${pageContext.request.contextPath}/diary_write" method="post">
+<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
+<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
+<input type="hidden" name="planner_id" value="${planner.planner_id}"/>
+
 <div class="container">
   <h2 class="text-warning">Diary</h2>
-  
-  		<select name="planner_id">
-			<c:forEach var="id" items="${diary}">
-				<option value='${id.planner_id}'>${id.planner_id}</option>
-			</c:forEach>
-		</select><br/>
-		<button type="button" class="btn">다이어리 작성</button>
   <div class="row">
-  <c:forEach items="${diary}" var="dto">
+
    <div class="col-sm-3"> 
-  <table class="table table-borderless">
+   <p>${planner.planner_id}</p>
+ <table class="table table-borderless">
 			<tr>
-      			<td>
-      				<img width='100' src='${dto.img_path}'/>
+      			<td rowspan='5'>
+      				<img width='100' src='https://github.com/tjaqpfflsk/hello/blob/main/%EC%97%AC%ED%96%891.png?raw=true'/>
+				</td>
+				<td>
+<!--      <div class="form-group"> -->
+      <input type="file" class="form-control-file border" name="img_path">
+<!--     </div>  -->
 				</td>
 			</tr> 
 			<tr>
-      			<td>
-      				${dto.diary_date}
+				<td>
+      				<textarea rows= "10" cols="50" name="hashtag"/></textarea>
 				</td>
 			</tr>
 			<tr>
       			<td>
-      				${dto.hashtag}
+      				<h4>Tag</h4>
 				</td>
+			</tr>
+			<tr>
+			<td>
+      		<textarea rows= "1" cols="30" name="text"/></textarea>
+			</td>
+			</tr>
+			<tr>
+			<td>
+			<input type="submit" value="작성">
+			</td>
 			</tr>
 			</table>
 			</div> 
-		</c:forEach>
 	</div>
 	</div>
+</form>
+	
 </body>
 </html>

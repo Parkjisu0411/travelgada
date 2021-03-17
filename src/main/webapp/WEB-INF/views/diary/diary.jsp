@@ -10,59 +10,106 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-latest.js"></script> 
 
+  <script>
+		/* function showPopup() { window.open('${pageContext.request.contextPath}/test', "a","location=no", "width=700, height=600, left=100, top=50"); }
+  */ 
+  </script>
+  <style>
+ .diary_img {
+  width: 240px;
+  height: 240px;
+  object-fit: cover;
+  display: block; 
+  margin: 0px auto;
+}
+ .popup_img {
+  width: 600px;
+  height: 600px;
+  object-fit: cover;
+}
+
+  
+  </style>
 </head>
 <body>
-<!-- 
-1.디데이 가지고 오는 쿼리문 하나 있어야 합니다.
-2.플래너 이름을 가지고 와야 한다. 
-3.그럴려면 쿼리가 어떻게 되어야 할까나요???
-다이어리 이름을 가져와야 하는데 거기서
-
-다이어리 작성 버튼 하나 있어야 하고 
-표를 한 페이지에 네개씩 넣어야 하고  -->
-<!-- 	private int diary_id;
-	private String img_path;
-	private String text;
-	private String hashtag;
-	private Timestamp diary_date;
-	private int planner_id;     -->
-
+<form action ="${pageContext.request.contextPath}/diary_write_view" method="get">
 <div class="container">
   <h2 class="text-warning">Diary</h2>
   <div class="row">
   <div class="col-sm-10"> 
   		<select class="form-control" name="planner_id">
-			<c:forEach var="id" items="${diary}">
-				<option value='${id.planner_id}'>${id.planner_id}</option>
+			<c:forEach var="id" items="${planner}">
+				<option value='${id.planner_id}'>
+				${id.end_date} ~ ${id.start_date}&nbsp;
+				${id.planner_name}&nbsp;
+				${id.planner_id}
+				</option>
 			</c:forEach>
-		</select>
+		</select>		
+		
 		</div>
 		  <div class="col-sm-2">
-		<button class="form-control" type="button" class="btn btn-outline-warning bg-warning text-white" onclick="location.href='${pageContext.request.contextPath}/diary_write_view'">다이어리 작성</button>
+		<input class="form-control" value="다이어리 작성" type="submit" class="btn btn-outline-warning bg-warning text-white"/>
+		<br/>    
     </div>
+   
   <c:forEach items="${diary}" var="dto">
    <div class="col-sm-3"> 
   <table class="table table-borderless">
-			<tr>
+			<tr class="table-light">
       			<td>
-      				<img width='100' src='${dto.img_path}'/>
+      			<div >
+      				<img class='diary_img' src='${dto.img_path}' data-toggle="modal" data-target="#myModal${dto.diary_id}"/>
+				</div>
 				</td>
 			</tr> 
-			<tr>
+			<tr class="table-light">
       			<td>
       				${dto.diary_date}
 				</td>
 			</tr>
-			<tr>
+			<tr class="table-light">
       			<td>
       				${dto.hashtag}
 				</td>
 			</tr>
 			</table>
 			</div> 
+			
+			<!-- Modal -->
+		<!-- 	<div class="row justify-content-center"> -->
+  <div class="modal fade" id="myModal${dto.diary_id}" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+        <img class="popup_img" src='${dto.img_path}'/>
+          <span>${dto.hashtag}</span>
+          <span> ${dto.diary_date}</span>
+          <span> ${dto.text}</span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+    </div>
+<!--   </div> -->
 		</c:forEach>
 	</div>
+	
+
+	
 	</div>
+	 </form>
+	 
+	 
+
+  
 </body>
 </html>

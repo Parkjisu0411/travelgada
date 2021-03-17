@@ -11,6 +11,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]> 
 	</select> 
 	
+	<select id="getPlanner" resultType="com.gada.travelgada.domain.PlannerVO"> 
+		<![CDATA[ 
+			select * from planner
+		]]> 
+	</select> 
+	
+	<insert id="writeDiary" > 
+		<![CDATA[ 
+		insert into diary (planner_id,diary_id,img_path,text,hashtag,diary_date)
+		VALUES(#{planner_id},get_seq('diary_seq'),#{img_path},#{text},#{hashtag},sysdate())
+		]]> 
+	</insert>
+	
 <!-- 	<select id="getTotalCount" resultType="int">
 		select count(*) from mvc_board
 	</select> -->

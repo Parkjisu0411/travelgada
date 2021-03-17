@@ -25,6 +25,6 @@ public class PlannerVO {
 	private Timestamp end_date;
 	private String planner_name;
 	private int satisfaction ;
-	private int member_id; 
+	private String member_id; 
 	
 }

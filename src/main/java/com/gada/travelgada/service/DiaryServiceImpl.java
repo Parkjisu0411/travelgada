@@ -30,11 +30,16 @@ public class DiaryServiceImpl implements DiaryService {
 		return mapper.getDiary();
 	}
 
-//	@Override
-//	public List<PlannerVO> getPlanner() {
-//		log.info("getPlanner();");
-//		return mapper.getPlanner();
-//	}
+	@Override
+	public List<PlannerVO> getPlanner() {
+		log.info("getPlanner();");
+		return mapper.getPlanner();
+	}
+
+	@Override
+	public void writeDiary(DiaryVO diaryVO) {
+		mapper.writeDiary(diaryVO);
+	}
 	
 	
 

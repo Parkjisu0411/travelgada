@@ -17,6 +17,7 @@ public interface DiaryMapper {
 
 	public List<DiaryVO> getDiary();
 	public List<PlannerVO> getPlanner();
+	public void writeDiary(DiaryVO diaryVO);
 
 	
 
