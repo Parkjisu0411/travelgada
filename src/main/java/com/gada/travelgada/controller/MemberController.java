@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gada.travelgada.domain.MemberVO;
-import com.gada.travelgada.service.MemberService;
+import com.gada.travelgada.service.MemberServiceImpl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class MemberController {
 	
-	private MemberService memberService;
+	private MemberServiceImpl memberService;
 	
 	@GetMapping("/member")
 	public ModelAndView signUpForm(ModelAndView mv) {
@@ -65,21 +65,4 @@ public class MemberController {
 		
 		return mv;
 	}
-	
-//	@PostMapping("/member/login")
-//	public ResponseEntity<String> login(@RequestBody MemberVO memberVO) {
-//		log.info("Member Login >>> " + memberVO.getMember_id());
-//		ResponseEntity<String> entity = null;
-//		
-//		try {
-//			memberService.selectMember(memberVO.getMember_id());
-//			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//		}
-//		
-//		return entity;
-//	}
-
 }

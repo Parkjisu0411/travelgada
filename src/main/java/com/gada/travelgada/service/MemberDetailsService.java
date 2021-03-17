@@ -1,4 +1,4 @@
-package com.gada.travelgada.security;
+package com.gada.travelgada.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.gada.travelgada.domain.MemberUser;
+import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.MemberVO;
 import com.gada.travelgada.mapper.MemberMapper;
 
@@ -28,6 +28,6 @@ public class MemberDetailsService implements UserDetailsService {
 
 		log.warn("queried by MemberVO mapper: " + vo);
 
-		return vo == null ? null : new MemberUser(vo);
+		return vo == null ? null : new MemberDetails(vo);
 	}
 }

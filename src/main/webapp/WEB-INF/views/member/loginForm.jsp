@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,22 +14,40 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
+<script type="text/javascript">
+	window.onload = function() {
+		var result = location.search.substring(1);
+		if (result == 'error') {
+			console.log('Login Error');
+			document.getElementById("errorMsg").innerHTML = "<p style='color: #f00;'>로그인에 실패했습니다. 아이디 또는 패스워드를 다시 입력해주십시오.</p>";
+		}
+	}
+</script>
 </head>
 <body>
-<div class="container">
-	<h1>Login Form</h1>
+	<div class="container">
+		<h1>Login Form</h1>
 		<form action="/member/login" method="POST">
-			<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+			<input name="${_csrf.parameterName}" type="hidden"
+				value="${_csrf.token}" />
 			<div class="form-group">
-				<label for="id">아이디:</label>
-				<input type="text" class="form-control" placeholder="ID" id="id" name="username"/>
+				<label for="id">아이디:</label> <input type="text" class="form-control"
+					placeholder="ID" id="id" name="username" />
 			</div>
 			<div class="form-group">
-				<label for="pw">비밀번호:</label>
-				<input type="password" class="form-control" placeholder="Password" id="pw" name="password"/>
+				<label for="pw">비밀번호:</label> <input type="password"
+					class="form-control" placeholder="Password" id="pw" name="password" />
 			</div>
+			<div id="errorMsg"></div>
+
 			<button type="submit" class="btn btn-primary" id="btnSubmit">로그인</button>
 		</form>
-</div>
+		<a
+			href="/oauth2/authorization/kakao">
+			<img src="/resources/img/social/kakao_login_medium_wide.png">
+		</a>
+		<a href="/oauth2/authorization/google "><img src="/resources/img/social/btn_google_signin_light_normal_web@2x.png"></a>
+		<a href="/oauth2/authorization/naver "><img src="/resources/img/social/naver_login_wide_white.PNG"></a>
+	</div>
 </body>
 </html>
