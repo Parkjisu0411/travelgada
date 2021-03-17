@@ -24,7 +24,10 @@ public class TodoController {
 		log.info("todo()");
 		
 		mav.setViewName("todo");
-		mav.addObject("todolist", service.todolist());
+		mav.addObject("todolist", service.todoList());
+		
+		mav.addObject("productList", service.productList());
+		
 		return mav;
 	}
 }

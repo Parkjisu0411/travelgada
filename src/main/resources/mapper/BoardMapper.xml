@@ -4,10 +4,37 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gada.travelgada.mapper.TodoMapper">
 
-	<select id="todolist" resultType="com.gada.travelgada.domain.TodoDomain">
+ 	<select id="todoList" resultType="com.gada.travelgada.domain.TodoDomain">
 		<![CDATA[
-			select todo_name, complete_flag, todo_title from todo, todo_type
+			select todo_name, complete_flag, todo_title, planner_id from todo as a, todo_type as b where a.todo_type_id = b.todo_type_id
+		]]>
+	</select> 
+	
+	 <select id="productList" resultType="com.gada.travelgada.domain.ProductDomain">
+		<![CDATA[
+			select product_name, price, img_path from product
 		]]>
 	</select>
+
+	
+<!-- 	<resultMap id="todoMap" type="com.gada.travelgada.domain.TodoDomain">
+	    <result property="todo_id" column="todo_id"/>
+	    <result property="todo_name" column="todo_name"/>
+	    <result property="complete_flag" column="complete_flag"/>
+	    <result property="todo_type_id" column="todo_type_id"/>
+		<collection property="todoType" resultMap="todoTypeMap"></collection>
+	</resultMap>
+	
+	<resultMap id="todoTypeMap" type="com.gada.travelgada.domain.TodoTypeDomain">
+		<result property="todo_type_id" column="todo_type_id"/>
+		<result property="todo_title" column="todo_title"/>
+		<result property="planner_id" column="planner_id"/>
+	</resultMap>
+	
+	<select id="todoList" resultMap="todoMap">
+		<![CDATA[
+			select todo_name, complete_flag, todo_title from todo as a, todo_type as b where a.todo_type_id = b.todo_type_id
+		]]>
+	</select> -->
 
 </mapper>
