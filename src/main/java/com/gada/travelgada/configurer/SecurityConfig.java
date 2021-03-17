@@ -19,9 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-//	@Autowired
-//	private OAuth2UserServiceImpl customOAuth2UserService;
-	
 	@Autowired
 	private PrincipalOauth2UserService principalOauth2UserService;
 	
@@ -40,19 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.oauth2Login().loginPage("/member/login").userInfoEndpoint().userService(principalOauth2UserService);
 	}
 	
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {  
-//		auth.authenticationProvider(authProvider());
-//	}
-
 	@Bean
 	public BCryptPasswordEncoder bcryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-//	@Bean
-//	public CustomAuthenticationProvider authProvider() {
-//		return new CustomAuthenticationProvider();
-//	}
 
 }
