@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.gada.travelgada.mapper.DiaryMapper"> 
+
+<!-- list -->
+	<select id="getDiary" resultType="com.gada.travelgada.domain.DiaryVO"> 
+		<![CDATA[ 
+			select * from diary where planner_id=1
+		]]> 
+	</select> 
+	
+	<select id="getPlanner" resultType="com.gada.travelgada.domain.PlannerVO"> 
+		<![CDATA[ 
+			select * from planner
+		]]> 
+	</select> 
+	
+	<insert id="writeDiary" > 
+		<![CDATA[ 
+		insert into diary (planner_id,diary_id,img_path,text,hashtag,diary_date)
+		VALUES(#{planner_id},get_seq('diary_seq'),#{img_path},#{text},#{hashtag},sysdate())
+		]]> 
+	</insert>
+	
+<!-- 	<select id="getTotalCount" resultType="int">
+		select count(*) from mvc_board
+	</select> -->
+	
+<!-- 		<select id="getListWithPaging" resultType="edu.bit.ex.vo.BoardVO">
+		<![CDATA[
+			SELECT * FROM (
+			     SELECT ROWNUM AS RNUM, A.* FROM (
+			        		SELECT
+			                    *
+			                FROM
+			                    mvc_board 
+			                order by bGroup desc, bStep asc   
+			    ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+			) WHERE RNUM > (#{pageNum}-1) * #{amount}
+		]]>
+	</select> -->
+	
+
+	
+	</mapper>
