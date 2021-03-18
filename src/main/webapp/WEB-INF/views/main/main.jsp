@@ -30,7 +30,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
-      <a class="navbar-brand" href="#"><img class="nav-logo-img" src="${contextPath}/resources/logo.png"></a>
+      <a class="navbar-brand" href="#"><img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -166,6 +166,30 @@
       </p>
       <div class="row">
         <!-- Insert Here -->
+        <div class="col-md-3">
+          <div class="recommendation-content">
+            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+              <span class="recommendation-country-name">프랑스</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="recommendation-content">
+            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+              <span class="recommendation-country-name">프랑스</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="recommendation-content">
+            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+              <span class="recommendation-country-name">프랑스</span>
+            </div>
+          </div>
+        </div>
         <div class="col-md-3">
           <div class="recommendation-content">
             <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">

@@ -1,8 +1,42 @@
 /* Font */
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+@font-face {
+    font-family: 'yg-jalnan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
   color: #222222;
+}
+
+/* Navbar */
+.navbar {
+  padding: 2px;
+  box-shadow: rgb(0 0 0 / 8%) 0px 1px 12px;
+}
+
+.nav-logo-img {
+  max-width: 70px;
+  max-height: 70px;
+}
+
+.navbar-brand {
+  font-family: 'yg-jalnan';
+  font-size: 1.4em;
+}
+
+.nav-logo-img {
+  max-width: 30px;
+  max-height: 30px;
+  margin: 0px 4px 0px 0px;
+  padding: 0px 0px 3px;
+}
+
+.nav-item {
+  padding: 0px 15px;
 }
 
 /* Notice */
@@ -31,20 +65,6 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
-
-/* Navbar */
-.navbar {
-  padding: 2px;
-}
-
-.nav-logo-img {
-  max-width: 70px;
-  max-height: 70px;
-}
-
-.nav-item {
-  padding: 0px 15px;
 }
 
 /* Footer */
@@ -77,13 +97,13 @@ footer {
   text-align: center;
   font-size: 2.4em;
   font-weight: 900;
-  padding: 30px;
+  padding: 25px 0px 50px 0px;
 }
 
 .card-img-top {
   object-fit: cover;
   border-radius: 0px;
-  max-height: 500px;
+  height: 500px;
 }
 
 /* planner */
@@ -92,7 +112,11 @@ footer {
 }
 
 .planner-title {
-  font-weight: 900;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.8em;
 }
 
 .planner-content {
@@ -118,7 +142,8 @@ footer {
 }
 
 .planner-d-day {
-  font-size: 2.5em;
+  font-size: 1.8em;
+  font-weight: 400;
 }
 
 .planner-route {
