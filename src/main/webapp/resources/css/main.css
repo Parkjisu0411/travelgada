@@ -32,7 +32,7 @@ body {
 .navbar-light .navbar-nav .nav-link:hover {
 	text-decoration: none;
 	border-bottom: 2px solid #000000;
-	padding-bottom: 7px;
+	padding-bottom: 6px;
 	color: #000000;
 }
 
