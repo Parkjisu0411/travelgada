@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gada.travelgada.service.DiaryService;
+import com.gada.travelgada.service.MainService;
 
 import lombok.AllArgsConstructor;
 
@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 public class MainController {
 	
 	@Autowired
-	private DiaryService diaryService;
+	private MainService diaryService;
 	
 	@GetMapping("/main")
 	public ModelAndView main(ModelAndView mav) {

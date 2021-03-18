@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiaryVO {
+public class MainVO {
 	private long diary_Id;
 	private String img_path;
 	private String text;
