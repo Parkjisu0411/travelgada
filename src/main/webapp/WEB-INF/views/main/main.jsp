@@ -28,7 +28,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#"><img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -47,32 +47,28 @@
           <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 커뮤니티 </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Q&A</a> <a class="dropdown-item" href="#">리뷰</a> <a
+              <a class="dropdown-item" href="#">Q&amp;A</a> <a class="dropdown-item" href="#">리뷰</a> <a
                 class="dropdown-item" href="#">동행</a>
             </div>
           </li>
           <li class="nav-item"><a class="nav-link" href="#">쇼핑</a></li>
-          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 회원정보 </a>
+        </ul>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="text" aria-label="Search">
+          <button class="btn btn-outline-white btn-sm my-0" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${contextPath}/resources/museum.jpg" class="nav-profile-img"></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">정보 수정</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">로그아웃</a>
             </div>
-          </li>
-        </ul>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="text" aria-label="Search">
-          <button class="btn btn-outline-white btn-sm my-0" type="submit">검색</button>
-        </form>
+          </div>
       </div>
     </div>
   </nav>
-
-  <div class="covid-19">
-    <a href="https://www.0404.go.kr/dev/newest_view.mofa?id=ATC0000000008500&pagenum=1&mst_id=MST0000000000040&ctnm=&div_cd=&st=title&stext="
-      class="covid-19-link">발효중인 여행 주의보</a>
-  </div>
 
   <header>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -108,6 +104,11 @@
       </a>
     </div>
   </header>
+    
+    <div class="covid-19">
+    <a href="https://www.0404.go.kr/dev/newest_view.mofa?id=ATC0000000008500&pagenum=1&mst_id=MST0000000000040&ctnm=&div_cd=&st=title&stext="
+      class="covid-19-link">발효중인 여행 주의보</a>
+    </div>
 
   <div class="divider-header-blank"></div>
 

@@ -23,12 +23,4 @@ public class MainController {
 		
 		return mav;
 	}
-	
-	@GetMapping("/test")
-	public ModelAndView test(ModelAndView mav) {
-		mav.addObject("diary", diaryService.getDiary());
-		mav.setViewName("main/test");
-		
-		return mav;
-	}
 }
