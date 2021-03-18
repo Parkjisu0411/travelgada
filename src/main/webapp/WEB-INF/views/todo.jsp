@@ -1,16 +1,38 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="utf-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+  	img {
+  		object-fit: cover;
+  		max-width: 70px;
+		max-height: 70px;
+  	}
+  	
+  	.selected {
+	  	text-decoration:line-through;
+	  	font-weight:700;
+	  	color:black;
+  	}
+
+  </style>
+  
+  <script type="text/javascript">
+	  var token = $("meta[name='_csrf']").attr("content");
+	  var header = $("meta[name='_csrf_header']").attr("content");
+	  $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+  </script>
 
     <script type="text/javascript">
     window.onload = function randomImage() {
@@ -27,6 +49,77 @@
 	}
 
     </script>
+    
+    <script>
+    	$(document).ready(function() {
+    		$("#addToDo").submit(function(event) {
+    			event.preventDefault();
+    			console.log("addToDo submit");
+    			
+    			var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+    			
+    			var planner_id = $("#planner_id").val();
+    			var todo_title = $("#todo_title").val();
+    			var todo_name = $("#todo_name").val(); 
+    			
+    			var form = {
+    					// planner_id : planner_id,
+    					todo_title : todo_title,
+    					todo_name : todo_name
+    				};
+    				
+    			$.ajax({
+    				type : "POST",
+    				url : $(this).attr("action"),
+    				cache : false,
+    				data : JSON.stringify(form),
+    				contentType : 'application/json; charset=utf-8',
+    	            beforeSend : function(xhr){   /*ë°ì´í„°ë¥¼ ì „ì†¡í•˜ê¸° ì „ì— í—¤ë”ì— csrfê°’ì„ ì„¤ì •í•œë‹¤*/
+    	                 console.log("header ì‹¤í–‰ "+header+token)
+    	                 //console.log(sentence.toLowerCase());
+    	                 xhr.setRequestHeader(header, token);
+    				success : function(result){
+    					if(result == "SUCCESS"){
+    						console.log("success");
+    						
+    					}
+    				},
+    				error : function(e){
+    					console.log(e);
+    				}
+    					
+    			}); // ajax end
+    		}) // submit end
+    	})
+    </script>
+    
+	<script>            
+        $(document).ready (function () {                
+            $('.btnAdd').click (function () {                                        
+                $('.buttons').append (                        
+                    '<input type="text" name="txt" placeholder="ex.ì¹´ë©”ë¼"><input type="button" class="btnRemove btn-warning" value=" - "><br>'                    
+                ); // end append                            
+                $('.btnRemove').on('click', function () { 
+                    $(this).prev().remove (); // remove the textbox
+                    $(this).next ().remove (); // remove the <br>
+                    $(this).remove (); // remove the button
+                });
+            }); // end click                                            
+        }); // end ready        
+    </script>
+    
+	<script>
+		$(document).ready(function() {
+			$("input:checkbox").on('click', function() {
+				if ( $(this).prop('checked') ) {
+					$(this).parent().parent().parent().addClass("selected");
+				} else {
+					$(this).parent().parent().parent().removeClass("selected");
+				} 
+			}); 
+		}); 
+	</script>
 
 
 </head>
@@ -34,46 +127,46 @@
 <!--  	<div class="btn-group btn-group-lg">
 		 <div class="row text-center" style="width: 100%">
 			<div style="width: 30%; float:none; margin:0 auto"> 
-				<button type="button" class="btn btn-info btn-lg ">ÀÏÁ¤</button>
-				<button type="button" class="btn btn-info btn-lg ">Ä¿¹Â´ÏÆ¼</button>
-				<button type="button" class="btn btn-info btn-lg ">¼îÇÎ</button>
-				<button type="button" class="btn btn-info btn-lg ">°Ë»ö</button>
+				<button type="button" class="btn btn-info btn-lg ">ì¼ì •</button>
+				<button type="button" class="btn btn-info btn-lg ">ì»¤ë®¤ë‹ˆí‹°</button>
+				<button type="button" class="btn btn-info btn-lg ">ì‡¼í•‘</button>
+				<button type="button" class="btn btn-info btn-lg ">ê²€ìƒ‰</button>
 		 	</div>
 		</div> 
 	</div>  -->
 
 	<nav  class="navbar  navbar-expand-sm  bg-warning navbar-dark fixed-top"> 
-	<!-- ·Î°í -->
+	<!-- ë¡œê³  -->
 	<a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" style="width:80px;"></a>
 		
-	<!-- ¸Ş´º ¸µÅ© -->	
+	<!-- ë©”ë‰´ ë§í¬ -->	
 
 
 	  <ul  class="navbar-nav"> 
 
 	    <li  class="nav-item"> 
-	      <a  class="nav-link"  href="#">ÀÏÁ¤</a> 
+	      <a  class="nav-link"  href="#">ì¼ì •</a> 
 	    </li> 
 
 	    <li class="nav-item"> 
-	      <a class="nav-link" href="#">Ä¿¹Â´ÏÆ¼</a> 
+	      <a class="nav-link" href="#">ì»¤ë®¤ë‹ˆí‹°</a> 
 	    </li>
 
 	    <li class="nav-item"> 
-	      <a class="nav-link" href="#">¼îÇÎ</a> 
+	      <a class="nav-link" href="#">ì‡¼í•‘</a> 
 	    </li> 
 	    
 	   	<li class="nav-item"> 
-	      <a class="nav-link" href="#">°Ë»ö</a> 
+	      <a class="nav-link" href="#">ê²€ìƒ‰</a> 
 	    </li> 
 
 		<form class="form-inline" action="#">
-			<input class="form-control" type="text" placeholder="°Ë»ö¾î">
-			<button class="btn btn-success" type="submit">Ã£±â</button>
+			<input class="form-control" type="text" placeholder="ê²€ìƒ‰ì–´">
+			<button class="btn btn-success" type="submit">ì°¾ê¸°</button>
 		</form>
 
 		<li class="nav-item"> 
-	      <a class="nav-link" href="#">·Î±×ÀÎ</a> 
+	      <a class="nav-link" href="#">ë¡œê·¸ì¸</a> 
 	    </li> 
        
 	  </ul>
@@ -84,10 +177,10 @@
 	<div class="row text-center" style="width: 100%;">
 	<div style="width: 30%; float:none; margin:0 auto">
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-warning">ÀÏÁ¤</button>
-		    <button type="button" class="btn btn-warning">Áöµµ</button>
-		    <button type="button" class="btn btn-warning">ÁØºñ¹°</button>
-		    <button type="button" class="btn btn-warning">´ÙÀÌ¾î¸®</button>
+		    <button type="button" class="btn btn-warning">ì¼ì •</button>
+		    <button type="button" class="btn btn-warning">ì§€ë„</button>
+		    <button type="button" class="btn btn-warning">ì¤€ë¹„ë¬¼</button>
+		    <button type="button" class="btn btn-warning">ë‹¤ì´ì–´ë¦¬</button>
 		  </div>
 	</div>
 	</div> 	  
@@ -100,7 +193,7 @@
 
 	  <div class="dropdown">
 	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-	     d-day / ÇÃ·¡³Ê Á¦¸ñ
+	     d-day / í”Œë˜ë„ˆ ì œëª©
 	    </button>
 	    <div class="dropdown-menu dropdown-menu-right">
 	    <c:forEach items="${todolist }" var="todo">
@@ -121,11 +214,42 @@
 	</div>	  
 	
 	
-	
 	<br /><br />
 	<div class="container">
 	<div class="row">
-	<c:forEach items="${todolist }" var="todo">
+	<div class="col-sm-3">
+	<form id="addToDo" action="/addToDo" method="POST" >
+	<!-- <input type="hidden" id="planner_id" value=""> -->		<!-- í”Œë˜ë„ˆ ë²ˆí˜¸ë¥¼ ì–´ë””ì„œ ë°›ì•„ì˜¬ ê²ƒì¸ê°€...? -->
+    <table class="table table-bordered"  width="100%" cellspacing="0">
+    	<tr>
+			<td colspan="3">ì¹´í…Œê³ ë¦¬ë¥¼ ì…ë ¥í•˜ì„¸ìš”<input type="text" id="todo_title" placeholder="ex.ì „ìê¸°ê¸°"></td>	
+		</tr>
+
+		<tr>
+			<td colspan="3">
+				<div class="buttons">            
+	        		 ì²´í¬ë¦¬ìŠ¤íŠ¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”<input type="text" id="todo_name" placeholder="ex.ì¹´ë©”ë¼"><input type="button" class="btnAdd btn-warning" value=" +"><br>
+	        	</div>  
+			</td>
+		</tr>	
+		
+		<tr>
+			<td colspan="3"><input type="submit" value="ì²´í¬ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°"></td>
+		</tr>
+		
+	</table>
+	</form>
+	</div>
+	</div>
+	</div>
+	
+	<!-- ë”ë¯¸ ë°ì´í„° ê°€ì ¸ì˜¤ê¸° ì—°ìŠµ -->
+	<!-- form í•„ìš” : flagê°’ db ì €ì¥..... -->
+ 	<br /><br />
+	<div class="container">
+	<div class="row">
+	<c:set var="todolist" value="${todolist}" />
+	<c:forEach items="${todolist.TodoDomain }" var="todo">
 	<div class="col-sm-3">
 	
     <table class="table table-bordered"  width="100%" cellspacing="0">
@@ -135,45 +259,51 @@
 
 		<tr>
 			<td>${todo.todo_name }</td>
-			<%-- <td>${todo.complete_flag }</td> --%>		
+			<%-- <td>${todo.todo_name }</td> --%>
+			<%-- <td>${todo.complete_flag }</td> --%>	
+				
 			<td>
 			<label class="checkbox-inline">
 	 		 	<input type="checkbox" id="inlineCheckbox1" value="option1">
 			</label>
 			</td>
-			<!-- ajax·Î delete Ã³¸® -->
+			
+			<!-- ajaxë¡œ delete ì²˜ë¦¬ -->
 			<td><a href="#">x</a></td>
 		</tr>
 		
 		<tr>
-			<!-- ajax·Î insert Ã³¸® -->
-			<td colspan="3"><a href="#">+ Ã¼Å©¸®½ºÆ® Ãß°¡</a></td>
+			<!-- ajaxë¡œ insert ì²˜ë¦¬ -->
+			<td colspan="3"><a href="#">+ ì²´í¬ë¦¬ìŠ¤íŠ¸ ì¶”ê°€</a></td>
 		</tr>	
 	</table>
 	
 	</div>
 	</c:forEach>
 	</div>
-	</div>
+	</div> 
+	
+	
+
 	
 	
 	<br /><br /><br /><br /><br /><br />
 	<div class="container">	
-		<h3>È¤½Ã ÀØ¾î¹ö¸° ¹°°ÇÀº ¾øÀ¸½Å°¡¿ä?</h3><br />
-		<p>´Ù¸¥ ¿©Çà°´µéÀÌ ÁÖ·Î Ã¬±â´Â ¹°Ç°µé</p>
+		<h3>í˜¹ì‹œ ìŠì–´ë²„ë¦° ë¬¼ê±´ì€ ì—†ìœ¼ì‹ ê°€ìš”?</h3><br />
+		<p>ë‹¤ë¥¸ ì—¬í–‰ê°ë“¤ì´ ì£¼ë¡œ ì±™ê¸°ëŠ” ë¬¼í’ˆë“¤</p>
 		<ol>
-			<li>ÃßÃµ ¸®½ºÆ® 1</li>
-			<li>ÃßÃµ ¸®½ºÆ® 2</li>
-			<li>ÃßÃµ ¸®½ºÆ® 3</li>
-			<li>ÃßÃµ ¸®½ºÆ® 4</li>
-			<li>ÃßÃµ ¸®½ºÆ® 5</li>
+			<li>ì¶”ì²œ ë¦¬ìŠ¤íŠ¸ 1</li>
+			<li>ì¶”ì²œ ë¦¬ìŠ¤íŠ¸ 2</li>
+			<li>ì¶”ì²œ ë¦¬ìŠ¤íŠ¸ 3</li>
+			<li>ì¶”ì²œ ë¦¬ìŠ¤íŠ¸ 4</li>
+			<li>ì¶”ì²œ ë¦¬ìŠ¤íŠ¸ 5</li>
 		</ol>
 	</div>
 	
 	
 	<br /><br /><br /><br /><br /><br />
 	<div class="container">
-	<h3>ÀÌ »óÇ°ÀÌ ÇÊ¿äÇÏÁø ¾ÊÀ¸½Å°¡¿ä?</h3>
+	<h3>ì´ ìƒí’ˆì´ í•„ìš”í•˜ì§„ ì•Šìœ¼ì‹ ê°€ìš”?</h3>
 	<br /><br />
 	<div class="row">
 	<c:forEach items="${productList }" var="pdlist">
@@ -181,30 +311,32 @@
 	
     <table class="table table-borderless">
          <tr class="table-light">
-            <td>
+            <td colspan="2">
                 <%-- <img width='100' src='${pdlist.img_path}'/> --%>
-                <img class="pdImg" onload="randomImage()" width="100"/>
+                <a href="#">
+              	  <img class="pdImg" onload="randomImage()"/>
+                </a>
             </td>
          </tr> 
          <tr class="table-light" style="text-align:center;">
-         	<td>»óÇ°</td>
+         	<td>ìƒí’ˆ</td>
             <td>
                 ${pdlist.product_name}
             </td>
          </tr>
          <tr class="table-light" style="text-align:center;">
-         	<td>°¡°İ</td>
+         	<td>ê°€ê²©</td>
             <td>
-                  ${pdlist.price} ¿ø
+                  ${pdlist.price} ì›
             </td>
          </tr>
          <tr style="text-align:center;">
-         	<td><a href="#">±¸¸Å</a></td>
-         	<!-- <td><a class="basket" href="#">Àå¹Ù±¸´Ï</a></td> -->
+         	<td><a href="#">êµ¬ë§¤</a></td>
+         	<!-- <td><a class="basket" href="#">ì¥ë°”êµ¬ë‹ˆ</a></td> -->
          	
          	<td>
          	<div class="container">
-         	<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Àå¹Ù±¸´Ï</button>
+         	<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">ì¥ë°”êµ¬ë‹ˆ</button>
          	  <!-- The Modal -->
 			  <div class="modal" id="myModal">
 			    <div class="modal-dialog">
@@ -212,19 +344,19 @@
 			      
 			        <!-- Modal Header -->
 			        <div class="modal-header">
-			          <h4 class="modal-title">»óÇ°ÀÌ Àå¹Ù±¸´Ï¿¡ ´ã°å½À´Ï´Ù.</h4>
+			          <h4 class="modal-title">ìƒí’ˆì´ ì¥ë°”êµ¬ë‹ˆì— ë‹´ê²¼ìŠµë‹ˆë‹¤.</h4>
 			          <button type="button" class="close" data-dismiss="modal"></button>
 			        </div>
 			        
 			        <!-- Modal body -->
 			        <div class="modal-body">
-			          Àå¹Ù±¸´Ï·Î ÀÌµ¿ÇÏ½Ã°Ú½À´Ï±î?
+			          ì¥ë°”êµ¬ë‹ˆë¡œ ì´ë™í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
 			        </div>
 			        
 			        <!-- Modal footer -->
 			        <div class="modal-footer">
-			          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.href='#'">¿¹</button>
-			          <button type="button" class="btn btn-default" data-dismiss="modal">¾Æ´Ï¿À</button>
+			          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.href='#'">ì˜ˆ</button>
+			          <button type="button" class="btn btn-default" data-dismiss="modal">ì•„ë‹ˆì˜¤</button>
 			        </div>
 			        
 			      </div>

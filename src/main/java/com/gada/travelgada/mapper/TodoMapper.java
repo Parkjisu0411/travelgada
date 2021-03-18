@@ -14,6 +14,8 @@ public interface TodoMapper {
 
 	public List<ProductDomain> productList();
 
+	public void addToDo(TodoDomain todoDomain);
+
 
 
 

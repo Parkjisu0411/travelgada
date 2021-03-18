@@ -11,6 +11,8 @@ public interface TodoService {
 
 	public List<ProductDomain> productList();
 
+	public void addToDo(TodoDomain todoDomain);
+
 
 
   

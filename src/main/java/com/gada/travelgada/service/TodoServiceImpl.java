@@ -29,5 +29,11 @@ public class TodoServiceImpl implements TodoService {
 		return mapper.productList();
 	}
 
+	@Override
+	public void addToDo(TodoDomain todoDomain) {
+		log.info("addToDo()");
+		mapper.addToDo(todoDomain);
+	}
+
   
 }

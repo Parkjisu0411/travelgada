@@ -2,10 +2,15 @@ package com.gada.travelgada.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gada.travelgada.domain.TodoDomain;
 import com.gada.travelgada.service.TodoService;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AllArgsConstructor
-@Controller
+@RestController
 public class TodoController {
 	@Autowired
 	private TodoService service;
@@ -29,5 +34,22 @@ public class TodoController {
 		mav.addObject("productList", service.productList());
 		
 		return mav;
+	}
+	
+	@PostMapping("/addToDo")
+	public ResponseEntity<String> addToDo(@RequestBody TodoDomain todoDomain) throws Exception{
+		ResponseEntity<String> entity = null;
+		
+		log.info("addToDo");
+		
+		try {
+			service.addToDo(todoDomain);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
 	}
 }
