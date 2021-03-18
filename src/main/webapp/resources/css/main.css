@@ -103,7 +103,6 @@ footer {
 .card-img-top {
   object-fit: cover;
   border-radius: 0px;
-  height: 500px;
 }
 
 /* planner */
@@ -116,7 +115,7 @@ footer {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 1.8em;
+  font-size: 1.5em;
 }
 
 .planner-content {
@@ -151,6 +150,10 @@ footer {
 }
 
 /* Card-Recommendation */
+.card-img-top.recommendation {
+	height: 300px;
+}
+
 .recommendation-country-name {
   font-size: 1.1em;
   font-weight: 600;
@@ -170,6 +173,10 @@ footer {
 .card-diary {
   border: 1px solid;
   margin: 0px 0px 30px 0px;
+}
+
+.card-img-top.diary {
+	height: 500px;
 }
 
 .card-diary:hover {

@@ -168,7 +168,7 @@
         <!-- Insert Here -->
         <div class="col-md-3">
           <div class="recommendation-content">
-            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
+            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top recommendation" alt="...">
             <div class="card-body text-center">
               <span class="recommendation-country-name">프랑스</span>
             </div>
@@ -176,7 +176,7 @@
         </div>
         <div class="col-md-3">
           <div class="recommendation-content">
-            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
+            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top recommendation" alt="...">
             <div class="card-body text-center">
               <span class="recommendation-country-name">프랑스</span>
             </div>
@@ -184,7 +184,7 @@
         </div>
         <div class="col-md-3">
           <div class="recommendation-content">
-            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
+            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top recommendation" alt="...">
             <div class="card-body text-center">
               <span class="recommendation-country-name">프랑스</span>
             </div>
@@ -192,7 +192,7 @@
         </div>
         <div class="col-md-3">
           <div class="recommendation-content">
-            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
+            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top recommendation" alt="...">
             <div class="card-body text-center">
               <span class="recommendation-country-name">프랑스</span>
             </div>
@@ -219,7 +219,7 @@
         <c:forEach var="diary" items="${diary}" end="5">
           <div class="col-md-4">
             <div class="card-diary">
-              <img src="${diary.img_path}" class="card-img-top" alt="...">
+              <img src="${diary.img_path}" class="card-img-top diary" alt="...">
               <div class="diary-content">
                 <div class="diary-profile">
                   <img class="diary-profile-img" src="${contextPath}/resources/museum.jpg"> <a class="diary-profile-id" href="#">닉네임</a>
