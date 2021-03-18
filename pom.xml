@@ -20,6 +20,19 @@
 	</properties>
 	<dependencies>
 
+		<!-- 파일 업로드 추가 -->
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+
 		<!-- OAuth2 login -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -31,7 +44,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 		</dependency>
-		
+
 		<!-- junit test -->
 		<dependency>
 			<groupId>junit</groupId>
