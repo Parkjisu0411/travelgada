@@ -13,16 +13,16 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class TodoDomain {
+public class TodoVO {
 	private int todo_id;
 	private String todo_name;
 	private int complete_flag;
 	private int todo_type_id;
 	
-//	private String todo_title;
-//	private int planner_id;
+	private String todo_title;
+	private int planner_id;
 	
-//	private List<TodoTypeDomain> todoType;
+//	private List<TodoTypeVO> todoType;
 //	
 //	
 //

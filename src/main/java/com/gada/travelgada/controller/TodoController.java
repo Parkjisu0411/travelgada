@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gada.travelgada.domain.TodoDomain;
+import com.gada.travelgada.domain.TodoVO;
 import com.gada.travelgada.service.TodoService;
 
 import lombok.AllArgsConstructor;
@@ -32,18 +32,18 @@ public class TodoController {
 		mav.addObject("todolist", service.todoList());
 		
 		mav.addObject("productList", service.productList());
-		
+
 		return mav;
 	}
 	
 	@PostMapping("/addToDo")
-	public ResponseEntity<String> addToDo(@RequestBody TodoDomain todoDomain) throws Exception{
+	public ResponseEntity<String> addToDo(@RequestBody TodoVO todoVO) throws Exception{
 		ResponseEntity<String> entity = null;
 		
 		log.info("addToDo");
 		
 		try {
-			service.addToDo(todoDomain);
+			service.addToDo(todoVO);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();

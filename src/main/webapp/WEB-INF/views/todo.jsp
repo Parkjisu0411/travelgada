@@ -13,6 +13,18 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+	<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<!-- Font -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
+	rel="stylesheet">
+  
   <style>
   	img {
   		object-fit: cover;
@@ -25,6 +37,46 @@
 	  	font-weight:700;
 	  	color:black;
   	}
+  	
+  	
+  	/* Navbar */
+	.navbar {
+	  padding: 2px;
+	  box-shadow: rgb(0 0 0 / 8%) 0px 1px 12px;
+	}
+	
+	.nav-logo-img {
+	  max-width: 70px;
+	  max-height: 70px;
+	}
+	
+	.navbar-brand {
+	  font-family: 'yg-jalnan';
+	  font-size: 1.4em;
+	}
+	
+	.nav-logo-img {
+	  max-width: 30px;
+	  max-height: 30px;
+	  margin: 0px 4px 0px 0px;
+	  padding: 0px 0px 3px;
+	}
+	
+	.nav-item {
+	  padding: 0px 15px;
+	}
+	
+	/* Footer */
+	footer {
+	  background-color: #f5f5f7;
+	}
+	
+	.footer-company-info {
+	  text-align: center;
+	  padding: 50px;
+	  font-size: 14px;
+	}
+
 
   </style>
   
@@ -124,53 +176,48 @@
 
 </head>
 <body>
-<!--  	<div class="btn-group btn-group-lg">
-		 <div class="row text-center" style="width: 100%">
-			<div style="width: 30%; float:none; margin:0 auto"> 
-				<button type="button" class="btn btn-info btn-lg ">일정</button>
-				<button type="button" class="btn btn-info btn-lg ">커뮤니티</button>
-				<button type="button" class="btn btn-info btn-lg ">쇼핑</button>
-				<button type="button" class="btn btn-info btn-lg ">검색</button>
-		 	</div>
-		</div> 
-	</div>  -->
 
-	<nav  class="navbar  navbar-expand-sm  bg-warning navbar-dark fixed-top"> 
-	<!-- 로고 -->
-	<a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" style="width:80px;"></a>
-		
-	<!-- 메뉴 링크 -->	
-
-
-	  <ul  class="navbar-nav"> 
-
-	    <li  class="nav-item"> 
-	      <a  class="nav-link"  href="#">일정</a> 
-	    </li> 
-
-	    <li class="nav-item"> 
-	      <a class="nav-link" href="#">커뮤니티</a> 
-	    </li>
-
-	    <li class="nav-item"> 
-	      <a class="nav-link" href="#">쇼핑</a> 
-	    </li> 
-	    
-	   	<li class="nav-item"> 
-	      <a class="nav-link" href="#">검색</a> 
-	    </li> 
-
-		<form class="form-inline" action="#">
-			<input class="form-control" type="text" placeholder="검색어">
-			<button class="btn btn-success" type="submit">찾기</button>
-		</form>
-
-		<li class="nav-item"> 
-	      <a class="nav-link" href="#">로그인</a> 
-	    </li> 
-       
-	  </ul>
-	</nav>
+<!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container">
+      <a class="navbar-brand" href="#"><img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 일정 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">플래너</a> <a class="dropdown-item" href="#">준비물</a> <a
+                class="dropdown-item" href="#">지도</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 커뮤니티 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Q&A</a> <a class="dropdown-item" href="#">리뷰</a> <a
+                class="dropdown-item" href="#">동행</a>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">쇼핑</a></li>
+          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 회원정보 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">정보 수정</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">로그아웃</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="text" aria-label="Search">
+          <button class="btn btn-outline-white btn-sm my-0" type="submit">검색</button>
+        </form>
+      </div>
+    </div>
+  </nav>
 	
 	<br /><br /><br />
 	<div class="container">
@@ -213,6 +260,8 @@
 	</div>
 	</div>	  
 	
+
+	
 	
 	<br /><br />
 	<div class="container">
@@ -245,11 +294,11 @@
 	
 	<!-- 더미 데이터 가져오기 연습 -->
 	<!-- form 필요 : flag값 db 저장..... -->
- 	<br /><br />
+<%--  	<br /><br />
 	<div class="container">
 	<div class="row">
 	<c:set var="todolist" value="${todolist}" />
-	<c:forEach items="${todolist.TodoDomain }" var="todo">
+	<c:forEach items="${todolist }" var="todo">
 	<div class="col-sm-3">
 	
     <table class="table table-bordered"  width="100%" cellspacing="0">
@@ -259,8 +308,8 @@
 
 		<tr>
 			<td>${todo.todo_name }</td>
-			<%-- <td>${todo.todo_name }</td> --%>
-			<%-- <td>${todo.complete_flag }</td> --%>	
+			<td>${todo.todo_name }</td>
+			<td>${todo.complete_flag }</td>	
 				
 			<td>
 			<label class="checkbox-inline">
@@ -281,10 +330,45 @@
 	</div>
 	</c:forEach>
 	</div>
-	</div> 
+	</div>  --%>
 	
+  	<br /><br />
+	<div class="container">
+	<div class="row">
+	<%-- <c:set var="todolist" value="${todolist}" /> --%>
+	<c:forEach items="${todolist }" var="todo">
+	<div class="col-sm-3">
 	
-
+    <table class="table table-bordered"  width="100%" cellspacing="0">
+    	<tr>
+			<td colspan="3">
+				 ${todo.todo_title }
+			</td>	
+		</tr>
+		
+		<tr>
+			<td>${todo.todo_name }</td>
+				
+			<td>
+			<label class="checkbox-inline">
+	 		 	<input type="checkbox" id="inlineCheckbox1" value="option1">
+			</label>
+			</td>
+			
+			<!-- ajax로 delete 처리 -->
+			<td><a href="#">x</a></td>
+		</tr>
+		
+		<tr>
+			<!-- ajax로 insert 처리 -->
+			<td colspan="3"><a href="#">+ 체크리스트 추가</a></td>
+		</tr>	
+	</table>
+	
+	</div>
+	</c:forEach>
+	</div>
+	</div>  
 	
 	
 	<br /><br /><br /><br /><br /><br />
@@ -371,5 +455,12 @@
 	</c:forEach>
 	</div>
 	</div>
+	
+	<!-- Footer -->
+  <footer>
+    <div class="footer-company-info">
+      © 2021 가다, Inc. All rights reserved<br> 개인정보 처리방침·이용약관·사이트맵
+    </div>
+  </footer>
 </body>
 </html>

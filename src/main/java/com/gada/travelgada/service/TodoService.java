@@ -2,16 +2,16 @@ package com.gada.travelgada.service;
 
 import java.util.List;
 
-import com.gada.travelgada.domain.ProductDomain;
-import com.gada.travelgada.domain.TodoDomain;
+import com.gada.travelgada.domain.ProductVO;
+import com.gada.travelgada.domain.TodoVO;
 
 public interface TodoService {
 
-	public List<TodoDomain> todoList();
+	public List<TodoVO> todoList();
 
-	public List<ProductDomain> productList();
+	public List<ProductVO> productList();
 
-	public void addToDo(TodoDomain todoDomain);
+	public void addToDo(TodoVO todoVO);
 
 
 

@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.gada.travelgada.domain.ProductDomain;
-import com.gada.travelgada.domain.TodoDomain;
+import com.gada.travelgada.domain.ProductVO;
+import com.gada.travelgada.domain.TodoVO;
 
 @Mapper
 public interface TodoMapper {
 
-	public List<TodoDomain> todoList();
+	public List<TodoVO> todoList();
 
-	public List<ProductDomain> productList();
+	public List<ProductVO> productList();
 
-	public void addToDo(TodoDomain todoDomain);
+	public void addToDo(TodoVO todoVO);
 
 
 

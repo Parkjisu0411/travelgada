@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.gada.travelgada.domain.ProductDomain;
-import com.gada.travelgada.domain.TodoDomain;
+import com.gada.travelgada.domain.ProductVO;
+import com.gada.travelgada.domain.TodoVO;
 import com.gada.travelgada.mapper.TodoMapper;
 
 import lombok.AllArgsConstructor;
@@ -18,21 +18,21 @@ public class TodoServiceImpl implements TodoService {
 	private TodoMapper mapper;
 	
 	@Override
-	public List<TodoDomain> todoList() {
+	public List<TodoVO> todoList() {
 		log.info("todoList()");
 		return mapper.todoList();
 	}
 
 	@Override
-	public List<ProductDomain> productList() {
+	public List<ProductVO> productList() {
 		log.info("productList()");
 		return mapper.productList();
 	}
 
 	@Override
-	public void addToDo(TodoDomain todoDomain) {
+	public void addToDo(TodoVO todoVO) {
 		log.info("addToDo()");
-		mapper.addToDo(todoDomain);
+		mapper.addToDo(todoVO);
 	}
 
   
