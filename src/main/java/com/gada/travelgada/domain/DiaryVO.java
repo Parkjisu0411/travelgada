@@ -1,7 +1,6 @@
 package com.gada.travelgada.domain;
 
-import java.sql.Timestamp;
-
+import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,7 @@ public class DiaryVO {
 	private String img_path;
 	private String text;
 	private String hashtag;
-	private Timestamp diary_date;
+	private Date diary_date;
 	private int planner_id; 
 	
 }
