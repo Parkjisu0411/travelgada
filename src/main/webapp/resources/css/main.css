@@ -1,0 +1,244 @@
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@font-face {
+    font-family: 'yg-jalnan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+  color: #222222;
+}
+
+/* Navbar */
+.navbar {
+  padding: 2px;
+  box-shadow: rgb(0 0 0 / 8%) 0px 1px 12px;
+}
+
+.nav-logo-img {
+  max-width: 70px;
+  max-height: 70px;
+}
+
+.navbar-brand {
+  font-family: 'yg-jalnan';
+  font-size: 1.4em;
+}
+
+.nav-logo-img {
+  max-width: 30px;
+  max-height: 30px;
+  margin: 0px 4px 0px 0px;
+  padding: 0px 0px 3px;
+}
+
+.nav-item {
+  padding: 0px 15px;
+}
+
+/* Notice */
+.covid-19 {
+  background-color: #000000;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.covid-19-link {
+  color: #ffffff;
+}
+
+.covid-19-link:hover {
+  color: #ffffff;
+  text-decoration: underline 2px;
+}
+
+/* Header */
+.carousel-item {
+  height: 100vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* Footer */
+footer {
+  background-color: #f5f5f7;
+}
+
+.footer-company-info {
+  text-align: center;
+  padding: 50px;
+  font-size: 14px;
+}
+
+/* Divider */
+.divider-card-solid {
+  border-top: 2px solid #222222;
+  width: 80px;
+}
+
+.divider-card-blank {
+  padding: 70px;
+}
+
+.divider-header-blank {
+  padding: 40px;
+}
+
+/* Card-Common */
+.headline {
+  text-align: center;
+  font-size: 2.4em;
+  font-weight: 900;
+  padding: 25px 0px 50px 0px;
+}
+
+.card-img-top {
+  object-fit: cover;
+  border-radius: 0px;
+}
+
+/* planner */
+.planner {
+  text-align: center;
+}
+
+.planner-title {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.5em;
+}
+
+.planner-content {
+  margin: 0px;
+  height: 400px;
+  overflow: hidden;
+  border: 1px solid;
+  padding: 10px;
+  margin: 0px 0px 30px 0px;
+}
+
+.planner-content:hover {
+  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.planner-content-align {
+  margin: 145px;
+}
+
+.planner-divider-solid {
+  border-top: 2px solid #222222;
+}
+
+.planner-d-day {
+  font-size: 1.8em;
+  font-weight: 400;
+}
+
+.planner-route {
+  font-weight: 500;
+}
+
+/* Card-Recommendation */
+.card-img-top.recommendation {
+	height: 300px;
+}
+
+.recommendation-country-name {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.recommendation-content {
+  border: 1px solid;
+  margin: 0px 0px 30px 0px;
+}
+
+.recommendation-content:hover {
+  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Card-Diary */
+.card-diary {
+  border: 1px solid;
+  margin: 0px 0px 30px 0px;
+}
+
+.card-img-top.diary {
+	height: 500px;
+}
+
+.card-diary:hover {
+  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.diary-profile {
+	margin: 0px 0px 8px 0px;
+}
+
+.diary-profile-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 70%;
+  margin: 0px 5px 0px 0px;
+}
+
+.diary-profile-id {
+  color: #222222;
+  font-weight: 900;
+}
+
+.diary-profile-id:hover {
+  color: #222222;
+  text-decoration: underline 2px;
+}
+
+.diary-text {
+	margin: 0px 0px 6px;
+}
+
+.diary-content {
+  margin: 8px;
+}
+
+.diary-hashtag {
+  color: #222222;
+  font-weight: 900;
+}
+
+.diary-hashtag:hover {
+  color: #222222;
+  text-decoration: underline 2px;
+}
+
+.diary-hashtag-area {
+  margin: 0px 0px 10px 0px;
+}
+
+/* View More */
+.view-more-p {
+  text-align: right;
+  margin: 0px 0px 10px 0px;
+}
+
+.view-more-a {
+  color: #222222;
+  text-decoration: underline 2px;
+}
+
+.view-more-a:hover {
+  color: #222222;
+}
