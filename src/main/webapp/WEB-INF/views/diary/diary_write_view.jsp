@@ -88,7 +88,30 @@
 }
 </script>
 <script type="text/javascript">
-
+$(document).ready(function(){
+	$("#uploadBtn").on("click",function(e){
+		var formData = new FormData();
+		var inputFile = $("input[name='img_path']");
+		var files = inputFile[0].files;
+		
+		console.log(files);
+		for(var i = 0; i<file.length; i++){
+		formData.append("uploadFile",files)
+		}
+		
+		$.ajax({
+			url:'${pageContext.request.contextPath}/upload',
+			processData: false,
+			contentTypez: false,
+			data: formData,
+			type:'Post',
+			sucess: function(result){
+				alert("Uploaded");
+			}
+		})
+		
+	})
+})
 
 
 </script>
@@ -98,8 +121,6 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/diary_write" method="post" enctype="multipart/form-data">
-<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
-<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
 <input type="hidden" name="planner_id" value="${planner.planner_id}"/>
 
 <div class="container">
@@ -118,7 +139,7 @@
 <!--      <div class="form-group"> -->
       
      	<input type="file" class="form-control-file border" name="img_path" id="profile_pt" onchange="previewImage(this,'View_area')">
-		<input type="button" value="업로드"/>
+		<input type="button" id='uploadBtn' value="업로드"/>
 <!--     </div>  -->
 				</td>
 			</tr> 

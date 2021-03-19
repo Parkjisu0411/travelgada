@@ -24,24 +24,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]> 
 	</insert>
 	
-<!-- 	<select id="getTotalCount" resultType="int">
-		select count(*) from mvc_board
-	</select> -->
+   	<delete id="deleteDiary" >
+	<![CDATA[
+		delete from diary where diary_id = #{diary_id}
+	]]>
+	</delete>
 	
-<!-- 		<select id="getListWithPaging" resultType="edu.bit.ex.vo.BoardVO">
-		<![CDATA[
-			SELECT * FROM (
-			     SELECT ROWNUM AS RNUM, A.* FROM (
-			        		SELECT
-			                    *
-			                FROM
-			                    mvc_board 
-			                order by bGroup desc, bStep asc   
-			    ) A WHERE ROWNUM <= #{pageNum} * #{amount}
-			) WHERE RNUM > (#{pageNum}-1) * #{amount}
-		]]>
-	</select> -->
+		<insert id="modifyDiary" >
+	<![CDATA[
+		update diary set img_path = #{img_path},text = #{text},hashtag=#{hashtag} where diary_id = #{diary_id}
+			]]>
+	</insert>
 	
-
+<select id="view_Diary" resultType="com.gada.travelgada.domain.DiaryVO">
+   <![CDATA[
+   		select * from diary where diary_id = #{diary_id}
+   ]]>
+</select>
 	
 	</mapper>

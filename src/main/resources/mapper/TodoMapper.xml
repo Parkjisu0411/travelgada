@@ -47,26 +47,28 @@
 		]]>
 	</delete>
 
-	
-<!--  	<resultMap id="todoMap" type="com.gada.travelgada.domain.TodoVO">
-	    <result property="todo_id" column="todo_id"/>
-	    <result property="todo_name" column="todo_name"/>
-	    <result property="complete_flag" column="complete_flag"/>
-	    <result property="todo_type_id" column="todo_type_id"/>
-		
-	</resultMap>
-	
-	<resultMap id="todoTypeMap" type="com.gada.travelgada.domain.TodoTypeVO">
-		<result property="todo_type_id" column="todo_type_id"/>
-		<result property="todo_title" column="todo_title"/>
-		<result property="planner_id" column="planner_id"/>
-		<collection property="todoType" resultMap="todoMap"></collection>
-	</resultMap>
-	
-	<select id="todoList" resultMap="todoTypeMap">
-		<![CDATA[
-			select todo_name, complete_flag, todo_title from todo as a, todo_type as b where a.todo_type_id = b.todo_type_id
-		]]>
-	</select> --> 
+
+
+   
+<!--     <resultMap id="todoMap" type="com.gada.travelgada.domain.TodoVO">
+       <result property="todo_id" column="todo_id"/>
+       <result property="todo_name" column="todo_name"/>
+       <result property="complete_flag" column="complete_flag"/>
+       <result property="todo_type_id" column="todo_type_id"/>
+      
+   </resultMap>
+   
+   <resultMap id="todoTypeMap" type="com.gada.travelgada.domain.TodoTypeVO">
+      <result property="todo_type_id" column="todo_type_id"/>
+      <result property="todo_title" column="todo_title"/>
+      <result property="planner_id" column="planner_id"/>
+      <collection property="todoType" resultMap="todoMap"></collection>
+   </resultMap>
+   
+   <select id="todoList" resultMap="todoTypeMap">
+      <![CDATA[
+         select todo_name, complete_flag, todo_title from todo as a, todo_type as b where a.todo_type_id = b.todo_type_id
+      ]]>
+   </select> --> 
 
 </mapper>

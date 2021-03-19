@@ -5,27 +5,86 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+
 <title>다이어리</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://code.jquery.com/jquery-latest.js"></script> 
+    <script src="https://code.jquery.com/jquery-latest.js"></script> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
 <!-- Bootstrap -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+
 <!-- Font -->
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
-	rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
+	
   <script>
-		/* function showPopup() { window.open('${pageContext.request.contextPath}/test', "a","location=no", "width=700, height=600, left=100, top=50"); }
-  */ 
+/* 		function showPopup() { 
+			window.open('${pageContext.request.contextPath}/test', 
+					"a",
+					"location=no",
+					"width=700, height=600, left=100, top=50"); 
+			} */
   </script>
+  
+<!--     <script>
+	$(document).ready(function(){
+    	//이미지 변경 함수 호출
+    	changeIMG();
+    });
+	  $('.next').click(function()({
+		  $('div').attr('id','myModal${dto.diary_id+1}')
+		  })
+  </script> -->
+  
+  <script type="text/javascript">
+  
+  //삭제 실행
+	$(document).ready(function(){//이래야 전체 다 읽고 읽는다. 
+		$(".delete").click(function(event){
+			event.stopPropagation();//근데 이거를 어떻게 하지??
+			console.log("이벤트 실행");
+			var trObj = $(this).parent().parent().parent();//이게 클로져래....
+			 var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+		     
+			
+			$.ajax({
+				type : 'DELETE',//대문자로 해야한다.
+				url : $(this).attr("href"),//기억해두자
+				cache : false,//왜 적어야 하는지 모르겠다.
+				beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	  				console.log("header 실행 "+header+token)
+	  				//console.log(sentence.toLowerCase());
+	  			        xhr.setRequestHeader(${_csrf.headerName}, ${_csrf.token});
+	  		
+	          },
+				success: function(result){
+					console.log(result);
+					if(result=="SUCCESS"){
+						$(trObj).remove();//이것도 기억해야 한다.
+						
+						console.log("<tr> 삭제함")
+					}
+				},//,까먹고 안 적으면 안된다.
+				error:function(e){
+					console.log(e);
+				}
+				
+			})
+			
+		});
+		
+	});
+	
+	
+	</script>
+  
+  
   <style>
  .diary_img {
   width: 240px;
@@ -81,23 +140,6 @@ footer {
 
   </style>
  
-  <script>
-  
-	$(document).ready(function(){
-    	//이미지 변경 함수 호출
-    	changeIMG();
-    });
-	
-	  $('.next').click(function()({
-
-		  $('div').attr('id','myModal${dto.diary_id+1}')
-
-		  })
-
-
-  </script>
-
-  
 </head>
 <body>
 <!-- Header -->
@@ -141,6 +183,8 @@ footer {
       </div>
     </div>
   </nav>
+  
+  
 <form action ="${pageContext.request.contextPath}/diary_write_view" method="get">
 <div class="container">
   <h2 class="text-warning">Diary</h2>
@@ -163,8 +207,18 @@ footer {
     </div>
    
   <c:forEach items="${diary}" var="dto">
+  
    <div class="col-sm-3"> 
+   <div class="dropdown">
+    				<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+    				</button>
+    				<div class="dropdown-menu">
+      					<a class="dropdown-item" href="${pageContext.request.contextPath}/diary_modify_view/${dto.diary_id}">수정</a>
+      					<a class="delete" href="${pageContext.request.contextPath}/diary/${dto.diary_id}">삭제</a>
+    				</div>
+  				</div>
   <table class="table table-borderless">
+  			
 			<tr class="table-light">
       			<td>
       			<div >
@@ -207,7 +261,7 @@ footer {
       </div>
     </div>
     </div>
-<!--   </div> -->
+
 		</c:forEach>
 	</div>
 	
@@ -215,9 +269,7 @@ footer {
 	
 	</div>
 	 </form>
-	 
-	 
-
+	
 <!-- Footer -->
   <footer>
     <div class="footer-company-info">
