@@ -253,7 +253,7 @@ footer {
 
  
 <!--  <div id ="up_to_top">Top</div> -->
-<a href="javascript:apple();" align="center"><img src="logo.png"></a>
+<a href="javascript:apple();"><img src="Logo.png"></a>
 
 <!-- Footer -->
   <footer>
