@@ -1,0 +1,9 @@
+diff a/src/main/java/com/gada/travelgada/configurer/diaryConfig.java b/src/main/java/com/gada/travelgada/configurer/diaryConfig.java	(rejected hunks)
+@@ -15,7 +15,6 @@
+ @AllArgsConstructor
+ public class diaryConfig {
+ 	
+-	@Bean(name = "multipartResolver") 
+ 
+ 	@Bean
+     public CommonsMultipartResolver commonsMultipartResolver() {

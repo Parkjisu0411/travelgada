@@ -25,15 +25,15 @@ public class DiaryServiceImpl implements DiaryService {
 //	}
 
 	@Override
-	public List<DiaryVO> getDiary() {
+	public List<DiaryVO> getDiary(String member_id) {
 		log.info("getDiary();");
-		return mapper.getDiary();
+		return mapper.getDiary(member_id);
 	}
 
 	@Override
-	public List<PlannerVO> getPlanner() {
+	public List<PlannerVO> getPlanner(String member_id) {
 		log.info("getPlanner();");
-		return mapper.getPlanner();
+		return mapper.getPlanner(member_id);
 	}
 
 	@Override
