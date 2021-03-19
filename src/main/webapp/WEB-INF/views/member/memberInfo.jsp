@@ -17,6 +17,9 @@
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
@@ -32,51 +35,9 @@ html, body {
 }
 
 .member-img {
-	height: 100px;
+	margin: 30px;
+	height:100px;
 	display: block;
-	margin: 20px;
-}
-
-.form-check-label {
-	margin-left: 20px;
-	color: gray;
-}
-
-.navbar {
-	padding: 2px;
-	box-shadow: rgb(0 0 0/ 8%) 0px 1px 12px;
-}
-
-.nav-logo-img {
-	max-width: 70px;
-	max-height: 70px;
-}
-
-.navbar-brand {
-	font-family: 'yg-jalnan';
-	font-size: 1.4em;
-}
-
-.nav-logo-img {
-	max-width: 30px;
-	max-height: 30px;
-	margin: 0px 4px 0px 0px;
-	padding: 0px 0px 3px;
-}
-
-.nav-item {
-	padding: 0px 15px;
-}
-
-/* Footer */
-footer {
-	background-color: #f5f5f7;
-}
-
-.footer-company-info {
-	text-align: center;
-	padding: 50px;
-	font-size: 14px;
 }
 </style>
 <script type="text/javascript">
@@ -91,54 +52,7 @@ footer {
 </head>
 <body>
 	<!-- Header -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-white">
-		<div class="container">
-			<a class="navbar-brand" href="#"><img class="nav-logo-img"
-				src="${contextPath}/resources/logo.png">가다</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-						role="button" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"> 일정 </a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">플래너</a> <a
-								class="dropdown-item" href="#">준비물</a> <a class="dropdown-item"
-								href="#">지도</a>
-						</div></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-						role="button" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"> 커뮤니티 </a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">Q&A</a> <a
-								class="dropdown-item" href="#">리뷰</a> <a class="dropdown-item"
-								href="#">동행</a>
-						</div></li>
-					<li class="nav-item"><a class="nav-link" href="#">쇼핑</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-						role="button" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"> 회원정보 </a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">정보 수정</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">로그아웃</a>
-						</div></li>
-				</ul>
-				<form class="form-inline">
-					<input class="form-control mr-sm-2" type="text" aria-label="Search">
-					<button class="btn btn-outline-white btn-sm my-0" type="submit">검색</button>
-				</form>
-			</div>
-		</div>
-	</nav>
+	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 	<!--Content -->
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
@@ -154,10 +68,12 @@ footer {
 						<tr>
 							<td>포인트</td>
 							<td>${point }</td>
+							<td><a href="/member/mypage/point">내역조회</a></td>
 						</tr>
 						<tr>
 							<td>이메일</td>
 							<td>${member.email }</td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>배송지 목록</td>
@@ -166,6 +82,7 @@ footer {
 									<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
 								</c:forEach>
 							</td>
+							<td><a href="/member/mypage/shippingLoc">관리</a></td>
 						</tr>
 						
 					</table>
@@ -174,10 +91,6 @@ footer {
 		</div>
 	</div>
 	<!-- Footer -->
-	<footer>
-		<div class="footer-company-info">
-			© 2021 가다, Inc. All rights reserved<br> 개인정보 처리방침·이용약관·사이트맵
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 </body>
 </html>

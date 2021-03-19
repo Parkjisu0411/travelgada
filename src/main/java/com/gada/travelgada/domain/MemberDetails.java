@@ -54,6 +54,10 @@ public class MemberDetails implements UserDetails, OAuth2User{
 	public String getUsername() {
 		return member.getMember_id();
 	}
+	
+	public String getProfile() {
+		return member.getProfile_img_path();
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {

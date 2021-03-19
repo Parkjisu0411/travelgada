@@ -89,6 +89,10 @@ body {
 	background-color: #FE5000;
 }
 
+.dropdown-toggle::after {
+    display:none;
+}
+
 textarea:hover, 
 input:hover, 
 textarea:active, 

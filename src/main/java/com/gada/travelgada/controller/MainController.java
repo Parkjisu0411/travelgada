@@ -16,7 +16,7 @@ public class MainController {
 	@Autowired
 	private MainService diaryService;
 	
-	@GetMapping("/main")
+	@GetMapping("/")
 	public ModelAndView main(ModelAndView mav) {
 		mav.addObject("diary", diaryService.getDiary());
 		mav.setViewName("main/main");
