@@ -63,7 +63,7 @@ body {
 	padding: 0px 0px 0px 20px !important;
 }
 
-.dropdown-toggle::after {
+.dropdown-toggle.user::after {
     display:none;
 }
 
@@ -96,7 +96,7 @@ body {
 	padding: 0px;
 }
 
-.form-control.mr-sm-2 {
+.form-control.mr-sm-2.user {
 	margin: 5px !important;
 }
 
