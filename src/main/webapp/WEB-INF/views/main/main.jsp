@@ -5,6 +5,7 @@
 
 <!DOCTYPE html>
 <html lang="ko">
+<title>메인</title>
 
 <head>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -12,16 +13,6 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
-
-<!-- Font -->
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
-	rel="stylesheet">
-
-<!-- Font Awesome -->
-<link rel="stylesheet"
-	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
 
 <!-- CSS -->
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">

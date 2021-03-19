@@ -23,4 +23,11 @@ public class MainController {
 		
 		return mav;
 	}
+	
+	@GetMapping("/example")
+	public ModelAndView example(ModelAndView mav) {
+		mav.setViewName("example");
+		
+		return mav;
+	}
 }
