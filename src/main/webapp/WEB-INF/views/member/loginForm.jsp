@@ -39,6 +39,7 @@ html, body {
 	height: 50px;
 	margin: 5px;
 	display: block;
+	margin: auto;
 }
 
 #login-form {
@@ -57,13 +58,15 @@ html, body {
 </head>
 <body>
 	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'"><img class="nav-logo-img"
-				src="${contextPath}/resources/logo.png">가다 로그인</h2>
+			<h2 class="headline" style="font-family: 'yg-jalnan'">
+				<img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다
+				로그인
+			</h2>
 			<div class="col-md-6" id="login-form">
 				<form action="/member/login" method="POST">
 					<input name="${_csrf.parameterName}" type="hidden"
@@ -81,10 +84,12 @@ html, body {
 					<label class="form-check-label"> <input
 						class="form-check-input" type="checkbox"> Remember me
 					</label>
-
-					<button type="submit" class="btn btn-primary login-icon" id="btnSubmit">로그인</button>
+					<button type="submit" class="btn btn-primary login-icon"
+						id="btnSubmit">로그인</button>
 				</form>
-				<div class="divider-header-blank"></div>
+				<div class="mb-auto">
+					<hr />
+				</div>
 				<a href="/oauth2/authorization/kakao"><img class="login-icon"
 					src="/resources/img/social/kakao_login_medium_wide.png"></a> <a
 					href="/oauth2/authorization/google "><img class="login-icon"
@@ -94,8 +99,8 @@ html, body {
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>
 </html>

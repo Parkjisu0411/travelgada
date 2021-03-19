@@ -58,30 +58,40 @@ html, body {
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">포인트 내역</h2>
-			<div class="row border">
-				<div class="col-md-8 member-detail">
+			<div class="row">
+				<div class="col-md-12 member-detail">
 					<table class="table">
-						<tr>
-							<td>포인트</td>
-							<td>${point }</td>
-							<td><a href="/member/mypage/point">내역조회</a></td>
-						</tr>
-						<tr>
-							<td>이메일</td>
-							<td>${member.email }</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>배송지 목록</td>
-							<td>
-								<c:forEach var="shipping_loc" items="${shippingList }">
-									<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
-								</c:forEach>
-							</td>
-							<td><a href="#">수정</a></td>
-						</tr>
-						
+						<thead>
+							<tr>
+								<th>적립 사용</th>
+								<th>일시</th>
+								<th>포인트</th>
+								<th>잔여 포인트</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="point" items="${pointList }">
+								<tr>
+									<td>
+										<c:choose>
+											<c:when test="${point.save_flag eq 0 }">
+												적립
+											</c:when>
+											<c:otherwise>
+												사용
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td>${point.save_date }</td>
+									<td>${point.amount }</td>
+									<td>
+										${amount }
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
 					</table>
+					<button type="button" class="btn btn-secondary" onclick="window.history.back();">돌아가기</button>
 				</div>
 			</div>
 		</div>

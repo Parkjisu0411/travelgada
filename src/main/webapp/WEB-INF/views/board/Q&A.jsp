@@ -29,15 +29,30 @@ html, body {
 	margins: 0;
 	padding: 0;
 }
-
 </style>
 </head>
 <body>
 	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
-	
+	<div class="divider-header-blank"></div>
+	<div id="wrap">
+		<div class="container">
+			<h2 class="headline" style="font-family: 'yg-jalnan'">Q&A</h2>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>날짜</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>
 </html>

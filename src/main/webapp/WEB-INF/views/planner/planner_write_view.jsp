@@ -30,28 +30,37 @@ html, body {
 	padding: 0;
 }
 
+#wrap {
+	min-heigth: 100%;
+}
+
+.member-profile {
+	text-align: center;
+}
+
+.member-img {
+	height: 100px;
+	display: block;
+	vertical-align: middle;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
 </style>
 </head>
 <body>
 	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="divider-header-blank"></div>
-	<div class="container">
-		<h2 class="headline" style="font-family: 'yg-jalnan'">ACCOMPANY</h2>
-		<table class="table">
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>날짜</th>
-				<th>조회수</th>
-			</tr>
-		</thead>
-		</table>
+	<div id="wrap">
+		<div class="container">
+			<h2 class="headline" style="font-family: 'yg-jalnan'">나만의 플래너 만들기</h2>
+
+		</div>
 	</div>
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>
 </html>

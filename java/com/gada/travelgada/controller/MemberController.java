@@ -86,4 +86,22 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+	@GetMapping("/member/mypage/point")
+	public ModelAndView memberPoint(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
+		log.info("MyPage==========Point==========");
+		mv.addObject("amount", PointCalculator.getCurrentPoint(memberService.getPoint(memberDetails.getUsername())));
+		mv.addObject("pointList", memberService.getPoint(memberDetails.getUsername()));
+		mv.setViewName("/member/memberPoint");
+		return mv;
+	}
+	
+	@GetMapping("/member/mypage/modify")
+	public ModelAndView memberInfoModify(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
+		log.info("MyPage==========Modify==========");
+		mv.addObject("member", memberService.getMember(memberDetails.getUsername()));
+		mv.setViewName("/member/infoModify");
+		return mv;
+	}
+	
 }

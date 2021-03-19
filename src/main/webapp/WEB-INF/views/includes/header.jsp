@@ -35,11 +35,11 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						class="nav-link dropdown-toggle" href="/planner" id="navbarDropdown"
 						role="button" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"> 일정 </a>
+						aria-expanded="false"> 플래너 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">플래너</a> <a
+							<a class="dropdown-item" href="/planner">일정</a> <a
 								class="dropdown-item" href="#">준비물</a> <a class="dropdown-item"
 								href="#">지도</a>
 						</div></li>
@@ -48,9 +48,9 @@
 						role="button" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false"> 커뮤니티 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">Q&amp;A</a> <a
-								class="dropdown-item" href="#">리뷰</a> <a class="dropdown-item"
-								href="#">동행</a>
+							<a class="dropdown-item" href="/board/qna">Q&amp;A</a> <a
+								class="dropdown-item" href="/board/review">리뷰</a> <a class="dropdown-item"
+								href="/board/accompany">동행</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">쇼핑</a></li>
 				</ul>

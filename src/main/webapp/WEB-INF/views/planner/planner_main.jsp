@@ -30,28 +30,55 @@ html, body {
 	padding: 0;
 }
 
+#wrap {
+	min-heigth: 100%;
+}
+
+.member-profile {
+	text-align: center;
+}
+
+.member-img {
+	height: 100px;
+	display: block;
+	vertical-align: middle;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
 </style>
 </head>
 <body>
 	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="divider-header-blank"></div>
-	<div class="container">
-		<h2 class="headline" style="font-family: 'yg-jalnan'">ACCOMPANY</h2>
-		<table class="table">
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>날짜</th>
-				<th>조회수</th>
-			</tr>
-		</thead>
-		</table>
+	<div id="wrap">
+		<div class="container">
+			<h2 class="headline" style="font-family: 'yg-jalnan'">MY PLANNER</h2>
+			<c:forEach var="planner" items="plannerList">
+				<div class="col-md-12">
+					<table class="table-borderless">
+						<tr>
+							<td>
+								<strong>${planner.planner_name }</strong>
+								<p>D-DAY</p>
+							</td>
+							<td>
+								<p>국가, 도시</p>
+								<p>${planner.start_date } ~ ${planner.end_date }</p>
+								<c:forEach begin="0" end="${planner.satisfaction }">
+									<p>*</p>
+								</c:forEach>
+							</td>
+						</tr>
+					</table>
+				</div>			
+			</c:forEach>
+		</div>
 	</div>
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>
 </html>

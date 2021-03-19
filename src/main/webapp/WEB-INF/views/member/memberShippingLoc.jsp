@@ -36,57 +36,84 @@ html, body {
 
 .member-img {
 	margin: 30px;
-	height:100px;
+	height: 100px;
 	display: block;
 }
 </style>
 <script type="text/javascript">
-	window.onload = function() {
-		var result = location.search.substring(1);
-		if (result == 'error') {
-			console.log('Login Error');
-			document.getElementById("errorMsg").innerHTML = "<p style='color: #f00;'>로그인에 실패했습니다. 아이디 또는 패스워드를 다시 입력해주십시오.</p>";
-		}
-	}
+	$(document).ready(function() {
+		
+		$(".delete").click(function(event) {
+			event.preventDefault();
+			console.log("delete click");
+			var trObj = $(this).parent().parent();//자바스크립트 클로저
+
+			$.ajax({
+				type : 'DELETE', //method
+				url : $(this).attr("href"), //주소를 받아오는 것이 포인트.
+				cache : false,
+				success : function(result) {
+					console.log("result: " + result);
+					if (result == "SUCCESS") {
+						$(trObj).remove();
+					}
+				},
+				errer : function(e) {
+					console.log(e);
+				}
+			}); //end of ajax
+		});
+	});
 </script>
 </head>
 <body>
 	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">배송지 목록</h2>
-			<div class="row border">
-				<div class="col-md-8 member-detail">
+						<p class="view-more-p">
+				<button type="button" class="btn btn-secondary"
+					onclick="">배송지 등록</button>
+			</p>
+			<div class="row">
+				<div class="col-md-12 member-detail">
 					<table class="table">
-						<tr>
-							<td>포인트</td>
-							<td>${point }</td>
-							<td><a href="/member/mypage/point">내역조회</a></td>
-						</tr>
-						<tr>
-							<td>이메일</td>
-							<td>${member.email }</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>배송지 목록</td>
-							<td>
-								<c:forEach var="shipping_loc" items="${shippingList }">
-									<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
-								</c:forEach>
-							</td>
-							<td><a href="#">수정</a></td>
-						</tr>
-						
+						<thead>
+							<tr>
+								<th>배송</th>
+								<th>주소</th>
+								<th>연락처</th>
+								<th>수정 삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="shipping_loc" items="${shippingList }">
+								<tr>
+									<td>
+										<p style="font-weight: bold;">${shipping_loc.shipping_loc_name }</p>
+										<p>${shipping_loc.receiver }</p>
+									</td>
+									<td>${shipping_loc.address }</td>
+									<td>${shipping_loc.receiver_phone_num }</td>
+									<td>
+										<div class="btn-aroup">
+											<button type="button" class="btn btn-light">수정</button>
+											<button type="button" class="btn btn-light delete" onclick="delete();">삭제</button>
+										</div>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
 					</table>
+					<button type="button" class="btn btn-secondary" onclick="window.history.back();">돌아가기</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>
 </html>
