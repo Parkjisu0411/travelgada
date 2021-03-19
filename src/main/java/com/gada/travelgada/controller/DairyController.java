@@ -38,10 +38,13 @@ public class DairyController {
 
 	@Autowired
 	private DiaryService diaryService;
+
 	
 	@Autowired
 	private ScheduleService scheduleService;
 
+
+	
 	private static final String FILE_SERVER_PATH = "C:\\Users\\김보람\\git\\travelgada\\src\\main\\webapp\\resources\\diary";
 	 
 	@GetMapping("diary")
@@ -83,6 +86,7 @@ public class DairyController {
 		}
 		return mav;
 	}
+
 
 	/* @DeleteMapping("/diary/{diary_id}") */
 	@RequestMapping(value="/diary/{diary_id}",method=RequestMethod.DELETE)
@@ -134,4 +138,36 @@ public class DairyController {
 			
 			return mav;
 		}
+
+	@PostMapping("upload")
+	public ModelAndView upload(ModelAndView mav, MultipartFile[] uploadFile) {
+		log.info("하고 있다.");
+
+		String uploadFolder = "C:\\Users\\김보람\\git\\travelgada\\src\\main\\webapp\\resources\\diary";
+		mav.setViewName("diary/uploadok");
+		for (MultipartFile multipartFile : uploadFile) {
+			log.info("------------------------");
+			log.info("Upload File Name:" + multipartFile.getOriginalFilename());
+			log.info("Upload File Size:" + multipartFile.getSize());
+
+			String uploadFileName = multipartFile.getOriginalFilename();
+
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
+
+			log.info("only file name:" + uploadFileName);
+
+			File saveFile = new File(uploadFolder, uploadFileName);
+
+			try {
+				multipartFile.transferTo(saveFile);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		}
+
+		return mav;
+	}
+
+	
+	
 }

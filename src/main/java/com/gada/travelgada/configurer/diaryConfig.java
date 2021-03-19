@@ -1,12 +1,10 @@
 package com.gada.travelgada.configurer;
 
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.multipart.support.MultipartFilter;
 
 import lombok.AllArgsConstructor;
 
@@ -15,6 +13,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class diaryConfig {
 	
+	@Bean(name = "multipartResolver") 
 
 	@Bean
     public CommonsMultipartResolver commonsMultipartResolver() {
