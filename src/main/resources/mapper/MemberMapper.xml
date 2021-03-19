@@ -36,9 +36,21 @@
 	
 	<insert id="insertAuthorities">
 		<![CDATA[
-			insert into authorities(member_id, authority) values (#{member_id}, "role_user");
+			insert into authorities(member_id, authority) values (#{member_id}, "ROLE_USER")
 		]]>
 	</insert>
+	
+	<select id="selectPoint" resultType="com.gada.travelgada.domain.PointVO">
+		<![CDATA[
+			select * from point where member_id = #{member_id}
+		]]>
+	</select>
+	
+	<select id="selectShippingLoc" resultType="com.gada.travelgada.domain.ShippingLocVO">
+		<![CDATA[
+			select * from shipping_loc where member_id = #{member_id}
+		]]>
+	</select>
 	
 
 </mapper>
