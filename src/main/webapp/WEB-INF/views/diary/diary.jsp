@@ -12,9 +12,9 @@
     <script src="https://code.jquery.com/jquery-latest.js"></script> 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <!-- Bootstrap -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 
@@ -40,27 +40,30 @@
 		  $('div').attr('id','myModal${dto.diary_id+1}')
 		  })
   </script> -->
-  
+    <script type="text/javascript">
+     var token = $("meta[name='_csrf']").attr("content");
+     var header = $("meta[name='_csrf_header']").attr("content");
+     $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+  </script>
   <script type="text/javascript">
   
   //삭제 실행
 	$(document).ready(function(){//이래야 전체 다 읽고 읽는다. 
+		
 		$(".delete").click(function(event){
-			event.stopPropagation();//근데 이거를 어떻게 하지??
+			/* event.stopPropagation();//근데 이거를 어떻게 하지?? */
 			console.log("이벤트 실행");
 			var trObj = $(this).parent().parent().parent();//이게 클로져래....
-			 var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
 		     
 			
 			$.ajax({
-				type : 'DELETE',//대문자로 해야한다.
+				type : "DELETE",//대문자로 해야한다.
 				url : $(this).attr("href"),//기억해두자
 				cache : false,//왜 적어야 하는지 모르겠다.
 				beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
 	  				console.log("header 실행 "+header+token)
 	  				//console.log(sentence.toLowerCase());
-	  			        xhr.setRequestHeader(${_csrf.headerName}, ${_csrf.token});
+	  			        xhr.setRequestHeader(header,token);
 	  		
 	          },
 				success: function(result){
@@ -205,7 +208,7 @@ footer {
 		<input class="form-control" value="다이어리 작성" type="submit" class="btn btn-outline-warning bg-warning text-white"/>
 		<br/>    
     </div>
-   
+ 
   <c:forEach items="${diary}" var="dto">
   
    <div class="col-sm-3"> 
@@ -222,7 +225,7 @@ footer {
 			<tr class="table-light">
       			<td>
       			<div >
-      				<img class='diary_img' src='${dto.img_path}' data-toggle="modal" data-target="#myModal${dto.diary_id}"/>
+      				<img class='diary_img' src='resources/diary/${dto.img_path}' data-toggle="modal" data-target="#myModal${dto.diary_id}"/>
 				</div>
 				</td>
 			</tr> 
@@ -249,7 +252,7 @@ footer {
           <h4 class="modal-title">Modal Header</h4>
         </div>
         <div class="modal-body">
-        <img class="popup_img" src='${dto.img_path}'/>
+        <img class="popup_img" src='resources/diary/${dto.img_path}'/>
           <span>${dto.hashtag}</span>
           <span> ${dto.diary_date}</span>
           <span> ${dto.text}</span>
@@ -268,7 +271,7 @@ footer {
 
 	
 	</div>
-	 </form>
+	   </form>
 	
 <!-- Footer -->
   <footer>

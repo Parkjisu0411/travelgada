@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gada.travelgada.mapper.TodoMapper">
+
+<!--   	<select id="todoList" resultType="com.gada.travelgada.domain.TodoVO">
+		<![CDATA[
+			select todo_name, complete_flag, todo_title, planner_id from todo as a, todo_type as b where a.todo_type_id = b.todo_type_id
+		]]>
+	</select>  --> 
+	
+	<select id="todoList" resultType="com.gada.travelgada.domain.TodoVO">
+		<![CDATA[			
+			select * from (select todo_title, todo_name, todo.todo_type_id, planner_id from todo, todo_type where todo.todo_type_id = todo_type.todo_type_id and planner_id = 1) as a where a.todo_type_id = 1
+		]]>
+	</select> 
+	
+	 <select id="productList" resultType="com.gada.travelgada.domain.ProductVO">
+		<![CDATA[
+			select product_name, price, img_path from product
+		]]>
+	 </select>
+	 
+	 <select id="getTodoTitle" resultType="com.gada.travelgada.domain.TodoTypeVO">
+		<![CDATA[
+			select todo_title, todo_type_id from todo_type where planner_id = #{planner_id}
+		]]>
+	 </select>
+	 
+	 <select id="getTodoName" resultType="com.gada.travelgada.domain.TodoVO">
+		<![CDATA[
+			select todo_name, todo_type_id, todo_id from todo
+		]]>
+	 </select>
+	 
+	 
+	 <insert id="addToDo">
+		<![CDATA[
+			insert into 
+		]]>
+	 </insert>
+	 
+	<delete id="delete_todoName">
+		<![CDATA[
+			delete from todo where todo_id = #{todo_id}
+		]]>
+	</delete>
+
+
+
+   
+<!--     <resultMap id="todoMap" type="com.gada.travelgada.domain.TodoVO">
+       <result property="todo_id" column="todo_id"/>
+       <result property="todo_name" column="todo_name"/>
+       <result property="complete_flag" column="complete_flag"/>
+       <result property="todo_type_id" column="todo_type_id"/>
+      
+   </resultMap>
+   
+   <resultMap id="todoTypeMap" type="com.gada.travelgada.domain.TodoTypeVO">
+      <result property="todo_type_id" column="todo_type_id"/>
+      <result property="todo_title" column="todo_title"/>
+      <result property="planner_id" column="planner_id"/>
+      <collection property="todoType" resultMap="todoMap"></collection>
+   </resultMap>
+   
+   <select id="todoList" resultMap="todoTypeMap">
+      <![CDATA[
+         select todo_name, complete_flag, todo_title from todo as a, todo_type as b where a.todo_type_id = b.todo_type_id
+      ]]>
+   </select> --> 
+
+</mapper>

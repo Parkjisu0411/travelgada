@@ -7,13 +7,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- list -->
 	<select id="getDiary" resultType="com.gada.travelgada.domain.DiaryVO"> 
 		<![CDATA[ 
-			select * from diary where planner_id=1
+			
+			select * from diary 
+				where planner_id=(select MAX(planner_id) from planner where member_id=#{member_id}) 
+					order by diary_id desc
 		]]> 
 	</select> 
 	
 	<select id="getPlanner" resultType="com.gada.travelgada.domain.PlannerVO"> 
 		<![CDATA[ 
-			select * from planner
+			select * from planner where member_id = #{member_id} order by planner_id desc
 		]]> 
 	</select> 
 	
