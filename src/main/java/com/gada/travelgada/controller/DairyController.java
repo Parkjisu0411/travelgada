@@ -68,10 +68,5 @@ public class DairyController {
 
 	     return "uploadok";
 	   }
-	   
-	   @GetMapping("test")
-	   public String test() {
-		   log.info("test();");
-		   return "test";
-	   }
+	  
 }

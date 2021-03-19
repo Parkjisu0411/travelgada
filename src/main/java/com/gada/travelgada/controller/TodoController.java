@@ -30,8 +30,8 @@ public class TodoController {
 		
 		mav.setViewName("todo");
 		mav.addObject("todolist", service.todoList());
-		
 		mav.addObject("productList", service.productList());
+		mav.addObject("planner", service.getPlanner());
 
 		return mav;
 	}

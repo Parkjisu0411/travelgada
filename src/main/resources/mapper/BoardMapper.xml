@@ -21,12 +21,13 @@
 			select product_name, price, img_path from product
 		]]>
 	 </select>
-
-<!-- 	 <insert id="addToDo">
+	 
+	 <select id="getPlanner" resultType="com.gada.travelgada.domain.PlannerVO">
 		<![CDATA[
-			insert into todo (todo_id, todo_name, complete_flag, todo_type_id) values (todo_seq.nextval, #{todo_name}, 1, 1)
+			select * from planner
 		]]>
-	 </insert> -->
+	 </select>
+	 
 	 
 	 <insert id="addToDo">
 		<![CDATA[

@@ -9,10 +9,9 @@
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
   
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<link rel="stylesheet"
@@ -235,25 +234,11 @@
 	
 	<br /><br />
 	<div class="container">
-	<div class="row">
-<%-- 	<div class="col-sm-10">
-
-	  <div class="dropdown">
-	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-	     d-day / 플래너 제목
-	    </button>
-	    <div class="dropdown-menu dropdown-menu-right">
-	    <c:forEach items="${todolist }" var="todo">
-	      <a class="dropdown-item" href="#">${todo.planner_id }</a>
-	    </c:forEach>
-	    </div>
-	  </div> --%>
-	  
-	  
+	<div class="row">  
   	<div class="col-sm-12"> 
         <select class="form-control" name="planner_id">
-         <c:forEach items="${todolist }" var="todo">
-            <option value='${todo.planner_id}'>${todo.planner_id}</option>
+         <c:forEach items="${planner }" var="planner">
+            <option value='${planner.planner_id}'>${planner.planner_name}</option>
          </c:forEach>
       	</select>
     </div>
