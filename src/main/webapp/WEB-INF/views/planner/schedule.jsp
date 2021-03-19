@@ -28,6 +28,8 @@
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
 	rel="stylesheet">
  	
+ 	<!-- 카카오 -->
+ 	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     
 <style>
 /* Navbar */
@@ -101,17 +103,17 @@ footer {
 } */
 
 #plus{
-	width:70px;
-	height:70px;
+	width:100px;
+	height:100px;
 	border-radius:20px;
 	background-color:#FACC2E;
 }
 
 #day{
-	width:70px;
-	height:70px;
+	width:100px;
+	height:100px;
 	border-radius:20px;
-	margin:auto;
+	margin:0 auto;
 	background-color:#FACC2E;
 }
 
@@ -119,6 +121,44 @@ footer {
 	width:200px;
 	height:30px;
 }
+
+.modal_wrap{
+        display: none;
+        width: 70px;
+        height: 70px;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        margin: -250px 0 0 -250px;
+        background:#eee;
+        z-index: 2;
+        border-radius:10px;
+    }
+    .black_bg{
+        display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color:rgba(0, 0,0, 0.5);
+        top:0;
+        left: 0;
+        z-index: 1;
+    }
+    .modal_close{
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: -30px;
+        right: 0;
+    }
+    .modal_close> a{
+        display: block;
+        width: 100%;
+        height: 100%;
+        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+        text-indent: -9999px;
+    }
 
 </style>
 
@@ -165,8 +205,12 @@ footer {
       </div>
     </div>
   </nav>
+  
+ <!--  <a id="kakao-link-btn" href="javascript:sendLink()">
+<img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+</a> -->
 
-	<div id = "top" style="align:center;">
+	<div id = "top" style="float:none">
 	<select class="form-control" name="schedule_id">
 		<c:forEach var="planner" items="${plannerList}">
 			<option value='${planner.planner_name}'>${planner.planner_name}</option>
@@ -175,93 +219,109 @@ footer {
 	
 	<br />
 	
-	<button style="background: #FACC2E; width:100px; height:30px;">일정</button>
+	<!-- <button style="background: #FACC2E; width:100px; height:30px;">일정</button>
 	<button style="background: #FACC2E; width:100px; height:30px;">지도</button>
 	<button style="background: #FACC2E; width:100px; height:30px;">준비물</button>
-	<button style="background: #FACC2E; width:100px; height:30px;">다이어리</button>
+	<button style="background: #FACC2E; width:100px; height:30px;">다이어리</button> -->
 	</div>
 	
+	
+	<div class="row text-center" style="width: 100%;">
+	<div style="width: 30%; float:none; margin:0 auto">
+		  <div class="btn-group">
+		    <button type="button" class="btn btn-warning">일정</button>
+		    <button type="button" class="btn btn-warning">지도</button>
+		    <button type="button" class="btn btn-warning">준비물</button>
+		    <button type="button" class="btn btn-warning" >다이어리</button>
+		  </div>
+	</div>
+	</div> 	  
 	<br />
 	<br />
-
-
-	<div class="slick-items" style="display: flex; justify-content: space-between;">
-		<button id="plus">
-			<div>+</div>
-		</button>
-
-
-		<c:forEach var="date" items="${dateList }">
-			<button id ="day">
-				${date}
-			</button>
-		</c:forEach>
+	
+	<button type='button' id="modal_btn">일정 공유</button>
+	<div class="black_bg"></div>
+	<div class="modal_wrap">
+		<div class="modal_close">
+			<a href="#">close</a>
+		</div>
+		<div><a id="kakao-link-btn" href="javascript:sendLink()">
+<img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+</a></div>
+		<div>
+		</div>
 		</div>
 
-	<table border="1" width="1000px" height="300px" margin="auto" align="center">
-		<thead>
 
-			<tr>
-				<th style="background-color:#FACC2E">날짜</th>
-				<th style="background-color:#FACC2E">도시</th>
-				<th style="background-color:#FACC2E">교통</th>
-				<th style="background-color:#FACC2E">일정</th>
-				<th style="background-color:#FACC2E">숙소</th>
-				<th style="background-color:#FACC2E">비용</th>
-			</tr>
+			<div class="slick-items"
+				style="display: flex; justify-content: space-between;">
+				<button id="plus">
+					<div>+</div>
+				</button>
 
-		</thead>
 
-		<tbody>
-			<c:forEach var="date" items="${dateList}">
-				<tr>
-					<td>${date}</td>
-					<td>
-						<c:forEach var="city" items="${cityList }">
-							<c:if test="${city.schedule_date eq date }">
-								<p>${city.schedule_content }</p>
-							</c:if>
-						</c:forEach>
-					</td>
-					<td>
-						<c:forEach var="vehicle" items="${vehicleList }">
-							<c:if test="${vehicle.schedule_date eq date }">
-								<p>${vehicle.schedule_content }</p>
-							</c:if>
-						</c:forEach>
-					</td>
-					<td>
-						<c:forEach var="schedule" items="${scheduleList }">
-							<c:if test="${schedule.schedule_date eq date }">
-								<p>${schedule.schedule_content }</p>
-								
-							</c:if>
-						</c:forEach>
-					</td>
-					<td>
-						<c:forEach var="hotel" items="${hotelList }">
-							<c:if test="${hotel.schedule_date eq date }">
-								<p>${hotel.schedule_content }</p>
-							</c:if>
-						</c:forEach>
-					</td>	
-					<td></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+				<c:forEach var="date" items="${dateList}">
+					<button id="day">${date}</button>
+				</c:forEach>
+			</div>
 
- 
-<!--  <div id ="up_to_top">Top</div> -->
-<a href="javascript:apple();"><img src="Logo.png"></a>
+			<table border="1" width="1000px" height="300px" margin="auto"
+				align="center">
+				<thead>
 
-<!-- Footer -->
-  <footer>
-    <div class="footer-company-info">
-      © 2021 가다, Inc. All rights reserved<br> 개인정보 처리방침·이용약관·사이트맵
-    </div>
-  </footer>
- 
+					<tr>
+						<th style="background-color: #FACC2E">날짜</th>
+						<th style="background-color: #FACC2E">도시</th>
+						<th style="background-color: #FACC2E">교통</th>
+						<th style="background-color: #FACC2E">일정</th>
+						<th style="background-color: #FACC2E">숙소</th>
+						<th style="background-color: #FACC2E">비용</th>
+					</tr>
+
+				</thead>
+				<tbody>
+					<c:forEach var="date" items="${dateList}">
+						<tr>
+							<td>${date}</td>
+							<td><c:forEach var="city" items="${cityList }">
+									<c:if test="${city.schedule_date eq date }">
+										<p>${city.schedule_content }</p>
+									</c:if>
+								</c:forEach></td>
+							<td><c:forEach var="vehicle" items="${vehicleList }">
+									<c:if test="${vehicle.schedule_date eq date }">
+										<p>${vehicle.schedule_content }</p>
+									</c:if>
+								</c:forEach></td>
+							<td><c:forEach var="schedule" items="${scheduleList }">
+									<c:if test="${schedule.schedule_date eq date }">
+										<p>${schedule.schedule_content }</p>
+
+									</c:if>
+								</c:forEach></td>
+							<td><c:forEach var="hotel" items="${hotelList }">
+									<c:if test="${hotel.schedule_date eq date }">
+										<p>${hotel.schedule_content }</p>
+									</c:if>
+								</c:forEach></td>
+							<td></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+
+
+
+
+			<!--  <div id ="up_to_top">Top</div> -->
+			<a href="javascript:apple();"><img src="logo.png"></a>
+
+			<!-- Footer -->
+			<footer>
+				<div class="footer-company-info">
+					© 2021 가다, Inc. All rights reserved<br> 개인정보 처리방침·이용약관·사이트맵
+				</div>
+			</footer>
 </body>
 <script type="text/javascript">
 
@@ -322,5 +382,67 @@ function apple(){
 banana = setInterval("if(scrollY>10){grapes();}else{clearInterval(banana);}",10);
 }
 </script>
+
+<script type='text/javascript'>
+  //<![CDATA[
+    // // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('11d0e5e983e5fa34cd54695c02482c5b');
+    // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+    Kakao.Link.createDefaultButton({
+      container: '#kakao-link-btn',
+      objectType: 'feed',
+      content: {
+        title: 'GADA',
+        description: '#여행 #가족 #커플 #무엇을 #쓸까 #?',
+        imageUrl: 'C:\Users\dongh\OneDrive\바탕 화면\프로젝트\로고-캐릭터',
+        link: {
+          mobileWebUrl: '',
+          webUrl: ''
+        }
+      },
+      social: {
+        likeCount: 286,
+        commentCount: 45,
+        sharedCount: 845
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com'
+          }
+        },
+        {
+          title: '앱으로 보기',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com'
+          }
+        }
+      ]
+    });
+  //]]>
+</script>
+
+<script>
+    window.onload = function() {
+ 
+    function onClick() {
+        document.querySelector('.modal_wrap').style.display ='block';
+        document.querySelector('.black_bg').style.display ='block';
+    }   
+    function offClick() {
+        document.querySelector('.modal_wrap').style.display ='none';
+        document.querySelector('.black_bg').style.display ='none';
+    }
+ 
+    document.getElementById('modal_btn').addEventListener('click', onClick);
+    document.querySelector('.modal_close').addEventListener('click', offClick);
+ 
+};
+</script>
+
+
 
 </html>
