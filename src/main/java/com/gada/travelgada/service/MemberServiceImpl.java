@@ -1,10 +1,14 @@
 package com.gada.travelgada.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.gada.travelgada.domain.MemberVO;
+import com.gada.travelgada.domain.PointVO;
+import com.gada.travelgada.domain.ShippingLocVO;
 import com.gada.travelgada.mapper.MemberMapper;
 
 import lombok.NoArgsConstructor;
@@ -36,8 +40,18 @@ public class MemberServiceImpl implements MemberService{
 		memberMapper.insertAuthorities(memberVO);
 	}
 
-	public MemberVO selectMember(String member_id) {
+	public MemberVO getMember(String member_id) {
 		return memberMapper.selectMember(member_id);
+	}
+
+	@Override
+	public List<PointVO> getPoint(String member_id) {
+		return memberMapper.selectPoint(member_id);
+	}
+
+	@Override
+	public List<ShippingLocVO> getShippingLoc(String member_id) {
+		return memberMapper.selectShippingLoc(member_id);
 	}
 
 }

@@ -1,23 +1,23 @@
 package com.gada.travelgada.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlannerVO {
-
-	private int planner_id;
-	private Date start_date;
-	private Date end_date;
-	private String planner_name;
-	private int satisfaction;
+@Setter
+@Getter
+@ToString
+public class PointVO {
+	
 	private String member_id;
-
+	private int amount;
+	private Date save_date;
+	private int save_flag;
+	
 }
