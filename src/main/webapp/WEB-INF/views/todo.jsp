@@ -12,8 +12,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   
-  
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
 	<script
@@ -79,11 +79,11 @@
 
   </style>
   
-  <script type="text/javascript">
+    <script type="text/javascript">
 	  var token = $("meta[name='_csrf']").attr("content");
 	  var header = $("meta[name='_csrf_header']").attr("content");
 	  $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
-  </script>
+    </script>
 
     <script type="text/javascript">
     window.onload = function randomImage() {
@@ -118,7 +118,7 @@
     					// planner_id : planner_id,
     					todo_title : todo_title,
     					todo_name : todo_name
-    				};
+    			};
     				
     			$.ajax({
     				type : "POST",
@@ -130,6 +130,7 @@
     	                 console.log("header 실행 "+header+token)
     	                 //console.log(sentence.toLowerCase());
     	                 xhr.setRequestHeader(header, token);
+    	            },
     				success : function(result){
     					if(result == "SUCCESS"){
     						console.log("success");
@@ -144,6 +145,40 @@
     		}) // submit end
     	})
     </script>
+     
+    <script type="text/javascript">
+    	
+		$(document).ready(function(){
+			$(".delete").click(function(event){				
+				event.preventDefault();
+				console.log("delete click");
+				
+				var tr = $(this).parent().parent();
+				
+				$.ajax({
+					type : "DELETE",
+					url : $(this).attr("href"),
+					cache : false,
+					beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+   	                 console.log("header 실행 "+header+token)
+   	                 //console.log(sentence.toLowerCase());
+   	                 xhr.setRequestHeader(header, token);
+					},
+					success : function(result){
+						console.log("result : " + result );
+						if(result == "SUCCESS"){
+							alert("삭제하시겠습니까?");
+							$(tr).remove();
+						}
+					},
+					error : function(e){
+						alert("오류가 발생했습니다.");
+						console.log(e);
+					}
+				}); // ajax end
+			}); // event end
+		}); // ready end
+	</script>
     
 	<script>            
         $(document).ready (function () {                
@@ -158,9 +193,7 @@
                 });
             }); // end click                                            
         }); // end ready        
-    </script>
-    
-	<script>
+
 		$(document).ready(function() {
 			$("input:checkbox").on('click', function() {
 				if ( $(this).prop('checked') ) {
@@ -179,7 +212,7 @@
 <!-- Header -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
-      <a class="navbar-brand" href="#"><img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다</a>
+      <a class="navbar-brand" href="#"><img class="nav-logo-img" src="${pageContext.request.contextPath}/resources/logo.png">가다</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -237,7 +270,7 @@
 	<div class="row">  
   	<div class="col-sm-12"> 
         <select class="form-control" name="planner_id">
-         <c:forEach items="${planner }" var="planner">
+         <c:forEach items="${plannerList }" var="planner">
             <option value='${planner.planner_id}'>${planner.planner_name}</option>
          </c:forEach>
       	</select>
@@ -320,19 +353,22 @@
   	<br /><br />
 	<div class="container">
 	<div class="row">
-	<%-- <c:set var="todolist" value="${todolist}" /> --%>
-	<c:forEach items="${todolist }" var="todo">
+	<c:forEach items="${todoTitle }" var="todoTitle">
 	<div class="col-sm-3">
 	
     <table class="table table-bordered"  width="100%" cellspacing="0">
     	<tr>
 			<td colspan="3">
-				 ${todo.todo_title }
+				 ${todoTitle.todo_title }
 			</td>	
 		</tr>
 		
+		<c:forEach var="todoName" items="${todoName }">
+		<c:if test="${todoName.todo_type_id eq todoTitle.todo_type_id }">
 		<tr>
-			<td>${todo.todo_name }</td>
+			<td>	
+				<p>${todoName.todo_name }</p>	
+			</td>
 				
 			<td>
 			<label class="checkbox-inline">
@@ -341,13 +377,18 @@
 			</td>
 			
 			<!-- ajax로 delete 처리 -->
-			<td><a href="#">x</a></td>
+			<td><a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a></td>	
 		</tr>
+		</c:if>
+		</c:forEach>
 		
 		<tr>
 			<!-- ajax로 insert 처리 -->
-			<td colspan="3"><a href="#">+ 체크리스트 추가</a></td>
-		</tr>	
+			<td colspan="3">
+			<a href="#">+ 체크리스트 추가</a> 
+			</td>
+		</tr>
+			
 	</table>
 	
 	</div>

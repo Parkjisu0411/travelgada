@@ -22,18 +22,30 @@
 		]]>
 	 </select>
 	 
-	 <select id="getPlanner" resultType="com.gada.travelgada.domain.PlannerVO">
+	 <select id="getTodoTitle" resultType="com.gada.travelgada.domain.TodoTypeVO">
 		<![CDATA[
-			select * from planner
+			select todo_title, todo_type_id from todo_type where planner_id = #{planner_id}
+		]]>
+	 </select>
+	 
+	 <select id="getTodoName" resultType="com.gada.travelgada.domain.TodoVO">
+		<![CDATA[
+			select todo_name, todo_type_id, todo_id from todo
 		]]>
 	 </select>
 	 
 	 
 	 <insert id="addToDo">
 		<![CDATA[
-			
+			insert into 
 		]]>
 	 </insert>
+	 
+	<delete id="delete_todoName">
+		<![CDATA[
+			delete from todo where todo_id = #{todo_id}
+		]]>
+	</delete>
 
 	
 <!--  	<resultMap id="todoMap" type="com.gada.travelgada.domain.TodoVO">
