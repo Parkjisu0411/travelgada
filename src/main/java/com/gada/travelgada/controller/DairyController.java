@@ -136,5 +136,4 @@ public class DairyController {
 			mav.setViewName("diary/test");
 			return mav;
 		}
-		
 }
