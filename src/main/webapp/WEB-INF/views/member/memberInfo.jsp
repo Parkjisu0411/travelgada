@@ -31,15 +31,10 @@ html, body {
 	min-heigth: 100%;
 }
 
-.login-icon {
-	width: 300px;
-	height: 50px;
-	margin: 5px;
+.member-img {
+	height: 100px;
 	display: block;
-}
-
-#login-form {
-	margin: 0 auto;
+	margin: 20px;
 }
 
 .form-check-label {
@@ -148,35 +143,33 @@ footer {
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'"><img class="nav-logo-img"
-				src="${contextPath}/resources/logo.png">가다 로그인</h2>
-			<div class="col-md-6" id="login-form">
-				<form action="/member/login" method="POST">
-					<input name="${_csrf.parameterName}" type="hidden"
-						value="${_csrf.token}" />
-					<div class="form-group">
-						<label for="id">아이디:</label> <input type="text"
-							class="form-control" placeholder="ID" id="id" name="username" />
-					</div>
-					<div class="form-group">
-						<label for="pw">비밀번호:</label> <input type="password"
-							class="form-control" placeholder="Password" id="pw"
-							name="password" />
-					</div>
-					<div id="errorMsg"></div>
-					<label class="form-check-label"> <input
-						class="form-check-input" type="checkbox"> Remember me
-					</label>
-
-					<button type="submit" class="btn btn-primary login-icon" id="btnSubmit">로그인</button>
-				</form>
-				<div class="divider-header-blank"></div>
-				<a href="/oauth2/authorization/kakao"><img class="login-icon"
-					src="/resources/img/social/kakao_login_medium_wide.png"></a> <a
-					href="/oauth2/authorization/google "><img class="login-icon"
-					src="/resources/img/social/btn_google_signin_light_normal_web@2x.png"></a>
-				<a href="/oauth2/authorization/naver "><img class="login-icon"
-					src="/resources/img/social/naver_login_wide_white.PNG"></a>
+			<h2 class="headline" style="font-family: 'yg-jalnan'">마이페이지</h2>
+			<div class="row border">
+				<div class="col-md-4 member-profile">
+					<img class="rounded-circle member-img" src="${member.profile_img_path }" onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+					<button class="btn btn-secondary btn-profile-img">프로필 이미지 변경</button>
+				</div>
+				<div class="col-md-8 member-detail">
+					<table class="table">
+						<tr>
+							<td>포인트</td>
+							<td>${point }</td>
+						</tr>
+						<tr>
+							<td>이메일</td>
+							<td>${member.email }</td>
+						</tr>
+						<tr>
+							<td>배송지 목록</td>
+							<td>
+								<c:forEach var="shipping_loc" items="${shippingList }">
+									<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
+								</c:forEach>
+							</td>
+						</tr>
+						
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
