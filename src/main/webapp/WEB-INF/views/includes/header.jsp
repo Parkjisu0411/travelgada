@@ -48,8 +48,8 @@
           <input class="form-control mr-sm-2" type="text" aria-label="Search">
           <button class="btn btn-outline-white btn-sm my-0" type="submit"><i class="fas fa-search"></i></button>
         </form>
-        <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+        <div class="nav-item dropdown user">
+        <a class="nav-link dropdown-toggle user" href="#" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${contextPath}/resources/museum.jpg" class="nav-profile-img"></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">정보 수정</a>
