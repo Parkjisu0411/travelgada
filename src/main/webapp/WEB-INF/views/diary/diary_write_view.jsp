@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="EUC-KR">
-<title>´ÙÀÌ¾î¸®</title>
+<meta charset="utf-8">
+<title>ë‹¤ì´ì–´ë¦¬</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -22,21 +22,21 @@
 	var preview = document.getElementById(View_area); //div id
 	var ua = window.navigator.userAgent;
 
-  //ieÀÏ¶§(IE8 ÀÌÇÏ¿¡¼­¸¸ ÀÛµ¿)
+  //ieì¼ë•Œ(IE8 ì´í•˜ì—ì„œë§Œ ì‘ë™)
 	if (ua.indexOf("MSIE") > -1) {
 		targetObj.select();
 		try {
-			var src = document.selection.createRange().text; // get file full path(IE9, IE10¿¡¼­ »ç¿ë ºÒ°¡)
+			var src = document.selection.createRange().text; // get file full path(IE9, IE10ì—ì„œ ì‚¬ìš© ë¶ˆê°€)
 			var ie_preview_error = document.getElementById("ie_preview_error_" + View_area);
 
 
 			if (ie_preview_error) {
-				preview.removeChild(ie_preview_error); //error°¡ ÀÖÀ¸¸é delete
+				preview.removeChild(ie_preview_error); //errorê°€ ìˆìœ¼ë©´ delete
 			}
 
-			var img = document.getElementById(View_area); //ÀÌ¹ÌÁö°¡ »Ñ·ÁÁú °÷
+			var img = document.getElementById(View_area); //ì´ë¯¸ì§€ê°€ ë¿Œë ¤ì§ˆ ê³³
 
-			//ÀÌ¹ÌÁö ·Îµù, sizingMethod´Â div¿¡ ¸ÂÃç¼­ »çÀÌÁî¸¦ ÀÚµ¿Á¶Àı ÇÏ´Â ¿ªÇÒ
+			//ì´ë¯¸ì§€ ë¡œë”©, sizingMethodëŠ” divì— ë§ì¶°ì„œ ì‚¬ì´ì¦ˆë¥¼ ìë™ì¡°ì ˆ í•˜ëŠ” ì—­í• 
 			img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+src+"', sizingMethod='scale')";
 		} catch (e) {
 			if (!document.getElementById("ie_preview_error_" + View_area)) {
@@ -46,15 +46,15 @@
 				preview.insertBefore(info, null);
 			}
 		}
-  //ie°¡ ¾Æ´Ò¶§(Å©·Ò, »çÆÄ¸®, FF)
+  //ieê°€ ì•„ë‹ë•Œ(í¬ë¡¬, ì‚¬íŒŒë¦¬, FF)
 	} else {
 		var files = targetObj.files;
 		for ( var i = 0; i < files.length; i++) {
 			var file = files[i];
-			var imageType = /image.*/; //ÀÌ¹ÌÁö ÆÄÀÏÀÏ°æ¿ì¸¸.. »Ñ·ÁÁØ´Ù.
+			var imageType = /image.*/; //ì´ë¯¸ì§€ íŒŒì¼ì¼ê²½ìš°ë§Œ.. ë¿Œë ¤ì¤€ë‹¤.
 			if (!file.type.match(imageType))
 				continue;
-			var prevImg = document.getElementById("prev_" + View_area); //ÀÌÀü¿¡ ¹Ì¸®º¸±â°¡ ÀÖ´Ù¸é »èÁ¦
+			var prevImg = document.getElementById("prev_" + View_area); //ì´ì „ì— ë¯¸ë¦¬ë³´ê¸°ê°€ ìˆë‹¤ë©´ ì‚­ì œ
 			if (prevImg) {
 				preview.removeChild(prevImg);
 			}
@@ -65,7 +65,7 @@
 			img.style.width = '300px'; 
 			img.style.height = '300px';
 			preview.appendChild(img);
-			if (window.FileReader) { // FireFox, Chrome, Opera È®ÀÎ.
+			if (window.FileReader) { // FireFox, Chrome, Opera í™•ì¸.
 				var reader = new FileReader();
 				reader.onloadend = (function(aImg) {
 					return function(e) {
@@ -86,7 +86,7 @@
 		}
 	}
 }
-</script>
+</script><!-- 
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#uploadBtn").on("click",function(e){
@@ -96,7 +96,7 @@ $(document).ready(function(){
 		
 		console.log(files);
 		for(var i = 0; i<file.length; i++){
-		formData.append("uploadFile",files)
+		formData.append("uploadFile",files[i])
 		}
 		
 		$.ajax({
@@ -114,14 +114,18 @@ $(document).ready(function(){
 })
 
 
-</script>
+</script> -->
 
 
 
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/diary_write" method="post" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/diary_write?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 <input type="hidden" name="planner_id" value="${planner.planner_id}"/>
+<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
+<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
+		  
+
 
 <div class="container">
   <h2 class="text-warning">Diary</h2>
@@ -132,20 +136,20 @@ $(document).ready(function(){
  <table class="table table-borderless">
 			<tr>
       			<td rowspan='5'>
-      				<!-- <img width='100' src='https://github.com/tjaqpfflsk/hello/blob/main/%EC%97%AC%ED%96%891.png?raw=true'/> -->
+      			 <img width='100' src='resources/diary/ì—¬í–‰7'/>
 				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '></div>
 					</td>
 				<td>
 <!--      <div class="form-group"> -->
       
-     	<input type="file" class="form-control-file border" name="img_path" id="profile_pt" onchange="previewImage(this,'View_area')">
-		<input type="button" id='uploadBtn' value="¾÷·Îµå"/>
+     	<input type="file" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+		<!-- <input type="button" id='uploadBtn' value="ì—…ë¡œë“œ"/> -->
 <!--     </div>  -->
 				</td>
 			</tr> 
 			<tr>
 				<td>
-      				<textarea rows= "10" cols="50" name="hashtag"/></textarea>
+      				<textarea rows= "10" cols="50" name="text"/></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -155,12 +159,12 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 			<td>
-      		<textarea rows= "1" cols="30" name="text"/></textarea>
+      		<textarea rows= "1" cols="30" name="hashtag"/></textarea>
 			</td>
 			</tr>
 			<tr>
 			<td>
-			<input type="submit" value="ÀÛ¼º">
+			<input type="submit" value="ì‘ì„±">
 			</td>
 			</tr>
 			</table>
