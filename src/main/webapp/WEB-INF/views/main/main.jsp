@@ -25,50 +25,14 @@
 
 <!-- CSS -->
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#"><img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 일정 </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">플래너</a> <a class="dropdown-item" href="#">준비물</a> <a
-                class="dropdown-item" href="#">지도</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 커뮤니티 </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Q&amp;A</a> <a class="dropdown-item" href="#">리뷰</a> <a
-                class="dropdown-item" href="#">동행</a>
-            </div>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#">쇼핑</a></li>
-        </ul>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="text" aria-label="Search">
-          <button class="btn btn-outline-white btn-sm my-0" type="submit"><i class="fas fa-search"></i></button>
-        </form>
-        <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${contextPath}/resources/museum.jpg" class="nav-profile-img"></a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">정보 수정</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">로그아웃</a>
-            </div>
-          </div>
-      </div>
-    </div>
-  </nav>
+
+  <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
   <header>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -236,14 +200,9 @@
       </div>
     </div>
   </section>
-
-  <div class="divider-card-blank"></div>
-
-  <footer>
-    <div class="footer-company-info">
-      © 2021 가다, Inc. All rights reserved<br> 개인정보 처리방침·이용약관·사이트맵
-    </div>
-  </footer>
+  
+  <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+  
 </body>
 
 </html>
