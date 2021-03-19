@@ -105,15 +105,10 @@ body {
 	background-color: #FE5000;
 }
 
-.dropdown-toggle::after {
+.dropdown-toggle.user::after {
     display:none;
 }
 
-textarea:hover, 
-input:hover, 
-textarea:active, 
-input:active, 
-textarea:focus, 
 input:focus,
 button:focus,
 button:active,
