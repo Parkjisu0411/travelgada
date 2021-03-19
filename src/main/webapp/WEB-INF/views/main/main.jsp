@@ -19,6 +19,13 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+
+<style>
+footer {
+	background-color: #f5f5f7;
+	width: 100%;
+}
+</style>
 </head>
 
 <body>

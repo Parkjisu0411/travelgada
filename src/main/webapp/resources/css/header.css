@@ -96,6 +96,10 @@ body {
 	padding: 0px;
 }
 
+.form-control.mr-sm-2 {
+	margin: 5px !important;
+}
+
 .container .dropdown .dropdown-menu a:hover {
 	color: #ffffff;
 	background-color: #FE5000;
