@@ -7,8 +7,8 @@ import com.gada.travelgada.domain.PlannerVO;
 
 public interface DiaryService {
 		
-	public List<DiaryVO> getDiary();
-	public List<PlannerVO> getPlanner();
+	public List<DiaryVO> getDiary(String member_id);
+	public List<PlannerVO> getPlanner(String member_id);
 	public void writeDiary(DiaryVO diaryVO);
 	public void deleteDiary(int diary_id);
 	public void modifyDiary(DiaryVO diaryVO);
