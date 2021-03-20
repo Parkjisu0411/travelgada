@@ -79,7 +79,7 @@
 						</div>
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
-						<a class="nav-link dropdown-toggle" href="/member/login"
+						<a class="nav-link dropdown-toggle.user" href="/member/login"
 							id="navbarDropdown" role="button" aria-haspopup="true"
 							aria-expanded="false"><img
 							src="/resources/img/profile/default_profile_img.jpg"
