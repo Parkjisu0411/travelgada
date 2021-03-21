@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PlannerVO;
+import com.gada.travelgada.domain.TodoTypeVO;
 import com.gada.travelgada.domain.TodoVO;
 import com.gada.travelgada.service.ScheduleService;
 import com.gada.travelgada.service.TodoService;
@@ -34,7 +35,7 @@ public class TodoController {
 	private ScheduleService scheduleService;
 	
 	@GetMapping("/todo")
-	public ModelAndView todo(ModelAndView mav, @AuthenticationPrincipal MemberDetails member) throws Exception{
+	public ModelAndView todo(ModelAndView mav, @AuthenticationPrincipal MemberDetails member, TodoTypeVO todoTypeVO) throws Exception{
 		log.debug("todo()");
 		log.info("todo()");
 		
@@ -48,6 +49,8 @@ public class TodoController {
 		mav.addObject("plannerList", plannerList);
 		mav.addObject("todoTitle", service.getTodoTitle(planner.getPlanner_id()));
 		mav.addObject("todoName", service.getTodoName());
+		mav.addObject("getPlannerId", planner.getPlanner_id());
+		mav.addObject("getTodoTypeId", todoTypeVO.getTodo_type_id());
 		
 		return mav;
 	}
@@ -65,17 +68,32 @@ public class TodoController {
 		      entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		  return entity;
+	}
+	
+	@DeleteMapping("/todoTitle/{todo_type_id}")
+	public ResponseEntity<String> delete_todoTitle(TodoTypeVO todoTypeVO) {
+		ResponseEntity<String> entity = null;
+		log.info("delete_todoTitle");
+		try {
+		   service.delete_todoTitle(todoTypeVO.getTodo_type_id());
+		      entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+		      e.printStackTrace();
+		      entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		  return entity;
 	}   
 	
 	
 	@PostMapping("/addToDo")
-	public ResponseEntity<String> addToDo(@RequestBody TodoVO todoVO) throws Exception{
+	public ResponseEntity<String> addToDo(@RequestBody TodoTypeVO todoTypeVO, TodoVO todoVO) throws Exception{
 		ResponseEntity<String> entity = null;
 		
 		log.info("addToDo");
 		
 		try {
-			service.addToDo(todoVO);
+			service.addToDo(todoTypeVO, todoVO);
+			
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();

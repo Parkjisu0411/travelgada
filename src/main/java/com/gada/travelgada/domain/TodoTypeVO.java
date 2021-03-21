@@ -18,6 +18,7 @@ public class TodoTypeVO {
 	private String todo_title;
 	private int planner_id;
 	
-	// private List<TodoDomain> todoType;
+	 private List<TodoVO> todo;
+
 }
    
