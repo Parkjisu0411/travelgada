@@ -79,6 +79,30 @@
 
   </style>
   
+  <style>
+      
+      .jb-table {
+        display: table;
+        width: 80%;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-table-row {
+        display: table-row;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-table-cell {
+        display: table-cell;
+        padding: 0px 20px;
+        height: 100px;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-top {
+        vertical-align: top;
+        border: 1px solid #bcbcbc;
+      }
+
+    </style>
+  
     <script type="text/javascript">
 	  var token = $("meta[name='_csrf']").attr("content");
 	  var header = $("meta[name='_csrf_header']").attr("content");
@@ -101,7 +125,7 @@
 
     </script>
     
-    <script>
+    <!-- <script>
     	$(document).ready(function() {
     		$("#addToDo").submit(function(event) {
     			event.preventDefault();
@@ -109,12 +133,12 @@
     			
     			var planner_id = $("#planner_id").val();
     			var todo_title = $("#todo_title").val();
-    			var todo_name = $("#todo_name").val(); 
+    			//var todo_name = $("#todo_name").val(); 
     			
     			var form = {
     					planner_id : planner_id,
-    					todo_title : todo_title,
-    					todo_name : todo_name,
+    					todo_title : todo_title
+    					//todo_name : todo_name,
     			};
     				
     			$.ajax({
@@ -131,7 +155,33 @@
     				success : function(result){
     					if(result == "SUCCESS"){
     						console.log("success");
+    						var todo_name = $("#todo_name").val();
+    		    			var form = {
+    		    					todo_name : todo_name
+    		    			};
     						
+    						$.ajax({
+    		    				type : "POST",
+    		    				url : "${pageContext.request.contextPath}/addToDo",
+    		    				cache : false,
+    		    				data : JSON.stringify(form),
+    		    				contentType : 'application/json; charset=utf-8',
+    		    	            beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+    		    	                 console.log("header 실행 "+header+token)
+    		    	                 //console.log(sentence.toLowerCase());
+    		    	                 xhr.setRequestHeader(header, token);
+    		    	            },
+    		    				success : function(result){
+    		    					if(result == "SUCCESS"){
+    		    						console.log("success");
+    		    						
+    		    					}
+    		    				},
+    		    				error : function(e){
+    		    					console.log(e);
+    		    				}
+    		    					
+    		    			}); // ajax end
     					}
     				},
     				error : function(e){
@@ -141,7 +191,7 @@
     			}); // ajax end
     		}) // submit end
     	})
-    </script>
+    </script> -->
      
     <script type="text/javascript">
 		$(document).ready(function(){
@@ -307,21 +357,25 @@
 	</div>
 	</div>	  
 	
-	<br /><br />
+<%-- 	<br /><br />
 	<div class="container">
 	<div class="row">
 	<div class="col-sm-3">
-	<form id="addToDo" action="/addToDo" method="POST" >
+	<form id="addToDoTitle" action="/addTodoType" method="POST" >
 	<input type="hidden" id="planner_id" value="${getPlannerId }">
     <table class="table table-bordered"  width="100%" cellspacing="0">
     	<tr>
 			<td colspan="3">카테고리를 입력하세요<input type="text" id="todo_title" placeholder="ex.전자기기"></td>	
 		</tr>
-
+	
 		<tr>
 			<td colspan="3">
-				<div class="buttons">            
+				<div class="buttons">      
+					<form id="addToDo" action="/addTodo" method="POST" >
+					<input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">
 	        		 체크리스트를 입력하세요<input type="text" id="todo_name" placeholder="ex.카메라"><input type="button" class="btnAdd btn-warning" value=" +"><br>
+	        		<input type="submit" value="체크리스트 만들기">
+	        		</form>
 	        	</div>  
 			</td>
 		</tr>	
@@ -330,11 +384,45 @@
 			<td colspan="3"><input type="submit" value="체크리스트 만들기"></td>
 		</tr>
 		
-	</table>
-	</form>
+	</table> 
+		</form>
 	</div>
 	</div>
 	</div>
+	--%>
+	
+	<div class="container">
+	<div class="row">
+	<div class="col-sm-3">
+	 <div class="jb-table">
+      <div class="jb-table-row">
+      <form id="addToDoTitle" action="/addTodoType" method="POST" >
+      <input type="hidden" id="planner_id" value="${getPlannerId }">
+        <div class="jb-table-cell">
+          <p>카테고리를 입력하세요<input type="text" id="todo_title" placeholder="ex.전자기기"></p>
+          <input type="submit" value="체크리스트 만들기">
+        </div>
+        </form>
+      </div>
+      <div class="jb-table-row">
+      <form id="addToDo" action="/addTodo" method="POST" >
+	  <input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">
+        <div class="jb-table-cell jb-top">
+          <p>체크리스트를 입력하세요<input type="text" id="todo_name" placeholder="ex.카메라"><input type="button" class="btnAdd btn-warning" value=" +"><br></p>
+        <input type="submit" value="체크리스트 만들기">
+        </div>
+      </form>
+      </div>
+      <div class="jb-table-row">
+        <div class="jb-table-cell jb-top">
+          <p><input type="submit" value="체크리스트 만들기"></p>
+        </div>
+      </div>
+    </div>
+	</div>
+	</div>
+	</div>
+
 	
 	
   	<br /><br />
