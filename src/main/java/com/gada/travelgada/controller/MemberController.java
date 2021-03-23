@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.MemberVO;
 import com.gada.travelgada.domain.ShippingLocVO;
 import com.gada.travelgada.service.MemberServiceImpl;
+import com.gada.travelgada.utils.MemberValidator;
 import com.gada.travelgada.utils.PointCalculator;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +32,8 @@ public class MemberController {
 	@Autowired
 	private MemberServiceImpl memberService;
 	
+	private MemberValidator memberValidator;
+	
 	@GetMapping("/member")
 	public ModelAndView signUpForm(ModelAndView mv) {
 		mv.setViewName("member/signUpForm");
@@ -38,10 +42,14 @@ public class MemberController {
 	}
 	
 	@PostMapping("/member")
-	public ResponseEntity<String> signUp(@RequestBody MemberVO memberVO) {
+	public ResponseEntity<String> signUp(@RequestBody MemberVO memberVO, BindingResult result) {
 		log.info("Sign Up Member >>> " + memberVO.getMember_id());
 		ResponseEntity<String> entity = null;
-		
+		memberValidator.validate(memberVO, result);
+		if(result.hasErrors()) {
+			entity = new ResponseEntity<String>(result.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
+			return entity;
+		}
 		try {
 			memberService.addMember(memberVO);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
