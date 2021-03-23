@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,11 +47,19 @@ public class MemberController {
 	public ResponseEntity<String> signUp(@RequestBody MemberVO memberVO, BindingResult result) {
 		log.info("Sign Up Member >>> " + memberVO.getMember_id());
 		ResponseEntity<String> entity = null;
+		
 		memberValidator.validate(memberVO, result);
 		if(result.hasErrors()) {
-			entity = new ResponseEntity<String>(result.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
+			System.out.println("===========유효성 검사 오류===============");
+			List<ObjectError> errors = result.getAllErrors();
+			for(ObjectError error : errors) {
+				log.info(error.toString());
+			}
+			entity = new ResponseEntity<String>(errors.get(0).toString(), HttpStatus.BAD_REQUEST);
 			return entity;
 		}
+		
+		
 		try {
 			memberService.addMember(memberVO);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
@@ -110,6 +120,32 @@ public class MemberController {
 		mv.addObject("member", memberService.getMember(memberDetails.getUsername()));
 		mv.setViewName("/member/infoModify");
 		return mv;
+	}
+	
+	@GetMapping("/member/checkid")
+	public ResponseEntity<String> checkId(@RequestParam("id") String id) {
+		ResponseEntity<String> entity = null;
+		
+		if(memberService.isExist(id)) {
+			entity = new ResponseEntity<String>("FAIL", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}
+		return entity;
+		
+	}
+	
+	@GetMapping("/member/checkpw")
+	public ResponseEntity<String> checkPw(@RequestParam("pw") String pw, @AuthenticationPrincipal MemberDetails memberDetails) {
+		ResponseEntity<String> entity = null;
+		
+		if(memberService.isPw(memberDetails.getUsername(), pw)) {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("FAIL", HttpStatus.OK);
+		}
+		
+		return entity;
 	}
 	
 }
