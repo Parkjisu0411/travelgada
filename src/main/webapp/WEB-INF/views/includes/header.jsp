@@ -40,8 +40,9 @@
 						aria-expanded="false"> 플래너 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/planner">일정</a> <a
-								class="dropdown-item" href="#">준비물</a> <a class="dropdown-item"
-								href="#">지도</a>
+								class="dropdown-item" href="#">지도</a> <a class="dropdown-item"
+								href="/todo">준비물</a> <a class="dropdown-item"
+								href="/diary">다이어리</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
@@ -89,5 +90,6 @@
 			</div>
 		</div>
 	</nav>
+	<div class="divider-header-blank"></div>
 </body>
 </html>
