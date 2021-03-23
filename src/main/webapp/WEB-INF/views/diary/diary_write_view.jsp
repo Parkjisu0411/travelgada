@@ -5,17 +5,11 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>다이어리</title>
+<title>diary</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- 	private int diary_id;
-	private String img_path;
-	private String text;
-	private String hashtag;
-	private Timestamp diary_date;
-	private int planner_id;     -->
 	
 	<script type="text/javascript">
 	function previewImage(targetObj, View_area) {
@@ -62,8 +56,8 @@
 			img.id = "prev_" + View_area;
 			img.classList.add("obj");
 			img.file = file;
-			img.style.width = '300px'; 
-			img.style.height = '300px';
+			img.style.width = '400px'; 
+			img.style.height = '400px';
 			preview.appendChild(img);
 			if (window.FileReader) { // FireFox, Chrome, Opera 확인.
 				var reader = new FileReader();
@@ -86,41 +80,45 @@
 		}
 	}
 }
-</script><!-- 
+	
+</script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#uploadBtn").on("click",function(e){
-		var formData = new FormData();
-		var inputFile = $("input[name='img_path']");
-		var files = inputFile[0].files;
-		
-		console.log(files);
-		for(var i = 0; i<file.length; i++){
-		formData.append("uploadFile",files[i])
-		}
-		
-		$.ajax({
-			url:'${pageContext.request.contextPath}/upload',
-			processData: false,
-			contentTypez: false,
-			data: formData,
-			type:'Post',
-			sucess: function(result){
-				alert("Uploaded");
-			}
-		})
-		
-	})
-})
+	
+	$("#fileCheck").on("click",function(e){
+	
+ 	var uploadfile = $("#profile_pt").val();
+  	console.log(uploadfile);
+  	
+  	  if(uploadfile == ""){
+   	     alert("사진을 첨부해 주세요!");
+  	      return false;
+  	  }else{
+  		  window.opener.name = "parentPage";
+  		  document.myForm.target = "parentPage";
+  		  $("#submitBtn").submit();
+  		  self.close();
+  	  }
+   	 });
+	});
 
 
-</script> -->
 
+</script>
+
+<style>
+/*    table, th, td {
+    border: 1px solid #bcbcbc;
+  } */ 
+  table {
+    margin-left:60px;
+  }
+</style>
 
 
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/diary_write?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+<form id='submitBtn' name="myForm" action="${pageContext.request.contextPath}/diary_write?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 <input type="hidden" name="planner_id" value="${planner.planner_id}"/>
 <input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
 <input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
@@ -128,16 +126,18 @@ $(document).ready(function(){
 
 
 <div class="container">
-  <h2 class="text-warning">Diary</h2>
+<br>
+  <h1 class="text-warning" >Diary</h1>
   <div class="row">
 
-   <div class="col-sm-3"> 
-   <p>${planner.planner_id}</p>
+<div class="col-sm-3">
  <table class="table table-borderless">
 			<tr>
       			<td rowspan='5'>
-      			 <img width='100' src='resources/diary/여행7'/>
-				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '></div>
+				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '>
+				<br>
+				<img id="prev_View_area" width='100' src='/resources/diary/camera2.png' style='position:relative; width: 400px; height: 400px;'/>
+				</div>
 					</td>
 				<td>
 <!--      <div class="form-group"> -->
@@ -159,12 +159,13 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 			<td>
-      		<textarea rows= "1" cols="30" name="hashtag"/></textarea>
+      		<textarea rows= "1" cols="50" name="hashtag"/></textarea>
 			</td>
 			</tr>
 			<tr>
 			<td>
-			<input type="submit" value="작성">
+			<!-- <input type="button" value="작성" style="display:none;" > -->
+			<button type="button" id="fileCheck">작성</button>
 			</td>
 			</tr>
 			</table>

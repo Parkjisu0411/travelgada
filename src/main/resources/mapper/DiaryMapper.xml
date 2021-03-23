@@ -35,7 +35,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 		<insert id="modifyDiary" >
 	<![CDATA[
-		update diary set img_path = #{img_path},text = #{text},hashtag=#{hashtag} where diary_id = #{diary_id}
+		update diary set img_path = #{img_path},text = #{text},hashtag=#{hashtag} 
+		where diary_id = #{diary_id};
 			]]>
 	</insert>
 	
@@ -44,5 +45,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		select * from diary where diary_id = #{diary_id}
    ]]>
 </select>
+
+	<select id="getDiaryOther" resultType="com.gada.travelgada.domain.DiaryVO"> 
+		<![CDATA[ 
+			
+			select * from diary 
+				where planner_id = #{planner_id}
+					order by diary_id desc;
+		]]> 
+	</select> 
+
 	
 	</mapper>
