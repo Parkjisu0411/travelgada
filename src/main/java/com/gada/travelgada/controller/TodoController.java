@@ -3,6 +3,7 @@ package com.gada.travelgada.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +74,7 @@ public class TodoController {
 	
 	
 	@DeleteMapping("/todoTitle/{todo_type_id}")
-	public ResponseEntity<String> delete_todoTitle(TodoTypeVO todoTypeVO) {
+	public ResponseEntity<String> delete_todoTitle(@RequestBody TodoTypeVO todoTypeVO) {
 		ResponseEntity<String> entity = null;
 		log.info("delete_todoTitle");
 		try {
@@ -91,7 +92,7 @@ public class TodoController {
 	// TodoListVO todoListVO
 	
 	@PostMapping("/addTodoType")
-	public ResponseEntity<String> addTodoType(TodoTypeVO todoTypeVO) throws Exception{
+	public ResponseEntity<String> addTodoType(@RequestBody TodoTypeVO todoTypeVO) throws Exception{
 		ResponseEntity<String> entity = null;
 		
 		log.info("addTodoType");
@@ -110,14 +111,15 @@ public class TodoController {
 	
 	
 	@PostMapping("/addToDo")
-	public ResponseEntity<String> addToDo(TodoVO todoVO) throws Exception{
+	public ResponseEntity<String> addToDo(@Param("todoVO") TodoVO todoVO, @Param("recentTodoTypeId") int recentTodoTypeId) throws Exception{
 		ResponseEntity<String> entity = null;
 		
 		log.info("addToDo");
+		log.info("" + service.getRecentTodoTypeId());
 		
 		try {
 			//service.addToDo(todoTypeVO, todoVO);
-			service.addToDo(todoVO);
+			service.addToDo(todoVO, recentTodoTypeId);
 			
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){

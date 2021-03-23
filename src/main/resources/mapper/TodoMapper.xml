@@ -99,7 +99,7 @@
 	 
 	 <insert id="addToDo">
 		<![CDATA[
-			insert into todo (todo_type_id, todo_id, todo_name, complete_flag) values (#{getRecentTodoTypeId}, get_seq('todo_seq'), #{todo_name}, 0)
+			insert into todo (todo_type_id, todo_id, todo_name, complete_flag) values (#{recentTodoTypeId}, get_seq('todo_seq'), #{todo_name}, 0)
 		]]>
 	 </insert>
 	 

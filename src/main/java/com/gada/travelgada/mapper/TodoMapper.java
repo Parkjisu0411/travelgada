@@ -27,11 +27,11 @@ public interface TodoMapper {
 	
 	public void delete_todoTitle(int todo_type_id);
 
+	public int getRecentTodoTypeId();
+	
 	public void addTodoType(TodoTypeVO todoTypeVO);
 
-	public void addToDo(TodoVO todoVO);
-
-	public int getRecentTodoTypeId();
+	public void addToDo(TodoVO todoVO, int recentTodoTypeId);
 	
 	
 

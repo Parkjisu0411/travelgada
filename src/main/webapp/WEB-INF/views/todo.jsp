@@ -125,9 +125,9 @@
 
     </script>
     
-    <!-- <script>
+     <script>
     	$(document).ready(function() {
-    		$("#addToDo").submit(function(event) {
+    		$("#addToDoTitle").submit(function(event) {
     			event.preventDefault();
     			console.log("addToDo submit");
     			
@@ -155,9 +155,11 @@
     				success : function(result){
     					if(result == "SUCCESS"){
     						console.log("success");
-    						var todo_name = $("#todo_name").val();
+    						/* var todo_name = $("#todo_name").val();
+    						var getRecentTodoTypeId = $("#getRecentTodoTypeId").val();
     		    			var form = {
-    		    					todo_name : todo_name
+    		    					todo_name : todo_name,
+    		    					getRecentTodoTypeId : getRecentTodoTypeId
     		    			};
     						
     						$.ajax({
@@ -179,7 +181,7 @@
     		    				},
     		    				error : function(e){
     		    					console.log(e);
-    		    				}
+    		    				} */
     		    					
     		    			}); // ajax end
     					}
@@ -191,7 +193,7 @@
     			}); // ajax end
     		}) // submit end
     	})
-    </script> -->
+    </script> 
      
     <script type="text/javascript">
 		$(document).ready(function(){
@@ -393,34 +395,37 @@
 	
 	<div class="container">
 	<div class="row">
+	<form id="addToDoTitle" action="/addTodoType" method="POST" >
 	<div class="col-sm-3">
 	 <div class="jb-table">
       <div class="jb-table-row">
-      <form id="addToDoTitle" action="/addTodoType" method="POST" >
+      
+      <input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">
       <input type="hidden" id="planner_id" value="${getPlannerId }">
         <div class="jb-table-cell">
           <p>카테고리를 입력하세요<input type="text" id="todo_title" placeholder="ex.전자기기"></p>
           <input type="submit" value="체크리스트 만들기">
         </div>
-        </form>
+        <!-- </form> -->
       </div>
       <div class="jb-table-row">
-      <form id="addToDo" action="/addTodo" method="POST" >
-	  <input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">
+      <!-- <form id="addToDo" action="/addTodo" method="POST" > -->
+	  <%-- <input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }"> --%>
         <div class="jb-table-cell jb-top">
           <p>체크리스트를 입력하세요<input type="text" id="todo_name" placeholder="ex.카메라"><input type="button" class="btnAdd btn-warning" value=" +"><br></p>
-        <input type="submit" value="체크리스트 만들기">
+        <!-- <input type="submit" value="체크리스트 만들기"> -->
         </div>
-      </form>
+      <!-- </form> -->
       </div>
       <div class="jb-table-row">
         <div class="jb-table-cell jb-top">
           <p><input type="submit" value="체크리스트 만들기"></p>
         </div>
       </div>
+      </div>
+      </div>
+      </form>
     </div>
-	</div>
-	</div>
 	</div>
 
 	

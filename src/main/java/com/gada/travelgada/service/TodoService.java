@@ -27,7 +27,7 @@ public interface TodoService {
 
 	public void addTodoType(TodoTypeVO todoTypeVO);
 
-	public void addToDo(TodoVO todoVO);
+	public void addToDo(TodoVO todoVO, int recentTodoTypeId);
 
 	//public void addTodoType(int planner_id, String todo_title);
 

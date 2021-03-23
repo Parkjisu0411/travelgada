@@ -77,9 +77,9 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	@Override
-	public void addToDo(TodoVO todoVO) {
+	public void addToDo(TodoVO todoVO, int recentTodoTypeId) {
 		log.info("addToDo()");
-		mapper.addToDo(todoVO);
+		mapper.addToDo(todoVO, recentTodoTypeId);		
 	}
 
 
