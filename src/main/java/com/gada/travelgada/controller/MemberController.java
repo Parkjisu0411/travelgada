@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,6 +72,21 @@ public class MemberController {
 		return entity;
 	}
 	
+	@PutMapping("member/{member_id}")
+	public ResponseEntity<String> updateMember(@RequestBody MemberVO memberVO) {
+		ResponseEntity<String> entity = null;
+		
+		try {
+			memberService.updateMember(memberVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
 	@GetMapping("/member/mypage")
 	public ModelAndView memberInfo(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
 		log.info("MyPage=================");
@@ -114,11 +130,11 @@ public class MemberController {
 		return mv;
 	}
 	
-	@GetMapping("/member/mypage/modify")
+	@GetMapping("/member/modify")
 	public ModelAndView memberInfoModify(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
 		log.info("MyPage==========Modify==========");
 		mv.addObject("member", memberService.getMember(memberDetails.getUsername()));
-		mv.setViewName("/member/infoModify");
+		mv.setViewName("/member/modify");
 		return mv;
 	}
 	
@@ -136,16 +152,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/checkpw")
-	public ResponseEntity<String> checkPw(@RequestParam("pw") String pw, @AuthenticationPrincipal MemberDetails memberDetails) {
+	public ResponseEntity<String> checkPw(@RequestParam("id") String id, @RequestParam("pw") String pw) {
 		ResponseEntity<String> entity = null;
 		
-		if(memberService.isPw(memberDetails.getUsername(), pw)) {
+		if(memberService.isCorrect(id, pw)) {
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} else {
 			entity = new ResponseEntity<String>("FAIL", HttpStatus.OK);
 		}
-		
 		return entity;
+		
 	}
-	
 }

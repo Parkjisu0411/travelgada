@@ -20,4 +20,6 @@ public interface MemberMapper {
 	List<PointVO> selectPoint(String member_id);
 
 	List<ShippingLocVO> selectShippingLoc(String member_id);
+
+	void updateMember(MemberVO member);
 }

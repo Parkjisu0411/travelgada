@@ -18,5 +18,7 @@ public interface MemberService {
 	
 	public boolean isExist(String member_id);
 	
-	public boolean isPw(String username, String pw);
+	public boolean isCorrect(String member_id, String pw);
+	
+	public void updateMember(MemberVO memberVO);
 }

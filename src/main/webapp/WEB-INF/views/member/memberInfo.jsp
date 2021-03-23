@@ -68,7 +68,7 @@ html, body {
 
 			<p class="view-more-p">
 				<button type="button" class="btn btn-secondary"
-					onclick="location.href='/member/mypage/modify'">회원정보 수정</button>
+					onclick="location.href='/member/modify'">회원정보 수정</button>
 			</p>
 			<div class="row">
 				<div class="col-md-4 member-profile member-profile">
@@ -94,7 +94,7 @@ html, body {
 							<td><c:forEach var="shipping_loc" items="${shippingList }">
 									<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
 								</c:forEach></td>
-							<td><a href="/member/mypage/shippingLoc">관리</a></td>
+							<td><a href="/member/shipping">관리</a></td>
 						</tr>
 
 					</table>

@@ -64,9 +64,32 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
-	public boolean isPw(String member_id, String pw) {
-
-		return false;
+	@Override
+	public boolean isCorrect(String member_id, String pw) {
+		MemberVO member = memberMapper.selectMember(member_id);
+		if (passEncoder.matches(pw, member.getPw())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public void updateMember(MemberVO memberVO) {
+		MemberVO member = memberMapper.selectMember(memberVO.getMember_id());
+		if(member.getMember_name() != memberVO.getMember_name()) {
+			member.setMember_name(memberVO.getMember_name());
+		} else if(member.getEmail() != memberVO.getEmail()) {
+			member.setEmail(memberVO.getEmail());
+		} else if(member.getPhone_num() != memberVO.getPhone_num()) {
+			member.setPhone_num(memberVO.getPhone_num());
+		} else if(member.getProfile_img_path() != memberVO.getProfile_img_path()) {
+			member.setProfile_img_path(memberVO.getProfile_img_path());
+		} else if(memberVO.getPw() != null); {
+			member.setPw(passEncoder.encode(memberVO.getPw()));
+		}
+		
+		memberMapper.updateMember(member);
 	}
 
 }
