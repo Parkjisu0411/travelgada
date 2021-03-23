@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>GADA-일정</title>
 
 <link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick.css" />
 
@@ -70,38 +70,6 @@ footer {
   font-size: 14px;
 }
 
-
-/* #plus {
-	width: 200px;
-	height: 100px;
-	text-align: center;
-	line-height: 100px;
-	border: 1px solid #cccccc;
-	border-radius: 20px;
-}
-
-#first {
-	width: 200px;
-	height: 100px;
-	text-align: center;
-}
-
-#sec {
-	width: 200px;
-	height: 100px;
-	text-align: center;
-}
-
-#three {
-	width: 200px;
-	height: 100px;
-	text-align: center;
-} */
-/* .slick-items{
-	width:1000px;	
-	hegiht:500px;
-} */
-
 #plus{
 	width:100px;
 	height:100px;
@@ -159,6 +127,33 @@ footer {
         background:url(https://img.icons8.com/metro/26/000000/close-window.png);
         text-indent: -9999px;
     }
+    
+   #top_btn{
+   		position:fixed; 
+   		right:50px; 
+   		bottom:-50%; 
+   		width:55px; 
+   		height:55px; 
+   		border-radius:50%; 
+   		background:#cda57d; 
+   		z-index:999; 
+   		transition:1s all;
+   }
+    
+   #top_btn.on{
+   		bottom:30px;
+   } 
+   #top_btn a{
+   		font-family:"Exo"; 
+   		display:block; 
+   		text-align:center; 
+   		line-height:55px; 
+   		font-size:16px;
+   		color:#fff; 
+   		font-size:bold;
+   	}
+
+
 
 </style>
 
@@ -219,10 +214,6 @@ footer {
 	
 	<br />
 	
-	<!-- <button style="background: #FACC2E; width:100px; height:30px;">일정</button>
-	<button style="background: #FACC2E; width:100px; height:30px;">지도</button>
-	<button style="background: #FACC2E; width:100px; height:30px;">준비물</button>
-	<button style="background: #FACC2E; width:100px; height:30px;">다이어리</button> -->
 	</div>
 	
 	
@@ -252,13 +243,13 @@ footer {
 		</div>
 		</div>
 
-
+			
 			<div class="slick-items"
 				style="display: flex; justify-content: space-between;">
 				<button id="plus">
-					<div>+</div>
+					+
 				</button>
-
+			
 
 				<c:forEach var="date" items="${dateList}">
 					<button id="day">${date}</button>
@@ -311,10 +302,8 @@ footer {
 			</table>
 
 
+			<div id="top_btn"><a href="#">TOP</a></div>
 
-
-			<!--  <div id ="up_to_top">Top</div> -->
-			<a href="javascript:apple();"><img src="logo.png"></a>
 
 			<!-- Footer -->
 			<footer>
@@ -324,8 +313,6 @@ footer {
 			</footer>
 </body>
 <script type="text/javascript">
-
-
 
 $(document).ready(function () {
 
@@ -374,14 +361,12 @@ $(document).ready(function () {
 
     
 <script>
-function grapes(){
-    scrollBy(0,scrollY/-10); 
-}
- 
-function apple(){
-banana = setInterval("if(scrollY>10){grapes();}else{clearInterval(banana);}",10);
-}
+$(window).scroll(function(){ if ($(window).scrollTop() > 150){ $("#top_btn").addClass("on"); } else { $("#top_btn").removeClass("on"); } }); $("#top_btn").click(function(){ $("body,html").animate({scrollTop:0},500); });
+
+
 </script>
+
+
 
 <script type='text/javascript'>
   //<![CDATA[

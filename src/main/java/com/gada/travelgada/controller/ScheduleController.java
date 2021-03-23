@@ -44,4 +44,25 @@ public class ScheduleController {
 		
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="/planner/plus")
+	public ModelAndView SchedulePlus(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member) {
+		
+		DateCalculator dateCalculator = new DateCalculator();
+		
+		Calendar cal = Calendar.getInstance();
+		List<PlannerVO> plannerList = scheduleService.selectPlanner(member.getUsername());
+		PlannerVO planner = plannerList.get(0);
+		
+		modelAndView.addObject("plannerList", plannerList);
+		modelAndView.addObject("dateList", dateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date()));
+		modelAndView.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
+		modelAndView.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
+		modelAndView.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));
+		modelAndView.addObject("hotelList", scheduleService.getHotel(planner.getPlanner_id()));
+		modelAndView.setViewName("planner/schedule_plus");
+		
+		return modelAndView;
+		
+	}
 }
