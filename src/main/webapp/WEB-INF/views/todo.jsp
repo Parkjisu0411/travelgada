@@ -79,6 +79,30 @@
 
   </style>
   
+  <style>
+      
+      .jb-table {
+        display: table;
+        width: 80%;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-table-row {
+        display: table-row;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-table-cell {
+        display: table-cell;
+        padding: 0px 20px;
+        height: 100px;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-top {
+        vertical-align: top;
+        border: 1px solid #bcbcbc;
+      }
+
+    </style>
+  
     <script type="text/javascript">
 	  var token = $("meta[name='_csrf']").attr("content");
 	  var header = $("meta[name='_csrf_header']").attr("content");
@@ -101,23 +125,20 @@
 
     </script>
     
-    <script>
+     <script>
     	$(document).ready(function() {
-    		$("#addToDo").submit(function(event) {
+    		$("#addToDoTitle").submit(function(event) {
     			event.preventDefault();
     			console.log("addToDo submit");
     			
-    			var token = $("meta[name='_csrf']").attr("content");
-                var header = $("meta[name='_csrf_header']").attr("content");
-    			
     			var planner_id = $("#planner_id").val();
     			var todo_title = $("#todo_title").val();
-    			var todo_name = $("#todo_name").val(); 
+    			//var todo_name = $("#todo_name").val(); 
     			
     			var form = {
-    					// planner_id : planner_id,
-    					todo_title : todo_title,
-    					todo_name : todo_name
+    					planner_id : planner_id,
+    					todo_title : todo_title
+    					//todo_name : todo_name,
     			};
     				
     			$.ajax({
@@ -134,7 +155,35 @@
     				success : function(result){
     					if(result == "SUCCESS"){
     						console.log("success");
+    						/* var todo_name = $("#todo_name").val();
+    						var getRecentTodoTypeId = $("#getRecentTodoTypeId").val();
+    		    			var form = {
+    		    					todo_name : todo_name,
+    		    					getRecentTodoTypeId : getRecentTodoTypeId
+    		    			};
     						
+    						$.ajax({
+    		    				type : "POST",
+    		    				url : "${pageContext.request.contextPath}/addToDo",
+    		    				cache : false,
+    		    				data : JSON.stringify(form),
+    		    				contentType : 'application/json; charset=utf-8',
+    		    	            beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+    		    	                 console.log("header 실행 "+header+token)
+    		    	                 //console.log(sentence.toLowerCase());
+    		    	                 xhr.setRequestHeader(header, token);
+    		    	            },
+    		    				success : function(result){
+    		    					if(result == "SUCCESS"){
+    		    						console.log("success");
+    		    						
+    		    					}
+    		    				},
+    		    				error : function(e){
+    		    					console.log(e);
+    		    				} */
+    		    					
+    		    			}); // ajax end
     					}
     				},
     				error : function(e){
@@ -144,16 +193,48 @@
     			}); // ajax end
     		}) // submit end
     	})
-    </script>
+    </script> 
      
     <script type="text/javascript">
-    	
 		$(document).ready(function(){
 			$(".delete").click(function(event){				
 				event.preventDefault();
 				console.log("delete click");
 				
 				var tr = $(this).parent().parent();
+				
+				$.ajax({
+					type : "DELETE",
+					url : $(this).attr("href"),
+					cache : false,
+					beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+   	                 console.log("header 실행 "+header+token)
+   	                 //console.log(sentence.toLowerCase());
+   	                 xhr.setRequestHeader(header, token);
+					},
+					success : function(result){
+						console.log("result : " + result );
+						if(result == "SUCCESS"){
+							alert("삭제하시겠습니까?");
+							$(tr).remove();
+						}
+					},
+					error : function(e){
+						alert("오류가 발생했습니다.");
+						console.log(e);
+					}
+				}); // ajax end
+			}); // event end
+		}); // ready end
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".titleDelete").click(function(event){				
+				event.preventDefault();
+				console.log("titleDelete click");
+				
+				var tr = $(this).parent().parent().parent();
 				
 				$.ajax({
 					type : "DELETE",
@@ -278,24 +359,25 @@
 	</div>
 	</div>	  
 	
-
-	
-	
-	<br /><br />
+<%-- 	<br /><br />
 	<div class="container">
 	<div class="row">
 	<div class="col-sm-3">
-	<form id="addToDo" action="/addToDo" method="POST" >
-	<!-- <input type="hidden" id="planner_id" value=""> -->		<!-- 플래너 번호를 어디서 받아올 것인가...? -->
+	<form id="addToDoTitle" action="/addTodoType" method="POST" >
+	<input type="hidden" id="planner_id" value="${getPlannerId }">
     <table class="table table-bordered"  width="100%" cellspacing="0">
     	<tr>
 			<td colspan="3">카테고리를 입력하세요<input type="text" id="todo_title" placeholder="ex.전자기기"></td>	
 		</tr>
-
+	
 		<tr>
 			<td colspan="3">
-				<div class="buttons">            
+				<div class="buttons">      
+					<form id="addToDo" action="/addTodo" method="POST" >
+					<input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">
 	        		 체크리스트를 입력하세요<input type="text" id="todo_name" placeholder="ex.카메라"><input type="button" class="btnAdd btn-warning" value=" +"><br>
+	        		<input type="submit" value="체크리스트 만들기">
+	        		</form>
 	        	</div>  
 			</td>
 		</tr>	
@@ -304,51 +386,49 @@
 			<td colspan="3"><input type="submit" value="체크리스트 만들기"></td>
 		</tr>
 		
-	</table>
-	</form>
+	</table> 
+		</form>
 	</div>
 	</div>
 	</div>
+	--%>
 	
-	<!-- 더미 데이터 가져오기 연습 -->
-	<!-- form 필요 : flag값 db 저장..... -->
-<%--  	<br /><br />
 	<div class="container">
 	<div class="row">
-	<c:set var="todolist" value="${todolist}" />
-	<c:forEach items="${todolist }" var="todo">
+	<form id="addToDoTitle" action="/addTodoType" method="POST" >
 	<div class="col-sm-3">
-	
-    <table class="table table-bordered"  width="100%" cellspacing="0">
-    	<tr>
-			<td colspan="3">${todo.todo_title }</td>	
-		</tr>
+	 <div class="jb-table">
+      <div class="jb-table-row">
+      
+      <input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">
+      <input type="hidden" id="planner_id" value="${getPlannerId }">
+        <div class="jb-table-cell">
+          <p>카테고리를 입력하세요<input type="text" id="todo_title" placeholder="ex.전자기기"></p>
+          <input type="submit" value="체크리스트 만들기">
+        </div>
+        <!-- </form> -->
+      </div>
+      <div class="jb-table-row">
+      <!-- <form id="addToDo" action="/addTodo" method="POST" > -->
+	  <%-- <input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }"> --%>
+        <div class="jb-table-cell jb-top">
+          <p>체크리스트를 입력하세요<input type="text" id="todo_name" placeholder="ex.카메라"><input type="button" class="btnAdd btn-warning" value=" +"><br></p>
+        <!-- <input type="submit" value="체크리스트 만들기"> -->
+        </div>
+      <!-- </form> -->
+      </div>
+      <div class="jb-table-row">
+        <div class="jb-table-cell jb-top">
+          <p><input type="submit" value="체크리스트 만들기"></p>
+        </div>
+      </div>
+      </div>
+      </div>
+      </form>
+    </div>
+	</div>
 
-		<tr>
-			<td>${todo.todo_name }</td>
-			<td>${todo.todo_name }</td>
-			<td>${todo.complete_flag }</td>	
-				
-			<td>
-			<label class="checkbox-inline">
-	 		 	<input type="checkbox" id="inlineCheckbox1" value="option1">
-			</label>
-			</td>
-			
-			<!-- ajax로 delete 처리 -->
-			<td><a href="#">x</a></td>
-		</tr>
-		
-		<tr>
-			<!-- ajax로 insert 처리 -->
-			<td colspan="3"><a href="#">+ 체크리스트 추가</a></td>
-		</tr>	
-	</table>
 	
-	</div>
-	</c:forEach>
-	</div>
-	</div>  --%>
 	
   	<br /><br />
 	<div class="container">
@@ -359,7 +439,8 @@
     <table class="table table-bordered"  width="100%" cellspacing="0">
     	<tr>
 			<td colspan="3">
-				 ${todoTitle.todo_title }
+				 ${todoTitle.todo_title }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 <a class="titleDelete" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">x</a>
 			</td>	
 		</tr>
 		

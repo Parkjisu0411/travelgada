@@ -32,12 +32,6 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	@Override
-	public void addToDo(TodoVO todoVO) {
-		log.info("addToDo()");
-		mapper.addToDo(todoVO);
-	}
-
-	@Override
 	public List<PlannerVO> getPlanner() {
 		log.info("getPlanner()");
 		return mapper.getPlanner();
@@ -60,6 +54,63 @@ public class TodoServiceImpl implements TodoService {
 		log.info("delete_todoName()");
 		mapper.delete_todoName(todo_id);
 	}
+
+
+	@Override
+	public void delete_todoTitle(int todo_type_id) {
+		log.info("delete_todoTitle()");
+		mapper.delete_todoTitle(todo_type_id);
+	}
+
+
+
+	@Override
+	public int getRecentTodoTypeId() {
+		log.info("getRecentTodoTypeId()");
+		return mapper.getRecentTodoTypeId();
+	}
+
+	@Override
+	public void addTodoType(TodoTypeVO todoTypeVO) {
+		log.info("addTodoType()");
+		mapper.addTodoType(todoTypeVO);
+	}
+
+	@Override
+	public void addToDo(TodoVO todoVO, int recentTodoTypeId) {
+		log.info("addToDo()");
+		mapper.addToDo(todoVO, recentTodoTypeId);		
+	}
+
+
+
+//	@Override
+//	public void addTodoType(int planner_id, String todo_title) {
+//		log.info("addTodoType()");
+//		mapper.addTodoType(planner_id, todo_title);
+//	}
+//
+//	@Override
+//	public void addToDo(int getRecentTodoTypeId, String todo_name) {
+//		log.info("addToDo()");
+//		mapper.addToDo(getRecentTodoTypeId, todo_name);
+//	}
+
+//	@Override
+//	public void addToDo(TodoTypeVO todoTypeVO, TodoVO todoVO) {
+//		log.info("addToDo()");
+//		mapper.addToDoType(todoTypeVO);
+//		mapper.addToDo(todoVO.getTodo_name(), todoTypeVO.getTodo_type_id());
+//	}
+
+//	@Override
+//	public void addToDo(TodoTypeVO todoTypeVO, TodoVO todoVO) {
+//		log.info("addToDo()");
+//		mapper.addToDoType(todoTypeVO);
+//		mapper.addToDo(todoVO.getTodo_name(), todoTypeVO.getTodo_type_id());		
+//	}
+
+
 	
 
   

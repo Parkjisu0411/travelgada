@@ -13,5 +13,6 @@ public interface DiaryService {
 	public void deleteDiary(int diary_id);
 	public void modifyDiary(DiaryVO diaryVO);
 	public DiaryVO view_Diary(int diary_id);
+	public List<DiaryVO> getDiaryOther(int planner_id);
 	
 }

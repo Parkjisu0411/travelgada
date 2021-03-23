@@ -26,36 +26,45 @@ public class DiaryServiceImpl implements DiaryService {
 
 	@Override
 	public List<DiaryVO> getDiary(String member_id) {
-		log.info("getDiary();");
+		log.info("ServiceImpl getDiary();");
 		return mapper.getDiary(member_id);
 	}
 
 	@Override
 	public List<PlannerVO> getPlanner(String member_id) {
-		log.info("getPlanner();");
+		log.info("ServiceImpl getPlanner();");
 		return mapper.getPlanner(member_id);
 	}
 
 	@Override
 	public void writeDiary(DiaryVO diaryVO) {
+		log.info("ServiceImpl writeDiary()");
 		mapper.writeDiary(diaryVO);
 	}
 
 	@Override
 	public void deleteDiary(int diary_id) {
+		log.info("ServiceImpl deleteDiary()");
 		mapper.deleteDiary(diary_id);
 		
 	}
 
 	@Override
 	public void modifyDiary(DiaryVO diaryVO) {
+		log.info("ServiceImpl modifyDiary()");
 		mapper.modifyDiary(diaryVO);
 	}
 
 	@Override
 	public DiaryVO view_Diary(int diary_id) {
-		log.info("여기는 나와");
+		log.info("ServiceImpl view_Diary()");
 		return mapper.view_Diary(diary_id);
+	}
+
+	@Override
+	public List<DiaryVO> getDiaryOther(int planner_id) {
+		log.info("ServiceImpl getDiaryOther()");
+		return mapper.getDiaryOther(planner_id);
 	}
 	
 	

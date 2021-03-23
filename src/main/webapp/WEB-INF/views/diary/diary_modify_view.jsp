@@ -9,16 +9,12 @@
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
 <title>다이어리</title>
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- 	private int diary_id;
-	private String img_path;
-	private String text;
-	private String hashtag;
-	private Timestamp diary_date;
-	private int planner_id;     -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	
 	<script type="text/javascript">
 	/* 미리보기 */
 	function previewImage(targetObj, View_area) {
@@ -59,14 +55,15 @@
 				continue;
 			var prevImg = document.getElementById("prev_" + View_area); //이전에 미리보기가 있다면 삭제
 			if (prevImg) {
+				//$("#firstImg").remove();
 				preview.removeChild(prevImg);
 			}
 			var img = document.createElement("img"); 
 			img.id = "prev_" + View_area;
 			img.classList.add("obj");
 			img.file = file;
-			img.style.width = '300px'; 
-			img.style.height = '300px';
+			img.style.width = '400px'; 
+			img.style.height = '400px';
 			preview.appendChild(img);
 			if (window.FileReader) { // FireFox, Chrome, Opera 확인.
 				var reader = new FileReader();
@@ -89,79 +86,61 @@
 		}
 	}
 }
-</script>
+	</script>
+	
 <script type="text/javascript">
-	$("#updateForm").submit(function(event){
-    
-    event.preventDefault();
-    
-    var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-       
-    
-	var img_path = $("#img_path").val();
-	var text = $("#text").val();
-	var hashtag = $("#hashtag").val();           
-	var diary_id = $("#diary_id").val();
-      
-	console.log($(this).attr("action"));
+$(document).ready(function(){
+	$("#submitBtn").on("click",function(){
+	
+	  	 window.opener.name = "parentPage";
+		  document.myForm.target = "parentPage"; 
+		  
+		  $("#formDate").submit();
+		  self.close();
 
-	var form = {
-    		  img_path: img_path,
-    		  text: text,
-    		  hashtag: hashtag,
-    		  diary_id: diary_id
-      };
+	});
+});
 
-      $.ajax({
-        type : "PUT",
-        url : $(this).attr("action"),
-        cache : false,
-        contentType:'application/json; charset=utf-8',
-		data: JSON.stringify(form), 
-		beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-				console.log("header 실행 "+header+token)
-				//console.log(sentence.toLowerCase());
-			    xhr.setRequestHeader(header, token);
-		
-     },
-        success: function (result) {       
-          if(result == "SUCCESS"){
-             //list로 
-             $(location).attr('href', '${pageContext.request.contextPath}/diary')                            
-          }                       
-        },
-        error: function (e) {
-            console.log(e);
-        }
-    })          
 
-  }); // end submit()
 
 </script>
-
-
+	<style>
+/*    table, th, td {
+    border: 1px solid #bcbcbc;
+  } */ 
+  table {
+    margin-left:60px;
+  }
+</style>
+	
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/diary_write" method="post" enctype="multipart/form-data">
+<form id='formDate' name="myForm" action="${pageContext.request.contextPath}/diary_modify?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 <input type="hidden" name="diary_id" value="${diary_view.diary_id}"/>
+<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
+<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
 
 <div class="container">
-  <h2 class="text-warning">Diary</h2>
+<br>
+  <h1 class="text-warning">Diary</h1>
   <div class="row">
 
    <div class="col-sm-3"> 
  <table class="table table-borderless">
 			<tr>
       			<td rowspan='5'>
-      				<img width='100' src='${diary_view.img_path}'/> -->
-				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '></div>
+      			<input type="hidden" value="${diary_view.img_path}" name="currImg"/>
+      				
+				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '>
+				<br>
+				<img id="prev_View_area" width='100' src='/resources/diary/${diary_view.img_path}' style='position:relative; width: 400px; height: 400px;'/>
+				</div>
 					</td>
 				<td>
 <!--      <div class="form-group"> -->
       
-     	<input type="file" class="form-control-file border" name="img_path" id="profile_pt" onchange="previewImage(this,'View_area')">
-		<input type="button" id='uploadBtn' value="업로드"/>
+     	<input type="file" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+	
 <!--     </div>  -->
 				</td>
 			</tr> 
@@ -177,12 +156,12 @@
 			</tr>
 			<tr>
 			<td>
-      		<textarea rows= "1" cols="30" name="hashtag">${diary_view.hashtag}</textarea>
+      		<textarea rows= "1" cols="50" name="hashtag">${diary_view.hashtag}</textarea>
 			</td>
 			</tr>
 			<tr>
 			<td>
-			<input type="submit" value="작성" id= 'updateForm'>
+					<input type="button" id="submitBtn" value="작성">
 			</td>
 			</tr>
 			</table>

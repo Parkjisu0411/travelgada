@@ -1,33 +1,46 @@
-<%@page import="java.net.URLEncoder"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
-<html>
-  <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>파일 다운로드</title>
-  </head>
-  <body>
-  	<div class="content">
-		<br/><br/>
-		<h3>파일 업로드</h3>
-		<form action="upload?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
-			<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
-			<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
-		  
-		  <table>
-		    <tr>
-		      <td>Select File</td>
-		      <td><input type="file" name="uploadFile" /></td>
-		      <td>
-		        <button type="submit">Upload</button>
-		      </td>
-		    </tr>
-		  </table>
-		</form>
-	</div>
-  </body>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Carousel Example</h2>  
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="la.jpg" alt="Los Angeles" style="width:100%;">
+      </div>
+
+      <div class="item">
+        <img src="chicago.jpg" alt="Chicago" style="width:100%;">
+      </div>
+    
+      <div class="item">
+        <img src="ny.jpg" alt="New york" style="width:100%;">
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+</body>
 </html>

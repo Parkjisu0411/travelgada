@@ -3,6 +3,7 @@ package com.gada.travelgada.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.gada.travelgada.domain.DiaryVO;
 import com.gada.travelgada.domain.PlannerVO;
@@ -21,7 +22,6 @@ public interface DiaryMapper {
 	public void deleteDiary(int diary_id);
 	public void modifyDiary(DiaryVO diaryVO);
 	public DiaryVO view_Diary(int diary_id);
-
+	public List<DiaryVO> getDiaryOther(int planner_id);
 	
-
 }
