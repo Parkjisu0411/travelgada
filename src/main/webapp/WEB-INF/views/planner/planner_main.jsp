@@ -34,18 +34,8 @@ html, body {
 	min-heigth: 100%;
 }
 
-.member-profile {
-	text-align: center;
-}
-
-.member-img {
-	height: 100px;
-	display: block;
-	vertical-align: middle;
-	margin-top: 50px;
-	margin-bottom: 30px;
-	margin-left: auto;
-	margin-right: auto;
+#planner {
+	margin: auto;
 }
 </style>
 </head>
@@ -57,8 +47,8 @@ html, body {
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">MY PLANNER</h2>
-			<c:forEach var="planner" items="plannerList">
-				<div class="col-md-12">
+			<c:forEach var="planner" items="${plannerList }">
+				<div class="col-md-12" id="planner">
 					<table class="table-borderless">
 						<tr>
 							<td>
@@ -69,7 +59,7 @@ html, body {
 								<p>국가, 도시</p>
 								<p>${planner.start_date } ~ ${planner.end_date }</p>
 								<c:forEach begin="0" end="${planner.satisfaction }">
-									<p>*</p>
+									<span>*</span>
 								</c:forEach>
 							</td>
 						</tr>
