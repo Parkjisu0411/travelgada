@@ -54,7 +54,7 @@
 	
 	<update id="updateMember">
 		<![CDATA[
-			update member set pw = #{pw}, member_name = #{member_name}, email = #{email}, phone_num = #{phone_num}, profile_img_path = #{profile_img_path} where member_id = #{member_id}
+			update member set pw = #{pw}, member_name = #{member_name}, email = #{email}, phone_num = #{phone_num}, profile_img_path = #{profile_img_path}, withdrawal_flag = #{withdrawal_flag}, withdrawal_code = #{withdrawal_code} where member_id = #{member_id}
 		]]>
 	</update>
 	

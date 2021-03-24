@@ -125,38 +125,178 @@ html, body {
 		//
 		
 		//submit button click event
+		$("#change-password-finish-btn").click(function(e) {
+			e.preventDefault();
+			var id = $("#id").text();
+			var form = {
+				member_id : id,
+				pw : $("#change-newPassword-input").val()
+			}
+			
+			if(confirm("비밀번호를 변경하시겠습니까?")) {
+				$.ajax({
+					type : "PUT",
+					url : "/member/" + id,
+					data : JSON.stringify(form),
+					contentType : "application/json",
+					cache : false,
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},
+					success : function(result) {
+						if(result == "SUCCESS") {
+							alert("비밀번호를 변경했습니다. \n다시 로그인 해주세요.");
+							$("#logout").submit();
+						}
+					},
+					error : function(e) {
+						alert("에러가 발생했습니다.");
+						console.log(e);
+					}
+				})
+			}
+		});
+		
 		$("#change-name-finish-btn").click(function(e) {
-                e.preventDefault();
+            e.preventDefault();
+          	var id = $("#id").text();
+          	var name = $("#change-name-input").val();
+            var form = {
+				member_id : id,
+				member_name : name
+			};
 
-                if(confirm('이름을 변경하시겠습니까?')) {
-                	var id = $("#id").text();
-                    $.ajax({
-                        type: "PUT",
-                        url: "/member/" + id,
-                        data : {
-                            "member_name" : $("#change-name-input").val(),
-                            "member_id" : id
-                        },
-                        dataType : 'json',
-        				contentType : "application/json",
-        				cache : false,
-                        beforeSend : function(xhr){
-          	                 xhr.setRequestHeader("${_csrf.parameterName}", "${_csrf.token}");
-       					},
-       					success : function(result){
-    						console.log("result : " + result );
-    						if(result == "SUCCESS"){
-    							alert("이름을 변경했습니다.");
-    						}
-    					},
-    					error : function(e){
-    						alert("오류가 발생했습니다.");
-    						console.log(e);
+            if(confirm('이름을 변경하시겠습니까?')) {
+                $.ajax({
+                    type: "PUT",
+                    url: "/member/" + id,
+                    data : JSON.stringify(form),
+        			contentType : "application/json",
+        			cache : false,
+                    beforeSend : function(xhr){
+          	             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+       				},
+       				success : function(result){
+    					console.log("result : " + result );
+    					if(result == "SUCCESS"){
+    						alert("이름을 변경했습니다.");
+    						$("#name-area").css("display", "");
+    						$("#change-name-area").css("display", "none");
+    						$("#name").html(name);
     					}
-                    });
-                }
+    				},
+    				error : function(e){
+    					alert("오류가 발생했습니다.");
+    					console.log(e);
+    				}
+                });
+            }
 
-            });
+        });
+		
+		$("#change-email-finish-btn").click(function(e) {
+			e.preventDefault();
+			var id = $("#id").text();
+			var email = $("#change-email-input").val();
+			var form = {
+				member_id : id,
+				email : email
+			};
+			
+			if(confirm("이메일을 변경하시겠습니까?")) {
+				$.ajax({
+					type : "PUT",
+					url : "/member/" + id,
+					data : JSON.stringify(form),
+					contentType : "application/json",
+					cache : false,
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},
+					success : function(result) {
+						if(result == "SUCCESS") {
+							alert("이메일을 변경했습니다.");
+							$("#email-area").css("display", "");
+							$("#change-email-area").css("display", "none");
+							$("#email").html(email);
+						}
+					},
+					error : function(e) {
+						alert("오류가 발생했습니다.");
+						console.log(e);
+					}
+				})
+			}
+		});
+		
+		$("#change-phone-finish-btn").click(function(e) {
+			e.preventDefault();
+			
+			var id = $("#id").text();
+			var phone = $("#change-phone-input").val();
+			var form = {
+				member_id : id,
+				phone_num : phone
+			};
+			
+			if(confirm("휴대전화를 변경하시겠습니까?")) {
+				$.ajax({
+					type : "PUT",
+					url : "/member/" + id,
+					data : JSON.stringify(form),
+					contentType : "application/json",
+					cache : false,
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},
+					success : function(result) {
+						if(result == "SUCCESS") {
+							alert("휴대전화를 변경했습니다.");
+							$("#phone-area").css("display", "");
+							$("#change-phone-area").css("display", "none");
+							$("#phone").html(phone);
+						}
+					},
+					error : function(e) {
+						alert("오류가 발생했습니다.");
+						console.log(e);
+					}
+				});
+			}
+		});
+		
+		$("#withdrawal-member-btn").click(function(e) {
+			e.preventDefault();
+			
+			var id = $("#id").text();
+			var form = {
+				member_id : id,
+				withdrawal_flag : 1,
+				withdrawal_code : 1
+			};
+			if(confirm("회원 탈퇴를 진행하시겠습니까? \n(경고 : 회원 탈퇴 시 관련된 모든 정보가 사라지며 복구할 수 없습니다.)")) {
+				$.ajax({
+					type : "PUT",
+					url : "/member/" + id,
+					data : JSON.stringify(form),
+					contentType : "application/json",
+					cache : false,
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},
+					success : function(result) {
+						if(result =="SUCCESS") {
+							alert("회원탈퇴 되었습니다.");
+							$("#logout").submit();
+						}
+					},
+					error : function(e) {
+						alert("에러가 발생했습니다.");
+						console.log(e);
+					}
+				});
+			}
+		});
 		//
 		
 		//keyup event
@@ -278,9 +418,27 @@ html, body {
 			}
         });
 
-
-		
-		
+		$("#change-phone-input").keyup(function (e) {
+			e.preventDefault();
+			
+			var phone = $("#change-phone-input").val();
+			var oMsg = $("#phoneMsg");
+			var isPhone = /(01[016789])([0-9]{3,4})([0-9]{4})$/;
+			
+			if(phone == "") {
+				showErrorMsg(oMsg, "휴대전화를 입력해주세요.");
+				$("#change-phone-finish-btn").attr('class', 'n-btn btn-sm btn-accent disabled');
+				$("#change-phone-finish-btn").attr('disabled', true);
+			} else if(!isPhone.test(phone)) {
+				showErrorMsg(oMsg, "휴대전화를 형식이 아닙니다.");
+				$("#change-phone-finish-btn").attr('class', 'n-btn btn-sm btn-accent disabled');
+				$("#change-phone-finish-btn").attr('disabled', true);
+			} else {
+				hideMsg(oMsg);
+				$("#change-phone-finish-btn").attr('class', 'n-btn btn-sm btn-accent');
+				$("#change-phone-finish-btn").attr('disabled', false);
+			}
+		});
 		//
 
 	})
@@ -343,7 +501,7 @@ html, body {
 					</tr>
 					<tr id="name-area">
 						<th>이름</th>
-						<td>${member.member_name }</td>
+						<td id="name">${member.member_name }</td>
 						<td><button type="button" class="btn btn-secondary"
 								id="change-name-btn">이름 변경</button></td>
 					</tr>
@@ -367,7 +525,7 @@ html, body {
 					</tr>
 					<tr id="email-area">
 						<th>이메일</th>
-						<td>${member.email }</td>
+						<td id="email">${member.email }</td>
 						<td><button type="button" class="btn btn-secondary"
 								id="change-email-btn">이메일 변경</button></td>
 					</tr>
@@ -391,7 +549,7 @@ html, body {
 					</tr>
 					<tr id="phone-area">
 						<th>휴대전화</th>
-						<td>${member.phone_num }</td>
+						<td id="phone">${member.phone_num }</td>
 						<td><button type="button" class="btn btn-secondary"
 								id="change-phone-btn">휴대전화 변경</button></td>
 					</tr>
@@ -401,8 +559,8 @@ html, body {
 							<div class="phone-change">
 								<div class="input">
 									<label for="phone">변경할 휴대전화</label> <input type="text"
-										class="phone-input" id="phone" />
-									<span class="error_next_box" id="phoneNoMsg" style="display: none" aria-live="assertive"></span>
+										class="phone-input" id="change-phone-input" />
+									<span class="error_next_box" id="phoneMsg" style="display: none" aria-live="assertive"></span>
 								</div>
 								<div class="btn-group">
 									<button type="button" class="n-btn btn-sm-btn-lighter"
@@ -417,7 +575,7 @@ html, body {
 				<button type="button" class="btn btn-secondary"
 					onclick="window.history.back();">돌아가기</button>
 				<button type="button" class="btn btn-danger"
-					onclick="#">회원탈퇴</button>
+					onclick="#" id="withdrawal-member-btn">회원탈퇴</button>
 			</div>
 		</div>
 	</div>

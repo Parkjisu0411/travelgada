@@ -76,17 +76,29 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public void updateMember(MemberVO memberVO) {
+		log.info("UPDATE MEMBER ========================");
 		MemberVO member = memberMapper.selectMember(memberVO.getMember_id());
-		if(member.getMember_name() != memberVO.getMember_name()) {
+		if(memberVO.getMember_name() != null) {
 			member.setMember_name(memberVO.getMember_name());
-		} else if(member.getEmail() != memberVO.getEmail()) {
+		}
+		if(memberVO.getEmail() != null) {
 			member.setEmail(memberVO.getEmail());
-		} else if(member.getPhone_num() != memberVO.getPhone_num()) {
+		}
+		if(memberVO.getPhone_num() != null) {
 			member.setPhone_num(memberVO.getPhone_num());
-		} else if(member.getProfile_img_path() != memberVO.getProfile_img_path()) {
+		}
+		if(memberVO.getProfile_img_path() != null) {
 			member.setProfile_img_path(memberVO.getProfile_img_path());
-		} else if(memberVO.getPw() != null); {
+		}
+		if(memberVO.getPw() != null) {
+			log.info("============================raw pw : " + memberVO.getPw());
 			member.setPw(passEncoder.encode(memberVO.getPw()));
+		}
+		if((Integer)memberVO.getWithdrawal_flag() != null) {
+			member.setWithdrawal_flag(memberVO.getWithdrawal_flag());
+		}
+		if((Integer)memberVO.getWithdrawal_code() != null) {
+			member.setWithdrawal_code(memberVO.getWithdrawal_code());
 		}
 		
 		memberMapper.updateMember(member);

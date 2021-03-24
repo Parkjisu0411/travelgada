@@ -83,7 +83,6 @@ public class MemberController {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		
 		return entity;
 	}
 	
