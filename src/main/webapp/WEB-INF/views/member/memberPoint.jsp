@@ -54,7 +54,6 @@ html, body {
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 	<!--Content -->
-	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">포인트 내역</h2>

@@ -40,7 +40,7 @@ public class MemberValidator implements Validator{
 		}
 		
 		if(!Pattern.matches(email, emailPattern)) {
-			log.info("Password is not match with pattern");
+			log.info("email is not match with pattern");
 			errors.rejectValue("email", "email");
 		}
 

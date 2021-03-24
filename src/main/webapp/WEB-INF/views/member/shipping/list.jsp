@@ -39,8 +39,23 @@ html, body {
 	height: 100px;
 	display: block;
 }
+
+.btn {
+	width : 10%;
+}
 </style>
 <script type="text/javascript">
+
+	//Get the modal
+	var modal = document.getElementById('enroll-form');
+	
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	    if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+	}
+	
 	$(document).ready(function() {
 		
 		$(".delete").click(function(event) {
@@ -74,9 +89,9 @@ html, body {
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">배송지 목록</h2>
-						<p class="view-more-p">
-				<button type="button" class="btn btn-secondary"
-					onclick="">배송지 등록</button>
+			<p class="view-more-p">
+				<button type="button" class="btn btn-secondary" data-toggle="modal"
+					data-target="#enroll-modal">배송지 등록</button>
 			</p>
 			<div class="row">
 				<div class="col-md-12 member-detail">
@@ -101,15 +116,67 @@ html, body {
 									<td>
 										<div class="btn-aroup">
 											<button type="button" class="btn btn-light">수정</button>
-											<button type="button" class="btn btn-light delete" onclick="delete();">삭제</button>
+											<button type="button" class="btn btn-light delete"
+												onclick="delete();">삭제</button>
 										</div>
 									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-					<button type="button" class="btn btn-secondary" onclick="window.history.back();">돌아가기</button>
+					<button type="button" class="btn btn-secondary"
+						onclick="window.history.back();">돌아가기</button>
 				</div>
+			</div>
+		</div>
+	</div>
+	<!-- The Modal (contains the 배송지 등록) -->
+	<div id="enroll-modal" class="modal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title" style="font-family: 'yg-jalnan'">배송지 등록</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="" method="POST">
+						<div class="form-group">
+							<label for="shipping_loc_name">배송지 이름</label>
+							<input type="text" class="form-control" placeholder="배송지 이름" id="shipping_loc_name" />
+						</div>
+						<div class="form-group">
+							<label for="receiver_name">수령인</label>
+							<input type="text" class="form-control" placeholder="수령인" id="receiver_name" />
+						</div>
+						<div class="form-group">
+							<label for="address">주소</label>
+							<input type="text" class="form-control" id="address" />
+						</div>
+						<div class="form-group row">
+							<div class="col">
+								<label for="receiver_phone_num">연락처</label>
+							</div>
+							<div class="col">
+								<input type="tel" class="form-control" id="receiver_phone_num" />
+							</div><div class="col">
+								<input type="tel" class="form-control" id="receiver_phone_num" />
+							</div><div class="col">
+								<input type="tel" class="form-control" id="receiver_phone_num" />
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" onclick="">등록</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+				</div>
+
 			</div>
 		</div>
 	</div>
