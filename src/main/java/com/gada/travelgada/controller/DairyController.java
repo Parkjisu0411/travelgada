@@ -65,22 +65,26 @@ public class DairyController {
    
    // 다이어리 작성
    @PostMapping("diary_write")
-   public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO)
-         throws IllegalStateException, IOException {
+   public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO,
+		   @AuthenticationPrincipal MemberDetails member) throws IllegalStateException, IOException {
       log.info("controller diary_write();");
 
       String img_path = file.getOriginalFilename();
 
       diaryVO.setImg_path(img_path);
       diaryService.writeDiary(diaryVO);
+      
+		/* return diaryService.getDiaryOther(diaryVO.getPlanner_id()); */
 
-      mav.setViewName("redirect:diary");
+      mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
+      mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+		mav.setViewName("diary/diary");
 
       if (!file.getOriginalFilename().isEmpty()) {
          file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
-         mav.addObject("msg", "File uploaded successfully.");
+			/* mav.addObject("msg", "File uploaded successfully."); */
       } else {
-         mav.addObject("msg", "Please select a valid mediaFile..");
+			/* mav.addObject("msg", "Please select a valid mediaFile.."); */
       }
 
       return mav;
@@ -126,10 +130,10 @@ public class DairyController {
 
       if (!file.getOriginalFilename().isEmpty()) {
          file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
-         mav.addObject("msg", "File uploaded successfully.");
+			/* mav.addObject("msg", "File uploaded successfully."); */
 
       } else {
-         mav.addObject("msg", "Please select a valid mediaFile..");
+			/* mav.addObject("msg", "Please select a valid mediaFile.."); */
 
       }//if end
 

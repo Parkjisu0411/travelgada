@@ -168,7 +168,7 @@
     		    				cache : false,
     		    				data : JSON.stringify(form),
     		    				contentType : 'application/json; charset=utf-8',
-    		    	            beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+    		    	            beforeSend : function(xhr){   
     		    	                 console.log("header 실행 "+header+token)
     		    	                 //console.log(sentence.toLowerCase());
     		    	                 xhr.setRequestHeader(header, token);
@@ -181,9 +181,9 @@
     		    				},
     		    				error : function(e){
     		    					console.log(e);
-    		    				} */
+    		    				} 
     		    					
-    		    			}); // ajax end
+    		    			}); // ajax end  */
     					}
     				},
     				error : function(e){

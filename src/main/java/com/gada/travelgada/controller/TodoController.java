@@ -74,7 +74,7 @@ public class TodoController {
 	
 	
 	@DeleteMapping("/todoTitle/{todo_type_id}")
-	public ResponseEntity<String> delete_todoTitle(@RequestBody TodoTypeVO todoTypeVO) {
+	public ResponseEntity<String> delete_todoTitle(TodoTypeVO todoTypeVO) {
 		ResponseEntity<String> entity = null;
 		log.info("delete_todoTitle");
 		try {
