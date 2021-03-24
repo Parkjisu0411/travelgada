@@ -5,18 +5,22 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>diary</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	
-	<script type="text/javascript">
-	function previewImage(targetObj, View_area) {
-	var preview = document.getElementById(View_area); //div id
-	var ua = window.navigator.userAgent;
 
-  //ie일때(IE8 이하에서만 작동)
+<title>diary</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+	
+<script type="text/javascript">
+	function previewImage(targetObj, View_area) {
+		var preview = document.getElementById(View_area); //div id
+		var ua = window.navigator.userAgent;
+
+ 	//ie일때(IE8 이하에서만 작동)
 	if (ua.indexOf("MSIE") > -1) {
 		targetObj.select();
 		try {
@@ -127,7 +131,7 @@ $(document).ready(function(){
 
 <div class="container">
 <br>
-  <h1 class="text-warning" >Diary</h1>
+  <h1 class="text-warning" style="font-family: 'yg-jalnan'">Diary</h1>
   <div class="row">
 
 <div class="col-sm-3">
@@ -142,7 +146,7 @@ $(document).ready(function(){
 				<td>
 <!--      <div class="form-group"> -->
       
-     	<input type="file" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+     	<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
 		<!-- <input type="button" id='uploadBtn' value="업로드"/> -->
 <!--     </div>  -->
 				</td>
@@ -154,18 +158,18 @@ $(document).ready(function(){
 			</tr>
 			<tr>
       			<td>
-      				<h4>Tag</h4>
+      				<h4 style="font-family: 'yg-jalnan'">Tag</h4>
 				</td>
 			</tr>
 			<tr>
 			<td>
-      		<textarea rows= "1" cols="50" name="hashtag"/></textarea>
+      		<textarea rows= "2" cols="50" name="hashtag"/></textarea>
 			</td>
 			</tr>
 			<tr>
 			<td>
 			<!-- <input type="button" value="작성" style="display:none;" > -->
-			<button type="button" id="fileCheck">작성</button>
+			<button type="button" id="fileCheck" style="font-family: 'yg-jalnan'">작성</button>
 			</td>
 			</tr>
 			</table>

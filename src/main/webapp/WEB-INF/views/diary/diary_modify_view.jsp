@@ -14,6 +14,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+ 	
+ 	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	
 	<script type="text/javascript">
 	/* 미리보기 */
@@ -122,7 +124,7 @@ $(document).ready(function(){
 
 <div class="container">
 <br>
-  <h1 class="text-warning">Diary</h1>
+  <h1 class="text-warning" style="font-family: 'yg-jalnan'">Diary</h1>
   <div class="row">
 
    <div class="col-sm-3"> 
@@ -139,7 +141,7 @@ $(document).ready(function(){
 				<td>
 <!--      <div class="form-group"> -->
       
-     	<input type="file" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+     	<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
 	
 <!--     </div>  -->
 				</td>
@@ -151,17 +153,17 @@ $(document).ready(function(){
 			</tr>
 			<tr>
       			<td>
-      				<h4>Tag</h4>
+      				<h4 style="font-family: 'yg-jalnan'">Tag</h4>
 				</td>
 			</tr>
 			<tr>
 			<td>
-      		<textarea rows= "1" cols="50" name="hashtag">${diary_view.hashtag}</textarea>
+      		<textarea rows= "2" cols="50" name="hashtag">${diary_view.hashtag}</textarea>
 			</td>
 			</tr>
 			<tr>
 			<td>
-					<input type="button" id="submitBtn" value="작성">
+					<input type="button" style="font-family: 'yg-jalnan'" id="submitBtn" value="작성">
 			</td>
 			</tr>
 			</table>

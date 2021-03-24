@@ -31,13 +31,18 @@ public interface TodoMapper {
 	
 	public void addTodoType(TodoTypeVO todoTypeVO);
 
-	public void addToDo(TodoVO todoVO, int recentTodoTypeId);
+	public void addToDo(TodoVO todoVO);
+	
+	//public void addToDo(String todo_name, int getRecentTodoTypeId);
+
 	
 	
+	//public void addToDo(TodoVO todoVO, int getRecentTodoTypeId);
 
 	//public void addTodoType(int planner_id, String todo_title);
 
-	//public void addToDo(int getRecentTodoTypeId, String todo_name);
+	
+
 
 
 

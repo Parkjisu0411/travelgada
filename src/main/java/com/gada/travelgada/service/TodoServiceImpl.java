@@ -77,10 +77,24 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	@Override
-	public void addToDo(TodoVO todoVO, int recentTodoTypeId) {
+	public void addToDo(TodoVO todoVO) {
 		log.info("addToDo()");
-		mapper.addToDo(todoVO, recentTodoTypeId);		
+		mapper.addToDo(todoVO);		
 	}
+	
+//	@Override
+//	public void addToDo(String todo_name, int getRecentTodoTypeId) {
+//		log.info("addToDo()");
+//		mapper.addToDo(todo_name, getRecentTodoTypeId);
+//	}
+
+	
+	
+//	@Override
+//	public void addToDo(TodoVO todoVO, int getRecentTodoTypeId) {
+//		log.info("addToDo()");
+//		mapper.addToDo(todoVO, getRecentTodoTypeId);		
+//	}
 
 
 
@@ -90,11 +104,8 @@ public class TodoServiceImpl implements TodoService {
 //		mapper.addTodoType(planner_id, todo_title);
 //	}
 //
-//	@Override
-//	public void addToDo(int getRecentTodoTypeId, String todo_name) {
-//		log.info("addToDo()");
-//		mapper.addToDo(getRecentTodoTypeId, todo_name);
-//	}
+
+
 
 //	@Override
 //	public void addToDo(TodoTypeVO todoTypeVO, TodoVO todoVO) {

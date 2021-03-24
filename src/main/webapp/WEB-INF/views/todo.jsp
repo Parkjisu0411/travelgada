@@ -7,8 +7,9 @@
 <meta charset="utf-8">
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   
@@ -75,11 +76,18 @@
 	  padding: 50px;
 	  font-size: 14px;
 	}
-
-
+	
+	button{
+		float : right;
+	}
+	/* 드롭다운 마우스 오	버 */
+	.dropdown:hover .dropdown-menu {
+	    display: block;
+	    margin-top: 0;
+	}
   </style>
   
-  <style>
+<!--   <style>
       
       .jb-table {
         display: table;
@@ -100,8 +108,7 @@
         vertical-align: top;
         border: 1px solid #bcbcbc;
       }
-
-    </style>
+    </style> -->
   
     <script type="text/javascript">
 	  var token = $("meta[name='_csrf']").attr("content");
@@ -116,13 +123,10 @@
                 bannerImages[1]="Red.png";
                 bannerImages[2]="Green.png";
                 bannerImages[3]="Yellow.png";
-
             var ranNum=Math.round(Math.random()*bannerImages.length);
-
             $(".pdImg").attr({src : bannerImages[ranNum]});
        
 	}
-
     </script>
     
      <script>
@@ -155,20 +159,37 @@
     				success : function(result){
     					if(result == "SUCCESS"){
     						console.log("success");
-    						/* var todo_name = $("#todo_name").val();
+    						
+    						var htmls="";
+    	 		        	htmls +='<div class="jb-table-row">';
+    			        	htmls +='<form id="addToDo" action="addToDo" method="POST">';
+    			        	htmls +='<input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">';
+    			        	htmls += '<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />';
+    			        	htmls +='<div class="jb-table-cell jb-top"><p>체크리스트를 입력하세요<input type="text" id="todo_name" placeholder="ex.카메라">';
+    						/* htmls +='<input type="button" class="btnAdd btn-warning" value=" +"><br></p>'; */
+    			        	htmls +='<input type="submit" value="체크리스트 만들기"></div></form></div>';
+    			        	$("#addToDoTitle").append(htmls); 
+    			        	
+    			        	
+    			        	 $("#addToDo").submit(function(event) {
+    			    			event.preventDefault();
+    			    			console.log("addToDo submit");
+    			    		var origin_uri = '${pageContext.request.contextPath}/addToDo';
+    			    		var uri = encodeURI(origin_uri);	
+    						var todo_name = $("#todo_name").val();
     						var getRecentTodoTypeId = $("#getRecentTodoTypeId").val();
     		    			var form = {
     		    					todo_name : todo_name,
     		    					getRecentTodoTypeId : getRecentTodoTypeId
     		    			};
-    						
+    		    			
     						$.ajax({
     		    				type : "POST",
-    		    				url : "${pageContext.request.contextPath}/addToDo",
+    		    				url : uri,
     		    				cache : false,
     		    				data : JSON.stringify(form),
     		    				contentType : 'application/json; charset=utf-8',
-    		    	            beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+    		    	            beforeSend : function(xhr){  
     		    	                 console.log("header 실행 "+header+token)
     		    	                 //console.log(sentence.toLowerCase());
     		    	                 xhr.setRequestHeader(header, token);
@@ -181,9 +202,11 @@
     		    				},
     		    				error : function(e){
     		    					console.log(e);
-    		    				} */
+    		    				} 
     		    					
-    		    			}); // ajax end
+    		    			}); // ajax end   
+    			        	});  
+    			        	
     					}
     				},
     				error : function(e){
@@ -192,8 +215,48 @@
     					
     			}); // ajax end
     		}) // submit end
-    	})
+    	});
     </script> 
+    
+<!--       <script>
+    	$(document).ready(function() {
+    		$("#addToDo").submit(function(event) {
+    			event.preventDefault();
+    			console.log("addToDo submit");
+    			
+    			var todo_name = $("#todo_name").val();
+    			var getRecentTodoTypeId = $("#getRecentTodoTypeId").val();
+    			
+    			var form = {
+    					todo_name : todo_name,
+    					getRecentTodoTypeId : getRecentTodoTypeId
+    			};
+				
+				$.ajax({
+    				type : "POST",
+    				url : $(this).attr("action"),
+    				cache : false,
+    				data : JSON.stringify(form),
+    				contentType : 'application/json; charset=utf-8',
+    	            beforeSend : function(xhr){  
+    	                 console.log("header 실행 "+header+token)
+    	                 //console.log(sentence.toLowerCase());
+    	                 xhr.setRequestHeader(header, token);
+    	            },
+    				success : function(result){
+    					if(result == "SUCCESS"){
+    						console.log("success");
+    						
+    					}
+    				},
+    				error : function(e){
+    					console.log(e);
+    				} 
+    					
+    			}); // ajax end
+    		}) // submit end
+    	});
+    </script>   -->
      
     <script type="text/javascript">
 		$(document).ready(function(){
@@ -269,12 +332,11 @@
                 ); // end append                            
                 $('.btnRemove').on('click', function () { 
                     $(this).prev().remove (); // remove the textbox
-                    $(this).next ().remove (); // remove the <br>
+                    $(this).next().remove (); // remove the <br>
                     $(this).remove (); // remove the button
                 });
             }); // end click                                            
         }); // end ready        
-
 		$(document).ready(function() {
 			$("input:checkbox").on('click', function() {
 				if ( $(this).prop('checked') ) {
@@ -285,6 +347,7 @@
 			}); 
 		}); 
 	</script>
+
 
 
 </head>
@@ -395,36 +458,39 @@
 	
 	<div class="container">
 	<div class="row">
-	<form id="addToDoTitle" action="/addTodoType" method="POST" >
+	
 	<div class="col-sm-3">
 	 <div class="jb-table">
       <div class="jb-table-row">
-      
+      <form id="addToDoTitle" action="/addTodoType" method="POST" >
       <input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">
       <input type="hidden" id="planner_id" value="${getPlannerId }">
         <div class="jb-table-cell">
           <p>카테고리를 입력하세요<input type="text" id="todo_title" placeholder="ex.전자기기"></p>
           <input type="submit" value="체크리스트 만들기">
         </div>
-        <!-- </form> -->
+        </form>
       </div>
-      <div class="jb-table-row">
-      <!-- <form id="addToDo" action="/addTodo" method="POST" > -->
-	  <%-- <input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }"> --%>
+      
+      
+<%--       <div class="jb-table-row">
+       <form id="addToDo" action="/addTodo" method="POST" >
+	   <input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">
         <div class="jb-table-cell jb-top">
           <p>체크리스트를 입력하세요<input type="text" id="todo_name" placeholder="ex.카메라"><input type="button" class="btnAdd btn-warning" value=" +"><br></p>
-        <!-- <input type="submit" value="체크리스트 만들기"> -->
+       	  <input type="submit" value="체크리스트 만들기">
         </div>
-      <!-- </form> -->
-      </div>
-      <div class="jb-table-row">
+       </form>
+      </div> --%>
+      
+<!--       <div class="jb-table-row">
         <div class="jb-table-cell jb-top">
           <p><input type="submit" value="체크리스트 만들기"></p>
         </div>
+      </div> -->
       </div>
       </div>
-      </div>
-      </form>
+      <!-- </form> -->
     </div>
 	</div>
 
@@ -435,14 +501,22 @@
 	<div class="row">
 	<c:forEach items="${todoTitle }" var="todoTitle">
 	<div class="col-sm-3">
-	
-    <table class="table table-bordered"  width="100%" cellspacing="0">
+	  			<div class="dropdown">
+    				<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+    				</button>
+    				<div class="dropdown-menu dropdown-menu-right">
+      					<a class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${dto.diary_id}',
+      					'popwin2','width=1250,height=800,left=300, top=120')">수정</a>
+      					<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">삭제</a>
+    				</div>
+  				</div>
+    <table class="table table-bordered">
     	<tr>
 			<td colspan="3">
 				 ${todoTitle.todo_title }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				 <a class="titleDelete" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">x</a>
+				<%--  <a class="titleDelete" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">x</a> --%>
 			</td>	
-		</tr>
+		</tr> 
 		
 		<c:forEach var="todoName" items="${todoName }">
 		<c:if test="${todoName.todo_type_id eq todoTitle.todo_type_id }">
@@ -469,9 +543,9 @@
 			<a href="#">+ 체크리스트 추가</a> 
 			</td>
 		</tr>
-			
-	</table>
 	
+	</table>
+
 	</div>
 	</c:forEach>
 	</div>
@@ -505,7 +579,8 @@
             <td colspan="2">
                 <%-- <img width='100' src='${pdlist.img_path}'/> --%>
                 <a href="#">
-              	  <img class="pdImg" onload="randomImage()"/>
+              	  <!-- <img class="pdImg" onload="randomImage()"/> -->
+              	  <img width='100' src="Blue.png"/>
                 </a>
             </td>
          </tr> 
