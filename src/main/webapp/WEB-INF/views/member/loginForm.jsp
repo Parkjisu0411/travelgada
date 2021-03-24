@@ -60,7 +60,6 @@ html, body {
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
-	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">
@@ -81,9 +80,9 @@ html, body {
 							name="password" />
 					</div>
 					<div id="errorMsg"></div>
-					<label class="form-check-label"> <input
-						class="form-check-input" type="checkbox"> Remember me
-					</label>
+					<input type="checkbox" id="remember-me" name="remember-me" class="form-check-input" />
+					<label class"form-check-label" for="remember-me">Remember me</label>
+					&nbsp;&nbsp; <a href="/member">회원가입</a>
 					<button type="submit" class="btn btn-primary login-icon"
 						id="btnSubmit">로그인</button>
 				</form>

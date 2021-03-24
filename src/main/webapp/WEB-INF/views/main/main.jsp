@@ -4,6 +4,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <title>메인</title>
@@ -31,7 +32,7 @@ footer {
 
 <body>
 
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+	<%@ include file="/WEB-INF/views/includes/header_main.jsp"%>
 
 	<header>
 		<div id="carouselExampleIndicators" class="carousel slide"
@@ -89,7 +90,7 @@ footer {
 		<h2 class="headline">가다에서 여행을 계획해 보세요</h2>
 		<div class="container">
 			<p class="view-more-p">
-				<a class="view-more-a" href="#">더 보기</a>
+				<a class="view-more-a" href="/member/planner">더 보기</a>
 			</p>
 			<sec:authorize access="isAnonymous()">
 				<div class="row">
@@ -140,7 +141,13 @@ footer {
 						<div class="col-md-4">
 							<div class="planner-content">
 								<h4 class="planner-title">${planner.planner_name }</h4>
-								<h2 class="planner-d-day">D-3</h2>
+								<jsp:useBean id="now" class="java.util.Date" />
+								<fmt:parseNumber value="${now.time / (1000*60*60*24) }" integerOnly="true" var="today" scope="request"/>
+								<fmt:parseNumber value="${planner.start_date.time / (1000*60*60*24) }" integerOnly="true" var="start_date" scope="request"/>
+								<c:if test="${start_date - today >= 0}">
+									<span class="badge badge-success">D - ${start_date - today + 1 }</span>
+								</c:if>
+								<h5 style="font-size:1.3em;" class="planner-d-day">${planner.start_date } ~ ${planner.end_date }</h5>
 								<hr class="planner-divider-solid">
 								<h5 class="planner-date">3월 16일</h5>
 								<p class="planner-route">까를 → 구시가지 광장 → 프라하 성 → 프라하 천문시계 → 성
@@ -221,13 +228,13 @@ footer {
 		<h2 class="headline">가다에서 추억을 공유해 보세요</h2>
 		<div class="container">
 			<p class="view-more-p">
-				<a class="view-more-a" href="#">더 보기</a>
+				<a class="view-more-a" href="/diary">더 보기</a>
 			</p>
 			<div class="row">
 				<c:forEach var="diary" items="${diary}" end="5">
 					<div class="col-md-4">
 						<div class="card-diary">
-							<img src="${diary.img_path}" class="card-img-top diary" alt="...">
+							<img src="resources/diary/${diary.img_path}" class="card-img-top diary" alt="...">
 							<div class="diary-content">
 								<div class="diary-profile">
 									<img class="diary-profile-img"

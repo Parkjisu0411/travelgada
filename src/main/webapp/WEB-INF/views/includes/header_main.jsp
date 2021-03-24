@@ -90,6 +90,5 @@
 			</div>
 		</div>
 	</nav>
-	<div class="divider-header-blank"></div>
 </body>
 </html>

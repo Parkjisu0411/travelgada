@@ -66,7 +66,9 @@ body {
 .dropdown-toggle.user::after {
     display:none;
 }
-
+.dropdown-toggle::after {
+    display:none;
+}
 /* 
 .dropdown-menu li:hover .sub-menu {
 	visibility: visible;

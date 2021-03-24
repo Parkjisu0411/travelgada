@@ -17,18 +17,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @NoArgsConstructor
 @Service
-public class MemberServiceImpl implements MemberService{
-	
+public class MemberServiceImpl implements MemberService {
+
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
-	
+
 	@Autowired
 	private MemberMapper memberMapper;
 
 	public void addMember(MemberVO memberVO) {
 		log.info("username >>> " + memberVO.getMember_id());
 		log.info("password >>> " + memberVO.getPw());
-		
+
 		String password = memberVO.getPw();
 		String encode = passEncoder.encode(password);
 		log.info("encoding password : " + encode);
@@ -52,6 +52,21 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<ShippingLocVO> getShippingLoc(String member_id) {
 		return memberMapper.selectShippingLoc(member_id);
+	}
+
+	@Override
+	public boolean isExist(String member_id) {
+		MemberVO member = memberMapper.selectMember(member_id);
+		if (member == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean isPw(String member_id, String pw) {
+
+		return false;
 	}
 
 }
