@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -21,7 +22,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login Form</title>
+<title>Shipping List</title>
 <style>
 html, body {
 	width: 100%;
@@ -46,38 +47,54 @@ html, body {
 </style>
 <script type="text/javascript">
 
-	//Get the modal
-	var modal = document.getElementById('enroll-form');
-	
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-	    if (event.target == modal) {
-	        modal.style.display = "none";
-	    }
+	//팝업
+	function enroll() {
+		var pop = window.open("/shipping/enroll", 'pop', "width=570,height=520, scrollbars=yes, resizable=yes");
 	}
+	//
 	
 	$(document).ready(function() {
 		
-		$(".delete").click(function(event) {
-			event.preventDefault();
-			console.log("delete click");
-			var trObj = $(this).parent().parent();//자바스크립트 클로저
-
-			$.ajax({
-				type : 'DELETE', //method
-				url : $(this).attr("href"), //주소를 받아오는 것이 포인트.
-				cache : false,
-				success : function(result) {
-					console.log("result: " + result);
-					if (result == "SUCCESS") {
-						$(trObj).remove();
+		//배송지 삭제	
+		$(".delete").click(function(e) {
+			e.preventDefault();
+			if(confirm("배송지를 삭제하시겠습니까?")) {
+				var trObj = $(this).parent().parent().parent();//자바스크립트 클로저
+				var form = {
+						member_id : $("#id").text(),
+						shipping_loc_name : trObj.children().children("strong").text()
+				};
+				$.ajax({
+					type : 'DELETE', //method
+					url : "/member/shipping", //주소를 받아오는 것이 포인트.
+					data : JSON.stringify(form),
+					contentType : "application/json",
+					cache : false,
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},
+					success : function(result) {
+						console.log("result: " + result);
+						if (result == "SUCCESS") {
+							$(trObj).remove();
+						}
+					},
+					error : function(e) {
+						console.log(e);
 					}
-				},
-				errer : function(e) {
-					console.log(e);
-				}
-			}); //end of ajax
+				}); //end of ajax
+			}
 		});
+		//
+		//배송지 수정
+		$(".modify").click(function(e) {
+			e.preventDefault();
+			var trObj = $(this).parent().parent().parent();
+			var name = trObj.children().children("form").children(".name").val();
+			enroll();
+			document.forms[name].submit();
+		})
+		//
 	});
 </script>
 </head>
@@ -86,12 +103,12 @@ html, body {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="divider-header-blank"></div>
+	<p id="id" style="display: none"><sec:authentication property="principal.username"/></p>
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">배송지 목록</h2>
 			<p class="view-more-p">
-				<button type="button" class="btn btn-secondary" data-toggle="modal"
-					data-target="#enroll-modal">배송지 등록</button>
+				<button type="button" class="btn btn-secondary" onclick="enroll();">배송지 등록</button>
 			</p>
 			<div class="row">
 				<div class="col-md-12 member-detail">
@@ -108,17 +125,30 @@ html, body {
 							<c:forEach var="shipping_loc" items="${shippingList }">
 								<tr>
 									<td>
-										<p style="font-weight: bold;">${shipping_loc.shipping_loc_name }</p>
-										<p>${shipping_loc.receiver }</p>
+										<strong class="shipping_name" id="shipping_name">${shipping_loc.shipping_loc_name }</strong>
+										<p id="receiver">${shipping_loc.receiver }</p>
 									</td>
-									<td>${shipping_loc.address }</td>
-									<td>${shipping_loc.receiver_phone_num }</td>
+									<td>
+										<span id="zipcode">${shipping_loc.zip_code}</span>
+										<span id="address">${shipping_loc.address }</span>
+										<span id="address_detail">${shipping_loc.address_detail }</span>
+										
+									</td>
+									<td id="phone">${shipping_loc.receiver_phone_num }</td>
 									<td>
 										<div class="btn-aroup">
-											<button type="button" class="btn btn-light">수정</button>
-											<button type="button" class="btn btn-light delete"
-												onclick="delete();">삭제</button>
+											<button type="button" class="btn btn-light modify">수정</button>
+											<button type="button" class="btn btn-light delete" onclick="delete();">삭제</button>
 										</div>
+										<form name="${shipping_loc.shipping_loc_name }" action="/shipping/enroll" method="post" target="pop">
+											<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+											<input type="hidden" class="name" name="shipping_loc_name" value="${shipping_loc.shipping_loc_name }" />
+											<input type="hidden" name="receiver" value="${shipping_loc.receiver }" />
+											<input type="hidden" name="zip_code" value="${shipping_loc.zip_code }" />
+											<input type="hidden" name="address" value="${shipping_loc.address }" />
+											<input type="hidden" name="address_detail" value="${shipping_loc.address_detail }" />
+											<input type="hidden" name="receiver_phone_num" value="${shipping_loc.receiver_phone_num }" />
+										</form>
 									</td>
 								</tr>
 							</c:forEach>
@@ -127,56 +157,6 @@ html, body {
 					<button type="button" class="btn btn-secondary"
 						onclick="window.history.back();">돌아가기</button>
 				</div>
-			</div>
-		</div>
-	</div>
-	<!-- The Modal (contains the 배송지 등록) -->
-	<div id="enroll-modal" class="modal">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title" style="font-family: 'yg-jalnan'">배송지 등록</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="" method="POST">
-						<div class="form-group">
-							<label for="shipping_loc_name">배송지 이름</label>
-							<input type="text" class="form-control" placeholder="배송지 이름" id="shipping_loc_name" />
-						</div>
-						<div class="form-group">
-							<label for="receiver_name">수령인</label>
-							<input type="text" class="form-control" placeholder="수령인" id="receiver_name" />
-						</div>
-						<div class="form-group">
-							<label for="address">주소</label>
-							<input type="text" class="form-control" id="address" />
-						</div>
-						<div class="form-group row">
-							<div class="col">
-								<label for="receiver_phone_num">연락처</label>
-							</div>
-							<div class="col">
-								<input type="tel" class="form-control" id="receiver_phone_num" />
-							</div><div class="col">
-								<input type="tel" class="form-control" id="receiver_phone_num" />
-							</div><div class="col">
-								<input type="tel" class="form-control" id="receiver_phone_num" />
-							</div>
-						</div>
-					</form>
-				</div>
-
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" onclick="">등록</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-				</div>
-
 			</div>
 		</div>
 	</div>

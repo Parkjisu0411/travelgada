@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,15 +37,27 @@ public class ShippingController {
 		return mv;
 	}
 	
-	@DeleteMapping("/member/shipping/{shipping_loc_name}")
-	public ResponseEntity<String> deleteShippingLoc(ShippingLocVO shippingLocVO, @AuthenticationPrincipal MemberDetails memberDetails) {
+	@DeleteMapping("/member/shipping")
+	public ResponseEntity<String> deleteShippingLoc(@RequestBody ShippingLocVO shippingLocVO) {
 		ResponseEntity<String> entity = null;
-		shippingLocVO.setMember_id(memberDetails.getUsername());
 		try {
 			log.info(shippingLocVO.getShipping_loc_name() + "의 삭제를 시도합니다.=============");
 			shippingLocService.deleteShippingLoc(shippingLocVO);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@PostMapping("/member/shipping")
+	public ResponseEntity<String> saveShippingLoc(@RequestBody ShippingLocVO shippingLocVO) {
+		ResponseEntity<String> entity = null;
+		try {
+			shippingLocService.saveShippingLoc(shippingLocVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
@@ -56,10 +70,9 @@ public class ShippingController {
 		return mav;
 	}
 	
-	@GetMapping("/address-search")
-	public ModelAndView popup(ModelAndView mav) {
-		mav.setViewName("/member/shipping/address-search");
+	@PostMapping("/shipping/enroll")
+	public ModelAndView modify(ModelAndView mav) {
+		mav.setViewName("/member/shipping/enroll");
 		return mav;
 	}
-	
 }

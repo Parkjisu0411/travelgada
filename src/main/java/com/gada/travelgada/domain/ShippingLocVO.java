@@ -18,6 +18,7 @@ public class ShippingLocVO {
 	private String receiver;
 	private String receiver_phone_num;
 	private String address;
-	private String ziq_code;
+	private String address_detail;
+	private String zip_code;
 	
 }

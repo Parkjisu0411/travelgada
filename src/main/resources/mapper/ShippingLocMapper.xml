@@ -4,9 +4,27 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gada.travelgada.mapper.ShippingLocMapper">
 
+	<select id="selectShippingLoc" resultType="com.gada.travelgada.domain.ShippingLocVO">
+		<![CDATA[
+			select * from shipping_loc where member_id = #{member_id} and shipping_loc_name = #{shipping_loc_name}
+		]]>
+	</select>
+
 	<delete id="deleteShippingLoc">
 		<![CDATA[
 			delete from shipping_loc where shipping_loc_name = #{shipping_loc_name} and member_id = #{member_id}
 		]]>
 	</delete>
+	
+	<insert id="insertShippingLoc">
+		<![CDATA[
+			insert into shipping_loc(shipping_loc_name, member_id, receiver, receiver_phone_num, address, zip_code, address_detail) values (#{shipping_loc_name}, #{member_id}, #{receiver}, #{receiver_phone_num}, #{address}, #{zip_code}, #{address_detail})
+		]]>
+	</insert>
+	
+	<update id="updateShippingLoc">
+		<![CDATA[
+			update shipping_loc set receiver = #{receiver}, receiver_phone_num = #{receiver_phone_num}, address = #{address}, zip_code = #{zip_code}, address_detail = #{address_detail} where member_id = #{member_id} and shipping_loc_name = #{shipping_loc_name}
+		]]>
+	</update>
 </mapper>
