@@ -1,7 +1,11 @@
 package com.gada.travelgada.controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +16,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gada.travelgada.domain.DiaryVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.domain.TodoListVO;
@@ -74,7 +81,7 @@ public class TodoController {
 	
 	
 	@DeleteMapping("/todoTitle/{todo_type_id}")
-	public ResponseEntity<String> delete_todoTitle(@RequestBody TodoTypeVO todoTypeVO) {
+	public ResponseEntity<String> delete_todoTitle(TodoTypeVO todoTypeVO) {
 		ResponseEntity<String> entity = null;
 		log.info("delete_todoTitle");
 		try {
@@ -111,7 +118,7 @@ public class TodoController {
 	
 	
 	@PostMapping("/addToDo")
-	public ResponseEntity<String> addToDo(@Param("todoVO") TodoVO todoVO, @Param("recentTodoTypeId") int recentTodoTypeId) throws Exception{
+	public ResponseEntity<String> addToDo(@RequestBody TodoVO todoVO, @RequestParam("todo_name") String todo_name, @RequestParam("getRecentTodoTypeId") int getRecentTodoTypeId) throws Exception{
 		ResponseEntity<String> entity = null;
 		
 		log.info("addToDo");
@@ -119,8 +126,11 @@ public class TodoController {
 		
 		try {
 			//service.addToDo(todoTypeVO, todoVO);
-			service.addToDo(todoVO, recentTodoTypeId);
-			
+			//service.addToDo(todoVO, getRecentTodoTypeId);
+			//service.addToDo(todo_name, getRecentTodoTypeId);
+		      todoVO.setTodo_name(todo_name);
+		      todoVO.setTodo_type_id(getRecentTodoTypeId);
+		     service.addToDo(todoVO);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -129,4 +139,16 @@ public class TodoController {
 		
 		return entity;
 	}
+	
+//	   @PostMapping("addToDo")
+//	   public ModelAndView addToDo(ModelAndView mav, @RequestParam("todo_name") String todo_name, @RequestParam("getRecentTodoTypeId") int getRecentTodoTypeId, TodoVO todoVO) throws Exception {
+//	      log.info("addToDo");
+//
+//	      todoVO.setTodo_name(todo_name);
+//	      todoVO.setTodo_type_id(getRecentTodoTypeId);
+//	     service.addToDo(todoVO);
+//	     mav.setViewName("redirect:todo");
+//
+//	      return mav;
+//	   }
 }
