@@ -105,13 +105,6 @@ public class MemberController {
 		return mv;
 	}
 	
-	@PostMapping("/member/{member_id}")
-	public ResponseEntity<String> modifyMemberInfo(@RequestBody MemberVO memberVO) {
-		ResponseEntity<String> entity = null;
-		log.info("Modify Member ID :  " + memberVO.getMember_id());
-		return null;
-	}
-	
 	@GetMapping("/member/login")
 	public ModelAndView loginForm(ModelAndView mv) {
 		log.info("Login Form >>> ");
