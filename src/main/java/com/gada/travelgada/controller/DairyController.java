@@ -43,6 +43,7 @@ public class DairyController {
 
       mav.addObject("diary", diaryService.getDiary(member.getUsername()));
       mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+      
       mav.setViewName("diary/diary");
 
       return mav;
@@ -78,7 +79,7 @@ public class DairyController {
 
       mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
       mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-		mav.setViewName("diary/diary");
+      mav.setViewName("diary/diary");
 
       if (!file.getOriginalFilename().isEmpty()) {
          file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
