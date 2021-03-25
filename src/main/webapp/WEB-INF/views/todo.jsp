@@ -89,8 +89,6 @@
 	    margin-top: 0;
 	}
   </style>
-  
-
 
 <!--   <style>
       
@@ -113,6 +111,7 @@
         vertical-align: top;
         border: 1px solid #bcbcbc;
       }
+      
     </style> -->
 
 <script type="text/javascript">
@@ -128,10 +127,13 @@
                 bannerImages[1]="Red.png";
                 bannerImages[2]="Green.png";
                 bannerImages[3]="Yellow.png";
+                
             var ranNum=Math.round(Math.random()*bannerImages.length);
+            
             $(".pdImg").attr({src : bannerImages[ranNum]});
        
 	}
+    
     </script>
 
 <script>
@@ -166,16 +168,6 @@
     						console.log("success");
     						
     						var htmls="";
-    						
-    	 		        	htmls +='<div class="jb-table-row">';
-    			        	htmls +='<form id="addToDo" action="addToDo" method="POST">';
-    			        	htmls +='<input type="hidden" id="getRecentTodoTypeId" value="${getRecentTodoTypeId }">';
-    			        	htmls += '<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />';
-    			        	htmls +='<div class="jb-table-cell jb-top"><p>체크리스트를 입력하세요<input type="text" id="todo_name" placeholder="ex.카메라">';
-    						/* htmls +='<input type="button" class="btnAdd btn-warning" value=" +"><br></p>'; */
-    			        	htmls +='<input type="submit" value="체크리스트 만들기"></div></form></div>';
-    			        	$("#addToDoTitle").append(htmls); 
-    			        	
 
     						    htmls +='<div class="container"><div class="row">'
     							htmls +='<div class="col-sm-3"><div class="dropdown"><button type="button" class="btn dropdown-toggle" data-toggle="dropdown"></button>'
