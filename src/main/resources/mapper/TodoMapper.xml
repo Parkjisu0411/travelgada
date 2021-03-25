@@ -103,10 +103,16 @@
 		]]>
 	 </insert>
 	 
-	 <select id="getRecentTodoTypeId" resultType="int">
+ 	 <select id="getRecentTodoTypeId" resultType="int">
 		<![CDATA[
-			select MAX(todo_type_id) from todo_type
+			SELECT todo_type_id FROM todo_type ORDER BY todo_type_id DESC LIMIT 1
 		]]>
 	 </select>
+	 
+<!-- 	 <select id="getRecentTodoTypeId" resultMap="todoTypeMap">
+		<![CDATA[
+			select * from todo_type where todo_type_id = (select MAX(todo_type_id) from todo_type)
+		]]>
+	 </select> -->
 
 </mapper>

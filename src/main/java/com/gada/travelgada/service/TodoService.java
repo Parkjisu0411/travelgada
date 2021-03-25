@@ -23,6 +23,7 @@ public interface TodoService {
 
 	public void delete_todoTitle(int todo_type_id);
 
+	//public List<TodoTypeVO> getRecentTodoTypeId();
 	public int getRecentTodoTypeId();
 
 	public void addTodoType(TodoTypeVO todoTypeVO);

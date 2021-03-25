@@ -104,7 +104,6 @@ public class TodoController {
 		
 		log.info("addTodoType");
 		
-		
 		try {
 			service.addTodoType(todoTypeVO);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
@@ -117,28 +116,28 @@ public class TodoController {
 	}
 	
 	
-	@PostMapping("/addToDo")
-	public ResponseEntity<String> addToDo(@RequestBody TodoVO todoVO, @RequestParam("todo_name") String todo_name, @RequestParam("getRecentTodoTypeId") int getRecentTodoTypeId) throws Exception{
-		ResponseEntity<String> entity = null;
-		
-		log.info("addToDo");
-		log.info("" + service.getRecentTodoTypeId());
-		
-		try {
-			//service.addToDo(todoTypeVO, todoVO);
-			//service.addToDo(todoVO, getRecentTodoTypeId);
-			//service.addToDo(todo_name, getRecentTodoTypeId);
-		      todoVO.setTodo_name(todo_name);
-		      todoVO.setTodo_type_id(getRecentTodoTypeId);
-		     service.addToDo(todoVO);
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		}catch(Exception e){
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		
-		return entity;
-	}
+//	@PostMapping("/addToDo")
+//	public ResponseEntity<String> addToDo(@RequestBody TodoVO todoVO, @RequestParam("todo_name") String todo_name, @RequestParam("getRecentTodoTypeId") int getRecentTodoTypeId) throws Exception{
+//		ResponseEntity<String> entity = null;
+//		
+//		log.info("addToDo");
+//		log.info("" + service.getRecentTodoTypeId());
+//		
+//		try {
+//			//service.addToDo(todoTypeVO, todoVO);
+//			//service.addToDo(todoVO, getRecentTodoTypeId);
+//			//service.addToDo(todo_name, getRecentTodoTypeId);
+//		      todoVO.setTodo_name(todo_name);
+//		      todoVO.setTodo_type_id(getRecentTodoTypeId);
+//		     service.addToDo(todoVO);
+//			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+//		}catch(Exception e){
+//			e.printStackTrace();
+//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//		
+//		return entity;
+//	}
 	
 //	   @PostMapping("addToDo")
 //	   public ModelAndView addToDo(ModelAndView mav, @RequestParam("todo_name") String todo_name, @RequestParam("getRecentTodoTypeId") int getRecentTodoTypeId, TodoVO todoVO) throws Exception {
@@ -151,4 +150,19 @@ public class TodoController {
 //
 //	      return mav;
 //	   }
+	
+	   @PostMapping("addToDo")
+	   public ModelAndView addToDo(ModelAndView mav, TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
+	      log.info("addToDo");
+	      
+//	      String tn = service.getCategoryId;
+//	      log.info(tn);
+//
+	     todoVO.setTodo_name(todoVO.getTodo_name());
+	     todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
+	     service.addToDo(todoVO);
+	     mav.setViewName("redirect:todo");
+
+	      return mav;
+	   }
 }
