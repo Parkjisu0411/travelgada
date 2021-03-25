@@ -64,6 +64,12 @@ public class TodoServiceImpl implements TodoService {
 
 
 
+//	@Override
+//	public List<TodoTypeVO> getRecentTodoTypeId() {
+//		log.info("getRecentTodoTypeId()");
+//		return mapper.getRecentTodoTypeId();
+//	}
+	
 	@Override
 	public int getRecentTodoTypeId() {
 		log.info("getRecentTodoTypeId()");
