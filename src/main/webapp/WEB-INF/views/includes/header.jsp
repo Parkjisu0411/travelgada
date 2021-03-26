@@ -66,7 +66,7 @@
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><img
-							src="<sec:authentication property="principal.profile"/>"
+							src="/resources/img/profile/<sec:authentication property="principal.profile"/>"
 							class="nav-profile-img"
 							onerror="this.src='/resources/img/profile/default_profile_img.jpg'"></a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
