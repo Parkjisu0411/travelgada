@@ -151,13 +151,16 @@ public class TodoController {
 //	      return mav;
 //	   }
 	
-	   @PostMapping("addToDo")
+	   @PostMapping("/addToDo")
 	   public ModelAndView addToDo(ModelAndView mav, TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
 	      log.info("addToDo");
+	      log.info(todoVO.getTodo_name());
+	      log.info("투두 아이디!!!!!11" + todoTypeVO.getTodo_type_id());
 	      
 //	      String tn = service.getCategoryId;
 //	      log.info(tn);
-//
+	      
+
 	     todoVO.setTodo_name(todoVO.getTodo_name());
 	     todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
 	     service.addToDo(todoVO);
