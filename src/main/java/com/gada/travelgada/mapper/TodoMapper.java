@@ -34,6 +34,9 @@ public interface TodoMapper {
 	public void addTodoType(TodoTypeVO todoTypeVO);
 
 	public void addToDo(TodoVO todoVO);
+
+	public void delete_allTodoName(int todo_type_id);
+
 	
 	//public void addToDo(String todo_name, int getRecentTodoTypeId);
 
