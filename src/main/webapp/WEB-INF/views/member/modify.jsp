@@ -621,10 +621,8 @@ html, body {
 									<span class="error_next_box" id="cpswdMsg" style="display: none" aria-live="assertive"></span>
 								</div>
 								<div class="btn-group">
-									<button type="button" class="n-btn btn-sm-btn-lighter"
-										id="change-password-cancle-btn">취소</button>
-									<button type="button" class="n-btn btn-sm-btn-accent disabled"
-										id="change-password-finish-btn" disabled>완료</button>
+									<button type="button" class="n-btn btn-sm-btn-lighter" id="change-password-cancle-btn">취소</button>
+									<button type="button" class="n-btn btn-sm-btn-accent disabled" id="change-password-finish-btn" disabled>완료</button>
 								</div>
 							</div>
 						</td>
