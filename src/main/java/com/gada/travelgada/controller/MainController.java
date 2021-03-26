@@ -42,14 +42,14 @@ public class MainController {
 	}
 
 	// Schedule Object => JSON
-	@GetMapping("/locations")
+	@GetMapping("/paths")
 	public List<ScheduleVO> locationsToJson(@AuthenticationPrincipal MemberDetails member) {
 		List<PlannerVO> plannerList = scheduleService.selectPlanner(member.getUsername());
 		PlannerVO planner = plannerList.get(0);
 
-		List<ScheduleVO> locationsToJson = scheduleService.getSchedule(planner.getPlanner_id());
+		List<ScheduleVO> pathsToJson = scheduleService.getSchedule(planner.getPlanner_id());
 
-		return locationsToJson;
+		return pathsToJson;
 	}
 	
 	// Map Page
