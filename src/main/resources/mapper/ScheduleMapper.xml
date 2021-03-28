@@ -37,6 +37,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select schedule_order from schedule where planner_id = #{planner_id} and schedule_date = #{schedule_date} order by schedule_order desc limit 1
 		]]>
 	</select>
+	
+	<delete id="deleteSchedule">
+		<![CDATA[
+			delete from schedule where schedule_id = #{schedule_id}
+		]]>
+	</delete>
 
 
 </mapper>

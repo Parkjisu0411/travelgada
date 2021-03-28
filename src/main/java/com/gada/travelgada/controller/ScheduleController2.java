@@ -1,12 +1,15 @@
 package com.gada.travelgada.controller;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +36,7 @@ public class ScheduleController2 {
 	
 	@GetMapping("/planner/schedule2")
 	public ModelAndView getSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "0") int planner_id) throws ParseException {
-		
+		log.info(String.valueOf(planner_id) + "=====================");
 		List<PlannerVO> plannerList = scheduleService.selectPlanner(member.getUsername());
 		PlannerVO planner = null;
 		if(planner_id != 0) {
@@ -60,6 +63,19 @@ public class ScheduleController2 {
 		modelAndView.setViewName("planner/schedule2");
 		
 		return modelAndView;
+	}
+	
+	@DeleteMapping("/planner/schedule/{schedule_id}")
+	public ResponseEntity<String> deleteSchedule(ScheduleVO scheduleVO) {
+		ResponseEntity<String> entity = null;
+		try {
+			scheduleService.deleteSchedule(scheduleVO.getSchedule_id());
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 	
 	@PostMapping("/planner/schedule2")

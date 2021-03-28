@@ -41,13 +41,26 @@
 	font-size: 15px;
 }
 
-.fa-bars {
+.order-control {
+	display: inline-block;
+	float: right;
+	color: #A2A2A2;
+}
+
+.delete {
+	display: inline-block;
 	float: right;
 	color: #A2A2A2;
 }
 
 tbody > div {
 	border: 1px solid black;
+}
+
+#map {
+  width: 50%;
+  height: 100%;
+  float: right;
 }
 
 </style>
@@ -72,8 +85,8 @@ tbody > div {
 	//버튼 스크롤 이동
 	function moveTo(date) {
 		var offset = $("#" + date).offset();
-		var height = $("#" + date).height();
-		$("html, body").animate({scrollTop : offset.top - height}, 400);
+		//헤더의 크기 52를 빼줌.
+		$("html, body").animate({scrollTop : offset.top - 52}, 400);
 	}
 	//
 	//일정 추가 테이블 삭제
@@ -84,6 +97,43 @@ tbody > div {
 			}, 350);
 	}
 	//
+	//delete function
+	function deleteSchedule(obj) {
+		console.log("delete");
+		
+		var schedule = $(obj).parent();
+		var budget = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total');
+		var text = $(obj).siblings('.budget').text();
+		var now = text.substr(1, text.length-3);
+		var total = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total').text();
+		var next = parseInt(total) - parseInt(now);
+		
+		console.log(schedule);
+		console.log(budget);
+		console.log(text);
+		console.log(now);
+		console.log(total);
+		console.log(next);
+/* 		$.ajax({
+			type : "DELETE",
+			url : "/planner/schedule/" + $(this).attr('id'),
+			cache : false,
+			beforeSend : function(xhr){
+	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(result) {
+				console.log(result);
+				schedule.remove();
+				budget.html(next);
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
+			}
+		}); */
+	}
+	//
+	
 	//
 	function submitForm(obj) {
 		var formData = $(obj).parent().parent().serializeObject();
@@ -108,7 +158,7 @@ tbody > div {
 					remove(obj);
 					switch(schedule_type_id) {
 						case "1" :
-							$("#" + schedule_date).children(".city-area").children("a.insert-btn").before("<span>" + result + "</span><br />");
+							$("#" + schedule_date).children(".city-area").children("a.insert-btn").before("<span>" + result + "</span><span class='delete' id='${hotel.schedule_id }' onclick='deleteSchedule()'><i class='far fa-trash-alt'></i></span><br />");
 							break
 						case "2" :
 							if(budget == 0) {
@@ -170,14 +220,16 @@ tbody > div {
 					breakpoint: 960, //화면 사이즈 960px
 					settings: {
 						//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-						slidesToShow:3 
+						slidesToShow:3 ,
+						slidesToScroll:3
 					} 
 				},
 				{ 
 					breakpoint: 768, //화면 사이즈 768px
 					settings: {	
 						//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-						slidesToShow:2 
+						slidesToShow:2,
+						slidesToScroll:2
 					} 
 				}
 			]
@@ -231,6 +283,57 @@ tbody > div {
 			$(this).parent().parent().parent().children('.insert-area').children('td').children('div').slideDown(400);	
 		})
 		
+		//Planner-select
+		$("#select-planner").on('change',function() {
+			var planner_id = this.value;
+			
+			$.ajax({
+				type : "GET",
+				url : "/planner/schedule2?planner_id=" + planner_id,
+				cache : false,
+				success : function(result) {
+					console.log(planner_id);
+					$("tbody").remove();
+					//html방식으로 return 받는 것 알아보기.
+					//또는 ModelAndView 로 return 받는 것 알아보기.
+				},
+				error : function(e) {
+					console.log(e);
+					alert("에러가 발생했습니다.");
+				}
+			});
+		})
+		//
+		//delete event
+		$(".delete").click(function(e) {
+			e.preventDefault();
+			console.log("delete");
+			var schedule = $(this).parent();
+			var budget = $(this).parent().parent().parent().children('.budget-area').children('.budget-total');
+			var text = $(this).siblings('.budget').text();
+			var now = text.substr(1, text.length-3);
+			var total = $(this).parent().parent().parent().children('.budget-area').children('.budget-total').text();
+			var next = parseInt(total) - parseInt(now);
+			
+			$.ajax({
+				type : "DELETE",
+				url : "/planner/schedule/" + $(this).attr('id'),
+				cache : false,
+				beforeSend : function(xhr){
+	  	             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				success : function(result) {
+					console.log(result);
+					schedule.remove();
+					budget.html(next);
+				},
+				error : function(e) {
+					console.log(e);
+					alert("에러가 발생했습니다.");
+				}
+			});
+		})
+		//
 	});
 </script>
 </head>
@@ -243,9 +346,9 @@ tbody > div {
 		<!-- headline -->
 		<h2 class="headline" style="font-family: 'yg-jalnan'">Schedule</h2>
 		<!-- planner option -->
-		<form action ="" method="get" target="popwin" name="formDate">
+		<form action ="/planner/schedule2" method="get">
 				<div class="col-md-12"> 
-					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'yg-jalnan'">
+					<select class="form-control" name="planner_id" id="select-planner" style="font-family: 'yg-jalnan'">
 						<c:forEach var="planner" items="${plannerList}">
 							<option value='${planner.planner_id}' style="font-family: 'yg-jalnan'">
 							  	${planner.planner_name}&nbsp;&nbsp; ${planner.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${planner.end_date}
@@ -266,7 +369,7 @@ tbody > div {
 		</div>
 		<!-- schedule table -->
 		<div class="col-md-12">
-			<table class="table">
+			<table class="table" id="table-schedule">
 				<colgroup>
 					<col width="130px" />
 				</colgroup>
@@ -288,8 +391,10 @@ tbody > div {
 							<td class="country-area">
 								<c:forEach var="country" items="${countryList }">
 									<c:if test="${country.schedule_date eq date}">
-										<span class="content">${country.schedule_content }</span>
-										<br />
+										<div>
+											<span class="content">${country.schedule_content }</span>
+											<span class="delete" id="${country.schedule_id }"><i class="far fa-trash-alt"></i></span>
+										</div>
 									</c:if>
 								</c:forEach>
 								<a class="insert-btn" href="#">추가하기</a>
@@ -297,8 +402,10 @@ tbody > div {
 							<td class="city-area">
 								<c:forEach var="city" items="${cityList }">
 									<c:if test="${city.schedule_date eq date }">
-										<span class="content">${city.schedule_content }</span>
-										<br />
+										<div>
+											<span class="content">${city.schedule_content }</span>
+											<span class="delete" id="${city.schedule_id }"><i class="far fa-trash-alt"></i></span>
+										</div>
 									</c:if>
 								</c:forEach>
 								<a class="insert-btn" href="#">추가하기</a>
@@ -306,9 +413,11 @@ tbody > div {
 							<td class="vehicle-area">
 								<c:forEach var="vehicle" items="${vehicleList }">
 									<c:if test="${vehicle.schedule_date eq date }">
-										<span class="content">${vehicle.schedule_content }</span>
-										<c:if test="${vehicle.budget ne 0 }"><span class="budget">(${vehicle.budget }₩)</span></c:if>
-										<br />
+										<div>
+											<span class="content">${vehicle.schedule_content }</span>
+											<c:if test="${vehicle.budget ne 0 }"><span class="budget">(${vehicle.budget }₩)</span></c:if>
+											<span class="delete" id="${vehicle.schedule_id }"><i class="far fa-trash-alt"></i></span>
+										</div>
 									</c:if>
 								</c:forEach>
 								<a class="insert-btn" href="#">추가하기</a>
@@ -316,10 +425,12 @@ tbody > div {
 							<td class="schedule-area">
 								<c:forEach var="schedule" items="${scheduleList }">
 									<c:if test="${schedule.schedule_date eq date }">
-										<span class="content">${schedule.schedule_order}. ${schedule.schedule_content }</span>
-										<c:if test="${schedule.budget ne 0 }"><span class="budget">(${schedule.budget }₩)</span></c:if>
-										<i class="fas fa-bars"></i>
-										<br />
+										<div>
+											<span class="content">${schedule.schedule_order}. ${schedule.schedule_content }</span>
+											<c:if test="${schedule.budget ne 0 }"><span class="budget">(${schedule.budget }₩)</span></c:if>
+											<span class='order-control'>&nbsp;&nbsp;<i class="fas fa-bars"></i></span>
+											<span class="delete" id="${schedule.schedule_id }"><i class="far fa-trash-alt"></i></span>
+										</div>
 									</c:if>
 								</c:forEach>
 								<a class="insert-btn" href="#">추가하기</a>
@@ -327,16 +438,18 @@ tbody > div {
 							<td class="hotel-area">
 								<c:forEach var="hotel" items="${hotelList }">
 									<c:if test="${hotel.schedule_date eq date }">
-										<span class="content">${hotel.schedule_content }</span>
-										<br />
-										<c:if test="${hotel.budget ne 0 }"><span class="budget">(${hotel.budget }₩)</span></c:if>
-										<br />
+										<div>
+											<span class="content">${hotel.schedule_content }</span>
+											<br />
+											<c:if test="${hotel.budget ne 0 }"><span class="budget">(${hotel.budget }₩)</span></c:if>
+											<span class="delete" id="${hotel.schedule_id }"><i class="far fa-trash-alt"></i></span>
+										</div>
 									</c:if>
 								</c:forEach>
 								<a class="insert-btn" href="#">추가하기</a>
 							</td>
 							<td class="budget-area">
-								<span class="budget-total counter"><c:out value="${dayBudget[date] }"></c:out></span>
+								<span class="budget-total"><c:out value="${dayBudget[date] }"></c:out></span>
 								<span>₩</span>
 							</td>
 						</tr>

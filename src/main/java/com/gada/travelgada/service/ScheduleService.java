@@ -25,5 +25,7 @@ public interface ScheduleService {
 	public Map<String, Integer> getBudget(int planner_id);
 
 	public void insertSchedule(ScheduleVO scheduleVO);
+	
+	public void deleteSchedule(int schedule_id);
 
 }

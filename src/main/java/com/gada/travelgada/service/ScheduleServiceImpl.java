@@ -80,4 +80,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		mapper.insertSchedule(scheduleVO);
 	}
 
+	@Override
+	public void deleteSchedule(int schedule_id) {
+		mapper.deleteSchedule(schedule_id);
+	}
+
 }

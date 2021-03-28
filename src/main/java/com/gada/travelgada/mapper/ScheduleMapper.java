@@ -21,5 +21,7 @@ public interface ScheduleMapper {
 	public void insertSchedule(ScheduleVO scheduleVO);
 	
 	public int selectScheduleOrder(@Param("planner_id") int planner_id,@Param("schedule_date") Date schedule_date);
+
+	public void deleteSchedule(int schedule_id);
 	
 }
