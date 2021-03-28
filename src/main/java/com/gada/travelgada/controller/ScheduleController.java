@@ -35,7 +35,7 @@ public class ScheduleController {
 		PlannerVO planner = plannerList.get(0);
 		
 		modelAndView.addObject("plannerList", plannerList);
-		modelAndView.addObject("dateList", dateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date()));
+		//modelAndView.addObject("dateList", dateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date()));
 		modelAndView.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
 		modelAndView.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
 		modelAndView.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));

@@ -40,6 +40,7 @@ html, body {
 
 .member-img {
 	height: 100px;
+	width: 100px;
 	display: block;
 	vertical-align: middle;
 	margin-top: 50px;
@@ -73,7 +74,7 @@ html, body {
 			<div class="row">
 				<div class="col-md-4 member-profile member-profile">
 					<img class="rounded-circle member-img"
-						src="${member.profile_img_path }"
+						src="/resources/img/profile/${member.profile_img_path }"
 						onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
 					<p>${member.member_name }</p>
 				</div>

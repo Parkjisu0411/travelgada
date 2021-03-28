@@ -91,6 +91,12 @@
 		]]>
 	 </delete>
 	 
+	 <delete id="delete_allTodoName">
+		<![CDATA[
+			delete from todo where todo_type_id = #{todo_type_id}
+		]]>
+	 </delete>
+	 
 	 <insert id="addTodoType">
 		<![CDATA[
 			insert into todo_type (todo_type_id, todo_title, planner_id) values (get_seq('todo_type_seq'), #{todo_title}, #{planner_id})

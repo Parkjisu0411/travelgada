@@ -59,6 +59,7 @@ public class TodoServiceImpl implements TodoService {
 	@Override
 	public void delete_todoTitle(int todo_type_id) {
 		log.info("delete_todoTitle()");
+		mapper.delete_allTodoName(todo_type_id);
 		mapper.delete_todoTitle(todo_type_id);
 	}
 

@@ -37,6 +37,7 @@ html, body {
 .member-img {
 	margin: 30px;
 	height: 100px;
+	width : 100px;
 	display: block;
 }
 
@@ -48,8 +49,51 @@ html, body {
 .green {
 	color: green;
 }
+
+#preview-area {
+	position:relative;
+	width: 100px;
+	height: 100px;
+	color: black;
+	border: 0px solid black;
+}
 </style>
 <script type="text/javascript">
+	//img preview
+	function previewImage(targetObj, view_area) {
+		var preview = document.getElementById(view_area);
+		
+		var files = targetObj.files;
+		for ( var i = 0; i < files.length; i++) {
+			var file = files[i];
+			var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
+			if (!file.type.match(imageType))
+				continue;
+			var prevImg = document.getElementById("prev_" + view_area); //이전에 미리보기가 있다면 삭제
+			if (prevImg) {
+				preview.removeChild(prevImg);
+			}
+			var img = document.createElement("img"); 
+			img.id = "prev_" + view_area;
+			img.classList.add("obj");
+			img.file = file;
+			img.style.width = '100px'; 
+			img.style.height = '100px';
+			preview.appendChild(img);
+			
+			var reader = new FileReader();
+			reader.onloadend = (function(aImg) {
+				return function(e) {
+					aImg.src = e.target.result;
+				};
+			})(img);
+			reader.readAsDataURL(file);
+			
+		}
+	}
+
+	//
+
 	//공통함수
 	function showErrorMsg(obj, msg) {
 		obj.attr("class", "error_next_box");
@@ -69,10 +113,22 @@ html, body {
 	$(document).ready(function() {
 		
 		//change button click event
+		$("#change-img-btn").click(function(e) {
+			e.preventDefault();
+			$("#img-area").css("display", "none");
+			$("#change-img-area").css("display", "");
+		});
+		
+		$("#change-img-cancle-btn").click(function(e) {
+			e.preventDefault();
+			$("#img-area").css("display", "");
+			$("#change-img-area").css("display", "none");
+		});
+		
 		$("#change-password-btn").click(function(e) {
 			e.preventDefault();
-			$("#password-area").css("display", "none");
-			$("#change-password-area").css("display", "");
+			$("#password-area").css("display", "");
+			$("#change-password-area").css("display", "none");
 		});
 
 		$("#change-password-cancle-btn").click(function(e) {
@@ -125,6 +181,60 @@ html, body {
 		//
 		
 		//submit button click event
+		$("#change-img-finish-btn").click(function(e) {
+			e.preventDefault();
+			var form = $("#fileForm")[0];
+			var formData = new FormData(form);
+			console.log(form);
+			console.log(formData);
+			$.ajax({
+				type : "POST",
+				url : "/file/profile",
+				data : formData,
+				cache : false,
+				contentType : false,
+				processData : false,
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				success : function(result) {
+					console.log("파일 업로드 완료.");
+					console.log(result);
+					var img_path = result;
+					var id = $("#id").text();
+					var form = {
+						member_id : id,
+						profile_img_path : img_path
+					};
+					
+					$.ajax({
+						type : "PUT",
+						url : "/member/" + id,
+						data : JSON.stringify(form),
+						contentType : "application/json",
+						cache : false,
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+						},
+						success : function(result) {
+							if(result == "SUCCESS") {
+								console.log(result);
+								location.reload();
+							}
+						},
+						error : function(e) {
+							console.log(e);
+							alert("에러가 발생했습니다.");
+						}
+					});
+				},
+				error : function(e) {
+					alert("파일 업로드 중 에러가 발생했습니다.");
+					console.log(e);
+				}
+			})
+		});
+		
 		$("#change-password-finish-btn").click(function(e) {
 			e.preventDefault();
 			var id = $("#id").text();
@@ -453,13 +563,32 @@ html, body {
 			<h2 class="headline" style="font-family: 'yg-jalnan'">회원 정보</h2>
 			<div class="col-md-8" style="margin: auto;">
 				<table class="table">
-					<tr>
+					<tr id="img-area">
 						<th>사진</th>
-						<td><img class="rounded-circle member-img"
-							src="${member.profile_img_path }"
-							onerror="this.src='/resources/img/profile/default_profile_img.jpg'"></td>
-						<td><button type="button" class="btn btn-secondary">사진
-								변경</button></td>
+						<td>
+							<img id="img" class="rounded-circle member-img" src="/resources/img/profile/${member.profile_img_path }" onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+						</td>
+						<td>
+							<button type="button" class="btn btn-secondary" id="change-img-btn">사진 변경</button>
+						</td>
+					</tr>
+					<tr id="change-img-area" style="display: none;">
+						<th>사진</th>
+						<td>
+							<div class="img-preview">
+								<div id='view_area'>
+									<img class="rounded-circle member-img" id="prev_view_area" width='100' src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'"/>
+								</div>							</div>
+							<form id="fileForm" enctype="multipart/form-data" method="post">
+								<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'view_area')">
+							</form>
+						</td>
+						<td>
+							<div class="btn-group">
+								<button type="button" class="n-btn btn-sm-btn-lighter" id="change-img-cancle-btn">취소</button>
+								<button type="button" class="n-btn btn-sm-btn-accent" id="change-img-finish-btn">완료</button>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<th>아이디</th>
@@ -468,8 +597,9 @@ html, body {
 					<tr id="password-area">
 						<th>비밀번호</th>
 						<td><strong>********</strong></td>
-						<td><button type="button" class="btn btn-secondary"
-								id="change-password-btn">비밀번호 변경</button></td>
+						<td>
+							<button type="button" class="btn btn-secondary" id="change-password-btn">비밀번호 변경</button>
+						</td>
 					</tr>
 					<tr id="change-password-area" style="display: none;">
 						<th>비밀번호</th>
@@ -491,10 +621,8 @@ html, body {
 									<span class="error_next_box" id="cpswdMsg" style="display: none" aria-live="assertive"></span>
 								</div>
 								<div class="btn-group">
-									<button type="button" class="n-btn btn-sm-btn-lighter"
-										id="change-password-cancle-btn">취소</button>
-									<button type="button" class="n-btn btn-sm-btn-accent disabled"
-										id="change-password-finish-btn" disabled>완료</button>
+									<button type="button" class="n-btn btn-sm-btn-lighter" id="change-password-cancle-btn">취소</button>
+									<button type="button" class="n-btn btn-sm-btn-accent disabled" id="change-password-finish-btn" disabled>완료</button>
 								</div>
 							</div>
 						</td>

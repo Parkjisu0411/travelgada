@@ -326,21 +326,21 @@ html, body {
 						});
 
 						//Check SignUpForm
-						$("#id").blur(function() {
+						$("#id").keyup(function() {
 							idFlag = false;
 							checkId("first");
 						});
-						$("#pswd1").blur(function() {
+						$("#pswd1").keyup(function() {
 							pwFlag = false;
 							checkPswd1();
 						});
-						$("#pswd2").blur(function() {
+						$("#pswd2").keyup(function() {
 							checkPswd2();
 						});
-						$("#name").blur(function() {
+						$("#name").keyup(function() {
 							checkName();
 						});
-						$("#email").blur(function() {
+						$("#email").keyup(function() {
 							checkEmail();
 						});
 
@@ -392,27 +392,6 @@ html, body {
 													});
 										});
 					})
-					
-	var IMP = window.IMP; // 생략해도 괜찮습니다.
-	IMP.init("imp17262751"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
-	  // IMP.certification(param, callback) 호출
-	IMP.certification({ // param
-		merchant_uid: "ORD20180131-0000011"
-	}, function (rsp) { // callback
-	  if (rsp.success) {
-	    alert("인증 성공");
-	    jQuery.ajax({
-	        url: "https://www.myservice.com/certifications", // 서비스 웹서버
-	        method: "POST",
-	        headers: { "Content-Type": "application/json" },
-	        data: { imp_uid: rsp.imp_uid }
-	      });
-	  } else {
-	    // 인증 실패 시 로직,
-	    alert("인증에 실패했습니다.");
-	    console.log("error : " + rsg.error_msg);
-	  }
-	});
 </script>
 </head>
 <body>
