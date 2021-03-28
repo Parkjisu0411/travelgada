@@ -39,6 +39,16 @@ public class CalendarController {
 		
 	}//calendar end
 	
+	//플래너 모달 달력 페이지
+	@GetMapping("calendar2")
+	public ModelAndView calendar2(ModelAndView mav,@AuthenticationPrincipal MemberDetails member) {
+		mav.setViewName("calendar/calendar2");
+		mav.addObject("member",member.getUsername());
+		
+		return mav;
+		
+	}//calendar end
+	
 	//플래너 생성
 	@PostMapping("planner_create")
 	public ModelAndView planner_create(ModelAndView mav, PlannerVO plannerVO,ScheduleVO scheduleVO){
@@ -62,4 +72,4 @@ public class CalendarController {
 		
 	}//planner_create end
 
-}
+}//controller end
