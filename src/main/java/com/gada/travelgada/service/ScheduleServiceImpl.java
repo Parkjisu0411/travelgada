@@ -82,7 +82,18 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public void deleteSchedule(int schedule_id) {
+		
+		ScheduleVO scheduleVO = mapper.selectScheduleById(schedule_id);
 		mapper.deleteSchedule(schedule_id);
+		if(scheduleVO.getSchedule_type_id() == 4) {
+			log.info("ORDERING =======================");
+			mapper.ordering(scheduleVO.getPlanner_id(), scheduleVO.getSchedule_date());
+		}
+	}
+
+	@Override
+	public ScheduleVO getLastSchedule(int planner_id) {
+		return mapper.selectLastSchedule(planner_id);
 	}
 
 }
