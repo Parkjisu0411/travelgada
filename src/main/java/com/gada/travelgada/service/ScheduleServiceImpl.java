@@ -56,4 +56,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return mapper.selectHotel(planner_id);
 	}
 
+	@Override
+	public void delete_Schedule(int schedule_id) {
+		log.info("delete_Schedule()");
+		mapper.delete_Schedule(schedule_id);
+		
+	}
+
+
+
 }

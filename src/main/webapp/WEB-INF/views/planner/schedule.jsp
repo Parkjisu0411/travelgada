@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -16,20 +16,20 @@
     <script type="text/javascript" src="http://kenwheeler.github.io/slick/slick/slick.min.js"></script>
     
  
- 	<!-- Bootstrap -->
+    <!-- Bootstrap -->
 
 <link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+   href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+   src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 <!-- Font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
-	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
-	rel="stylesheet">
- 	
- 	<!-- 카카오 -->
- 	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+   href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
+   rel="stylesheet">
+    
+    <!-- 카카오 -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     
 <style>
 /* Navbar */
@@ -71,23 +71,15 @@ footer {
 }
 
 #plus{
-	width:100px;
-	height:100px;
-	border-radius:20px;
-	background-color:#FACC2E;
-}
-
-#day{
-	width:100px;
-	height:100px;
-	border-radius:20px;
-	margin:0 auto;
-	background-color:#FACC2E;
+   width:100px;
+   height:100px;
+   border-radius:20px;
+   background-color:#FACC2E;
 }
 
 .form-control{
-	width:200px;
-	height:30px;
+   width:200px;
+   height:30px;
 }
 
 .modal_wrap{
@@ -129,36 +121,98 @@ footer {
     }
     
    #top_btn{
-   		position:fixed; 
-   		right:50px; 
-   		bottom:-50%; 
-   		width:55px; 
-   		height:55px; 
-   		border-radius:50%; 
-   		background:#cda57d; 
-   		z-index:999; 
-   		transition:1s all;
+         position:fixed; 
+         right:50px; 
+         bottom:-50%; 
+         width:55px; 
+         height:55px; 
+         border-radius:50%; 
+         background:#cda57d; 
+         z-index:999; 
+         transition:1s all;
    }
     
    #top_btn.on{
-   		bottom:30px;
+         bottom:30px;
    } 
    #top_btn a{
-   		font-family:"Exo"; 
-   		display:block; 
-   		text-align:center; 
-   		line-height:55px; 
-   		font-size:16px;
-   		color:#fff; 
-   		font-size:bold;
-   	}
+         font-family:"Exo"; 
+         display:block; 
+         text-align:center; 
+         line-height:55px; 
+         font-size:16px;
+         color:#fff; 
+         font-size:bold;
+      }
 
+.button {
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
 
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+  background-color: #4CAF50;
+  color: white;
+}
 
 </style>
 
+<script type="text/javascript">
+	  var token = $("meta[name='_csrf']").attr("content");
+	  var header = $("meta[name='_csrf_header']").attr("content");
+	  $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+    </script>
+    
+    <script type="text/javascript">
+		$(document).ready(function(){
+			$(".delete").click(function(event){				
+				event.preventDefault();
+				console.log("delete click");
+				
+				var tr = $(this).parent().parent();
+				
+				$.ajax({
+					type : "DELETE",
+					url : $(this).attr("href"),
+					cache : false,
+					beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+   	                 console.log("header 실행 "+header+token)
+   	                 //console.log(sentence.toLowerCase());
+   	                 xhr.setRequestHeader(header, token);
+					},
+					success : function(result){
+						console.log("result : " + result );
+						if(result == "SUCCESS"){
+							alert("삭제하시겠습니까?");
+							$(tr).remove();
+						}
+					},
+					error : function(e){
+						alert("오류가 발생했습니다.");
+						console.log(e);
+					}
+				}); // ajax end
+			}); // event end
+		}); // ready end
+	</script>
+
 </head>
 <body>
+   
 <!-- Header -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
@@ -201,116 +255,116 @@ footer {
     </div>
   </nav>
   
- <!--  <a id="kakao-link-btn" href="javascript:sendLink()">
-<img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
-</a> -->
 
-	<div id = "top" style="float:none">
-	<select class="form-control" name="schedule_id">
-		<c:forEach var="planner" items="${plannerList}">
-			<option value='${planner.planner_name}'>${planner.planner_name}</option>
-		</c:forEach>
-	</select>
-	
-	<br />
-	
-	</div>
-	
-	
-	<div class="row text-center" style="width: 100%;">
-	<div style="width: 30%; float:none; margin:0 auto">
-		  <div class="btn-group">
-		    <button type="button" class="btn btn-warning">일정</button>
-		    <button type="button" class="btn btn-warning">지도</button>
-		    <button type="button" class="btn btn-warning">준비물</button>
-		    <button type="button" class="btn btn-warning" >다이어리</button>
-		  </div>
-	</div>
-	</div> 	  
-	<br />
-	<br />
-	
-	<button type='button' id="modal_btn">일정 공유</button>
-	<div class="black_bg"></div>
-	<div class="modal_wrap">
-		<div class="modal_close">
-			<a href="#">close</a>
-		</div>
-		<div><a id="kakao-link-btn" href="javascript:sendLink()">
+   <div id = "top" style="float:none">
+   <select class="form-control" name="schedule_id">
+      <c:forEach var="planner" items="${plannerList}">
+         <option value='${planner.planner_name}'>${planner.planner_name}</option>
+      </c:forEach>
+   </select>
+   
+   <br />
+   
+   </div>
+   
+   
+   <div class="row text-center" style="width: 100%;">
+   <div style="width: 30%; float:none; margin:0 auto">
+        <div class="btn-group">
+          <button type="button" class="btn btn-warning">일정</button>
+          <button type="button" class="btn btn-warning">지도</button>
+          <button type="button" class="btn btn-warning">준비물</button>
+          <button type="button" class="btn btn-warning" >다이어리</button>
+        </div>
+   </div>
+   </div>      
+   <br />
+   <br />
+   
+   <button type='button' id="modal_btn">일정 공유</button>
+   <div class="black_bg"></div>
+   <div class="modal_wrap">
+      <div class="modal_close">
+         <a href="#">close</a>
+      </div>
+      <div><a id="kakao-link-btn" href="javascript:sendLink()">
 <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
 </a></div>
-		<div>
-		</div>
-		</div>
-
-			
-			<div class="slick-items"
-				style="display: flex; justify-content: space-between;">
-				<button id="plus">
-					+
-				</button>
-			
-
-				<c:forEach var="date" items="${dateList}">
-					<button id="day">${date}</button>
-				</c:forEach>
-			</div>
-
-			<table border="1" width="1000px" height="300px" margin="auto"
-				align="center">
-				<thead>
-
-					<tr>
-						<th style="background-color: #FACC2E">날짜</th>
-						<th style="background-color: #FACC2E">도시</th>
-						<th style="background-color: #FACC2E">교통</th>
-						<th style="background-color: #FACC2E">일정</th>
-						<th style="background-color: #FACC2E">숙소</th>
-						<th style="background-color: #FACC2E">비용</th>
-					</tr>
-
-				</thead>
-				<tbody>
-					<c:forEach var="date" items="${dateList}">
-						<tr>
-							<td>${date}</td>
-							<td><c:forEach var="city" items="${cityList }">
-									<c:if test="${city.schedule_date eq date }">
-										<p>${city.schedule_content }</p>
-									</c:if>
-								</c:forEach></td>
-							<td><c:forEach var="vehicle" items="${vehicleList }">
-									<c:if test="${vehicle.schedule_date eq date }">
-										<p>${vehicle.schedule_content }</p>
-									</c:if>
-								</c:forEach></td>
-							<td><c:forEach var="schedule" items="${scheduleList }">
-									<c:if test="${schedule.schedule_date eq date }">
-										<p>${schedule.schedule_content }</p>
-
-									</c:if>
-								</c:forEach></td>
-							<td><c:forEach var="hotel" items="${hotelList }">
-									<c:if test="${hotel.schedule_date eq date }">
-										<p>${hotel.schedule_content }</p>
-									</c:if>
-								</c:forEach></td>
-							<td></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+      <div>
+      </div>
+      </div>
+      
+      
+      <!-- ajax로 delete 처리 -->
+	<%-- <td><a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a></td> --%>
 
 
-			<div id="top_btn"><a href="#">TOP</a></div>
+	<div class="slick-items">
+		<c:forEach var="date" items="${dateList}">
+			<button class="button button1">
+					<span onclick="this.parentElement.style.display='none'"class="close">X</span>
+					${date}
+					</button>
+			</c:forEach>
+	</div>
 
 
-			<!-- Footer -->
-			<footer>
-				<div class="footer-company-info">
-					© 2021 가다, Inc. All rights reserved<br> 개인정보 처리방침·이용약관·사이트맵
-				</div>
-			</footer>
+
+	<table border="1" width="1000px" height="300px" margin="auto"
+            align="center">
+            <thead>
+
+               <tr>
+                  <th style="background-color: #FACC2E">날짜</th>
+                  <th style="background-color: #FACC2E">도시</th>
+                  <th style="background-color: #FACC2E">교통</th>
+                  <th style="background-color: #FACC2E">일정</th>
+                  <th style="background-color: #FACC2E">숙소</th>
+                  <th style="background-color: #FACC2E">비용</th>
+               </tr>
+
+            </thead>
+            <tbody>
+               <c:forEach var="date" items="${dateList}">
+                  <tr>
+                     <td> ${date}</td>
+                     <td><c:forEach var="city" items="${cityList }">
+                           <c:if test="${city.schedule_date eq date }">
+                              <p>${city.schedule_content }</p>
+                           </c:if>
+                        </c:forEach></td>
+                     <td><c:forEach var="vehicle" items="${vehicleList }">
+                           <c:if test="${vehicle.schedule_date eq date }">
+                              <p>${vehicle.schedule_content }</p>
+                           </c:if>
+                        </c:forEach></td>
+                     <td><c:forEach var="schedule" items="${scheduleList }">
+                           <c:if test="${schedule.schedule_date eq date }">
+                              <p>${schedule.schedule_content }</p>
+
+                           </c:if>
+                        </c:forEach></td>
+                     <td><c:forEach var="hotel" items="${hotelList }">
+                           <c:if test="${hotel.schedule_date eq date }">
+                              <p>${hotel.schedule_content }</p>
+                           </c:if>
+                        </c:forEach></td>
+                     <td></td>
+                  </tr>
+               </c:forEach>
+            </tbody>
+         </table>
+
+
+         <div id="top_btn"><a href="#">TOP</a></div>
+
+
+         <!-- Footer -->
+         <footer>
+            <div class="footer-company-info">
+               © 2021 가다, Inc. All rights reserved<br> 개인정보 처리방침·이용약관·사이트맵
+            </div>
+         </footer>
 </body>
 <script type="text/javascript">
 
@@ -322,8 +376,8 @@ $(document).ready(function () {
         dots: true,
         infinite: false,
         speed: 300,
-        slidesToShow: 4,
-        slidesToScroll: 4,
+        slidesToShow: 3,
+        slidesToScroll: 3,
         responsive: [
           {
             breakpoint: 1024,
