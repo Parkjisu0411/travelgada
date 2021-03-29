@@ -88,6 +88,18 @@ public class TodoServiceImpl implements TodoService {
 		log.info("addToDo()");
 		mapper.addToDo(todoVO);		
 	}
+
+	@Override
+	public void todo_name_modify(TodoVO todoVO) {
+		log.info("todo_name_modify()");
+		mapper.todo_name_modify(todoVO);				
+	}
+
+	@Override
+	public TodoVO todo_view(int todo_id) {
+		log.info("todo_view()");
+		return mapper.todo_view(todo_id);
+	}
 	
 //	@Override
 //	public void addToDo(String todo_name, int getRecentTodoTypeId) {

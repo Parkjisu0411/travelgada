@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,7 +51,7 @@ public class TodoController {
 		List<PlannerVO> plannerList = scheduleService.selectPlanner(member.getUsername());
 		PlannerVO planner = plannerList.get(0);
 		
-		mav.setViewName("todo");
+		mav.setViewName("todo/todo");
 		//mav.addObject("todolist", service.todoList());
 		mav.addObject("productList", service.productList());
 		
@@ -115,57 +116,46 @@ public class TodoController {
 		return entity;
 	}
 	
-	
-//	@PostMapping("/addToDo")
-//	public ResponseEntity<String> addToDo(@RequestBody TodoVO todoVO, @RequestParam("todo_name") String todo_name, @RequestParam("getRecentTodoTypeId") int getRecentTodoTypeId) throws Exception{
-//		ResponseEntity<String> entity = null;
-//		
-//		log.info("addToDo");
-//		log.info("" + service.getRecentTodoTypeId());
-//		
-//		try {
-//			//service.addToDo(todoTypeVO, todoVO);
-//			//service.addToDo(todoVO, getRecentTodoTypeId);
-//			//service.addToDo(todo_name, getRecentTodoTypeId);
-//		      todoVO.setTodo_name(todo_name);
-//		      todoVO.setTodo_type_id(getRecentTodoTypeId);
-//		     service.addToDo(todoVO);
-//			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-//		}catch(Exception e){
-//			e.printStackTrace();
-//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//		}
-//		
-//		return entity;
-//	}
-	
-//	   @PostMapping("addToDo")
-//	   public ModelAndView addToDo(ModelAndView mav, @RequestParam("todo_name") String todo_name, @RequestParam("getRecentTodoTypeId") int getRecentTodoTypeId, TodoVO todoVO) throws Exception {
-//	      log.info("addToDo");
-//
-//	      todoVO.setTodo_name(todo_name);
-//	      todoVO.setTodo_type_id(getRecentTodoTypeId);
-//	     service.addToDo(todoVO);
-//	     mav.setViewName("redirect:todo");
-//
-//	      return mav;
-//	   }
-	
-	   @PostMapping("/addToDo")
-	   public ModelAndView addToDo(ModelAndView mav, TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
-	      log.info("addToDo");
-	      log.info(todoVO.getTodo_name());
-	      log.info("투두 아이디!!!!!11" + todoTypeVO.getTodo_type_id());
-	      
-//	      String tn = service.getCategoryId;
-//	      log.info(tn);
-	      
+	@PostMapping("/addToDo")
+	public ModelAndView addToDo(ModelAndView mav, TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
+	   log.info("addToDo");
+	   log.info(todoVO.getTodo_name());
 
-	     todoVO.setTodo_name(todoVO.getTodo_name());
-	     todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
-	     service.addToDo(todoVO);
-	     mav.setViewName("redirect:todo");
+	   todoVO.setTodo_name(todoVO.getTodo_name());
+	   todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
+	   service.addToDo(todoVO);
+	   mav.setViewName("redirect:todo");
 
-	      return mav;
-	   }
+	    return mav;
+	 }
+	
+	 @GetMapping("todo_modify_view/{todo_id}")
+	 public ModelAndView todo_modify_view(ModelAndView mav, TodoVO todoVO) {
+	    log.info("todo_modify_view();");
+
+	    mav.addObject("todo_view", service.todo_view(todoVO.getTodo_id()));
+	    mav.setViewName("todo/todo_modify_view");
+
+	    return mav;
+
+	 }
+	
+	@PutMapping("/todo/{todo_id}")
+	public ResponseEntity<String> todo_name_modify(@RequestBody TodoVO todoVO) {
+		ResponseEntity<String> entity = null;
+		
+		log.info("todo_name_modify");
+		
+		try {
+			service.todo_name_modify(todoVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	
+		return entity;
+	}
+	
+	
 }

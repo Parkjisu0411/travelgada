@@ -27,11 +27,20 @@
 <!-- CSS -->
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+<%-- <link rel="stylesheet" href="${contextPath}/resources/css/header.css"> --%>
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 
   
   <style>
+	body {
+		font-family: 'yg-jalnan';
+		src:
+			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff')
+			format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+  
   	img {
   		object-fit: cover;
   		max-width: 70px;
@@ -39,11 +48,15 @@
   	}
   	
   	.selected {
-	  	text-decoration:line-through;
+	  	text-decoration:line-through double red;
 	  	font-weight:700;
 	  	color:black;
+
   	}
   	
+  	.label{
+  		
+  	}
 	
 	dropdown {
 		float : right;
@@ -58,118 +71,6 @@
 	}
 	
 	
-	/* 체크박스  */
-	
-	.checkbox-container {
-
-position: relative;
-
-}
-
-
-
-// 기본 체크박스 없애기
-
-.checkbox-container input[type="checkbox"] {
-
-position: absolute;
-
-width: 1px;
-
-height: 1px;
-
-padding: 0;
-
-margin: -1px;
-
-overflow: hidden;
-
-clip:rect(0,0,0,0);
-
-border: 0
-
-}
-
-
-
-// 웹의 경우 커서에 pointer 설정
-
-.checkbox-container input[type="checkbox"] + label {
-
-display: inline-block;
-
-position: relative;
-
-cusor: pointer;
-
--webkit-user-select: none;
-
--moz-user-select: none;
-
--ms-user-select: none;
-
-user-select: none;
-
-}
-
-
-
-// 새로운 디자인의 체크박스 만들기
-
-.checkbox-container input[type="checkbox"] + label:before {
-
-content: ' ';
-
-display: inline-block;
-
-width: 18px;
-
-height: 18px;
-
-line-height: 18px;
-
-margin: -2px 8px 0 0;
-
-text-align: center;
-
-vertical-align: middle;
-
-background: #fafafa;
-
-border: 1px solid #cacece;
-
-border-radius: 3px;
-
-box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-
-}
-
-
-
-.checkbox-container input[type="checkbox"] + label:active:before,
-
-.checkbox-container input[type="checkbox"]:checked + label:active:before {
-        box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
-
-}
-
-
-
-.checkbox-container input[type="checkbox"]:checked + label:before {
-
-content: '\2713';
-
-color: #314ca2;
-
-text-shadow: 1px 1px white;
-
-background: #f1f4ff;
-
-border-color: #adb8c0;
-
-box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-
-}
 
   </style>
 
@@ -243,8 +144,8 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
     							htmls +='</table></div></div></div>'
 
     			        	$(".todoTable").append(htmls); 
-    						$(location).attr('href', '${pageContext.request.contextPath}/todo');
-    			        	
+    						//$(location).attr('href', '${pageContext.request.contextPath}/todo');
+    						    location.reload();
     					}  
     				},
     				error : function(e){
@@ -258,19 +159,19 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 
 	<script>
     	$(document).ready(function() {
-    		$(".makeForm").click(function makeForm(event) {
+    		$(".makeForm").one("click", function makeForm(event) {
     			console.log("makeForm");
     			
     				var tr = $(this).parent();
     			   // var todo_type_id = $(this).parent().parent().parent().parent().parent().parent().children("#here").attr("value");
-        			var todo_type_id = $("input[name=todo_type_id]").val();
-    			   console.log(todo_type_id);
+        			//var todo_type_id = $("input[name=todo_type_id]").val();
+        			var todo_type_id = $(this).attr("name");
+    			    console.log(todo_type_id);
     						
     				var htmls="";
 
     			    htmls +='<form id="addToDo" action="/addToDo" method="POST">'
     			    htmls +='<input type="hidden" id="todo_type_id" name="todo_type_id" value="' + todo_type_id + '">'
-    			   	//htmls +='<c:forEach items="${todoTitle}" var="todoTitle"><input type="hidden" name="todo_type_id" value="${todoTitle.todo_type_id }"></c:forEach>'
     			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
     			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
     			    htmls +='<input type="text" id="todo_name" name="todo_name" placeholder="ex.카메라">'
@@ -282,30 +183,53 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
     </script>
     
     
+    
     <script>
     	$(document).ready(function() {
-    		$(".dropdown-item").click(function makeOption(event) {
+    		$(".listModify").one("click", function makeOption(event) {
     			console.log("makeOption");
-    			
-    				var tr = $(this).parent().parent().siblings(".table").children().children().children().siblings(".option");
-    				var del_todo_id = $(".del_todo_name").val();
+
+    				//var tr = $(this).parent().parent().siblings(".table").children().children().children().siblings(".option");
+    				//var del_todo_id = $(".del_todo_name").val();
+    				
+    				var tr = $(this).parent().parent().parent().find(".option");
+    				var del_todo_name = $(this).parent().parent().parent().find(".del_todo_name").attr("value");
+    				//var del_todo_id = $(this).attr("value");
+    				var modi_todo_name = $(this).parent().parent().parent().find(".option").children().attr("value");
+    				//var modify_todo_name = $(this).siblings(".todoName").attr("value");
+    				//var modify_todo_name = $(this).siblings().children(".option").children().attr("value");
     						
     				var htmls="";
-					
-    				htmls +='<a class="delete" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_id + '">수정</a>/'
-    				htmls +='<a class="delete" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_id + '">삭제</a>'
+
+      					
+    				//htmls +='<a class="modify" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_id + '"><input type="hidden" class="todo_Name" value="' + modify_todo_name + '">수정</a>/'
+htmls +='<a class="modify" onclick="window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + modi_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')">수정</a>/'
+    				htmls +='<a class="delete" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_name + '">삭제</a>'
+    				
 
     			    $(tr).append(htmls);
-    		});
+    				
+    				//$(tr).toggle('slow');
+    		});		
     		
     	});
     </script>
+    
+    <script>
+	function openwin() {
+		window.open('about:blank','popwin',
+		  'width=1250,height=800,toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, left=300, top=120');
+  	document.formDate.submit();
+	}//function end
+</script>
+    
+    
 
-	
 
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$(".delete").click(function(event){				
+			$(document).on("click", ".delete", function(event){		
+				if (confirm("삭제하시겠습니까?")) {
 				event.preventDefault();
 				console.log("delete click");
 				
@@ -323,12 +247,7 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 					success : function(result){
 						console.log("result : " + result );
 						if(result == "SUCCESS"){
-						    if (!confirm("삭제하시겠습니까?")) {
-						        // 취소 버튼 클릭 시 이벤트
-						    } else {
-						        // 확인 버튼 클릭 시 이벤트
-						    	$(tr).remove();
-						    }
+							$(tr).remove();
 						}
 					},
 					error : function(e){
@@ -336,13 +255,17 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 						console.log(e);
 					}
 				}); // ajax end
+			}else{
+				return false;
+			}
 			}); // event end
 		}); // ready end
 	</script>
 
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$(".titleDelete").click(function(event){				
+			$(".titleDelete").click(function(event){			
+				if (confirm("삭제하시겠습니까?")) {
 				event.preventDefault();
 				console.log("titleDelete click");
 				
@@ -360,14 +283,9 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 					},
 					success : function(result){
 						console.log("result : " + result );
-						if(result == "SUCCESS"){				
-						    if (!confirm("삭제하시겠습니까?")) {
-						        // 취소 버튼 클릭 시 이벤트
-						    } else {
-						        // 확인 버튼 클릭 시 이벤트
-						        $(list).remove();
-						    	$(category).remove();
-						    }	
+						if(result == "SUCCESS"){		
+							$(list).remove();
+					    	$(category).remove();
 						}
 					},
 					error : function(e){
@@ -375,6 +293,10 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 						console.log(e);
 					}
 				}); // ajax end
+				
+			}else{
+				return false;
+			}
 			}); // event end
 		}); // ready end
 	</script>
@@ -396,10 +318,12 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 			$("input:checkbox").on('click', function() {
 				if ( $(this).prop('checked') ) {
 					//$(this).parent().parent().parent().addClass("selected");
-					$(this).parent().siblings(".del_todo_name").addClass("selected");
+					//$(this).parent().siblings(".del_todo_name").addClass("selected");
+					$(this).parent().parent().parent().parent().children().children("p").addClass("selected");
 				} else {
 					//$(this).parent().parent().parent().removeClass("selected");
-					$(this).parent().siblings(".del_todo_name").removeClass("selected");
+					//$(this).parent().siblings(".del_todo_name").removeClass("selected");
+					$(this).parent().parent().parent().parent().children().children("p").removeClass("selected");
 				} 
 			}); 
 		}); 
@@ -413,25 +337,10 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 <!-- 해더 -->
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-<!-- 	<br />
 	<br />
 	<br />
 	<div class="container">
-		<div class="row text-center" style="width: 100%;">
-			<div style="width: 30%; float: none; margin: 0 auto">
-				<div class="btn-group">
-					<button type="button" class="btn btn-warning">일정</button>
-					<button type="button" class="btn btn-warning">지도</button>
-					<button type="button" class="btn btn-warning">준비물</button>
-					<button type="button" class="btn btn-warning">다이어리</button>
-				</div>
-			</div>
-		</div>
-	</div> -->
-
-	<br />
-	<br />
-	<div class="container">
+	<h2 class="headline" style="font-family: 'yg-jalnan'">준비물</h2>
 		<div class="row">
 			<div class="col-sm-12">
 				<select class="form-control" name="planner_id">
@@ -443,19 +352,21 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 		</div>
 	</div>
 
+	<br /><br />
 
-	<br /><br /><br />
+	<br />
 	<div class="container">
 		<div class="row">
-
+		&nbsp;&nbsp;<h4 style="font-family: 'yg-jalnan'">카테고리를 입력하세요</h4>
+		<hr style="border: solid 1px light-grey; width: 75%;">
 			<div class="col-sm-3">
 				<div class="jb-table">
 					<div class="jb-table-row">
 						<form id="addToDoTitle" action="/addTodoType" method="POST">
 							<input type="hidden" class="getRecentTodoTypeId" value="${getRecentTodoTypeId }"> <input type="hidden" id="planner_id" value="${getPlannerId }">
-							<div class="jb-table-cell">
-								<p>
-									카테고리를 입력하세요<input type="text" id="todo_title" placeholder="ex.전자기기">
+							<div class="jb-table-cell"> <br />
+						 		<p>
+									<input type="text" id="todo_title" placeholder="ex.전자기기">
 								</p>
 								<input type="submit" value="카테고리 만들기">
 							</div>
@@ -465,84 +376,88 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 			</div>
 		</div>
 	</div>
-
-
-
 	<br />
+	<hr style="border: solid 1px light-grey; width: 66%;">
 	<br />
+
 	<div class="todoTable container">
 		<div class="row">
 			<c:forEach items="${todoTitle }" var="todoTitle">
-			<input id="here" type="hidden" class="todo_type_id" name="todo_type_id" value="${todoTitle.todo_type_id }" />
 				<div class="col-sm-3">
 					<div class="dropdown">
-						<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>
+						<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>	
 						<div class="dropdown-menu dropdown-menu-right">
-							<a class="dropdown-item" href="javascript:void(0);" onclick="function makeOption();">수정</a>
-							<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">삭제</a>
+							<button class="listModify dropdown-item" onclick="function makeOption();">수정</button>
+							<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">카테고리 삭제</a>
 						</div>
-					</div>
+					
 
 					<table class="table table-bordered">
+					
 						<tr>
 							<td colspan="3">${todoTitle.todo_title } ${todoTitle.todo_type_id }</td>
-						</tr>		
+						</tr>	
+							
+						
+						
 						<c:forEach var="todoName" items="${todoName }">
-						<input class="del_todo_name" type="hidden" value="${todoName.todo_id }">
+						<input class="del_todo_name" type="hidden" name="del_todo_name" value="${todoName.todo_id }">
 						<c:if test="${todoName.todo_type_id eq todoTitle.todo_type_id }">	
-						<tr >
+
+				
+						<tr>
 							<td>
+								<div class="label">
 								 <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label> 
- 								<!-- <div class="checkbox-container">
-
-<input type="checkbox" id="is-subscription">
-
-<label for="is-subscription"></label>
-
-</div>  -->
+ 								</div>
 							</td>
 						
 							<td >
-								<p>${todoName.todo_name } ${todoTitle.todo_type_id }</p>
+								<p>${todoName.todo_name } ${todoName.todo_id }</p>
 							</td>
 
 
 
 							<!-- ajax로 delete 처리 -->
 							<td class="option">
+								 <input type="hidden" class="modi_todo_name" value="${todoName.todo_id }"> 	
 								<%-- <a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a> --%>
-								<a></a>
 							</td>
 						</tr>
+						
 						</c:if>
 						</c:forEach>
+						
 						<tr>
 							<!-- form으로 insert 처리 -->
 							<td colspan="3">
-								<a class="makeForm" href="javascript:void(0);" onclick="function makeForm();">+ 체크리스트 추가</a>
+								<div class="container">
+								<div class="row">
+									<input type="button" class="makeForm btn-primary" onclick="function makeForm();" name="${todoTitle.todo_type_id }" value="+ 체크리스트 추가"></input>
+								</div>
+								</div>
 							</td>
 
 						</tr>
 					</table>
-					
+					</div>
 				</div>
 			</c:forEach>
 		</div>
 	</div>
+	
+	
+	
 
 
 
 
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
+	<br /><br /><br /><br /><br /><br />
 	<div class="container">
-		<h3>혹시 잊어버린 물건은 없으신가요?</h3>
-		<br />
-		<p>다른 여행객들이 주로 챙기는 물품들</p>
+		<h4 style="font-family: 'yg-jalnan'">혹시 잊어버린 물건은 없으신가요?</h4>  
+		<hr style="border: solid 1px light-grey; width: 100%;">
+		
+		<div>다른 여행객들이 주로 챙기는 물품들</div>
 		<ol>
 			<li>추천 리스트 1</li>
 			<li>추천 리스트 2</li>
@@ -553,15 +468,11 @@ box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,
 	</div>
 
 
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
+	<br /><br /><br /><br /><br /><br />
 	<div class="container">
-		<h3>이 상품이 필요하진 않으신가요?</h3>
-		<br /> <br />
+		<h4 style="font-family: 'yg-jalnan'">이 상품이 필요하진 않으신가요?</h4>  
+		<hr style="border: solid 1px light-grey; width: 100%;">
+		<br />
 		<div class="row">
 			<c:forEach items="${productList }" var="pdlist">
 				<div class="col-sm-3">
