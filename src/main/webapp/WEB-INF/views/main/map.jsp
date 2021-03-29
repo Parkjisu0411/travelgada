@@ -28,6 +28,7 @@
 </head>
 
 <body>
+
   <div id="map"></div>
 
   <!-- Google Map -->
@@ -90,7 +91,6 @@
       }
     });
   </script>
-
 </body>
 
 </html>
