@@ -61,6 +61,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select * from schedule where schedule_id = #{schedule_id}
 		]]>
 	</select>
+	
+	<update id="updateSchedule">
+		<![CDATA[
+			update schedule set schedule_order = #{schedule_order} where schedule_id = #{schedule_id}
+		]]>
+	</update>
 
 
 </mapper>

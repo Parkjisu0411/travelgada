@@ -25,6 +25,8 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="/resources/slick/slick.min.js"></script>
+<!-- jquery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
 <meta charset="UTF-8">
 <title>Schedule</title>
 <style>
@@ -45,6 +47,7 @@
 	display: inline-block;
 	float: right;
 	color: #A2A2A2;
+	
 }
 
 .delete-btn {
@@ -67,13 +70,43 @@ tbody > div {
 
 </style>
 <script type="text/javascript">
-	function moveToMap() {
-		var lattitude = 35.160973
-		var center = new google.maps.LatLng(35.160973, 35.160973);
-		map.panTo(center);
+	//일정 순서 재정렬
+	function reOrder(obj) {
+		var size = $(obj).children("div").children(".order").size();
+		for(var i = 0; i < size; i++) {
+			$(obj).children("div").children(".order").eq(i).html(i+1 + ". ");
+		}
 	}
 	
-
+	function reOrderDB(obj) {
+		var size = $(obj).children("div").children(".order").size();
+		for(var i = 0; i < size; i++) {
+			var index = i + 1;
+			var data = {
+				schedule_order : index,
+				schedule_id : $(obj).children('div').children('.delete-btn').eq(i).attr('id')
+			};
+			console.log(data);
+			$.ajax({
+				type : "PUT",
+				url : "/planner/schedule",
+				data : JSON.stringify(data),
+				contentType : "application/json",
+				cache : false,
+				beforeSend : function(xhr){
+	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				success : function(result) {
+					console.log(result);
+				},
+				error : function(e) {
+					alert("일정 순서 변경 중 오류가 발생했습니다.");
+					console.log(e);
+				}
+			})
+		}
+	}
+	//
 	//text parsing to json object
 	$.fn.serializeObject = function() {
 		var o = {};
@@ -136,10 +169,7 @@ tbody > div {
 				schedule.remove();
 				budget.html(next);
 				if(schedule_type == 'schedule-area') {
-					for(var i = 1; i < size; i++) {
-						console.log(td.children("div").children(".order").eq(i).text());
-						td.children("div").children(".order").eq(i-1).html(i + ". ");
-					}
+					reOrder(td);
 				}
 			},
 			error : function(e) {
@@ -297,6 +327,7 @@ tbody > div {
 			}
 			var date = $(this).parent().parent().attr("id");
 			var schedule_type  = $(this).parent().attr("class");
+			console.log(schedule_type);
 			var schedule_type_id;
 			var planner_id = $(this).parent().parent().children(".country-area").children("div").children(".this_planner_id").text();
 			if(schedule_type == "country-area") {
@@ -305,7 +336,7 @@ tbody > div {
 				schedule_type_id = 1;
 			}  else if(schedule_type == "vehicle-area") {
 				schedule_type_id = 3;
-			}  else if(schedule_type == "schedule-area") {
+			}  else if(schedule_type == "schedule-area ui-sortable") {
 				schedule_type_id = 4;
 			}  else if(schedule_type == "hotel-area") {
 				schedule_type_id = 2;
@@ -437,6 +468,22 @@ tbody > div {
 				}
 			});
 		})
+		//드래그 앤 드롭으로 일정 순서 변경하기
+		$(".schedule-area").sortable({
+			helper: 'clone',
+			axis : 'y',
+			opacity : 0.7,
+			placeholder:"itemBoxHighlight",
+			handle : ".order-control",
+			
+	        start: function (event, ui) {
+	        },
+	        stop: function (event, ui) {
+	        	console.log(this);
+	        	reOrder(this);
+	        	reOrderDB(this);
+	        }
+		});
 	});
 </script>
 <!-- google Map API -->
@@ -534,7 +581,7 @@ tbody > div {
 							<td class="schedule-area">
 								<c:forEach var="schedule" items="${scheduleList }">
 									<c:if test="${schedule.schedule_date eq date }">
-										<div>
+										<div class="sortable-order">
 											<span class="order">${schedule.schedule_order}. </span><span class="content">${schedule.schedule_content }</span>
 											<c:if test="${schedule.budget ne 0 }"><span class="budget">(${schedule.budget }₩)</span></c:if>
 											<span class='order-control'>&nbsp;&nbsp;<i class="fas fa-bars"></i></span>
@@ -542,7 +589,7 @@ tbody > div {
 										</div>
 									</c:if>
 								</c:forEach>
-								<a class="insert-btn" href="#">추가하기</a>
+								<a class="insert-btn ui-state-disabled" href="#">추가하기</a>
 							</td>
 							<td class="hotel-area">
 								<c:forEach var="hotel" items="${hotelList }">

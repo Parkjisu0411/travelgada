@@ -29,5 +29,7 @@ public interface ScheduleMapper {
 	public ScheduleVO selectLastSchedule(int planner_id);
 	
 	public void ordering(@Param("planner_id") int planner_id, @Param("schedule_date") Date schedule_date);
+
+	public void updateSchedule(ScheduleVO scheduleVO);
 	
 }

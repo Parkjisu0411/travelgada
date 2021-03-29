@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -96,6 +97,19 @@ public class ScheduleController2 {
 			data.put("error", e.getMessage());
 			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.BAD_REQUEST);
 			log.info("ERROR Message : " + e.getMessage());
+		}
+		return entity;
+	}
+	
+	@PutMapping("/planner/schedule")
+	public ResponseEntity<String> modifySchedule(@RequestBody ScheduleVO scheduleVO) {
+		ResponseEntity<String> entity = null;
+		try {
+			scheduleService.modifySchedule(scheduleVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}

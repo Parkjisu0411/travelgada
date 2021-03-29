@@ -29,5 +29,7 @@ public interface ScheduleService {
 	public void deleteSchedule(int schedule_id);
 	
 	public ScheduleVO getLastSchedule(int planner_id);
+	
+	public void modifySchedule(ScheduleVO scheduleVO);
 
 }

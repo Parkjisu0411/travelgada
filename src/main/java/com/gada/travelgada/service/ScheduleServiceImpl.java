@@ -96,4 +96,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return mapper.selectLastSchedule(planner_id);
 	}
 
+	@Override
+	public void modifySchedule(ScheduleVO scheduleVO) {
+		mapper.updateSchedule(scheduleVO);
+	}
+
 }
