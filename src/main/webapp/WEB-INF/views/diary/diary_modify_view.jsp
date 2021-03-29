@@ -11,6 +11,7 @@
 <title>´ÙÀÌ¾î¸®</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<<<<<<< HEAD
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- 	private int diary_id;
@@ -19,6 +20,12 @@
 	private String hashtag;
 	private Timestamp diary_date;
 	private int planner_id;     -->
+=======
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+ 	
+ 	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+	
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 	<script type="text/javascript">
 	/* ¹Ì¸®º¸±â */
 	function previewImage(targetObj, View_area) {
@@ -147,7 +154,12 @@
 <input type="hidden" name="diary_id" value="${diary_view.diary_id}"/>
 
 <div class="container">
+<<<<<<< HEAD
   <h2 class="text-warning">Diary</h2>
+=======
+<br>
+  <h1 class="text-warning" style="font-family: 'yg-jalnan'">Diary</h1>
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
   <div class="row">
 
    <div class="col-sm-3"> 
@@ -160,8 +172,13 @@
 				<td>
 <!--      <div class="form-group"> -->
       
+<<<<<<< HEAD
      	<input type="file" class="form-control-file border" name="img_path" id="profile_pt" onchange="previewImage(this,'View_area')">
 		<input type="button" id='uploadBtn' value="¾÷·Îµå"/>
+=======
+     	<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+	
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 <!--     </div>  -->
 				</td>
 			</tr> 
@@ -172,17 +189,25 @@
 			</tr>
 			<tr>
       			<td>
-      				<h4>Tag</h4>
+      				<h4 style="font-family: 'yg-jalnan'">Tag</h4>
 				</td>
 			</tr>
 			<tr>
 			<td>
+<<<<<<< HEAD
       		<textarea rows= "1" cols="30" name="hashtag">${diary_view.hashtag}</textarea>
+=======
+      		<textarea rows= "2" cols="50" name="hashtag">${diary_view.hashtag}</textarea>
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 			</td>
 			</tr>
 			<tr>
 			<td>
+<<<<<<< HEAD
 			<input type="submit" value="ÀÛ¼º" id= 'updateForm'>
+=======
+					<input type="button" style="font-family: 'yg-jalnan'" id="submitBtn" value="ìž‘ì„±">
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 			</td>
 			</tr>
 			</table>

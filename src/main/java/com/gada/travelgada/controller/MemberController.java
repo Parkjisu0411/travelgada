@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -53,6 +54,20 @@ public class MemberController {
 		return entity;
 	}
 	
+	@PutMapping("member/{member_id}")
+	public ResponseEntity<String> updateMember(@RequestBody MemberVO memberVO) {
+		ResponseEntity<String> entity = null;
+		
+		try {
+			memberService.updateMember(memberVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 	@GetMapping("/member/mypage")
 	public ModelAndView memberInfo(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
 		log.info("MyPage=================");
@@ -72,13 +87,6 @@ public class MemberController {
 		return mv;
 	}
 	
-	@PostMapping("/member/{member_id}")
-	public ResponseEntity<String> modifyMemberInfo(@RequestBody MemberVO memberVO) {
-		ResponseEntity<String> entity = null;
-		log.info("Modify Member ID :  " + memberVO.getMember_id());
-		return null;
-	}
-	
 	@GetMapping("/member/login")
 	public ModelAndView loginForm(ModelAndView mv) {
 		log.info("Login Form >>> ");
@@ -86,4 +94,50 @@ public class MemberController {
 		
 		return mv;
 	}
+<<<<<<< HEAD
+=======
+	
+	@GetMapping("/member/mypage/point")
+	public ModelAndView memberPoint(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
+		log.info("MyPage==========Point==========");
+		mv.addObject("amount", PointCalculator.getCurrentPoint(memberService.getPoint(memberDetails.getUsername())));
+		mv.addObject("pointList", memberService.getPoint(memberDetails.getUsername()));
+		mv.setViewName("/member/memberPoint");
+		return mv;
+	}
+	
+	@GetMapping("/member/modify")
+	public ModelAndView memberInfoModify(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
+		log.info("MyPage==========Modify==========");
+		mv.addObject("member", memberService.getMember(memberDetails.getUsername()));
+		mv.setViewName("/member/modify");
+		return mv;
+	}
+	
+	@GetMapping("/member/checkid")
+	public ResponseEntity<String> checkId(@RequestParam("id") String id) {
+		ResponseEntity<String> entity = null;
+		
+		if(memberService.isExist(id)) {
+			entity = new ResponseEntity<String>("FAIL", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}
+		return entity;
+		
+	}
+	
+	@GetMapping("/member/checkpw")
+	public ResponseEntity<String> checkPw(@RequestParam("id") String id, @RequestParam("pw") String pw) {
+		ResponseEntity<String> entity = null;
+		
+		if(memberService.isCorrect(id, pw)) {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("FAIL", HttpStatus.OK);
+		}
+		return entity;
+		
+	}
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 }

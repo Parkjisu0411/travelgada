@@ -33,6 +33,7 @@ html, body {
 
 .member-img {
 	height: 100px;
+	width: 100px;
 	display: block;
 	margin: 20px;
 }
@@ -144,10 +145,24 @@ footer {
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">마이페이지</h2>
+<<<<<<< HEAD
 			<div class="row border">
 				<div class="col-md-4 member-profile">
 					<img class="rounded-circle member-img" src="${member.profile_img_path }" onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
 					<button class="btn btn-secondary btn-profile-img">프로필 이미지 변경</button>
+=======
+
+			<p class="view-more-p">
+				<button type="button" class="btn btn-secondary"
+					onclick="location.href='/member/modify'">회원정보 수정</button>
+			</p>
+			<div class="row">
+				<div class="col-md-4 member-profile member-profile">
+					<img class="rounded-circle member-img"
+						src="/resources/img/profile/${member.profile_img_path }"
+						onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+					<p>${member.member_name }</p>
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 				</div>
 				<div class="col-md-8 member-detail">
 					<table class="table">
@@ -164,8 +179,13 @@ footer {
 							<td>
 								<c:forEach var="shipping_loc" items="${shippingList }">
 									<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
+<<<<<<< HEAD
 								</c:forEach>
 							</td>
+=======
+								</c:forEach></td>
+							<td><a href="/member/shipping">관리</a></td>
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 						</tr>
 						
 					</table>

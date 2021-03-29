@@ -148,8 +148,14 @@ footer {
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
+<<<<<<< HEAD
 			<h2 class="headline" style="font-family: 'yg-jalnan'"><img class="nav-logo-img"
 				src="${contextPath}/resources/logo.png">가다 로그인</h2>
+=======
+			<h2 class="headline" style="font-family: 'yg-jalnan'">
+				<img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다 로그인
+			</h2>
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 			<div class="col-md-6" id="login-form">
 				<form action="/member/login" method="POST">
 					<input name="${_csrf.parameterName}" type="hidden"

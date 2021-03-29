@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<<<<<<< HEAD
 <meta charset="EUC-KR">
 <title>´ÙÀÌ¾î¸®</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -16,13 +17,29 @@
 	private String hashtag;
 	private Timestamp diary_date;
 	private int planner_id;     -->
-	
-	<script type="text/javascript">
-	function previewImage(targetObj, View_area) {
-	var preview = document.getElementById(View_area); //div id
-	var ua = window.navigator.userAgent;
+=======
+<meta charset="utf-8">
 
+<title>diary</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
+	
+<script type="text/javascript">
+	function previewImage(targetObj, View_area) {
+		var preview = document.getElementById(View_area); //div id
+		var ua = window.navigator.userAgent;
+
+<<<<<<< HEAD
   //ieÀÏ¶§(IE8 ÀÌÇÏ¿¡¼­¸¸ ÀÛµ¿)
+=======
+ 	//ieì¼ë•Œ(IE8 ì´í•˜ì—ì„œë§Œ ìž‘ë™)
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 	if (ua.indexOf("MSIE") > -1) {
 		targetObj.select();
 		try {
@@ -124,7 +141,12 @@ $(document).ready(function(){
 <input type="hidden" name="planner_id" value="${planner.planner_id}"/>
 
 <div class="container">
+<<<<<<< HEAD
   <h2 class="text-warning">Diary</h2>
+=======
+<br>
+  <h1 class="text-warning" style="font-family: 'yg-jalnan'">Diary</h1>
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
   <div class="row">
 
    <div class="col-sm-3"> 
@@ -138,8 +160,13 @@ $(document).ready(function(){
 				<td>
 <!--      <div class="form-group"> -->
       
+<<<<<<< HEAD
      	<input type="file" class="form-control-file border" name="img_path" id="profile_pt" onchange="previewImage(this,'View_area')">
 		<input type="button" id='uploadBtn' value="¾÷·Îµå"/>
+=======
+     	<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+		<!-- <input type="button" id='uploadBtn' value="ì—…ë¡œë“œ"/> -->
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 <!--     </div>  -->
 				</td>
 			</tr> 
@@ -150,17 +177,26 @@ $(document).ready(function(){
 			</tr>
 			<tr>
       			<td>
-      				<h4>Tag</h4>
+      				<h4 style="font-family: 'yg-jalnan'">Tag</h4>
 				</td>
 			</tr>
 			<tr>
 			<td>
+<<<<<<< HEAD
       		<textarea rows= "1" cols="30" name="text"/></textarea>
+=======
+      		<textarea rows= "2" cols="50" name="hashtag"/></textarea>
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 			</td>
 			</tr>
 			<tr>
 			<td>
+<<<<<<< HEAD
 			<input type="submit" value="ÀÛ¼º">
+=======
+			<!-- <input type="button" value="ìž‘ì„±" style="display:none;" > -->
+			<button type="button" id="fileCheck" style="font-family: 'yg-jalnan'">ìž‘ì„±</button>
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 			</td>
 			</tr>
 			</table>

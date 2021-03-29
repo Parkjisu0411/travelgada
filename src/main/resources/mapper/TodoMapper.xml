@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gada.travelgada.mapper.TodoMapper">
+	 
+<!-- 	 <select id="getTodoTitle" resultType="com.gada.travelgada.domain.TodoTypeVO">
+		<![CDATA[
+			select todo_title, todo_type_id from todo_type where planner_id = #{planner_id}
+		]]>
+	 </select>
+	 
+	 <select id="getTodoName" resultType="com.gada.travelgada.domain.TodoVO">
+		<![CDATA[
+			select todo_name, todo_type_id, todo_id from todo
+		]]>
+	 </select>
+	 
+	 <select id="productList" resultType="com.gada.travelgada.domain.ProductVO">
+		<![CDATA[
+			select product_name, price, img_path from product
+		]]>
+	 </select>
+	 
+	 <delete id="delete_todoName">
+		<![CDATA[
+			delete from todo where todo_id = #{todo_id}
+		]]>
+	 </delete>
+	 
+	 
+	 <insert id="addToDo">
+		<![CDATA[
+			insert into 
+		]]>
+	 </insert> -->
+	 
+
+
+
+
+   
+     <resultMap id="todoMap" type="com.gada.travelgada.domain.TodoVO">
+       <result property="todo_id" column="todo_id"/>
+       <result property="todo_name" column="todo_name"/>
+       <result property="complete_flag" column="complete_flag"/>
+       <result property="todo_type_id" column="todo_type_id"/>
+      
+   </resultMap>
+   
+   <resultMap id="todoTypeMap" type="com.gada.travelgada.domain.TodoTypeVO">
+      <result property="todo_type_id" column="todo_type_id"/>
+      <result property="todo_title" column="todo_title"/>
+      <result property="planner_id" column="planner_id"/>
+      <collection property="todo" resultMap="todoMap"></collection>
+   </resultMap>
+   
+<!--    <select id="todoList" resultMap="todoTypeMap">
+      <![CDATA[
+         select todo_name, complete_flag, todo_title from todo as a, todo_type as b where a.todo_type_id = b.todo_type_id
+      ]]>
+   </select>  -->
+   
+   	 <select id="getTodoTitle" resultMap="todoTypeMap">
+		<![CDATA[
+			select todo_title, todo_type_id from todo_type where planner_id = #{planner_id}
+		]]>
+	 </select>
+	 
+	 <select id="getTodoName" resultMap="todoMap">
+		<![CDATA[
+			select todo_name, todo_type_id, todo_id from todo
+		]]>
+	 </select>
+	 
+	 <select id="productList" resultType="com.gada.travelgada.domain.ProductVO">
+		<![CDATA[
+			select product_name, price, img_path from product
+		]]>
+	 </select>
+	 
+	 <delete id="delete_todoName">
+		<![CDATA[
+			delete from todo where todo_id = #{todo_id}
+		]]>
+	 </delete>
+	 
+	 <delete id="delete_todoTitle">
+		<![CDATA[
+			delete from todo_type where todo_type_id = #{todo_type_id}
+		]]>
+	 </delete>
+	 
+	 <delete id="delete_allTodoName">
+		<![CDATA[
+			delete from todo where todo_type_id = #{todo_type_id}
+		]]>
+	 </delete>
+	 
+	 <insert id="addTodoType">
+		<![CDATA[
+			insert into todo_type (todo_type_id, todo_title, planner_id) values (get_seq('todo_type_seq'), #{todo_title}, #{planner_id})
+		]]>
+	 </insert>
+	 
+	 <insert id="addToDo">
+		<![CDATA[
+			insert into todo (todo_type_id, todo_id, todo_name, complete_flag) values (#{todo_type_id}, get_seq('todo_seq'), #{todo_name}, 0)
+		]]>
+	 </insert>
+	 
+ 	 <select id="getRecentTodoTypeId" resultType="int">
+		<![CDATA[
+			SELECT todo_type_id FROM todo_type ORDER BY todo_type_id DESC LIMIT 1
+		]]>
+	 </select>
+	 
+	 <select id="todo_view" resultMap="todoMap">
+   		<![CDATA[
+   			select * from todo where todo_id = #{todo_id}
+  		 ]]>
+	</select>
+	 
+	<update id="todo_name_modify">
+		<![CDATA[
+			update todo set todo_name = #{todo_name} where todo_id = #{todo_id}
+		]]>
+	</update>	
+	 
+<!-- 	 <select id="getRecentTodoTypeId" resultMap="todoTypeMap">
+		<![CDATA[
+			select * from todo_type where todo_type_id = (select MAX(todo_type_id) from todo_type)
+		]]>
+	 </select> -->
+
+</mapper>

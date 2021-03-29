@@ -54,4 +54,53 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.selectShippingLoc(member_id);
 	}
 
+<<<<<<< HEAD
+=======
+	@Override
+	public boolean isExist(String member_id) {
+		MemberVO member = memberMapper.selectMember(member_id);
+		if (member == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isCorrect(String member_id, String pw) {
+		MemberVO member = memberMapper.selectMember(member_id);
+		if (passEncoder.matches(pw, member.getPw())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public void updateMember(MemberVO memberVO) {
+		log.info("UPDATE MEMBER ========================");
+		MemberVO member = memberMapper.selectMember(memberVO.getMember_id());
+		if(memberVO.getMember_name() != null) {
+			member.setMember_name(memberVO.getMember_name());
+		} if(memberVO.getEmail() != null) {
+			member.setEmail(memberVO.getEmail());
+		} if(memberVO.getPhone_num() != null) {
+			member.setPhone_num(memberVO.getPhone_num());
+		} if(memberVO.getProfile_img_path() != null) {
+			member.setProfile_img_path(memberVO.getProfile_img_path());
+		} if(memberVO.getPw() != null) {
+			log.info("============================raw pw : " + memberVO.getPw());
+			member.setPw(passEncoder.encode(memberVO.getPw()));
+		} if((Integer)memberVO.getWithdrawal_flag() != null) {
+			member.setWithdrawal_flag(memberVO.getWithdrawal_flag());
+		} if((Integer)memberVO.getWithdrawal_code() != null) {
+			member.setWithdrawal_code(memberVO.getWithdrawal_code());
+		} if(memberVO.getProfile_img_path() != null) {
+			member.setProfile_img_path(memberVO.getProfile_img_path());
+		}
+		
+		memberMapper.updateMember(member);
+	}
+
+>>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 }
