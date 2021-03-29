@@ -28,16 +28,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String password = (String) authentication.getCredentials();
 
 		MemberDetails member = (MemberDetails) memberDetailsService.loadUserByUsername(name);
-		
+
 		if (member == null || !name.equals(member.getUsername())
 				|| !pwEncoder.matches(password, member.getPassword())) {
 			throw new BadCredentialsException(name);
 		}
-		if (!member.canAccess()) {
-			throw new BadCredentialsException("탈퇴한 회원입니다.");
-		}
-		
-		
 		Authentication auth = new UsernamePasswordAuthenticationToken(member, null, member.getAuthorities());
 
 		return auth;

@@ -115,18 +115,6 @@
 		]]>
 	 </select>
 	 
-	 <select id="todo_view" resultMap="todoMap">
-   		<![CDATA[
-   			select * from todo where todo_id = #{todo_id}
-  		 ]]>
-	</select>
-	 
-	<update id="todo_name_modify">
-		<![CDATA[
-			update todo set todo_name = #{todo_name} where todo_id = #{todo_id}
-		]]>
-	</update>	
-	 
 <!-- 	 <select id="getRecentTodoTypeId" resultMap="todoTypeMap">
 		<![CDATA[
 			select * from todo_type where todo_type_id = (select MAX(todo_type_id) from todo_type)

@@ -21,9 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private PrincipalOauth2UserService principalOauth2UserService;
-
-	private final MemberDetailsService memberDetailsService;
-
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -33,21 +30,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/admin").hasRole("ADMIN")
 		.antMatchers("/resources/**").permitAll()
 		.antMatchers("/planner/**").hasRole("USER")
-		.antMatchers("/member/mypage").hasRole("USER")
+		.antMatchers("/member/mypage/**").hasRole("USER")
 		.and()
 		.formLogin().loginPage("/member/login").permitAll()
 		.and()
 		.logout().logoutUrl("/member/logout").logoutSuccessUrl("/")
 		.and()
 		.oauth2Login().loginPage("/member/login").userInfoEndpoint().userService(principalOauth2UserService);
-		
-		http.rememberMe()
-		.userDetailsService(memberDetailsService).tokenValiditySeconds(2592000 )
-		;
 	}
 	
 	@Bean
 	public BCryptPasswordEncoder bcryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 }

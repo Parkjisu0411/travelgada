@@ -28,5 +28,18 @@ footer {
 	text-align: center;
 	padding: 50px;
 	font-size: 14px;
-	border-top: 1px solid #DDDDDD;
+}
+
+/* Divider */
+.divider-card-solid {
+	border-top: 2px solid #000000;
+	width: 80px;
+}
+
+.divider-card-blank {
+	padding: 70px;
+}
+
+.divider-header-blank {
+	padding: 40px;
 }

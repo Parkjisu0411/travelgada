@@ -5,6 +5,7 @@
 	font-size: 15px;
 	height: 55px;
 	line-height: 55px;
+	
 }
 
 .covid-19-link {
@@ -13,30 +14,19 @@
 }
 
 .covid-19-link:hover {
-	width: 100%;
 	color: #ffffff;
 	text-decoration: underline 2px;
 }
 
-/* Divider */
-.divider-card-solid {
-	border-top: 2px solid #000000;
-	width: 80px;
-}
-
-.divider-card-blank {
-	padding: 70px;
-}
-
-.divider-header-blank {
-	padding: 35px;
-}
-
 /* Header */
-.main-img {
-	width: 100%;
-	height: 680px;
-	object-fit: cover;
+.carousel-item {
+	height: 100vh;
+	min-height: 350px;
+	background: no-repeat center center scroll;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 /* Card-Common */
@@ -75,7 +65,7 @@
 }
 
 .planner-content:hover {
-	box-shadow: rgb(0 0 0 / 15%) 0px 16px 32px, rgb(0 0 0 / 10%) 0px 3px 8px;
+	box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
 	cursor: pointer;
 }
 
@@ -112,7 +102,7 @@
 }
 
 .recommendation-content:hover {
-	box-shadow: rgb(0 0 0 / 15%) 0px 16px 32px, rgb(0 0 0 / 10%) 0px 3px 8px;
+	box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
 	cursor: pointer;
 }
 
@@ -120,7 +110,6 @@
 .card-diary {
 	border: 1px solid;
 	margin: 0px 0px 30px 0px;
-	height: 620px;
 }
 
 .card-img-top.diary {
@@ -128,7 +117,7 @@
 }
 
 .card-diary:hover {
-	box-shadow: rgb(0 0 0 / 15%) 0px 16px 32px, rgb(0 0 0 / 10%) 0px 3px 8px;
+	box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
 	cursor: pointer;
 }
 
@@ -156,9 +145,6 @@
 
 .diary-text {
 	margin: 0px 0px 6px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 
 .diary-content {
@@ -177,9 +163,6 @@
 
 .diary-hashtag-area {
 	margin: 0px 0px 10px 0px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 
 /* View More */

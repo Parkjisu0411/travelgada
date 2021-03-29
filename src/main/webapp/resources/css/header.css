@@ -55,10 +55,6 @@ body {
 	object-fit: cover;
 }
 
-.nav-profile-img:hover {
-	filter: brightness(85%);
-}
-
 .nav-item.dropdown.user {
 	padding: 0px !important;
 }
@@ -70,7 +66,9 @@ body {
 .dropdown-toggle.user::after {
     display:none;
 }
-
+.dropdown-toggle::after {
+    display:none;
+}
 /* 
 .dropdown-menu li:hover .sub-menu {
 	visibility: visible;
@@ -80,7 +78,7 @@ body {
 	display: block;
 }
  */
-  
+ 
 .form-control {
 	height: 32px !important;
 	border-radius: 0px !important;

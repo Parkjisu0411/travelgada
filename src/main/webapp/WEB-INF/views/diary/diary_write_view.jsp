@@ -1,23 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<<<<<<< HEAD
-<meta charset="EUC-KR">
-<title>´ÙÀÌ¾î¸®</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- 	private int diary_id;
-	private String img_path;
-	private String text;
-	private String hashtag;
-	private Timestamp diary_date;
-	private int planner_id;     -->
-=======
 <meta charset="utf-8">
 
 <title>diary</title>
@@ -28,32 +14,27 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
->>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 	
 <script type="text/javascript">
 	function previewImage(targetObj, View_area) {
 		var preview = document.getElementById(View_area); //div id
 		var ua = window.navigator.userAgent;
 
-<<<<<<< HEAD
-  //ieÀÏ¶§(IE8 ÀÌÇÏ¿¡¼­¸¸ ÀÛµ¿)
-=======
  	//ieì¼ë•Œ(IE8 ì´í•˜ì—ì„œë§Œ ì‘ë™)
->>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 	if (ua.indexOf("MSIE") > -1) {
 		targetObj.select();
 		try {
-			var src = document.selection.createRange().text; // get file full path(IE9, IE10¿¡¼­ »ç¿ë ºÒ°¡)
+			var src = document.selection.createRange().text; // get file full path(IE9, IE10ì—ì„œ ì‚¬ìš© ë¶ˆê°€)
 			var ie_preview_error = document.getElementById("ie_preview_error_" + View_area);
 
 
 			if (ie_preview_error) {
-				preview.removeChild(ie_preview_error); //error°¡ ÀÖÀ¸¸é delete
+				preview.removeChild(ie_preview_error); //errorê°€ ìˆìœ¼ë©´ delete
 			}
 
-			var img = document.getElementById(View_area); //ÀÌ¹ÌÁö°¡ »Ñ·ÁÁú °÷
+			var img = document.getElementById(View_area); //ì´ë¯¸ì§€ê°€ ë¿Œë ¤ì§ˆ ê³³
 
-			//ÀÌ¹ÌÁö ·Îµù, sizingMethod´Â div¿¡ ¸ÂÃç¼­ »çÀÌÁî¸¦ ÀÚµ¿Á¶Àı ÇÏ´Â ¿ªÇÒ
+			//ì´ë¯¸ì§€ ë¡œë”©, sizingMethodëŠ” divì— ë§ì¶°ì„œ ì‚¬ì´ì¦ˆë¥¼ ìë™ì¡°ì ˆ í•˜ëŠ” ì—­í• 
 			img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+src+"', sizingMethod='scale')";
 		} catch (e) {
 			if (!document.getElementById("ie_preview_error_" + View_area)) {
@@ -63,15 +44,15 @@
 				preview.insertBefore(info, null);
 			}
 		}
-  //ie°¡ ¾Æ´Ò¶§(Å©·Ò, »çÆÄ¸®, FF)
+  //ieê°€ ì•„ë‹ë•Œ(í¬ë¡¬, ì‚¬íŒŒë¦¬, FF)
 	} else {
 		var files = targetObj.files;
 		for ( var i = 0; i < files.length; i++) {
 			var file = files[i];
-			var imageType = /image.*/; //ÀÌ¹ÌÁö ÆÄÀÏÀÏ°æ¿ì¸¸.. »Ñ·ÁÁØ´Ù.
+			var imageType = /image.*/; //ì´ë¯¸ì§€ íŒŒì¼ì¼ê²½ìš°ë§Œ.. ë¿Œë ¤ì¤€ë‹¤.
 			if (!file.type.match(imageType))
 				continue;
-			var prevImg = document.getElementById("prev_" + View_area); //ÀÌÀü¿¡ ¹Ì¸®º¸±â°¡ ÀÖ´Ù¸é »èÁ¦
+			var prevImg = document.getElementById("prev_" + View_area); //ì´ì „ì— ë¯¸ë¦¬ë³´ê¸°ê°€ ìˆë‹¤ë©´ ì‚­ì œ
 			if (prevImg) {
 				preview.removeChild(prevImg);
 			}
@@ -79,10 +60,10 @@
 			img.id = "prev_" + View_area;
 			img.classList.add("obj");
 			img.file = file;
-			img.style.width = '300px'; 
-			img.style.height = '300px';
+			img.style.width = '400px'; 
+			img.style.height = '400px';
 			preview.appendChild(img);
-			if (window.FileReader) { // FireFox, Chrome, Opera È®ÀÎ.
+			if (window.FileReader) { // FireFox, Chrome, Opera í™•ì¸.
 				var reader = new FileReader();
 				reader.onloadend = (function(aImg) {
 					return function(e) {
@@ -103,76 +84,76 @@
 		}
 	}
 }
+	
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#uploadBtn").on("click",function(e){
-		var formData = new FormData();
-		var inputFile = $("input[name='img_path']");
-		var files = inputFile[0].files;
-		
-		console.log(files);
-		for(var i = 0; i<file.length; i++){
-		formData.append("uploadFile",files)
-		}
-		
-		$.ajax({
-			url:'${pageContext.request.contextPath}/upload',
-			processData: false,
-			contentTypez: false,
-			data: formData,
-			type:'Post',
-			sucess: function(result){
-				alert("Uploaded");
-			}
-		})
-		
-	})
-})
+	
+	$("#fileCheck").on("click",function(e){
+	
+ 	var uploadfile = $("#profile_pt").val();
+  	console.log(uploadfile);
+  	
+  	  if(uploadfile == ""){
+   	     alert("ì‚¬ì§„ì„ ì²¨ë¶€í•´ ì£¼ì„¸ìš”!");
+  	      return false;
+  	  }else{
+  		  window.opener.name = "parentPage";
+  		  document.myForm.target = "parentPage";
+  		  $("#submitBtn").submit();
+  		  self.close();
+  	  }
+   	 });
+	});
+
 
 
 </script>
 
+<style>
+/*    table, th, td {
+    border: 1px solid #bcbcbc;
+  } */ 
+  table {
+    margin-left:60px;
+  }
+</style>
 
 
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/diary_write" method="post" enctype="multipart/form-data">
+<form id='submitBtn' name="myForm" action="${pageContext.request.contextPath}/diary_write?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 <input type="hidden" name="planner_id" value="${planner.planner_id}"/>
+<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
+<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
+		  
+
 
 <div class="container">
-<<<<<<< HEAD
-  <h2 class="text-warning">Diary</h2>
-=======
 <br>
   <h1 class="text-warning" style="font-family: 'yg-jalnan'">Diary</h1>
->>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
   <div class="row">
 
-   <div class="col-sm-3"> 
-   <p>${planner.planner_id}</p>
+<div class="col-sm-3">
  <table class="table table-borderless">
 			<tr>
       			<td rowspan='5'>
-      				<!-- <img width='100' src='https://github.com/tjaqpfflsk/hello/blob/main/%EC%97%AC%ED%96%891.png?raw=true'/> -->
-				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '></div>
+				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '>
+				<br>
+				<img id="prev_View_area" width='100' src='/resources/diary/camera2.png' style='position:relative; width: 400px; height: 400px;'/>
+				</div>
 					</td>
 				<td>
 <!--      <div class="form-group"> -->
       
-<<<<<<< HEAD
-     	<input type="file" class="form-control-file border" name="img_path" id="profile_pt" onchange="previewImage(this,'View_area')">
-		<input type="button" id='uploadBtn' value="¾÷·Îµå"/>
-=======
      	<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
 		<!-- <input type="button" id='uploadBtn' value="ì—…ë¡œë“œ"/> -->
->>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 <!--     </div>  -->
 				</td>
 			</tr> 
 			<tr>
 				<td>
-      				<textarea rows= "10" cols="50" name="hashtag"/></textarea>
+      				<textarea rows= "10" cols="50" name="text"/></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -182,21 +163,13 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 			<td>
-<<<<<<< HEAD
-      		<textarea rows= "1" cols="30" name="text"/></textarea>
-=======
       		<textarea rows= "2" cols="50" name="hashtag"/></textarea>
->>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 			</td>
 			</tr>
 			<tr>
 			<td>
-<<<<<<< HEAD
-			<input type="submit" value="ÀÛ¼º">
-=======
 			<!-- <input type="button" value="ì‘ì„±" style="display:none;" > -->
 			<button type="button" id="fileCheck" style="font-family: 'yg-jalnan'">ì‘ì„±</button>
->>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 			</td>
 			</tr>
 			</table>

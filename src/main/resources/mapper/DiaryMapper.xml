@@ -6,19 +6,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getDiary" resultType="com.gada.travelgada.domain.DiaryVO"> 
 		<![CDATA[ 
-<<<<<<< HEAD
-			select * from diary where planner_id=1
-=======
 			select * from diary 
 				where planner_id=(select MAX(planner_id) from planner where member_id=#{member_id}) 
 					order by diary_id desc
->>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
 		]]> 
 	</select> 
 	
 	<select id="getPlanner" resultType="com.gada.travelgada.domain.PlannerVO"> 
 		<![CDATA[ 
-			select * from planner
+			select * from planner where member_id = #{member_id} order by planner_id desc
 		]]> 
 	</select> 
 	
@@ -35,21 +31,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</delete>
 	
-<<<<<<< HEAD
-		<insert id="modifyDiary" >
-	<![CDATA[
-		update diary set img_path = #{img_path},text = #{text},hashtag=#{hashtag} where diary_id = #{diary_id}
-			]]>
-	</insert>
-	
-<select id="view_Diary" resultType="com.gada.travelgada.domain.DiaryVO">
-   <![CDATA[
-   		select * from diary where diary_id = #{diary_id}
-   ]]>
-</select>
-	
-	</mapper>
-=======
 	<insert id="modifyDiary" >
 		<![CDATA[
 			update diary set img_path = #{img_path},text = #{text},hashtag=#{hashtag} 
@@ -72,4 +53,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select> 
 
 </mapper>
->>>>>>> 39e5e13d84f1493bfbeed7085aa1bac272a136a9
