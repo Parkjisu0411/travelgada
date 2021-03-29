@@ -1,0 +1,127 @@
+body {
+	padding-top: 52px;
+}
+
+.navbar.navbar-expand-lg.navbar-light.bg-white {
+	height: 52px;
+	padding: 0px;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 12px;
+	background-color: #ffffff;
+	color: #000000;
+	font-weight: 500;
+}
+
+.navbar-light .navbar-nav .nav-link {
+	color: #000000;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+	text-decoration: none;
+	border-bottom: 2px solid #000000;
+	padding-bottom: 6px;
+	color: #000000;
+}
+
+.navbar-brand {
+	font-family: 'yg-jalnan';
+	font-size: 1.4em;
+	padding: 0px 30px 0px 0px;
+}
+
+.nav-logo-img {
+	max-width: 30px;
+	max-height: 30px;
+	margin: 0px 4px 0px 0px;
+	padding: 0px 0px 3px;
+}
+
+.nav-item {
+	padding: 0px 18px;
+	font-size: 15px;
+}
+
+.nav-link.dropdown-toggle {
+	color: black;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+	background-color: #FE5000;
+}
+
+.nav-profile-img {
+	border-radius: 70%;
+	width: 32px;
+	height: 32px;
+	object-fit: cover;
+}
+
+.nav-profile-img:hover {
+	filter: brightness(85%);
+}
+
+.nav-item.dropdown.user {
+	padding: 0px !important;
+}
+
+.nav-link.dropdown-toggle.user {
+	padding: 0px 0px 0px 20px !important;
+}
+
+.dropdown-toggle.user::after {
+    display:none;
+}
+
+/* 
+.dropdown-menu li:hover .sub-menu {
+	visibility: visible;
+}
+
+.dropdown:hover .dropdown-menu {
+	display: block;
+}
+ */
+  
+.form-control {
+	height: 32px !important;
+	border-radius: 0px !important;
+	border: 0px !important;
+	border-bottom: 1px solid !important;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.form-control:focus {
+	border: 2px solid !important;
+	border-bottom: 4px solid !important;
+}
+
+.btn {
+	border: 0px;
+	padding: 0px;
+}
+
+.form-control.mr-sm-2 {
+	margin: 5px !important;
+}
+
+.container .dropdown .dropdown-menu a:hover {
+	color: #ffffff;
+	background-color: #FE5000;
+}
+
+.dropdown-toggle.user::after {
+    display:none;
+}
+
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+}

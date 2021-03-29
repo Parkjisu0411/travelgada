@@ -1,0 +1,32 @@
+/* 
+<Footer 사용법>
+
+Case1. 컨텐츠가 어느 정도 있는 경우(한 페이지에 모든 컨텐츠가 보여지지 않는 경우) =>
+
+footer {
+	background-color: #f5f5f7;
+	width: 100%;
+}
+
+---
+
+Case2. 컨텐츠가 적은 경우(한 페이지에 모든 컨텐츠가 보여지는 경우): 따라서 Footer가 가운데에 붕 뜨는 경우 =>
+
+footer {
+	background-color: #f5f5f7;
+	width: 100%;
+	position:absolute;
+    bottom:0;
+}
+
+---
+
+혼동되시는 경우 전자를 우선적으로 적용하고, Footer가 가운데에 붕 떠서 나온다면 그 때 후자를 적용하시면 되겠습니다.
+ */
+
+.footer-company-info {
+	text-align: center;
+	padding: 50px;
+	font-size: 14px;
+	border-top: 1px solid #DDDDDD;
+}
