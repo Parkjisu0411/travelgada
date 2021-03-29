@@ -14,28 +14,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 
-	<select id="selectCity" resultType="com.gada.travelgada.domain.ScheduleVO">
-		<![CDATA[
-			select * from schedule where planner_id = #{planner_id} and schedule_type_id = 1
-		]]>
-	</select>
-
-	<select id="selectVehicle" resultType="com.gada.travelgada.domain.ScheduleVO">
-		<![CDATA[
-			select * from schedule where planner_id = #{planner_id} and schedule_type_id = 3
-		]]>
-	</select>
-
 	<select id="selectSchedule" resultType="com.gada.travelgada.domain.ScheduleVO">
 		<![CDATA[
-			select * from schedule where planner_id = #{planner_id} and schedule_type_id = 4
+			select schedule_id, schedule_date, ifnull(budget, 0) as 'budget', planner_id, schedule_type_id, schedule_content, latitude, longitude, schedule_order from schedule where planner_id = #{planner_id} and schedule_type_id = #{schedule_type_id} order by schedule_date, schedule_order
 		]]>
 	</select>
-
-	<select id="selectHotel" resultType="com.gada.travelgada.domain.ScheduleVO">
+	
+	<select id="selectAllSchedule" resultType="com.gada.travelgada.domain.ScheduleVO">
 		<![CDATA[
-			select * from schedule where planner_id = #{planner_id} and schedule_type_id = 2
+			select schedule_id, schedule_date, ifnull(budget, 0) as 'budget', planner_id, schedule_type_id, schedule_content, latitude, longitude, schedule_order from schedule where planner_id = #{planner_id} order by schedule_date, schedule_order;
 		]]>
 	</select>
+	
+	<insert id="insertSchedule">
+		<![CDATA[
+			insert into schedule(schedule_id, schedule_date, budget, planner_id, schedule_type_id, schedule_content, latitude, longitude, schedule_order) values (get_seq('schedule_seq'), #{schedule_date}, #{budget}, #{planner_id}, #{schedule_type_id}, #{schedule_content}, #{latitude}, #{longitude}, #{schedule_order})
+		]]>
+	</insert>
+	
+	<select id="selectScheduleOrder" resultType="int">
+		<![CDATA[
+			select schedule_order from schedule where planner_id = #{planner_id} and schedule_date = #{schedule_date} order by schedule_order desc limit 1
+		]]>
+	</select>
+	
+	<delete id="deleteSchedule">
+		<![CDATA[
+			delete from schedule where schedule_id = #{schedule_id}
+		]]>
+	</delete>
+
 
 </mapper>

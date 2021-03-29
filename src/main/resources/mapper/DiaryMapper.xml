@@ -4,10 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.gada.travelgada.mapper.DiaryMapper"> 
 
-<!-- list -->
 	<select id="getDiary" resultType="com.gada.travelgada.domain.DiaryVO"> 
 		<![CDATA[ 
-			
 			select * from diary 
 				where planner_id=(select MAX(planner_id) from planner where member_id=#{member_id}) 
 					order by diary_id desc
@@ -22,38 +20,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="writeDiary" > 
 		<![CDATA[ 
-		insert into diary (planner_id,diary_id,img_path,text,hashtag,diary_date)
-		VALUES(#{planner_id},get_seq('diary_seq'),#{img_path},#{text},#{hashtag},sysdate())
+			insert into diary (planner_id,diary_id,img_path,text,hashtag,diary_date)
+				VALUES(#{planner_id},get_seq('diary_seq'),#{img_path},#{text},#{hashtag},sysdate())
 		]]> 
 	</insert>
 	
    	<delete id="deleteDiary" >
-	<![CDATA[
-		delete from diary where diary_id = #{diary_id}
-	]]>
+		<![CDATA[
+			delete from diary where diary_id = #{diary_id}
+		]]>
 	</delete>
 	
-		<insert id="modifyDiary" >
-	<![CDATA[
-		update diary set img_path = #{img_path},text = #{text},hashtag=#{hashtag} 
-		where diary_id = #{diary_id};
+	<insert id="modifyDiary" >
+		<![CDATA[
+			update diary set img_path = #{img_path},text = #{text},hashtag=#{hashtag} 
+				where diary_id = #{diary_id};
 			]]>
 	</insert>
 	
-<select id="view_Diary" resultType="com.gada.travelgada.domain.DiaryVO">
-   <![CDATA[
-   		select * from diary where diary_id = #{diary_id}
-   ]]>
-</select>
+	<select id="view_Diary" resultType="com.gada.travelgada.domain.DiaryVO">
+		<![CDATA[
+			select * from diary where diary_id = #{diary_id}
+		]]>
+	</select>
 
 	<select id="getDiaryOther" resultType="com.gada.travelgada.domain.DiaryVO"> 
-		<![CDATA[ 
-			
+		<![CDATA[ 	
 			select * from diary 
 				where planner_id = #{planner_id}
 					order by diary_id desc;
 		]]> 
 	</select> 
 
-	
-	</mapper>
+</mapper>

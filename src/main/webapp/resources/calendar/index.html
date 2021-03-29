@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+    <!-- �쁿�쑝濡� 媛��뒗 踰꾪듉�씠 �뿬湲곗뿉 �엳�떎. -->
+    <link href="resources/calendar/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="resources/calendar/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="resources/calendar/css/main.css" rel="stylesheet" media="all">
+</head>
+
+<body>
+<!-- �궡媛� �뜑 �븳 寃� �쓣�뼱 �벐湲� -->
+    <br>
+    <div class="page-wrapper bg-color-1">
+        <div class="wrapper wrapper--w1226">
+            <div class="card card-7">
+                <div class="card-body">
+                    <form class="form" action="${pageContext.request.contextPath}/planner_create" method="post">
+
+                        <div class="input-group input--large">
+                            <label class="label" style="font-family: 'yg-jalnan'">�뵆�옒�꼫 �씠由�</label>
+                            <input name="planner_name" class="input--style-1" type="text" placeholder="媛��떎�옉 �븿猿� 利먭굅�슫 �뿬�뻾!" name="going">
+                        </div>
+                        <div class="input-group input--medium">
+                            <label class="label" style="font-family: 'yg-jalnan'">�뿬�뻾�떆�옉</label>
+                            <input name="start_date" class="input--style-1" type="text" placeholder="YYYY/MM/DD" id="input-start">
+                        </div>
+                        <div class="input-group input--medium">
+                            <label class="label" style="font-family: 'yg-jalnan'">�뿬�뻾醫낅즺</label>
+                            <input name="end_date" class="input--style-1" type="text" placeholder="YYYY/MM/DD" id="input-end">
+                        </div>
+                        <div class="input-group input--large">
+                            <label class="label" style="font-family: 'yg-jalnan'">�굹�씪</label>
+                            <input name="schedule_content" class="input--style-1" type="text" placeholder="�뼱�뵒濡� �뿬�뻾 媛덇퉴�슂?" name="going">
+                        </div>
+
+                        <button class="btn-submit" type="submit">�옉�꽦</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="resources/calendar/vendor/jquery/jquery.min.js"></script>
+    <script src="resources/calendar/vendor/datepicker/moment.min.js"></script>
+    <script src="resources/calendar/vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="resources/calendar/js/global.js"></script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
+<!-- end document-->

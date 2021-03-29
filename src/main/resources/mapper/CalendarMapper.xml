@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.gada.travelgada.mapper.CalendarMapper"> 
+
+	<insert id="planner_create" > 
+		<![CDATA[ 
+			insert into planner (member_id,planner_id,planner_name,start_date,end_date)
+				values (#{member_id},get_seq('planner_seq'),#{planner_name},#{start_date},#{end_date})
+		]]> 
+	</insert>
+	
+	<select id="getPlanner_id" resultType="int"> 
+		<![CDATA[ 
+			select planner_id from planner order by planner_id desc limit 1
+		]]> 
+	</select> 
+		
+	<insert id="schedule_create"> 
+		<![CDATA[ 
+			insert into schedule (planner_id,schedule_id,schedule_date,schedule_content,schedule_type_id)
+				values (#{planner_id},get_seq('schedule_seq'),#{schedule_date},#{schedule_content},5)
+		]]> 
+	</insert> 
+	
+</mapper>

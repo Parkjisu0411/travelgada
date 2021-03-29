@@ -223,7 +223,7 @@
 			<div class="col-sm-3"> 
 				<!-- 다이어리 수정, 삭제 -->
    				<div class="dropdown" >
-    				<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>
+    				<img src="resources/diary/dot3.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>
     				<div class="dropdown-menu" >
       					<a class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${dto.diary_id}',
       					'popwin2','width=1250,height=800,left=300, top=120')">수정</a>
