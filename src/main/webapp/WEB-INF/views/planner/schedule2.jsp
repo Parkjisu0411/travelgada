@@ -34,10 +34,6 @@
 	background-color: grey;;
 }
 
-.content {
-	
-}
-
 .budget {
 	color: grey;
 	font-size: 15px;
@@ -85,6 +81,10 @@
 	text-align: center;
 	color: #A2A2A2;
 }
+
+thead {
+	text-align: center;
+}
 </style>
 <script type="text/javascript">
 	//예산 추가/수정
@@ -95,7 +95,7 @@
 			if(!$(obj).children(".input-budget-area").val()) {
 				$(obj).html("<i class='fas fa-plus'></i>");				
 			}
-		})
+		});
 		$(obj).children(".input-budget-area").keydown(function(key) {
 			if(key.keyCode == 13) {
 				data = {
@@ -178,7 +178,6 @@
 				});
 			}
 		});
-		
 	}
 	//
 	//일정 순서 재정렬
@@ -213,7 +212,6 @@
 					console.log(result);
 				},
 				error : function(e) {
-					alert("일정 순서 변경 중 오류가 발생했습니다.");
 					console.log(e);
 				}
 			})
@@ -327,64 +325,83 @@
 					var longitude = data.longitude;
 					var planner_id = data.planner_id;
 					var content = "";
-					if(schedule_type_id == 4) {
-						if(budget == "") {
-							content += "<div>";
-							content += "	<span class='order'>" + schedule_order + ".</span>";
-							content += "    <span class='content'>" + schedule_content + "</span>";
-							content += "	<span class='order-control'>&nbsp;&nbsp;<i class='fas fa-bars'></i></span>";
-							content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-							content += "</div>";
-							var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-							var next = parseInt(curr);
-						} else {
-							content += "<div>";
-							content += "	<span class='order'>" + schedule_order + ".</span>";
-							content += "    <span class='content'>" + schedule_content + "</span>";
-							content += "	<span class='budget'>(" + budget + "₩)</span>";
-							content += "	<span class='order-control'>&nbsp;&nbsp;<i class='fas fa-bars'></i></span>";
-							content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-							content += "</div>";
-							var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-							var next = parseInt(curr) + parseInt(budget);
-						}
-					} else{
-						if(budget == "") {
-							content += "<div>";
-							content += "    <span class='content'>" + schedule_content + "</span>";
-							content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-							content += "</div>";
-							var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-							var next = parseInt(curr);
-						} else {
-							content += "<div>";
-							content += "    <span class='content'>" + schedule_content + "</span>";
-							content += "	<span class='budget'>(" + budget + "₩)</span>";
-							content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-							content += "</div>";
-							var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-							var next = parseInt(curr) + parseInt(budget);
-						}
-					}
 					
 					switch(schedule_type_id) {
 						case "1" :
-							$("#" + schedule_date).children(".city-area").children("a.insert-btn").before(content);
+							content += "<div>";
+							content += "    <span class='content'>" + schedule_content + "</span>";
+							content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
+							content += "</div>";
+							$("#" + schedule_date).children(".city-area").children("div.insert-btn").before(content);
 							break
 						case "2" :
-							$("#" + schedule_date).children(".hotel-area").children("a.insert-btn").before(content);
+							if(budget == "") {
+								content += "<div>";
+								content += "    <span class='content'>" + schedule_content + "</span>";
+								content += "	<span class='input-budget-after' onclick='inputBudget(this)'><i class='fas fa-plus'></i></span>";
+								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
+								content += "</div>";
+								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
+								var next = parseInt(curr);
+							} else {
+								content += "<div>";
+								content += "    <span class='content'>" + schedule_content + "</span>";
+								content += "	<span class='budget' onclick='modifyBudget(this)'>(" + budget + "₩)</span>";
+								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
+								content += "</div>";
+								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
+								var next = parseInt(curr) + parseInt(budget);
+							}
+							$("#" + schedule_date).children(".hotel-area").children("div.insert-btn").before(content);
 							$("#" + schedule_date).children(".budget-area").children(".budget-total").html(next);
 							break
 						case "3" :
-							$("#" + schedule_date).children(".vehicle-area").children("a.insert-btn").before(content);
+							if(budget == "") {
+								content += "<div>";
+								content += "    <span class='content'>" + schedule_content + "</span>";
+								content += "	<span class='input-budget-after' onclick='inputBudget(this)'><i class='fas fa-plus'></i></span>";
+								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
+								content += "</div>";
+								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
+								var next = parseInt(curr);
+							} else {
+								content += "<div>";
+								content += "    <span class='content'>" + schedule_content + "</span>";
+								content += "	<span class='budget' onclick='modifyBudget(this)'>(" + budget + "₩)</span>";
+								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
+								content += "</div>";
+								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
+								var next = parseInt(curr) + parseInt(budget);
+							}
+							$("#" + schedule_date).children(".vehicle-area").children("div.insert-btn").before(content);
 							$("#" + schedule_date).children(".budget-area").children(".budget-total").html(next);
 							break
 						case "4" :
-							$("#" + schedule_date).children(".schedule-area").children("a.insert-btn").before(content);
+							if(budget == "") {
+								content += "<div>";
+								content += "	<span class='order'>" + schedule_order + ".</span>";
+								content += "    <span class='content'>" + schedule_content + "</span>";
+								content += "	<span class='input-budget-after' onclick='inputBudget(this)'><i class='fas fa-plus'></i></span>";
+								content += "	<span class='order-control'>&nbsp;&nbsp;<i class='fas fa-bars'></i></span>";
+								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
+								content += "</div>";
+								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
+								var next = parseInt(curr);
+							} else {
+								content += "<div>";
+								content += "	<span class='order'>" + schedule_order + ".</span>";
+								content += "    <span class='content'>" + schedule_content + "</span>";
+								content += "	<span class='budget' onclick='modifyBudget(this)'>(" + budget + "₩)</span>";
+								content += "	<span class='order-control'>&nbsp;&nbsp;<i class='fas fa-bars'></i></span>";
+								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
+								content += "</div>";
+								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
+								var next = parseInt(curr) + parseInt(budget);
+							}
+							$("#" + schedule_date).children(".schedule-area").children("div.insert-btn").before(content);
 							$("#" + schedule_date).children(".budget-area").children(".budget-total").html(next);
 							break
 						case "5" :
-							content = "";
 							content += "<div>";
 							content += "    <span class='content'>" + schedule_content + "</span>";
 							content += "	<span class='latitude' style='display:none'>" + latitude + "</span>";
@@ -392,7 +409,7 @@
 							content += "	<span class='this_planner_id' style='display:none'>" + planner_id + "</span>";
 							content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
 							content += "</div>";
-							$("#" + schedule_date).children(".country-area").children("a.insert-btn").before(content);
+							$("#" + schedule_date).children(".country-area").children("div.insert-btn").before(content);
 							break
 					}
 				},
@@ -567,13 +584,11 @@
 			
 			$.ajax({
 				type : "GET",
-				url : "/planner/schedule2?planner_id=" + planner_id,
+				url : "/planner/schedule/callback?planner_id=" + planner_id,
 				cache : false,
+				dataType : "html",
 				success : function(result) {
-					console.log(planner_id);
-					$("tbody").remove();
-					//html방식으로 return 받는 것 알아보기.
-					//또는 ModelAndView 로 return 받는 것 알아보기.
+					$("body > div.container").html(result);
 				},
 				error : function(e) {
 					console.log(e);
@@ -617,13 +632,20 @@
 		<!-- headline -->
 		<h2 class="headline" style="font-family: 'yg-jalnan'">Schedule</h2>
 		<!-- planner option -->
-		<form action ="/planner/schedule2" method="get">
+		<form>
 				<div class="col-md-12"> 
 					<select class="form-control" name="planner_id" id="select-planner" style="font-family: 'yg-jalnan'">
 						<c:forEach var="planner" items="${plannerList}">
-							<option value='${planner.planner_id}' style="font-family: 'yg-jalnan'">
-							  	${planner.planner_name}&nbsp;&nbsp; ${planner.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${planner.end_date}
-							</option>
+							<c:if test="${planner.planner_id eq planner_id}">
+								<option value='${planner.planner_id}' style="font-family: 'yg-jalnan'" selected>
+							  		${planner.planner_name}&nbsp;&nbsp; ${planner.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${planner.end_date}
+								</option>
+							</c:if>
+							<c:if test="${planner.planner_id ne planner_id}">
+								<option value='${planner.planner_id}' style="font-family: 'yg-jalnan'">
+							  		${planner.planner_name}&nbsp;&nbsp; ${planner.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${planner.end_date}
+								</option>
+							</c:if>
 						</c:forEach>
 					</select>
 				</div>
@@ -642,7 +664,13 @@
 		<div class="col-md-12">
 			<table class="table" id="table-schedule">
 				<colgroup>
-					<col width="130px" />
+					<col width="15%" />
+					<col width="10%" />
+					<col width="10%" />
+					<col width="10%" />
+					<col width="25%" />
+					<col width="15%" />
+					<col width="15%" />
 				</colgroup>
 				<thead style="font-family:yg-jalnan;">
 					<tr>
