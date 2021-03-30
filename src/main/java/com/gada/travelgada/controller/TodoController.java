@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,10 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gada.travelgada.domain.DiaryVO;
+
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PlannerVO;
-import com.gada.travelgada.domain.TodoListVO;
 import com.gada.travelgada.domain.TodoTypeVO;
 import com.gada.travelgada.domain.TodoVO;
 import com.gada.travelgada.service.ScheduleService;
@@ -116,18 +116,48 @@ public class TodoController {
 		return entity;
 	}
 	
-	@PostMapping("/addToDo")
-	public ModelAndView addToDo(ModelAndView mav, TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
+//	@PostMapping("/todo")
+//	public ModelAndView addToDo(ModelAndView mav, TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
+//	   log.info("addToDo");
+//	   log.info(todoVO.getTodo_name());
+//
+//	   todoVO.setTodo_name(todoVO.getTodo_name());
+//	   todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
+//	   service.addToDo(todoVO);
+//	   mav.setViewName("redirect:todo");
+//
+//	    return mav;
+//	 }
+	
+	@PostMapping("/todo")
+	public void addToDo(TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
 	   log.info("addToDo");
 	   log.info(todoVO.getTodo_name());
 
 	   todoVO.setTodo_name(todoVO.getTodo_name());
 	   todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
 	   service.addToDo(todoVO);
-	   mav.setViewName("redirect:todo");
-
-	    return mav;
 	 }
+	
+//	@PostMapping("/todo")
+//	public ResponseEntity<String> addToDo(TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
+//	   ResponseEntity<String> entity = null;
+//	   
+//	   log.info("addToDo");
+//	   log.info(todoVO.getTodo_name());
+//	   
+//	   try {
+//		   todoVO.setTodo_name(todoVO.getTodo_name());
+//		   todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
+//		   service.addToDo(todoVO);
+//		   entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+//		}catch(Exception e){
+//			e.printStackTrace();
+//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//	   
+//	   return entity;
+//	 }
 	
 	 @GetMapping("todo_modify_view/{todo_id}")
 	 public ModelAndView todo_modify_view(ModelAndView mav, TodoVO todoVO) {
