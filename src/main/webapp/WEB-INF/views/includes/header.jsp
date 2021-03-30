@@ -53,7 +53,7 @@
 								class="dropdown-item" href="/board/review">리뷰</a> <a class="dropdown-item"
 								href="/board/accompany">동행</a>
 						</div></li>
-					<li class="nav-item"><a class="nav-link" href="#">쇼핑</a></li>
+					<li class="nav-item"><a class="nav-link" href="/shopping">쇼핑</a></li>
 				</ul>
 				<form class="form-inline">
 					<input class="form-control mr-sm-2" type="text" aria-label="Search">
