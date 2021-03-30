@@ -64,16 +64,7 @@
 	
 	
 
-	/* 드롭다운 마우스 오	버 */
-	.dropdown:hover .dropdown-menu {
-	    display: block;
-	    margin-top: 0;
-	}
-	
-	
-
   </style>
-
 
 	<script type="text/javascript">
 	  var token = $("meta[name='_csrf']").attr("content");
@@ -81,21 +72,6 @@
 	  $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
     </script>
 
-	<script type="text/javascript">
-    window.onload = function randomImage() {
-            var bannerImages=new Array();
-                bannerImages[0]="Blue.png";
-                bannerImages[1]="Red.png";
-                bannerImages[2]="Green.png";
-                bannerImages[3]="Yellow.png";
-                
-            var ranNum=Math.round(Math.random()*bannerImages.length);
-            
-            $(".pdImg").attr({src : bannerImages[ranNum]});
-       
-	}
-    
-    </script>
 
 	<script>
     	$(document).ready(function() {
@@ -170,7 +146,7 @@
     						
     				var htmls="";
 
-    			    htmls +='<form id="addToDo" action="/addToDo" method="POST">'
+    			    htmls +='<form id="addToDo" action="/todo" method="POST">'
     			    htmls +='<input type="hidden" id="todo_type_id" name="todo_type_id" value="' + todo_type_id + '">'
     			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
     			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
@@ -183,36 +159,101 @@
     </script>
     
     
-    
     <script>
     	$(document).ready(function() {
-    		$(".listModify").one("click", function makeOption(event) {
-    			console.log("makeOption");
-
-    				//var tr = $(this).parent().parent().siblings(".table").children().children().children().siblings(".option");
-    				//var del_todo_id = $(".del_todo_name").val();
-    				
-    				var tr = $(this).parent().parent().parent().find(".option");
-    				var del_todo_name = $(this).parent().parent().parent().find(".del_todo_name").attr("value");
-    				//var del_todo_id = $(this).attr("value");
-    				var modi_todo_name = $(this).parent().parent().parent().find(".option").children().attr("value");
-    				//var modify_todo_name = $(this).siblings(".todoName").attr("value");
-    				//var modify_todo_name = $(this).siblings().children(".option").children().attr("value");
+    		$("#addToDo").submit(function(event) {
+    			event.preventDefault();
+    			console.log("addToDo submit");
+    			
+    			var tr = $(this).parent();
+    			var todo_name = $("#todo_name").val();
+    			var todo_type_id = $("#todo_type_id").val();
+    			
+    			var form = {
+    					todo_name : todo_name,
+    					todo_type_id : todo_type_id
+    			};
+				
+				$.ajax({
+    				type : "POST",
+    				url : $(this).attr("action"),
+    				cache : false,
+    				data : JSON.stringify(form),
+    				contentType : 'application/json; charset=utf-8',
+    	            beforeSend : function(xhr){  
+    	                 console.log("header 실행 "+header+token)
+    	                 //console.log(sentence.toLowerCase());
+    	                 xhr.setRequestHeader(header, token);
+    	            },
+    				success : function(result){
+    					if(result == "SUCCESS"){
+    						console.log("success");
     						
-    				var htmls="";
+    						var htmls="";
 
-      					
-    				//htmls +='<a class="modify" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_id + '"><input type="hidden" class="todo_Name" value="' + modify_todo_name + '">수정</a>/'
-htmls +='<a class="modify" onclick="window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + modi_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')">수정</a>/'
-    				htmls +='<a class="delete" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_name + '">삭제</a>'
-    				
-
-    			    $(tr).append(htmls);
-    				
-    				//$(tr).toggle('slow');
-    		});		
-    		
+						    htmls +='<tr><td><div class="label">'
+							htmls +='<label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label>'
+							htmls +='</div></td>'
+							htmls +='<td ><p>' + todo_name + '</p></td>'
+							htmls +='<td class="option">'
+							htmls +='<input type="hidden" class="modi_todo_name" value="' + todo_type_id + '">'
+							htmls +='</td></tr>'
+							
+			        	$(tr).append(htmls); 
+    						
+    					}
+    				},
+    				error : function(e){
+    					console.log(e);
+    				} 
+    					
+    			}); // ajax end
+    		}) // submit end
     	});
+    </script>
+    
+    
+    
+ <script>
+       $(document).ready(function() {
+          $(".listModify").one("click", function makeOption(event) {
+             console.log("makeOption");
+
+                //var tr = $(this).parent().parent().siblings(".table").children().children().children().siblings(".option");
+                //var del_todo_id = $(".del_todo_name").val();
+                
+                
+               var tr = $(this).parent().parent().parent().find(".option");
+                /*var del_todo_name = $(this).parent().parent().parent().find(".del_todo_name").attr("value");
+                //var del_todo_id = $(this).attr("value");
+                var modi_todo_name = $(this).parent().parent().parent().find(".option").children().attr("value");
+                //var modify_todo_name = $(this).siblings(".todoName").attr("value");
+                //var modify_todo_name = $(this).siblings().children(".option").children().attr("value"); */
+                      
+                var htmls="";
+
+                     
+                //htmls +='<a class="modify" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_id + '"><input type="hidden" class="todo_Name" value="' + modify_todo_name + '">수정</a>/'
+               htmls +='<a class="modify">수정</a>/';
+                htmls +='<a class="delete">삭제</a>';
+                
+                $(tr).append(htmls)
+                
+                
+               // var del_todo_name = $(".modify").parent().find(".modi_todo_name").attr("value");
+               var del_todo_name = document.getElementsByClassName("modi_todo_name");
+                console.log(del_todo_name);
+                $(".modify").attr("onclick",'window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + del_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')')
+                /* $("img").attr("width", "500"); */
+                console.log(del_todo_name);
+
+
+                 
+                
+                //$(tr).toggle('slow');
+          });      
+          
+       });
     </script>
     
     <script>
@@ -269,8 +310,8 @@ htmls +='<a class="modify" onclick="window.open(\'${pageContext.request.contextP
 				event.preventDefault();
 				console.log("titleDelete click");
 				
-				var list = $(this).parent().parent().parent().children(".table").children().children(".del_todo_name");
 				var category = $(this).parent().parent().parent();
+				var list = $(this).parent().parent().parent().find(".todoListTable");
 				
 				$.ajax({
 					type : "DELETE",
@@ -328,6 +369,7 @@ htmls +='<a class="modify" onclick="window.open(\'${pageContext.request.contextP
 			}); 
 		}); 
 	</script>
+	
 
 
 
@@ -380,16 +422,14 @@ htmls +='<a class="modify" onclick="window.open(\'${pageContext.request.contextP
 	<hr style="border: solid 1px light-grey; width: 66%;">
 	<br />
 
+	<br />
+	<br />
 	<div class="todoTable container">
 		<div class="row">
 			<c:forEach items="${todoTitle }" var="todoTitle">
 				<div class="col-sm-3">
-					<div class="dropdown">
-						<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>	
-						<div class="dropdown-menu dropdown-menu-right">
-							<button class="listModify dropdown-item" onclick="function makeOption();">수정</button>
-							<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">카테고리 삭제</a>
-						</div>
+					
+
 					
 
 					<table class="table table-bordered">
@@ -398,18 +438,21 @@ htmls +='<a class="modify" onclick="window.open(\'${pageContext.request.contextP
 							<td colspan="3">${todoTitle.todo_title } ${todoTitle.todo_type_id }</td>
 						</tr>	
 							
-						
-						
+						<div class="dropdown">
+						<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>	
+							
 						<c:forEach var="todoName" items="${todoName }">
-						<input class="del_todo_name" type="hidden" name="del_todo_name" value="${todoName.todo_id }">
+						<%-- <input class="del_todo_name" type="hidden" name="del_todo_name" value="${todoName.todo_id }"> --%>
 						<c:if test="${todoName.todo_type_id eq todoTitle.todo_type_id }">	
-
+						<div class="dropdown-menu dropdown-menu-right">
+							<button id="td" class="listModify dropdown-item" value="${todoName.todo_id }">수정</button>
+							<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">카테고리 삭제</a>
+						</div>
 				
 						<tr>
 							<td>
-								<div class="label">
 								 <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label> 
- 								</div>
+ 								
 							</td>
 						
 							<td >
@@ -420,27 +463,27 @@ htmls +='<a class="modify" onclick="window.open(\'${pageContext.request.contextP
 
 							<!-- ajax로 delete 처리 -->
 							<td class="option">
-								 <input type="hidden" class="modi_todo_name" value="${todoName.todo_id }"> 	
+								<input type="hidden" class="modi_todo_name" value="${todoName.todo_id }"> 			
 								<%-- <a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a> --%>
 							</td>
 						</tr>
 						
 						</c:if>
 						</c:forEach>
-						
+						</div>
 						<tr>
 							<!-- form으로 insert 처리 -->
 							<td colspan="3">
 								<div class="container">
 								<div class="row">
-									<input type="button" class="makeForm btn-primary" onclick="function makeForm();" name="${todoTitle.todo_type_id }" value="+ 체크리스트 추가"></input>
+									<input type="button" class="makeForm btn-primary" name="${todoTitle.todo_type_id }" value="+ 체크리스트 추가"></input>
 								</div>
 								</div>
 							</td>
 
 						</tr>
 					</table>
-					</div>
+					
 				</div>
 			</c:forEach>
 		</div>

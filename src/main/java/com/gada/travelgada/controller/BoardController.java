@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @AllArgsConstructor
 public class BoardController {
-
 	private BoardService boardService;
 	
 	@GetMapping("/board/review")
