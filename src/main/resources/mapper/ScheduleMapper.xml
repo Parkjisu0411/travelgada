@@ -43,6 +43,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			delete from schedule where schedule_id = #{schedule_id}
 		]]>
 	</delete>
+	
+	<select id="selectLastSchedule" resultType="com.gada.travelgada.domain.ScheduleVO">
+		<![CDATA[
+			select * from schedule where planner_id = #{planner_id} order by schedule_id desc limit 1
+		]]>
+	</select>
+	
+	<update id="ordering">
+		<![CDATA[
+			update schedule S, (select @rownum:=@rownum+1 as 'rnum', A.schedule_id as 'id' from schedule A, (select @rownum:=0) R where A.planner_id = #{planner_id} and A.schedule_date = #{schedule_date} and A.schedule_type_id=4) N set S.schedule_order = N.rnum where S.schedule_id = id
+		]]>
+	</update>
+	
+	<select id="selectScheduleById" resultType="com.gada.travelgada.domain.ScheduleVO">
+		<![CDATA[
+			select * from schedule where schedule_id = #{schedule_id}
+		]]>
+	</select>
+	
+	<update id="updateSchedule">
+		<![CDATA[
+			update schedule set schedule_order = #{schedule_order} where schedule_id = #{schedule_id}
+		]]>
+	</update>
 
 
 </mapper>

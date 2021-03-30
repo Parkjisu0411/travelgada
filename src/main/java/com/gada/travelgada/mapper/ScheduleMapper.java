@@ -17,11 +17,19 @@ public interface ScheduleMapper {
 	public List<PlannerVO> selectPlanner(String member_id);
 	
 	public List<ScheduleVO> selectAllSchedule(int planner_id);
+	
+	public ScheduleVO selectScheduleById(int schedule_id);
 
 	public void insertSchedule(ScheduleVO scheduleVO);
 	
-	public int selectScheduleOrder(@Param("planner_id") int planner_id,@Param("schedule_date") Date schedule_date);
+	public int selectScheduleOrder(@Param("planner_id") int planner_id, @Param("schedule_date") Date schedule_date);
 
 	public void deleteSchedule(int schedule_id);
+	
+	public ScheduleVO selectLastSchedule(int planner_id);
+	
+	public void ordering(@Param("planner_id") int planner_id, @Param("schedule_date") Date schedule_date);
+
+	public void updateSchedule(ScheduleVO scheduleVO);
 	
 }

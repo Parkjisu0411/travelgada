@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,18 +80,36 @@ public class ScheduleController2 {
 	}
 	
 	@PostMapping("/planner/schedule2")
-	public ResponseEntity<String> insertSchedule(@RequestBody ScheduleVO scheduleVO) {
-		ResponseEntity<String> entity = null;
+	public ResponseEntity<Map<String,String>> insertSchedule(@RequestBody ScheduleVO scheduleVO) {
+		ResponseEntity<Map<String,String>> entity = null;
+		Map<String, String> data = new HashMap<>();
 		try {
 			scheduleService.insertSchedule(scheduleVO);
-			if(scheduleVO.getSchedule_type_id() == 4) {
-				entity = new ResponseEntity<String>(scheduleVO.getSchedule_order() + ". " + scheduleVO.getSchedule_content(), HttpStatus.OK);
-			} else {
-				entity = new ResponseEntity<String>(scheduleVO.getSchedule_content(), HttpStatus.OK);
-			}
+			ScheduleVO result = scheduleService.getLastSchedule(scheduleVO.getPlanner_id());
+			data.put("planner_id",String.valueOf(result.getPlanner_id()));
+			data.put("latitude", String.valueOf(result.getLatitude()));
+			data.put("longitude", String.valueOf(result.getLongitude()));
+			data.put("schedule_id", String.valueOf(result.getSchedule_id()));
+			data.put("schedule_content", result.getSchedule_content());
+			data.put("schedule_order", String.valueOf(result.getSchedule_order()));
+			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.OK);
 		} catch(Exception e) {
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			data.put("error", e.getMessage());
+			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.BAD_REQUEST);
 			log.info("ERROR Message : " + e.getMessage());
+		}
+		return entity;
+	}
+	
+	@PutMapping("/planner/schedule")
+	public ResponseEntity<String> modifySchedule(@RequestBody ScheduleVO scheduleVO) {
+		ResponseEntity<String> entity = null;
+		try {
+			scheduleService.modifySchedule(scheduleVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
