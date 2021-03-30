@@ -26,13 +26,13 @@ public class DiaryServiceImpl implements DiaryService {
 
 	@Override
 	public List<DiaryVO> getDiary(String member_id) {
-		log.info("ServiceImpl getDiary();");
+		log.info("ServiceImpl getDiary()");
 		return mapper.getDiary(member_id);
 	}
 
 	@Override
 	public List<PlannerVO> getPlanner(String member_id) {
-		log.info("ServiceImpl getPlanner();");
+		log.info("ServiceImpl getPlanner()");
 		return mapper.getPlanner(member_id);
 	}
 
@@ -66,6 +66,14 @@ public class DiaryServiceImpl implements DiaryService {
 		log.info("ServiceImpl getDiaryOther()");
 		return mapper.getDiaryOther(planner_id);
 	}
+
+	
+	  @Override public int getImg_seq() { 
+		  log.info("ServiceImpl getImg_seq()");
+	  return mapper.getImg_seq();
+	  
+	  }
+	 
 	
 	
 

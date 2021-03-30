@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
-<%@ page import="java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,32 +11,33 @@
 
 <title>diary</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 	
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
   
-<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 
-<!-- 모달 스타일 -->
 <style>
-.dialog{
-    width : 300px;
-    height : 50px;
-    float: left;
-    margin-left: 30px;
-    margin-botton: 10px;
-}
+/* 모달 스타일 */
+	.dialog{
+    	width : 300px;
+   	 	height : 50px;
+    	float: left;
+    	margin-left: 30px;
+    	margin-botton: 10px;
+	}
 
-#mainImg{
-    float: left;
-}
+	#mainImg{
+	    float: left;
+	}
+	
 </style>
 
 <style>
@@ -54,7 +54,6 @@
 	height: 300px;
 	object-fit: cover;
 }
-
 
 </style>
  
@@ -73,7 +72,7 @@
 <script type="text/javascript">
     	
 	$(document).ready(function(){
-		$(".delete").click(function(event){				
+		$(document).on("click",".delete",function(event){				
 			event.preventDefault();
 			console.log("delete click");
 			
@@ -117,13 +116,20 @@
 			
 			function getList() {
 				var url = "${pageContext.request.contextPath}/diary_other/"+planner_id;
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				
 				console.log(url);
 			
 				$.ajax({
 					type: 'GET',
 					url: url,
-					cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
-					dataType: 'json',// 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
+					cache : false,
+					dataType: 'json',
+			 		beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+						console.log("header 실행 "+header+token)
+						xhr.setRequestHeader(header, token);
+					}, 
 					success: function(result) {
 					//console.log(result);
 						$('#diaryDiv').children().remove();
@@ -133,17 +139,14 @@
 		        		$("#diaryDiv").html("");	
 
 		        		$(result).each(function(){	
-		        			
-		        			/* <span class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${dto.diary_id}',
-		      					'popwin2','width=1250,height=800,left=300, top=120')">수정</span>  */
 		        		
 		 		       	//다이어리
  		  		      	htmls +='<div class="col-sm-3">';
 		   		     	htmls +='<div class="dropdown">';
 		   		     	htmls +='<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style="height: 20px;float: right;"/>';    
 		   		     	htmls +='<div class="dropdown-menu">';
-		 	 	      	htmls +='<a class="dropdown-item" onclick="window.open(\'${pageContext.request.contextPath}/diary_modify_view/'+this.diary_id+'\',\'popwin2\',\'width=1250,height=800,left=300, top=120\')">수정</a>';
-		        		htmls +='<a class="delete dropdown-item" href="${pageContext.request.contextPath}/diary/'+ this.diary_id +'">삭제</a>';
+		 	 	      	htmls +='<a class="dropdown-item" onclick="window.open(\'${pageContext.request.contextPath}/diary_modify_view/'+this.diary_id+'&'+this.planner_id+'\',\'popwin2\',\'width=1250,height=800,left=300, top=120\')">수정</a>';
+		 	 	      	htmls +='<a class="delete dropdown-item" href="diary/'+ this.diary_id +'">삭제</a>';
 		       		 	htmls +='</div></div>';
 		     		   	htmls +='<table class="table table-borderless">';
 		      		  	htmls +='<tr class="table-light">';
@@ -157,7 +160,7 @@
 		      		  	htmls +='<div class="modal fade" id="myModal'+ this.diary_id +'" role="dialog">';
 		     		   	htmls +='<div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header">';
 		        		htmls +='<h3 class="modal-title" style="font-family: \'yg-jalnan\'">diary</h3>';
-		      		  	htmls +='<button type="button" class="close" data-dismiss="modal">&times;</button>';
+		      		  	htmls +='<button type="button" class="close" data-dismiss="modal">&times;</button></div>';
 		      		  	htmls +='<div class="modal-body"><div id="mainImg">';
 		      		  	htmls +='<img class="popup_img" src="resources/diary/'+this.img_path+'" style="position:relative; width: 400px; height: 400px;"/></div>';
 		        		htmls +='<div class="dialog"><h4 style="font-family: \'yg-jalnan\'">'+this.diary_date+'</h4></div>';
@@ -165,7 +168,8 @@
 		      		  	htmls +='<div class="modal-footer">';
 		      		  	htmls +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
 		      		  	htmls +='</div></div></div></div></div>';  
-		
+		      		  	
+						
 		        		});//result end
 		        		
 		        		//console.log(htmls);
@@ -187,6 +191,17 @@
   	document.formDate.submit();
 	}//function end
 </script>
+
+ <script type="text/javascript">
+  $(document).ready(function(){
+	
+	 var currPlanner_id= ${other.planner_id};  
+	console.log("현재 플래너의 아이디 : "+ currPlanner_id);
+	
+	$("#selectDiary").val(currPlanner_id).prop("selected", true);
+}); 
+ 
+</script> 
 
 </head>
 <body>
@@ -215,6 +230,7 @@
      </div>
 </form><!-- 다이어리 작성을 위한 form -->
 
+
 	<!-- 다이어리  -->
 	<div class="row"  id="diaryDiv">
 		<!-- 다이어리 반복문 -->
@@ -225,7 +241,7 @@
    				<div class="dropdown" >
     				<img src="resources/diary/dot3.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>
     				<div class="dropdown-menu" >
-      					<a class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${dto.diary_id}',
+      					<a class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${dto.diary_id}&${dto.planner_id}',
       					'popwin2','width=1250,height=800,left=300, top=120')">수정</a>
       					<a class="delete dropdown-item" href="diary/${dto.diary_id}">삭제</a>
     				</div>

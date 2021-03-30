@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -128,7 +129,7 @@
 </script>
 
 <script>
-/* 엔드 날짜 클릭시 시작 날짜로 포거스가게 하기 */
+/* 엔드 날짜 클릭시 시작 날짜로 포커스가게 하기 */
 	$(document).ready(function(){
 		$("#input-end").click(function(){
 			$("#input-start").focus();
@@ -144,7 +145,58 @@
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
 	<!--Content -->
+	<!-- 달력 이미지는 container 안에 있어서는 아니되오! -->
 	<img id="calImg" src="resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
+	
+	<div class="container">
+		<form action="${pageContext.request.contextPath}/search" method="post">
+			<!-- 보안 -->
+			<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
+			<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
+			
+			<input class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
+			<button type="submit"><i class="fa fa-search"></i></button>
+		</form>	
+		
+		<!-- <hr/>
+		검색 메뉴	
+		<a style="font-family: 'yg-jalnan'">통합</a>&nbsp;&nbsp;
+		<a style="font-family: 'yg-jalnan'">일정</a>&nbsp;&nbsp;
+		<a style="font-family: 'yg-jalnan'">다이어리</a>
+		
+		<hr/>
+		일정
+		<h5 style="font-family: 'yg-jalnan'">일정</h5>
+		반복
+		<div class="row">
+			<div class="col-sm-3">일정사진</div>
+			<div class="col-sm-3">경로사진</div>
+			<div class="col-sm-6">
+			국가,도시
+			<br/>
+			날짜
+			<br/>
+			만족도 별
+			<br/>
+			여행 후기
+			</div>
+		</div>
+		
+		다이어리
+		<br/>
+		<h5 style="font-family: 'yg-jalnan'">다이어리</h5>
+		
+		<div class="row">
+			<div class="col-sm-3">다이어리 사진</div>
+			<div class="col-sm-3">다이어리 사진</div>
+			<div class="col-sm-3">다이어리 사진</div>		
+			<div class="col-sm-3">다이어리 사진</div>	
+		</div> -->
+	
+	
+
+
+
 
 	<!-- Modal -->
 	<div class="modal" id="calModal" role="dialog">
@@ -182,123 +234,11 @@
 						</div>
 					<br>
 				</div>
-					</form>
-				</div>
-      	  	</div>
+				</form>
+			</div>
 		</div>
-
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
+	</div><!-- 달력 모달 end -->
+	</div><!-- container end -->
 	<!-- 달력 (아래 추가) -->
 	<script src="resources/calendar/datepicker/moment.min.js"></script>
 	<script src="resources/calendar/datepicker/daterangepicker.js"></script>
