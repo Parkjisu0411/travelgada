@@ -56,8 +56,15 @@
 	color: #A2A2A2;
 }
 
-tbody > div {
-	border: 1px solid black;
+.input-budget-after {
+	color: #A2A2A2;
+	display: none;
+}
+
+.input-budget-area {
+	width: 70px;
+	border: none;
+	border-bottom: 2px solid gray;
 }
 
 #map {
@@ -68,8 +75,112 @@ tbody > div {
   float: right;
 }
 
+.ui-state-highlight{
+  width:200px;
+  height: 2px;
+  background-color:grey;
+}
+
+.insert-btn {
+	text-align: center;
+	color: #A2A2A2;
+}
 </style>
 <script type="text/javascript">
+	//예산 추가/수정
+	function inputBudget(obj) {
+		$(obj).html("<input class='input-budget-area' type='number' name='input-budget-area'>₩</input>");
+		$(obj).children(".input-budget-area").focus();
+		$(obj).children(".input-budget-area").blur(function() {
+			if(!$(obj).children(".input-budget-area").val()) {
+				$(obj).html("<i class='fas fa-plus'></i>");				
+			}
+		})
+		$(obj).children(".input-budget-area").keydown(function(key) {
+			if(key.keyCode == 13) {
+				data = {
+					budget : $(obj).children(".input-budget-area").val(),
+					schedule_id : $(obj).siblings(".delete-btn").attr("id")
+				};
+				$.ajax({
+					type : "PUT",
+					url : "/planner/schedule",
+					data : JSON.stringify(data),
+					contentType : "application/json",
+					cache : false,
+					beforeSend : function(xhr){
+		  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},
+					success : function(result) {
+						var now = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total').text();
+						var budgetObj = $(obj).parent().parent().parent().children(".budget-area").children(".budget-total");
+						if(!$(obj).children(".input-budget-area").val()) {
+							$(obj).html("<i class='fas fa-plus'></i>");		
+						} else {
+							$(obj).replaceWith($("<span class='budget' onclick='modifyBudget(this)'>(" + $(obj).children(".input-budget-area").val() + "₩)</span>"));
+							var plus = $(obj).children(".input-budget-area").val();
+							var total = parseInt(now) + parseInt(plus);
+							budgetObj.html(total);
+						}
+					},
+					error : function(e) {
+						console.log(e);
+						alert("에러가 발생했습니다.");
+					}
+				});
+			}
+		});
+	}
+	
+	function modifyBudget(obj) {
+		var nowHtml = $(obj).text();
+		var now = $(obj).text().substr(1, $(obj).text().length - 3);
+		console.log(now);
+		$(obj).html("<input class='input-budget-area' type='number' name='input-budget-area' value='" + now + "'>₩</input>");
+		$(obj).children(".input-budget-area").focus();
+		$(obj).children(".input-budget-area").blur(function() {
+			$(obj).html(nowHtml);
+		})
+		$(obj).children(".input-budget-area").keydown(function(key) {
+			if(key.keyCode == 13) {
+				var next = $(obj).children(".input-budget-area").val();
+				data = {
+					budget : next,
+					schedule_id : $(obj).siblings(".delete-btn").attr("id")
+				};
+				$.ajax({
+					type : "PUT",
+					url : "/planner/schedule",
+					data : JSON.stringify(data),
+					contentType : "application/json",
+					cache : false,
+					beforeSend : function(xhr){
+		  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},
+					success : function(result) {
+						var total = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total').text();
+						var budgetObj = $(obj).parent().parent().parent().children(".budget-area").children(".budget-total");
+						if(!next) {
+							$(obj).replaceWith($("<span class='input-budget-after' onclick='inputBudget(this)'><i class='fas fa-plus'></i></span>"));
+							var total = parseInt(total) - parseInt(now);
+							budgetObj.html(total);
+						} else {
+							$(obj).html(nowHtml);
+							$(obj).text("(" + next + "₩)");
+							var total = parseInt(total) - parseInt(now) + parseInt(next);
+							budgetObj.html(total);
+						}
+					},
+					error : function(e) {
+						console.log(e);
+						alert("에러가 발생했습니다.");
+					}
+				});
+			}
+		});
+		
+	}
+	//
 	//일정 순서 재정렬
 	function reOrder(obj) {
 		var size = $(obj).children("div").children(".order").size();
@@ -84,8 +195,10 @@ tbody > div {
 			var index = i + 1;
 			var data = {
 				schedule_order : index,
-				schedule_id : $(obj).children('div').children('.delete-btn').eq(i).attr('id')
+				schedule_id : $(obj).children('div').children('.delete-btn').eq(i).attr('id'),
+				budget : -1
 			};
+				
 			console.log(data);
 			$.ajax({
 				type : "PUT",
@@ -470,20 +583,25 @@ tbody > div {
 		})
 		//드래그 앤 드롭으로 일정 순서 변경하기
 		$(".schedule-area").sortable({
-			helper: 'clone',
 			axis : 'y',
 			opacity : 0.7,
-			placeholder:"itemBoxHighlight",
-			handle : ".order-control",
-			
-	        start: function (event, ui) {
-	        },
+			placeholder: "ui-state-highlight",
+			handle: ".order-control",
 	        stop: function (event, ui) {
 	        	console.log(this);
 	        	reOrder(this);
 	        	reOrderDB(this);
 	        }
 		});
+		//
+		//hover event
+		$(".content-box").hover(function() {
+			$(this).children(".input-budget-after").css("display","inline");
+		}, function() {
+			$(this).children(".input-budget-after").css("display", "none");
+		})
+		//
+		
 	});
 </script>
 <!-- google Map API -->
@@ -544,7 +662,7 @@ tbody > div {
 							<td class="country-area">
 								<c:forEach var="country" items="${countryList }">
 									<c:if test="${country.schedule_date eq date}">
-										<div>
+										<div class="content-box">
 											<span class="content">${country.schedule_content }</span>
 											<span class='latitude' style='display:none'>${country.latitude }</span>
 											<span class='longitude' style='display:none'>${country.longitude }</span>
@@ -553,56 +671,59 @@ tbody > div {
 										</div>
 									</c:if>
 								</c:forEach>
-								<a class="insert-btn" href="#">추가하기</a>
+								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
 							</td>
 							<td class="city-area">
 								<c:forEach var="city" items="${cityList }">
 									<c:if test="${city.schedule_date eq date }">
-										<div>
+										<div class="content-box">
 											<span class="content">${city.schedule_content }</span>
 											<span class="delete-btn" id="${city.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
 										</div>
 									</c:if>
 								</c:forEach>
-								<a class="insert-btn" href="#">추가하기</a>
+								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
 							</td>
 							<td class="vehicle-area">
 								<c:forEach var="vehicle" items="${vehicleList }">
 									<c:if test="${vehicle.schedule_date eq date }">
-										<div>
+										<div class="content-box">
 											<span class="content">${vehicle.schedule_content }</span>
-											<c:if test="${vehicle.budget ne 0 }"><span class="budget">(${vehicle.budget }₩)</span></c:if>
+											<c:if test="${vehicle.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${vehicle.budget }₩)</span></c:if>
+											<c:if test="${vehicle.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
 											<span class="delete-btn" id="${vehicle.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
 										</div>
 									</c:if>
 								</c:forEach>
-								<a class="insert-btn" href="#">추가하기</a>
+								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
 							</td>
 							<td class="schedule-area">
 								<c:forEach var="schedule" items="${scheduleList }">
 									<c:if test="${schedule.schedule_date eq date }">
-										<div class="sortable-order">
+										<div class="sortable-order content-box">
 											<span class="order">${schedule.schedule_order}. </span><span class="content">${schedule.schedule_content }</span>
-											<c:if test="${schedule.budget ne 0 }"><span class="budget">(${schedule.budget }₩)</span></c:if>
+											<c:if test="${schedule.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${schedule.budget }₩)</span></c:if>
+											<c:if test="${schedule.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
 											<span class='order-control'>&nbsp;&nbsp;<i class="fas fa-bars"></i></span>
 											<span class="delete-btn" id="${schedule.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
 										</div>
 									</c:if>
 								</c:forEach>
-								<a class="insert-btn ui-state-disabled" href="#">추가하기</a>
+								<div class="insert-btn ui-state-disabled"><i class="fas fa-plus-circle"></i></div>
 							</td>
 							<td class="hotel-area">
 								<c:forEach var="hotel" items="${hotelList }">
 									<c:if test="${hotel.schedule_date eq date }">
-										<div>
+										<div class="content-box">
 											<span class="content">${hotel.schedule_content }</span>
 											<br />
-											<c:if test="${hotel.budget ne 0 }"><span class="budget">(${hotel.budget }₩)</span></c:if>
+											<c:if test="${hotel.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${hotel.budget }₩)</span></c:if>
+											<c:if test="${hotel.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
 											<span class="delete-btn" id="${hotel.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
 										</div>
 									</c:if>
 								</c:forEach>
-								<a class="insert-btn" href="#">추가하기</a>
+								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
 							</td>
 							<td class="budget-area">
 								<span class="budget-total"><c:out value="${dayBudget[date] }"></c:out></span>

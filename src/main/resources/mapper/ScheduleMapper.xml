@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="updateSchedule">
 		<![CDATA[
-			update schedule set schedule_order = #{schedule_order} where schedule_id = #{schedule_id}
+			update schedule set schedule_order = #{schedule_order}, budget = #{budget} where schedule_id = #{schedule_id}
 		]]>
 	</update>
 
