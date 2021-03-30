@@ -1,10 +1,17 @@
 package com.gada.travelgada.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,9 +21,12 @@ import com.gada.travelgada.domain.ScheduleVO;
 import com.gada.travelgada.service.MainService;
 import com.gada.travelgada.service.PlannerService;
 import com.gada.travelgada.service.ScheduleService;
+import com.gada.travelgada.utils.DateCalculator;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @AllArgsConstructor
 @RestController
 public class MainController {
@@ -47,9 +57,15 @@ public class MainController {
 		List<PlannerVO> plannerList = scheduleService.selectPlanner(member.getUsername());
 		PlannerVO planner = plannerList.get(0);
 
+<<<<<<< HEAD
 		List<ScheduleVO> pathsToJson = scheduleService.getSchedule(planner.getPlanner_id());
 
 		return pathsToJson;
+=======
+		List<ScheduleVO> pathsJson = scheduleService.getSchedule(planner.getPlanner_id());
+
+		return pathsJson;
+>>>>>>> 187e0c8 (Implements map polyline #23 - jongyeong)
 	}
 	
 	// Map Page
@@ -66,5 +82,54 @@ public class MainController {
 		modelAndView.setViewName("example");
 
 		return modelAndView;
+	}
+	
+	// Schedule 3
+	@GetMapping("/planner/schedule3")
+	public ModelAndView getSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "0") int planner_id) throws ParseException {
+		log.info(String.valueOf(planner_id) + "=====================");
+		List<PlannerVO> plannerList = scheduleService.selectPlanner(member.getUsername());
+		PlannerVO planner = null;
+		if(planner_id != 0) {
+			for(PlannerVO vo : plannerList) {
+				if(vo.getPlanner_id() == planner_id) {
+					planner = vo;
+				}
+			}
+		} else {
+			planner = plannerList.get(0);
+		}
+		
+		List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
+		modelAndView.addObject("planner_id", planner.getPlanner_id());
+		modelAndView.addObject("plannerList", plannerList);
+		modelAndView.addObject("dateList", dateList);
+		modelAndView.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));
+		modelAndView.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
+		modelAndView.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
+		modelAndView.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));
+		modelAndView.addObject("hotelList", scheduleService.getHotel(planner.getPlanner_id()));
+		modelAndView.addObject("dayBudget", scheduleService.getBudget(planner.getPlanner_id()));
+		
+		modelAndView.setViewName("main/schedule3");
+		
+		return modelAndView;
+	}
+	
+	@PostMapping("/planner/schedule3")
+	public ResponseEntity<String> insertSchedule(@RequestBody ScheduleVO scheduleVO) {
+		ResponseEntity<String> entity = null;
+		try {
+			scheduleService.insertSchedule(scheduleVO);
+			if(scheduleVO.getSchedule_type_id() == 4) {
+				entity = new ResponseEntity<String>(scheduleVO.getSchedule_order() + ". " + scheduleVO.getSchedule_content(), HttpStatus.OK);
+			} else {
+				entity = new ResponseEntity<String>(scheduleVO.getSchedule_content(), HttpStatus.OK);
+			}
+		} catch(Exception e) {
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			log.info("ERROR Message : " + e.getMessage());
+		}
+		return entity;
 	}
 }
