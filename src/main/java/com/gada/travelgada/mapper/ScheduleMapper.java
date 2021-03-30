@@ -26,10 +26,14 @@ public interface ScheduleMapper {
 
 	public void deleteSchedule(int schedule_id);
 	
+<<<<<<< HEAD
 	public ScheduleVO selectLastSchedule(int planner_id);
 	
 	public void ordering(@Param("planner_id") int planner_id, @Param("schedule_date") Date schedule_date);
 
 	public void updateSchedule(ScheduleVO scheduleVO);
 	
+=======
+	public List<ScheduleVO> getLocations(int planner_id);
+>>>>>>> f508152 (Fix conflict #21 - jongyeong)
 }

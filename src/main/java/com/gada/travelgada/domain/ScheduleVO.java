@@ -19,8 +19,5 @@ public class ScheduleVO {
 	private int schedule_id;
 	private int schedule_type_id;
 	private String schedule_content;
-	private double latitude;
-	private double longitude;
-	private int schedule_order;
 
 }
