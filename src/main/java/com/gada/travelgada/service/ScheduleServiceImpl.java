@@ -1,5 +1,6 @@
 package com.gada.travelgada.service;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +109,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 		}
 		
 		mapper.updateSchedule(schedule);
+	}
+
+	@Override
+	public List<ScheduleVO> getMap(Date schedule_date) {
+		return mapper.getMap(schedule_date);
+	}
+
+	@Override
+	public List<ScheduleVO> selectAllSchedule(int planner_id) {
+		return mapper.selectAllSchedule(planner_id);
 	}
 
 }

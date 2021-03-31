@@ -25,7 +25,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="/"><img class="nav-logo-img"
-				src="${contextPath}/resources/logo.png">가다</a>
+				src="${contextPath}/resources/img/main/logo.png">가다</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
