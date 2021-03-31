@@ -45,25 +45,27 @@
       success: function initMap(result) {
         var paths = result;
         var pathsArray = [];
+        var markerIndex = 1;
 
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 8,
           center: { lat: 36.117223849684194, lng: 127.77243924839905 }
         });
-
+		
         for (var index = 0; index < paths.length; index++) {
           if ((paths[index].latitude && paths[index].longitude) == '' || null || undefined || 0 || NaN) {
               continue;
           }
           var latitude = paths[index].latitude;
           var longitude = paths[index].longitude;
-
+          
           var marker = new google.maps.Marker({
             position: { lat: latitude, lng: longitude },
-            label: "" + paths[index].schedule_order,
+            label: "" + markerIndex,
             map: map
           });
-
+		  markerIndex++;
+          
           marker.info = new google.maps.InfoWindow({
             content: '<div class="schedule-content">' + paths[index].schedule_content + '</div>',
             anchorPoint: new google.maps.Point(0, -29),

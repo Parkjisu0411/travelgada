@@ -23,16 +23,5 @@ public interface BoardMapper {
 	public int getTotalAccompanyBoard(CriteriaVO cri);
 
 	public BoardVO boardContentView(int board_id);
-
-	
-
-	
-	
-	
-	
-
-	
-
-	
 	
 }
