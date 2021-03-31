@@ -112,13 +112,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public List<ScheduleVO> getMap(Date schedule_date) {
-		return mapper.getMap(schedule_date);
+	public List<ScheduleVO> selectAllSchedule(int planner_id) {
+		return mapper.selectAllSchedule(planner_id);
 	}
 
 	@Override
-	public List<ScheduleVO> selectAllSchedule(int planner_id) {
-		return mapper.selectAllSchedule(planner_id);
+	public List<ScheduleVO> getMap(int planner_id, Date schedule_date) {
+		return mapper.getMap(planner_id, schedule_date);
 	}
 
 }
