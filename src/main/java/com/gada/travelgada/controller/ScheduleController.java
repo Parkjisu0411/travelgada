@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +27,7 @@ public class ScheduleController {
 	@Autowired
 	private ScheduleService scheduleService;
 	
-	@RequestMapping(value="/planner/schedule")
+	@RequestMapping(value="/planner/TestShedule")
 	public ModelAndView getSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member) {
 		
 		DateCalculator dateCalculator = new DateCalculator();
@@ -35,7 +37,7 @@ public class ScheduleController {
 		PlannerVO planner = plannerList.get(0);
 		
 		modelAndView.addObject("plannerList", plannerList);
-		modelAndView.addObject("dateList", dateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date()));
+		//modelAndView.addObject("dateList", dateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date()));
 		modelAndView.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
 		modelAndView.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
 		modelAndView.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));
@@ -44,4 +46,6 @@ public class ScheduleController {
 		
 		return modelAndView;
 	}
+	
+	
 }

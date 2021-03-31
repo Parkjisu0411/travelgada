@@ -46,7 +46,6 @@
 	.calRow{
 		width: 100%;
 	}
-
 	/* 작성 버튼 */
 	.btn-submit {
   		background-color: rgb(240, 240, 240);
@@ -58,7 +57,6 @@
 		width: 50px;
 		float: left;
 	}
-
 	/* input */
 	.input-style{
 		border: none;
@@ -93,7 +91,6 @@
 		width: 180px;
 		padding-left: 30px;
  	}
-
 	/* 선택 되었을 때 색깔 */    
 	.inputGroup:hover, .dateGroup:hover,.btn-submit:hover{
 		background: white;
@@ -105,7 +102,6 @@
 		float: left;
 		margin-left: 100px;
 	}
-
 /* 플래너 생성 스타일 end */
 </style>
 

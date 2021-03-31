@@ -29,11 +29,9 @@ html, body {
 	margins: 0;
 	padding: 0;
 }
-
 #wrap {
 	min-heigth: 100%;
 }
-
 .login-icon {
 	width: 300px;
 	height: 50px;
@@ -41,7 +39,6 @@ html, body {
 	display: block;
 	margin: auto;
 }
-
 #login-form {
 	margin: 0 auto;
 }

@@ -58,6 +58,14 @@ public class MemberDetails implements UserDetails, OAuth2User{
 	public String getProfile() {
 		return member.getProfile_img_path();
 	}
+	
+	public boolean canAccess() {
+		if(member.getWithdrawal_flag() == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -80,4 +88,3 @@ public class MemberDetails implements UserDetails, OAuth2User{
 	}
 
 }
- 

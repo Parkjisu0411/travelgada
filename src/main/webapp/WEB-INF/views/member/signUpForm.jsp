@@ -32,19 +32,15 @@ html, body {
 	margins: 0;
 	padding: 0;
 }
-
 #wrap {
 	min-heigth: 100%;
 }
-
 #signup-form {
 	margin: 0 auto;
 }
-
 .error_next_box {
 	color: red;
 }
-
 .green {
 	color: green;
 }
@@ -64,7 +60,6 @@ html, body {
 	function hideMsg(obj) {
 		obj.hide();
 	}
-
 	function setFocusToInputObject(obj) {
 		if (submitFlag) {
 			submitFlag = false;
@@ -78,7 +73,6 @@ html, body {
 	function submitOpen() {
 		$("#btnJoin").attr("disabled", false);
 	}
-
 	function checkSpace(str) {
 		if (str.search(/\s/) != -1) {
 			return true;
@@ -86,13 +80,11 @@ html, body {
 			return false;
 		}
 	}
-
 	function isValidPasswd(str) {
 		var cnt = 0;
 		if (str == "") {
 			return false;
 		}
-
 		/* check whether input value is included space or not */
 		var retVal = checkSpace(str);
 		if (retVal) {
@@ -108,44 +100,36 @@ html, body {
 		if (cnt == str.length) {
 			return false;
 		}
-
 		var isPW = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/;
 		if (!isPW.test(str)) {
 			return false;
 		}
-
 		return true;
 	}
-
 	/* Form Check Method */
 	function checkId(event) {
 		if (idFlag)
 			return true;
-
 		var id = $("#id").val();
 		var oMsg = $("#idMsg");
 		var oInput = $("#id");
-
 		if (id == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
 			setFocusToInputObject(oInput);
 			return false;
 		}
-
 		var isID = /^[a-z0-9]{5,20}$/;
 		if (!isID.test(id)) {
 			showErrorMsg(oMsg, "5~20자의 영문 소문자와 숫자만 사용 가능합니다.");
 			setFocusToInputObject(oInput);
 			return false;
 		}
-
 		idFlag = true;
 		$.ajax({
 			type : "GET",
 			url : "/member/checkid?id=" + id,
 			success : function(data) {
 				var result = data;
-
 				if (result == "SUCCESS") {
 					if (event == "first") {
 						showSuccessMsg(oMsg, "멋진 아이디네요!");
@@ -162,25 +146,21 @@ html, body {
 		hideMsg(oMsg);
 		return true;
 	}
-
 	function checkPswd1() {
 		if (pwFlag)
 			return true;
-
 		var id = $("#id").val();
 		var pw = $("#pswd1").val();
 		var oImg = $("#pswd1Img");
 		var oSpan = $("#pswd1Span");
 		var oMsg = $("#pswd1Msg");
 		var oInput = $("#pswd1");
-
 		if (pw == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
 			setFocusToInputObject(oInput);
 			pwFlag = false;
 			return false;
 		}
-
 		var isPW = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
 		if (!isPW.test(pw)) {
 			showErrorMsg(oMsg, "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
@@ -188,12 +168,10 @@ html, body {
 			pwFlag = false;
 			return false;
 		}
-
 		hideMsg(oMsg);
 		pwFlag = true;
 		return true;
 	}
-
 	function checkPswd2() {
 		var pswd1 = $("#pswd1");
 		var pswd2 = $("#pswd2");
@@ -201,7 +179,6 @@ html, body {
 		var oImg = $("#pswd2Img");
 		var oBlind = $("#pswd2Blind");
 		var oInput = $("#pswd2");
-
 		if (pswd2.val() == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
 			oBlind.html("");
@@ -218,14 +195,11 @@ html, body {
 			hideMsg(oMsg);
 			return true;
 		}
-
 		return true;
 	}
-
 	function checkName() {
 		var oMsg = $("#nameMsg");
 		var nonchar = /[^가-힣a-zA-Z0-9]/gi;
-
 		var name = $("#name").val();
 		var oInput = $("#name");
 		if (name == "") {
@@ -238,22 +212,18 @@ html, body {
 			setFocusToInputObject(oInput);
 			return false;
 		}
-
 		hideMsg(oMsg);
 		return true;
 	}
-
 	function checkEmail() {
 		var email = $("#email").val();
 		var oMsg = $("#emailMsg");
 		var oInput = $("#email");
-
 		if (email == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
 			setFocusToInputObject(oInput);
 			return true;
 		}
-
 		var isEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		var isHan = /[ㄱ-ㅎ가-힣]/g;
 		if (!isEmail.test(email) || isHan.test(email)) {
@@ -261,22 +231,18 @@ html, body {
 			setFocusToInputObject(oInput);
 			return false;
 		}
-
 		hideMsg(oMsg);
 		return true;
 	}
-
 	function checkPhoneNo() {
 		var phoneNo = $("#phoneNo").val();
 		var oMsg = $("#phoneNoMsg");
 		var oInput = $("#phoneNo");
-
 		if (phoneNo == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
 			setFocusToInputObject(oInput);
 			return false;
 		}
-
 		hideMsg(oMsg);
 		return true;
 	}
@@ -293,14 +259,11 @@ html, body {
             return false;
         }
     }
-
 	function mainSubmit() {
-
 		if (!checkUnrealInput()) {
 			submitOpen();
 			return false;
 		}
-
 		if (idFlag && pwFlag && authFlag) {
 			$("#join_form").submit();
 		} else {
@@ -308,11 +271,9 @@ html, body {
 			return false;
 		}
 	}
-
 	$(document)
 			.ready(
 					function() {
-
 						$("#btnJoin").click(function(event) {
 							clickcr(this, 'sup.signup', '', '', event);
 							submitClose();
@@ -324,7 +285,6 @@ html, body {
 								}, 700);
 							}
 						});
-
 						//Check SignUpForm
 						$("#id").keyup(function() {
 							idFlag = false;
@@ -343,7 +303,6 @@ html, body {
 						$("#email").keyup(function() {
 							checkEmail();
 						});
-
 						//Submit SignUpForm
 						$("#btnSubmit")
 								.click(
@@ -357,7 +316,6 @@ html, body {
 												phone_num : $("#phone_num")
 														.val(),
 											};
-
 											$
 													.ajax({
 														type : "POST",

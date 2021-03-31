@@ -30,17 +30,14 @@ html, body {
 	margins: 0;
 	padding: 0;
 }
-
 #wrap {
 	min-heigth: 100%;
 }
-
 .member-img {
 	margin: 30px;
 	height: 100px;
 	display: block;
 }
-
 .btn {
 	width: 10%;
 }

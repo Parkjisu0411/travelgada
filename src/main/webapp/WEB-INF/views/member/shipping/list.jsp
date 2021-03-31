@@ -30,23 +30,19 @@ html, body {
 	margins: 0;
 	padding: 0;
 }
-
 #wrap {
 	min-heigth: 100%;
 }
-
 .member-img {
 	margin: 30px;
 	height: 100px;
 	display: block;
 }
-
 .btn {
 	width : 10%;
 }
 </style>
 <script type="text/javascript">
-
 	//팝업
 	function enroll() {
 		var pop = window.open("/shipping/enroll", 'pop', "width=570,height=520, scrollbars=yes, resizable=yes");

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -53,15 +53,25 @@
 	color: #A2A2A2;
 }
 
-tbody > div {
+tbody>div {
 	border: 1px solid black;
 }
 
 #map {
-  width: 50%;
-  height: 100%;
-  float: right;
+	width: 50%;
+	height: 100%;
+	float: right;
 }
+
+header{
+
+	position:sticky;
+	top:40px;
+	padding:5px;
+	
+	
+}
+
 
 </style>
 <script type="text/javascript">
@@ -336,6 +346,7 @@ tbody > div {
 		//
 	});
 </script>
+
 </head>
 <body>
 
@@ -357,16 +368,22 @@ tbody > div {
 					</select>
 				</div>
 		</form>
+		
 		<!-- date button -->
+		<header>
 		<div class="col-md-12">
+			<div id="topBar ">
 			<div class="date-btn">
 				<c:forEach var="date" items="${dateList }">
-					<button class="btn btn-secondary btn-lg" onclick="moveTo('${date}')">
+					<button class="btn btn-secondary btn-lg" onclick="moveTo('${date}')" style="margin:10px; height:50px;">
 						${date}
 					</button>
 				</c:forEach>
+				</div>
 			</div>
 		</div>
+		</header>
+		
 		<!-- schedule table -->
 		<div class="col-md-12">
 			<table class="table" id="table-schedule">
@@ -462,4 +479,284 @@ tbody > div {
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>
+</html> --%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Shopping</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="resources/shpvendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="resources/shpcss/shop-homepage.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+<!-- Font -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
+	rel="stylesheet">
+	
+	<style>
+	/* Navbar */
+.navbar {
+  padding: 2px;
+  box-shadow: rgb(0 0 0 / 8%) 0px 1px 12px;
+}
+
+.nav-logo-img {
+  max-width: 70px;
+  max-height: 70px;
+}
+
+.navbar-brand {
+  font-family: 'yg-jalnan';
+  font-size: 1.4em;
+}
+
+.nav-logo-img {
+  max-width: 30px;
+  max-height: 30px;
+  margin: 0px 4px 0px 0px;
+  padding: 0px 0px 3px;
+}
+
+.nav-item {
+  padding: 0px 15px;
+}
+	</style>
+
+</head>
+
+<body>
+
+<!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container">
+      <a class="navbar-brand" href="#"><img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 일정 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">플래너</a> <a class="dropdown-item" href="#">준비물</a> <a
+                class="dropdown-item" href="#">지도</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 커뮤니티 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Q&A</a> <a class="dropdown-item" href="#">리뷰</a> <a
+                class="dropdown-item" href="#">동행</a>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">쇼핑</a></li>
+          <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 회원정보 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">정보 수정</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">로그아웃</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="text" aria-label="Search">
+          <button class="btn btn-outline-white btn-sm my-0" type="submit">검색</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+	
+	
+	
+	 <!-- Page Content -->
+	 <!-- 좌측 사이드바 -->
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4" style="font-family: 'yg-jalnan'">GADA</h1>
+        <div class="list-group" style="font-family: 'yg-jalnan'">
+          <a href="#" class="list-group-item">Category 1</a>
+          <a href="#" class="list-group-item">Category 2</a>
+          <a href="#" class="list-group-item">Category 3</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9" style="font-family: 'yg-jalnan'">
+
+        <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="https://media.istockphoto.com/photos/adorable-little-girl-taking-a-photo-of-herself-picture-id942546816?s=612x612" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">셀카봉</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text"></p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Two</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Three</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Four</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Five</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Item Six</a>
+                </h4>
+                <h5>$24.99</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.row -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+<!-- Footer -->
+  <footer>
+    <div class="footer-company-info">
+      © 2021 가다, Inc. All rights reserved<br> 개인정보 처리방침·이용약관·사이트맵
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="resources/shpvendor/jquery/jquery.min.js"></script>
+  <script src="resources/shpvendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
 </html>

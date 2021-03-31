@@ -35,40 +35,32 @@
   padding: 2px;
   box-shadow: rgb(0 0 0 / 8%) 0px 1px 12px;
 }
-
 .nav-logo-img {
   max-width: 70px;
   max-height: 70px;
 }
-
 .navbar-brand {
   font-family: 'yg-jalnan';
   font-size: 1.4em;
 }
-
 .nav-logo-img {
   max-width: 30px;
   max-height: 30px;
   margin: 0px 4px 0px 0px;
   padding: 0px 0px 3px;
 }
-
 .nav-item {
   padding: 0px 15px;
 }
-
 /* Footer */
 footer {
   background-color: #f5f5f7;
 }
-
 .footer-company-info {
   text-align: center;
   padding: 50px;
   font-size: 14px;
 }
-
-
 /* #plus {
 	width: 200px;
 	height: 100px;
@@ -77,19 +69,16 @@ footer {
 	border: 1px solid #cccccc;
 	border-radius: 20px;
 }
-
 #first {
 	width: 200px;
 	height: 100px;
 	text-align: center;
 }
-
 #sec {
 	width: 200px;
 	height: 100px;
 	text-align: center;
 }
-
 #three {
 	width: 200px;
 	height: 100px;
@@ -99,14 +88,12 @@ footer {
 	width:1000px;	
 	hegiht:500px;
 } */
-
 #plus{
 	width:70px;
 	height:70px;
 	border-radius:20px;
 	background-color:#FACC2E;
 }
-
 #day{
 	width:70px;
 	height:70px;
@@ -114,12 +101,10 @@ footer {
 	margin:auto;
 	background-color:#FACC2E;
 }
-
 .form-control{
 	width:200px;
 	height:30px;
 }
-
 </style>
 
 </head>
@@ -264,13 +249,8 @@ footer {
  
 </body>
 <script type="text/javascript">
-
-
-
 $(document).ready(function () {
-
    //alert('123');
-
    $('.slick-items').slick({
         dots: true,
         infinite: false,
@@ -306,10 +286,7 @@ $(document).ready(function () {
           // instead of a settings object
         ]
       });
-
 });
-
-
 </script>
 
     

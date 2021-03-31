@@ -18,9 +18,10 @@ public class TodoVO {
 	private String todo_name;
 	private int complete_flag;
 	private int todo_type_id;
+
 	
-	private String todo_title;
-	private int planner_id;
+	//private String todo_title;
+	//private int planner_id;
 	
 //	private List<TodoTypeVO> todoType;
 //	

@@ -29,27 +29,22 @@ html, body {
 	margins: 0;
 	padding: 0;
 }
-
 #wrap {
 	min-heigth: 100%;
 }
-
 .member-img {
 	margin: 30px;
 	height: 100px;
 	width : 100px;
 	display: block;
 }
-
 .error_next_box {
 	color: red;
 	font-size: 0.5em;
 }
-
 .green {
 	color: green;
 }
-
 #preview-area {
 	position:relative;
 	width: 100px;
@@ -91,9 +86,7 @@ html, body {
 			
 		}
 	}
-
 	//
-
 	//공통함수
 	function showErrorMsg(obj, msg) {
 		obj.attr("class", "error_next_box");
@@ -109,7 +102,6 @@ html, body {
 		obj.hide();
 	}
 	//
-
 	$(document).ready(function() {
 		
 		//change button click event
@@ -130,7 +122,6 @@ html, body {
 			$("#password-area").css("display", "");
 			$("#change-password-area").css("display", "none");
 		});
-
 		$("#change-password-cancle-btn").click(function(e) {
 			e.preventDefault();
 			$("#password").val('');
@@ -139,39 +130,33 @@ html, body {
 			$("#password-area").css("display", "");
 			$("#change-password-area").css("display", "none");
 		});
-
 		$("#change-name-btn").click(function(e) {
 			e.preventDefault();
 			$("#name-area").css("display", "none");
 			$("#change-name-area").css("display", "");
 		});
-
 		$("#change-name-cancle-btn").click(function(e) {
 			e.preventDefault();
 			$("#name").val('');
 			$("#name-area").css("display", "");
 			$("#change-name-area").css("display", "none");
 		});
-
 		$("#change-email-btn").click(function(e) {
 			e.preventDefault();
 			$("#email-area").css("display", "none");
 			$("#change-email-area").css("display", "");
 		});
-
 		$("#change-email-cancle-btn").click(function(e) {
 			e.preventDefault();
 			$("#email").val('');
 			$("#email-area").css("display", "");
 			$("#change-email-area").css("display", "none");
 		});
-
 		$("#change-phone-btn").click(function(e) {
 			e.preventDefault();
 			$("#phone-area").css("display", "none");
 			$("#change-phone-area").css("display", "");
 		});
-
 		$("#change-phone-cancle-btn").click(function(e) {
 			e.preventDefault();
 			$("#phone").val('');
@@ -275,7 +260,6 @@ html, body {
 				member_id : id,
 				member_name : name
 			};
-
             if(confirm('이름을 변경하시겠습니까?')) {
                 $.ajax({
                     type: "PUT",
@@ -301,7 +285,6 @@ html, body {
     				}
                 });
             }
-
         });
 		
 		$("#change-email-finish-btn").click(function(e) {
@@ -485,11 +468,9 @@ html, body {
 		
 		$("#change-name-input").keyup(function (e) {
             e.preventDefault();
-
             var name = $("#change-name-input").val();
             var oMsg = $("#nameMsg");
             var isName = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/;
-
             if (name == "") {
             	showErrorMsg(oMsg, "변경할 이름을 입력해주세요.");
             	$("#change-name-finish-btn").attr('class', 'n-btn btn-sm btn-accent disabled');
@@ -527,7 +508,6 @@ html, body {
 				$("#change-email-finish-btn").attr('disabled', false);
 			}
         });
-
 		$("#change-phone-input").keyup(function (e) {
 			e.preventDefault();
 			
@@ -550,7 +530,6 @@ html, body {
 			}
 		});
 		//
-
 	})
 </script>
 </head>

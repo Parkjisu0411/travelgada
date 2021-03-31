@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,18 +29,19 @@ public class ShippingLocController {
 	
 	private ShippingLocServiceImpl shippingLocService;
 	
-	@GetMapping("/member/mypage/shippingLoc")
+	@GetMapping("/member/shipping")
 	public ModelAndView memberShippingLoc(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
 		log.info("MyPage==========ShippingLoc==========");
 		mv.addObject("shippingList", memberService.getShippingLoc(memberDetails.getUsername()));
-		mv.setViewName("/member/memberShippingLoc");
+		mv.setViewName("/member/shipping/list");
 		return mv;
 	}
 	
-	@DeleteMapping("/member/mypage/shippingLoc/{shipping_loc_name}")
-	public ResponseEntity<String> deleteShippingLoc(ShippingLocVO shippingLocVO, Model model, @AuthenticationPrincipal MemberDetails memberDetails) {
+	@DeleteMapping("/member/shipping")
+	public ResponseEntity<String> deleteShippingLoc(@RequestBody ShippingLocVO shippingLocVO) {
 		ResponseEntity<String> entity = null;
 		try {
+			log.info(shippingLocVO.getShipping_loc_name() + "의 삭제를 시도합니다.=============");
 			shippingLocService.deleteShippingLoc(shippingLocVO);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
@@ -49,4 +51,28 @@ public class ShippingLocController {
 		return entity;
 	}
 	
+	@PostMapping("/member/shipping")
+	public ResponseEntity<String> saveShippingLoc(@RequestBody ShippingLocVO shippingLocVO) {
+		ResponseEntity<String> entity = null;
+		try {
+			shippingLocService.saveShippingLoc(shippingLocVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@GetMapping("/shipping/enroll")
+	public ModelAndView enroll(ModelAndView mav) {
+		mav.setViewName("/member/shipping/enroll");
+		return mav;
+	}
+	
+	@PostMapping("/shipping/enroll")
+	public ModelAndView modify(ModelAndView mav) {
+		mav.setViewName("/member/shipping/enroll");
+		return mav;
+	}
 }

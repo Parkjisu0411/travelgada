@@ -49,12 +49,10 @@
 		width: 25px;
 		height: 30px;
 	}
-
 	/* 모달 스타일 */
 	.modalInput{
         margin-left: 20px;
     }
-
 	.modal_input-style{
 		border: none;
 		font-size: 15px;
@@ -65,7 +63,6 @@
 		border-radius: 15px;
 		padding-left: 20px;
 	}
-
 	.modal-submit{
 		border: none;
 		height: 40px;
@@ -73,7 +70,6 @@
 		border-radius: 15px;
 		background-color: rgb(211, 211, 211);
 	}
-
 	.modalLabel{
 		margin:15px 10px 10px 10px;			
 		font-size: 12px;
@@ -94,7 +90,6 @@
 		right: 60px;
 		width:310px;
 	}
-
 /* 모달 스타일 end */
 </style>
 

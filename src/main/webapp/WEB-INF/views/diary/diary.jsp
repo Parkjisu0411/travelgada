@@ -34,7 +34,6 @@
     margin-left: 30px;
     margin-botton: 10px;
 }
-
 #mainImg{
     float: left;
 }
@@ -48,19 +47,15 @@
 	display: block;
 	margin: 0px auto;
 }
-
 .popup_img {
 	width: 300px;
 	height: 300px;
 	object-fit: cover;
 }
-
-
 </style>
  
 <!-- csrf 토큰 -->
 <!-- <script type="text/javascript">
-
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	
@@ -131,7 +126,6 @@
 						var htmls="";
 					
 		        		$("#diaryDiv").html("");	
-
 		        		$(result).each(function(){	
 		        			
 		        			/* <span class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${dto.diary_id}',

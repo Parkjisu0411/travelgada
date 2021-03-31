@@ -29,11 +29,9 @@ html, body {
 	margins: 0;
 	padding: 0;
 }
-
 #wrap {
 	min-heigth: 100%;
 }
-
 #planner {
 	margin: auto;
 }

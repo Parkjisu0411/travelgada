@@ -19,21 +19,16 @@
 	function previewImage(targetObj, View_area) {
 		var preview = document.getElementById(View_area); //div id
 		var ua = window.navigator.userAgent;
-
  	//ie일때(IE8 이하에서만 작동)
 	if (ua.indexOf("MSIE") > -1) {
 		targetObj.select();
 		try {
 			var src = document.selection.createRange().text; // get file full path(IE9, IE10에서 사용 불가)
 			var ie_preview_error = document.getElementById("ie_preview_error_" + View_area);
-
-
 			if (ie_preview_error) {
 				preview.removeChild(ie_preview_error); //error가 있으면 delete
 			}
-
 			var img = document.getElementById(View_area); //이미지가 뿌려질 곳
-
 			//이미지 로딩, sizingMethod는 div에 맞춰서 사이즈를 자동조절 하는 역할
 			img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+src+"', sizingMethod='scale')";
 		} catch (e) {
@@ -105,9 +100,6 @@ $(document).ready(function(){
   	  }
    	 });
 	});
-
-
-
 </script>
 
 <style>

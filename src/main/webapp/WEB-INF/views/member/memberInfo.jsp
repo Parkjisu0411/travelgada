@@ -29,15 +29,12 @@ html, body {
 	margins: 0;
 	padding: 0;
 }
-
 #wrap {
 	min-heigth: 100%;
 }
-
 .member-profile {
 	text-align: center;
 }
-
 .member-img {
 	height: 100px;
 	width: 100px;

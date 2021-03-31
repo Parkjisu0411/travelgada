@@ -78,23 +78,18 @@
                         <button class="btn-submit" type="submit">작성</button>
                         </div>
 	</div>
-
 	</div>
-
 	
 	        <!-- Jquery JS-->
      <script src="resources/calendar/vendor/jquery/jquery.min.js"></script>
     <script src="resources/calendar/vendor/datepicker/moment.min.js"></script>
     <script src="resources/calendar/vendor/datepicker/daterangepicker.js"></script>
-
     <!-- Main JS-->
     <script src="resources/calendar/js/global.js"></script>
 	
 	
 	
-
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
-
 </body>
 </html>
