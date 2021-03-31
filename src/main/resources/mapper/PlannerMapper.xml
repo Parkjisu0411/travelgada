@@ -21,4 +21,16 @@
 			insert into planner(planner_id, start_date, end_date, planner_name, member_id) values(get_seq('planner_seq'), #{start_date}, #{end_date}, #{planner_name}, #{member_id}) 
 		]]>
 	</insert>
+	
+	<select id="selectFuturePlanner" resultType="com.gada.travelgada.domain.PlannerVO">
+		<![CDATA[
+			select * from planner where member_id = #{member_id} and end_date > now() order by start_date
+		]]>
+	</select>
+	
+	<select id="selectPastPlanner" resultType="com.gada.travelgada.domain.PlannerVO">
+		<![CDATA[
+			select * from planner where member_id = #{member_id} and end_date <= now() order by start_date desc
+		]]>
+	</select>
 </mapper>

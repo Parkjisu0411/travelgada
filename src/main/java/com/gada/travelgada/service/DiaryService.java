@@ -14,5 +14,6 @@ public interface DiaryService {
 	public void modifyDiary(DiaryVO diaryVO);
 	public DiaryVO view_Diary(int diary_id);
 	public List<DiaryVO> getDiaryOther(int planner_id);
+	public int getImg_seq();
 	
 }

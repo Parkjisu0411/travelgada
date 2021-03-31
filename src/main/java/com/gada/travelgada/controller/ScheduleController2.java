@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.domain.ScheduleVO;
+import com.gada.travelgada.service.PlannerService;
 import com.gada.travelgada.service.ScheduleService;
 import com.gada.travelgada.utils.DateCalculator;
 
@@ -35,10 +36,14 @@ public class ScheduleController2 {
 	@Autowired
 	private ScheduleService scheduleService;
 	
+	@Autowired
+	private PlannerService plannerService;
+	
 	@GetMapping("/planner/schedule2")
 	public ModelAndView getSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "0") int planner_id) throws ParseException {
 		log.info(String.valueOf(planner_id) + "=====================");
-		List<PlannerVO> plannerList = scheduleService.selectPlanner(member.getUsername());
+		
+		List<PlannerVO> plannerList = plannerService.getPlanner(member.getUsername());
 		PlannerVO planner = null;
 		if(planner_id != 0) {
 			for(PlannerVO vo : plannerList) {
@@ -62,6 +67,36 @@ public class ScheduleController2 {
 		modelAndView.addObject("dayBudget", scheduleService.getBudget(planner.getPlanner_id()));
 		
 		modelAndView.setViewName("planner/schedule2");
+		
+		return modelAndView;
+	}
+	
+	@GetMapping("/planner/schedule/callback")
+	public ModelAndView callBackSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "0") int planner_id) throws ParseException {
+		List<PlannerVO> plannerList = plannerService.getPlanner(member.getUsername());
+		PlannerVO planner = null;
+		if(planner_id != 0) {
+			for(PlannerVO vo : plannerList) {
+				if(vo.getPlanner_id() == planner_id) {
+					planner = vo;
+				}
+			}
+		} else {
+			planner = plannerList.get(0);
+		}
+		
+		List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
+		modelAndView.addObject("planner_id", planner.getPlanner_id());
+		modelAndView.addObject("plannerList", plannerList);
+		modelAndView.addObject("dateList", dateList);
+		modelAndView.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));
+		modelAndView.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
+		modelAndView.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
+		modelAndView.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));
+		modelAndView.addObject("hotelList", scheduleService.getHotel(planner.getPlanner_id()));
+		modelAndView.addObject("dayBudget", scheduleService.getBudget(planner.getPlanner_id()));
+		
+		modelAndView.setViewName("planner/callback_schedule");
 		
 		return modelAndView;
 	}
