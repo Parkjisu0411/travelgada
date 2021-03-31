@@ -34,10 +34,11 @@ $(document).ready(function () {
    });
 	
 	//추가하기 버튼 클릭 이벤트
-	$(".insert-btn").click(function(e) {
+	$(".insert-btn").click(async function(e) {
 		e.preventDefault();
-		if($(".insert-area")) {
+		if($(".insert-area").length) {
 			remove($(".insert-cancel-btn"));
+			await sleep(500);
 		}
 		var date = $(this).parent().parent().attr("id");
 		var schedule_type  = $(this).parent().attr("class");
@@ -172,7 +173,7 @@ $(document).ready(function () {
 			cache : false,
 			dataType : "html",
 			success : function(result) {
-				$("body > div.container-floid").html(result);
+				$("body > div.container").html(result);
 			},
 			error : function(e) {
 				console.log(e);

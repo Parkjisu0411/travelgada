@@ -18,4 +18,6 @@ public interface PlannerMapper {
 	List<PlannerVO> selectFuturePlanner(String member_id);
 	
 	List<PlannerVO> selectPastPlanner(String member_id);
+
+	PlannerVO selectPlannerById(int planner_id);
 }

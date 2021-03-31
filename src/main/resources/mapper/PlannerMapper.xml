@@ -33,4 +33,10 @@
 			select * from planner where member_id = #{member_id} and end_date <= now() order by start_date desc
 		]]>
 	</select>
+	
+		<select id="selectPlannerById" resultType="com.gada.travelgada.domain.PlannerVO">
+		<![CDATA[
+			select * from planner where planner_id = #{planner_id}
+		]]>
+	</select>
 </mapper>

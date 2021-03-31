@@ -25,8 +25,22 @@ public class PlannerController {
 	@GetMapping("/planner")
 	public ModelAndView plannerMain(ModelAndView mav, @AuthenticationPrincipal MemberDetails memberDetails) {
 		mav.addObject("plannerList", plannerService.getPlanner(memberDetails.getUsername()));
+		mav.addObject("DDayMap", plannerService.getDDay(memberDetails.getUsername()));
 		mav.setViewName("planner/planner_main");
 		return mav;
+	}
+	
+	@GetMapping("/planner/{planner_id}")
+	public ResponseEntity<String> selectPlanner(PlannerVO plannerVO, @AuthenticationPrincipal MemberDetails memberDetails) {
+		ResponseEntity<String> entity = null;
+		try {
+			memberDetails.setPlanner_id(plannerVO.getPlanner_id());
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 	
 	@GetMapping("/planner/write")

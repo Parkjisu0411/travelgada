@@ -45,21 +45,21 @@ footer {
 			</ol>
 			<div class="carousel-inner" role="listbox">
 				<div class="carousel-item active"
-					style="background-image: url('${contextPath}/resources/img/flight.png')">
+					style="background-image: url('${contextPath}/resources/img/main/flight.png')">
 					<div class="carousel-caption d-none d-md-block">
 						<h2 class="display-4">First Slide</h2>
 						<p class="lead">This is a description for the first slide.</p>
 					</div>
 				</div>
 				<div class="carousel-item"
-					style="background-image: url('${contextPath}/resources/img/map.jpg')">
+					style="background-image: url('${contextPath}/resources/img/main/map.jpg')">
 					<div class="carousel-caption d-none d-md-block">
 						<h2 class="display-4">Second Slide</h2>
 						<p class="lead">This is a description for the second slide.</p>
 					</div>
 				</div>
 				<div class="carousel-item"
-					style="background-image: url('${contextPath}/resources/img/truck.jpg')">
+					style="background-image: url('${contextPath}/resources/img/main/truck.jpg')">
 					<div class="carousel-caption d-none d-md-block">
 						<h2 class="display-4">Third Slide</h2>
 						<p class="lead">This is a description for the third slide.</p>

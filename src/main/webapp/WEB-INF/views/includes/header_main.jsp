@@ -53,7 +53,15 @@
 								class="dropdown-item" href="/board/review">리뷰</a> <a class="dropdown-item"
 								href="/board/accompany">동행</a>
 						</div></li>
-					<li class="nav-item"><a class="nav-link" href="/shopping">쇼핑</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">스토어</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/shopping?product_type_id=3">가방</a>
+							<a class="dropdown-item" href="/shopping?product_type_id=1">백팩</a>
+							<a class="dropdown-item" href="/shopping?product_type_id=2">캐리어</a>
+							<a class="dropdown-item" href="/shopping?product_type_id=4">악세사리</a>
+						</div>
+					</li>
 				</ul>
 				<form class="form-inline">
 					<input class="form-control mr-sm-2" type="text" aria-label="Search">
@@ -70,7 +78,8 @@
 							class="nav-profile-img"
 							onerror="this.src='/resources/img/profile/default_profile_img.jpg'"></a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/member/mypage">마이페이지</a>
+							<a class="dropdown-item" href="/member/mypage">회원정보</a>
+							<a class="dropdown-item" href="/shopping/cart">장바구니</a>
 							<div class="dropdown-divider"></div>
 							<form id="logout" action="/member/logout" method="POST">
 								<input name="${_csrf.parameterName}" type="hidden"

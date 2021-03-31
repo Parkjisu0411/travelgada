@@ -63,45 +63,43 @@ html, body {
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
-	<div id="wrap">
-		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'">마이페이지</h2>
-
-			<p class="view-more-p">
-				<button type="button" class="btn btn-secondary"
-					onclick="location.href='/member/modify'">회원정보 수정</button>
-			</p>
-			<div class="row">
-				<div class="col-md-4 member-profile member-profile">
-					<img class="rounded-circle member-img"
-						src="/resources/img/profile/${member.profile_img_path }"
-						onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-					<p>${member.member_name }</p>
-				</div>
-				<div class="col-md-8 member-detail">
-					<table class="table">
-						<tr>
-							<th>포인트</th>
-							<td>${point }</td>
-							<td><a href="/member/mypage/point">내역조회</a></td>
-						</tr>
-						<tr>
-							<th>이메일</th>
-							<td>${member.email }</td>
-							<td></td>
-						</tr>
-						<tr>
-							<th>배송지 목록</th>
-							<td><c:forEach var="shipping_loc" items="${shippingList }">
-									<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
-								</c:forEach></td>
-							<td><a href="/member/shipping">관리</a></td>
-						</tr>
-
-					</table>
-				</div>
+	<div class="container">
+		<h2 class="headline" style="font-family: 'yg-jalnan'">마이페이지</h2>
+		<hr />
+		<p class="view-more-p">
+			<button type="button" class="btn btn-secondary"
+				onclick="location.href='/member/modify'">회원정보 수정</button>
+		</p>
+		<div class="row">
+			<div class="col-md-4 member-profile member-profile">
+				<img class="rounded-circle member-img"
+					src="/resources/img/profile/${member.profile_img_path }"
+					onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+				<p>${member.member_name }</p>
+			</div>
+			<div class="col-md-8 member-detail">
+				<table class="table">
+					<tr>
+						<th>포인트</th>
+						<td>${point }</td>
+						<td><a href="/member/mypage/point">내역조회</a></td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td>${member.email }</td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>배송지 목록</th>
+						<td><c:forEach var="shipping_loc" items="${shippingList }">
+								<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
+							</c:forEach></td>
+						<td><a href="/member/shipping">관리</a></td>
+					</tr>
+				</table>
 			</div>
 		</div>
+		<hr />
 	</div>
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
