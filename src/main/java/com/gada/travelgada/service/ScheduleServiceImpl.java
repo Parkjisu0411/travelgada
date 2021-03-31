@@ -98,7 +98,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public void modifySchedule(ScheduleVO scheduleVO) {
-		mapper.updateSchedule(scheduleVO);
+		
+		ScheduleVO schedule = mapper.selectScheduleById(scheduleVO.getSchedule_id());
+		if(scheduleVO.getBudget() != -1) {
+			schedule.setBudget(scheduleVO.getBudget());
+		}
+		if(scheduleVO.getSchedule_order() > 0) {
+			schedule.setSchedule_order(scheduleVO.getSchedule_order());
+		}
+		
+		mapper.updateSchedule(schedule);
 	}
 
 }

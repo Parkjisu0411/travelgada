@@ -26,7 +26,20 @@ public class PlannerService {
 	}
 
 	public List<PlannerVO> getPlanner(String member_id) {
-		return plannerMapper.selectPlanner(member_id);
+		List<PlannerVO> futurePlanner = plannerMapper.selectFuturePlanner(member_id);
+		List<PlannerVO> pastPlanner = plannerMapper.selectPastPlanner(member_id);
+		for(PlannerVO vo : pastPlanner) {
+			futurePlanner.add(vo);
+		}
+		return futurePlanner;
+	}
+	
+	public List<PlannerVO> getFuturePlanner(String member_id) {
+		return plannerMapper.selectFuturePlanner(member_id);
+	}
+	
+	public List<PlannerVO> getPastPlanner(String member_id) {
+		return plannerMapper.selectPastPlanner(member_id); 
 	}
 
 }

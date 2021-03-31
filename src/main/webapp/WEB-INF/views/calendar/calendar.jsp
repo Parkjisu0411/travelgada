@@ -137,6 +137,16 @@
 	});//ready function end
 /* 플래너 생성 경고 end */
 </script>
+
+<script>
+/* 엔드 날짜 클릭시 시작 날짜로 포거스가게 하기 */
+	$(document).ready(function(){
+		$("#input-end").click(function(){
+			$("#input-start").focus();
+		});//click function end
+	});//ready function end
+/* 날짜 동시에 띄우기 end */
+</script>
 	
 </head>
 <body>
@@ -163,7 +173,7 @@
 				</div>
 				<div class="dateGroup">
 					<label class="calLabel">여행시작</label>
-					<input style="font-family: 'yg-jalnan'" name="start_date" class="input-style" type="text"  placeholder="YYYY/MM/DD" id=input-start>
+					<input style="font-family: 'yg-jalnan'" name="start_date" class="input-style" type="text"  placeholder="YYYY/MM/DD" id="input-start">
 				</div>
 				<div class="dateGroup">
 					<label class="calLabel" >여행종료</label>

@@ -119,6 +119,7 @@ $(document).ready(function(){
 <body>
 <form id='formDate' name="myForm" action="${pageContext.request.contextPath}/diary_modify?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 <input type="hidden" name="diary_id" value="${diary_view.diary_id}"/>
+<input type="hidden" name="planner_id" value="${planner.planner_id}"/>
 <input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
 <input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
 

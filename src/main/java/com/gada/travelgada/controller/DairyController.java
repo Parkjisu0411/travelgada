@@ -71,16 +71,18 @@ public class DairyController {
       log.info("controller diary_write();");
 
       String img_path = file.getOriginalFilename();
-
+      
       diaryVO.setImg_path(img_path);
       diaryService.writeDiary(diaryVO);
       
 		/* return diaryService.getDiaryOther(diaryVO.getPlanner_id()); */
 
+      mav.addObject("other",diaryVO);
       mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
       mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
       mav.setViewName("diary/diary");
-
+      
+      
       if (!file.getOriginalFilename().isEmpty()) {
          file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
 			/* mav.addObject("msg", "File uploaded successfully."); */
@@ -94,10 +96,11 @@ public class DairyController {
 
    
    // 다이어리 수정 페이지
-   @GetMapping("diary_modify_view/{diary_id}")
+   @GetMapping("diary_modify_view/{diary_id}&{planner_id}")
    public ModelAndView diary_modify_view(ModelAndView mav, DiaryVO diaryVO) {
       log.info("controller diary_write_view();");
 
+      mav.addObject("planner", diaryVO);
       mav.addObject("diary_view", diaryService.view_Diary(diaryVO.getDiary_id()));
       mav.setViewName("diary/diary_modify_view");
 
@@ -109,7 +112,7 @@ public class DairyController {
    // 다이어리 수정
    @PostMapping("diary_modify")
    public ModelAndView diary_modify(ModelAndView mav, DiaryVO diaryVO, @RequestParam("uploadfile") MultipartFile file,
-         @RequestParam("currImg") String currImg) throws IllegalStateException, IOException {
+         @RequestParam("currImg") String currImg,@AuthenticationPrincipal MemberDetails member) throws IllegalStateException, IOException {
       log.info("controller diary_modify()");
       log.info(currImg);
          
@@ -118,14 +121,22 @@ public class DairyController {
       if(img_path == "") {
          diaryVO.setImg_path(currImg);
          diaryService.modifyDiary(diaryVO);
-            
-         mav.setViewName("redirect:diary");
+         
+         log.info(""+diaryVO.getPlanner_id());
+         mav.addObject("other",diaryVO);
+         mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
+         mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+         mav.setViewName("diary/diary");
+			/* mav.setViewName("redirect:diary"); */
             
       }else {
          diaryVO.setImg_path(img_path);
          diaryService.modifyDiary(diaryVO);
          
-         mav.setViewName("redirect:diary");
+         mav.addObject("other",diaryVO);
+         mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
+         mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+         mav.setViewName("diary/diary");
             
       }//if end
 
@@ -168,6 +179,7 @@ public class DairyController {
    @GetMapping("diary_other/{planner_id}")
    public List<DiaryVO> diary_another(@AuthenticationPrincipal MemberDetails member,DiaryVO diaryVO) {
    log.info("controller diary_test();");
+
       return diaryService.getDiaryOther(diaryVO.getPlanner_id());
       
    }// diary_test end
