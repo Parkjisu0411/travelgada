@@ -2,8 +2,6 @@ package com.gada.travelgada.domain;
 
 import java.sql.Date;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

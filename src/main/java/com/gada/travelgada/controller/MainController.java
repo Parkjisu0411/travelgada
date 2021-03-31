@@ -1,5 +1,6 @@
 package com.gada.travelgada.controller;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.util.List;
 
@@ -7,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,25 +53,19 @@ public class MainController {
 	}
 
 	// Schedule Object => JSON
-	@GetMapping("/paths")
-	public List<ScheduleVO> locationsToJson(@AuthenticationPrincipal MemberDetails member) {
+	@GetMapping("/paths/{schedule_date}")
+	public List<ScheduleVO> locationsToJson(ScheduleVO scheduleVO, @AuthenticationPrincipal MemberDetails member) {
 		List<PlannerVO> plannerList = scheduleService.selectPlanner(member.getUsername());
 		PlannerVO planner = plannerList.get(0);
-
-<<<<<<< HEAD
-		List<ScheduleVO> pathsToJson = scheduleService.getSchedule(planner.getPlanner_id());
+		List<ScheduleVO> pathsToJson = scheduleService.getMap(scheduleVO.getSchedule_date());
 
 		return pathsToJson;
-=======
-		List<ScheduleVO> pathsJson = scheduleService.getSchedule(planner.getPlanner_id());
-
-		return pathsJson;
->>>>>>> 187e0c8 (Implements map polyline #23 - jongyeong)
 	}
 	
 	// Map Page
-	@GetMapping("/map")
-	public ModelAndView map(ModelAndView modelAndView) {
+	@GetMapping("/map/{schedule_date}")
+	public ModelAndView map(@PathVariable("schedule_date") Date scheduleDate, ModelAndView modelAndView) {
+		modelAndView.addObject("schedule_date", scheduleDate);
 		modelAndView.setViewName("main/map");
 
 		return modelAndView;

@@ -1,5 +1,6 @@
 package com.gada.travelgada.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +32,9 @@ public interface ScheduleService {
 	public ScheduleVO getLastSchedule(int planner_id);
 	
 	public void modifySchedule(ScheduleVO scheduleVO);
+	
+	public List<ScheduleVO> selectAllSchedule(int planner_id);
+	
+	public List<ScheduleVO> getMap(Date schedule_date);
 
 }

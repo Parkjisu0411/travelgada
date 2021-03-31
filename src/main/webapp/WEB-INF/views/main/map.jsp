@@ -38,7 +38,7 @@
   <script>
 
     $.ajax({
-      url: "http://localhost:8282/paths",
+      url: "${pageContext.request.contextPath}/paths/${schedule_date}",
       method: 'GET',
       cache: false,
       contentType: "application/json; charset=utf-8",
@@ -53,7 +53,7 @@
 
         for (var index = 0; index < paths.length; index++) {
           if ((paths[index].latitude && paths[index].longitude) == '' || null || undefined || 0 || NaN) {
-            continue;
+              continue;
           }
           var latitude = paths[index].latitude;
           var longitude = paths[index].longitude;
@@ -73,7 +73,10 @@
             var marker_map = this.getMap();
             this.info.open(marker_map, this);
           });
-
+          
+          if ((paths[index].schedule_type_id) != 4) {
+        	  continue;
+          }
           pathsArray.push({ lat: latitude, lng: longitude });
         };
 

@@ -67,6 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			update schedule set schedule_order = #{schedule_order}, budget = #{budget} where schedule_id = #{schedule_id}
 		]]>
 	</update>
-
+	
+	<select id="getMap" resultType="com.gada.travelgada.domain.ScheduleVO">
+		<![CDATA[	
+			select schedule_date, schedule_order, schedule_type_id, schedule_content, latitude, longitude from schedule where schedule_type_id in (2, 4) and schedule_date = #{schedule_date}
+		]]>
+	</select>
 
 </mapper>
