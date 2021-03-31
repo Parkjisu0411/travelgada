@@ -12,7 +12,7 @@
 
 	<select id="selectPlannerForMain" resultType="com.gada.travelgada.domain.PlannerVO">
 		<![CDATA[
-			select * from planner where member_id = #{member_id} order by end_date desc limit 2
+			select * from planner where member_id = #{member_id} and end_date > now() order by start_date limit 2
 		]]>
 	</select>
 	

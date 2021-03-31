@@ -39,7 +39,7 @@
 						role="button" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false"> 플래너 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/planner">일정</a> <a
+							<a class="dropdown-item" href="/planner/schedule">일정</a> <a
 								class="dropdown-item" href="#">지도</a> <a class="dropdown-item"
 								href="/todo">준비물</a> <a class="dropdown-item"
 								href="/diary">다이어리</a>
@@ -53,7 +53,7 @@
 								class="dropdown-item" href="/board/review">리뷰</a> <a class="dropdown-item"
 								href="/board/accompany">동행</a>
 						</div></li>
-					<li class="nav-item"><a class="nav-link" href="#">쇼핑</a></li>
+					<li class="nav-item"><a class="nav-link" href="/shopping">쇼핑</a></li>
 				</ul>
 				<form class="form-inline">
 					<input class="form-control mr-sm-2" type="text" aria-label="Search">

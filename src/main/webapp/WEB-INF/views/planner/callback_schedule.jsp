@@ -172,7 +172,7 @@ $(document).ready(function () {
 			cache : false,
 			dataType : "html",
 			success : function(result) {
-				$("body > div.container").html(result);
+				$("body > div.container-floid").html(result);
 			},
 			error : function(e) {
 				console.log(e);
