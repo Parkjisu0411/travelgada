@@ -22,5 +22,4 @@ public class ShoppingServiceImpl {
 	public List<ProductVO> getProduct() {
 		return shoppingMapper.selectProduct();
 	}
-
 }
