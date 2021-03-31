@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login Form</title>
+<title>ACCOMPANY BOARD</title>
 <style>
 html, body {
 	width: 100%;
@@ -37,19 +37,68 @@ html, body {
 	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 	<!--Content -->
 	<div class="divider-header-blank"></div>
-	<div class="container">
-		<h2 class="headline" style="font-family: 'yg-jalnan'">ACCOMPANY</h2>
-		<table class="table">
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>날짜</th>
-				<th>조회수</th>
-			</tr>
-		</thead>
-		</table>
+	<div id="wrap">
+		<div class="container">
+			<h2 class="headline" style="font-family: 'yg-jalnan'">ACCOMPANY</h2>
+					<table class="table">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>날짜</th>
+							<th>조회수</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<c:forEach items="${boardAccompanyList }" var="boardAccompanyList">
+						<tr>
+							<td>${boardAccompanyList.board_id }</td>
+							<td>
+								<c:forEach begin="1" end="${boardAccompanyList.bindent }">[답변]</c:forEach>
+								<a href="${pageContext.request.contextPath }/board/${boardAccompanyList.board_id}">${boardAccompanyList.title }</a>
+							</td>
+							<td>${boardAccompanyList.member_id }</td>
+							<td>${boardAccompanyList.board_date }</td>
+							<td>${boardAccompanyList.bhit }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+
+			<div>
+				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+			</div>
+			
+			<ul class="pagination" style="padding:80px 500px;">	
+		  		<c:if test="${pageMaker.prev}">
+	       		  <li class="page-item"><a class="page-link" href="accompany${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
+	     		</c:if>
+
+	      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+	         		<li class="page-item"><a class="page-link" href="accompany${pageMaker.makeQuery(idx)}">${idx}</a></li>
+	      		</c:forEach>
+	      
+	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+	         		<li class="page-item"><a class="page-link" href="accompany${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
+	      		</c:if> <br> 
+		 	</ul>
+
+				<div style="padding:0 400px;">
+				<form class="form-inline">
+					<select style="border-radius:0.2em; border:2px solid black;">
+						<option>제목</option>
+						<option>제목+내용</option>
+						<option>내용</option>
+					</select>&nbsp;&nbsp;
+					<input class="form-control mr-sm-2" type="text" aria-label="Search" style="width:50%;">
+					<button class="btn btn-outline-white btn-sm my-0" type="submit">
+						<i class="fas fa-search"></i>
+					</button>
+				</form>
+				</div>
+		</div>
 	</div>
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp" %>

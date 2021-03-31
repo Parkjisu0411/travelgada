@@ -48,9 +48,9 @@
   	}
   	
   	.selected {
-	  	text-decoration:line-through double red;
+	  	text-decoration:line-through grey;
 	  	font-weight:700;
-	  	color:black;
+	  	color:grey;
 
   	}
   	
@@ -241,7 +241,7 @@
                 
                 
                // var del_todo_name = $(".modify").parent().find(".modi_todo_name").attr("value");
-               var del_todo_name = document.getElementsByClassName("modi_todo_name");
+               var del_todo_name = document.getElementsByClassName("modi_todo_name").value;
                 console.log(del_todo_name);
                 $(".modify").attr("onclick",'window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + del_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')')
                 /* $("img").attr("width", "500"); */
@@ -422,68 +422,62 @@
 	<hr style="border: solid 1px light-grey; width: 66%;">
 	<br />
 
-	<br />
-	<br />
 	<div class="todoTable container">
 		<div class="row">
 			<c:forEach items="${todoTitle }" var="todoTitle">
 				<div class="col-sm-3">
-					
-
-					
+					<div class="dropdown">
+						<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>	
+						<div class="dropdown-menu dropdown-menu-right">
+							<button class="listModify dropdown-item" >수정</button>
+							<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">카테고리 삭제</a>
+						</div>
 
 					<table class="table table-bordered">
-					
 						<tr>
 							<td colspan="3">${todoTitle.todo_title } ${todoTitle.todo_type_id }</td>
 						</tr>	
 							
-						<div class="dropdown">
-						<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>	
-							
+						
+						
 						<c:forEach var="todoName" items="${todoName }">
-						<%-- <input class="del_todo_name" type="hidden" name="del_todo_name" value="${todoName.todo_id }"> --%>
+						<input class="del_todo_name" type="hidden" name="del_todo_name" value="${todoName.todo_id }">
 						<c:if test="${todoName.todo_type_id eq todoTitle.todo_type_id }">	
-						<div class="dropdown-menu dropdown-menu-right">
-							<button id="td" class="listModify dropdown-item" value="${todoName.todo_id }">수정</button>
-							<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">카테고리 삭제</a>
-						</div>
-				
-						<tr>
+
+						<tr class="todoListTable">
 							<td>
+								<div class="label">
 								 <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label> 
- 								
+ 								</div>
 							</td>
 						
-							<td >
+							<td>
 								<p>${todoName.todo_name } ${todoName.todo_id }</p>
 							</td>
 
-
-
 							<!-- ajax로 delete 처리 -->
 							<td class="option">
-								<input type="hidden" class="modi_todo_name" value="${todoName.todo_id }"> 			
+								 <input type="hidden" class="modi_todo_name" value="${todoName.todo_name }"> 	
 								<%-- <a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a> --%>
 							</td>
 						</tr>
 						
 						</c:if>
 						</c:forEach>
-						</div>
+						
 						<tr>
 							<!-- form으로 insert 처리 -->
 							<td colspan="3">
 								<div class="container">
 								<div class="row">
-									<input type="button" class="makeForm btn-primary" name="${todoTitle.todo_type_id }" value="+ 체크리스트 추가"></input>
+									<input type="button" class="makeForm btn-primary" name="${todoTitle.todo_type_id }" value="+ 체크리스트 추가" />
 								</div>
 								</div>
 							</td>
-
 						</tr>
+						
 					</table>
-					
+					</div>
 				</div>
 			</c:forEach>
 		</div>

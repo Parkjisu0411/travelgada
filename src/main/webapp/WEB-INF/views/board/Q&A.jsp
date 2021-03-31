@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login Form</title>
+<title>Q&A BOARD</title>
 <style>
 html, body {
 	width: 100%;
@@ -49,9 +49,59 @@ html, body {
 						<th>조회수</th>
 					</tr>
 				</thead>
+
+				<tbody>
+					<c:forEach items="${boardQnAList }" var="boardQnAList">
+					<tr>
+						<td>${boardQnAList.board_id }</td>
+						<td>
+							<c:forEach begin="1" end="${boardQnAList.bindent }">[답변]</c:forEach>
+							<a href="${pageContext.request.contextPath }/board/${boardQnAList.board_id}">${boardQnAList.title }</a>
+						</td>
+						<td>${boardQnAList.member_id }</td>
+						<td>${boardQnAList.board_date }</td>
+						<td>${boardQnAList.bhit }</td>
+					</tr>
+					</c:forEach>
+				</tbody>
+				
+
 			</table>
+			
+			<div>
+				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+			</div>
+
+			<ul class="pagination" style="padding:80px 500px;">	
+		  		<c:if test="${pageMaker.prev}">
+	       		  <li class="page-item"><a class="page-link" href="qna${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
+	     		</c:if>
+
+	      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+	         		<li class="page-item"><a class="page-link" href="qna${pageMaker.makeQuery(idx)}">${idx}</a></li>
+	      		</c:forEach>
+	      
+	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+	         		<li class="page-item"><a class="page-link" href="qna${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
+	      		</c:if> <br> 
+		 	</ul>
+
+			<div style="padding:0 400px;">
+			<form class="form-inline">
+				<select style="border-radius:0.2em; border:2px solid black;">
+					<option>제목</option>
+					<option>제목+내용</option>
+					<option>내용</option>
+				</select>&nbsp;&nbsp;
+				<input class="form-control mr-sm-2" type="text" aria-label="Search" style="width:50%;">
+				<button class="btn btn-outline-white btn-sm my-0" type="submit">
+					<i class="fas fa-search"></i>
+				</button>
+			</form>
+			</div>
 		</div>
 	</div>
+
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>

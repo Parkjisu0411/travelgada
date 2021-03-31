@@ -4,11 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gada.travelgada.mapper.BoardMapper"> 
 
-	<select id="selectReviewBoard" resultType="com.gada.travelgada.domain.BoardVO">
+<!-- < 	<select id="selectReviewBoard" resultType="com.gada.travelgada.domain.BoardVO">
 		<![CDATA[
 			select * from board where board_type_id = 1
 		]]>
-	</select>
+	</select> 
 	
 	<select id="selectQnABoard" resultType="com.gada.travelgada.domain.BoardVO">
 		<![CDATA[
@@ -16,7 +16,7 @@
 		]]>
 	</select>
 	
-	<select id="selectCompanionBoard" resultType="com.gada.travelgada.domain.BoardVO">
+	<select id="selectAccompanyBoard" resultType="com.gada.travelgada.domain.BoardVO">
 		<![CDATA[
 			select * from board where board_type_id = 3
 		]]>
@@ -26,6 +26,49 @@
 		<![CDATA[
 			select * from board where board_type_id = 4
 		]]>
+	</select> -->
+	
+	<select id="selectReviewBoard" resultType="com.gada.travelgada.domain.BoardVO">
+		<![CDATA[
+			select B1.* FROM( SELECT * FROM board where board_type_id = 1 order by bgroup desc, bstep asc ) B1 LIMIT #{nowPage}, #{amount} 	
+		]]>
 	</select>
+
+	<select id="getTotalReviewBoard" resultType="int">
+		<![CDATA[
+			select count(*) from board where board_type_id = 1
+		]]>
+	</select>
+	
+	<select id="selectQnABoard" resultType="com.gada.travelgada.domain.BoardVO">
+		<![CDATA[
+			select B2.* FROM( SELECT * FROM board where board_type_id = 2 order by bgroup desc, bstep asc ) B2 LIMIT #{nowPage}, #{amount} 		
+		]]>
+	</select>
+
+	<select id="getTotalQnABoard" resultType="int">
+		<![CDATA[
+			select count(*) from board where board_type_id = 2
+		]]>
+	</select>	
+	
+	<select id="getAccompanyBoard" resultType="com.gada.travelgada.domain.BoardVO">
+		<![CDATA[
+			select B3.* FROM( SELECT * FROM board where board_type_id = 3 order by bgroup desc, bstep asc ) B3 LIMIT #{nowPage}, #{amount} 		
+		]]>
+	</select>
+
+	<select id="getTotalAccompanyBoard" resultType="int">
+		<![CDATA[
+			select count(*) from board where board_type_id = 3
+		]]>
+	</select>	
+	
+	<select id="boardContentView" resultType="com.gada.travelgada.domain.BoardVO">
+		<![CDATA[
+			select * from board where board_id = #{board_id}
+		]]>
+	</select>
+
 
 </mapper>
