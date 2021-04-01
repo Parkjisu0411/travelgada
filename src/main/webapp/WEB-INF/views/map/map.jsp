@@ -95,10 +95,11 @@
       success: function initMap(result) {
         var paths = result;
         var pathsArray = [];
-        var markerIndex = 0;
+        var markerIndex = 1;
 
         var map = new google.maps.Map(document.getElementById('map'), {
           mapTypeControl: false,
+          fullscreenControl: false
         });
         /* map.setOptions({draggable: false}); */
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
@@ -110,7 +111,7 @@
           }
           var latitude = paths[index].latitude;
           var longitude = paths[index].longitude;
-
+          
           var marker = new google.maps.Marker({
             position: { lat: latitude, lng: longitude },
             map: map
@@ -118,8 +119,9 @@
           marker.setVisible(false);
 
           bounds.extend(new google.maps.LatLng(latitude, longitude));
-
-          var markerContent = '<div id="schedule-content">' + '<strong>' + markerIndex++ + '</strong>&nbsp;&nbsp;|&nbsp;&nbsp;' + paths[index].schedule_content + '</div>';
+		  
+          var markerType = paths[index].schedule_type_id == 4 ? markerIndex++ : 0;
+          var markerContent = '<div id="schedule-content">' + '<strong>' + markerType + '</strong>&nbsp;&nbsp;|&nbsp;&nbsp;' + paths[index].schedule_content + '</div>';
           marker.info = new google.maps.InfoWindow({
             content: markerContent.replace(0, '<i class="fas fa-bed"></i>'),
             pixelOffset: new google.maps.Size(0, 45),
@@ -130,7 +132,9 @@
           });
           marker.info.open(marker.getMap(), marker);
 
-          pathsArray.push({ lat: latitude, lng: longitude });
+          if (paths[index].schedule_type_id == 4) {
+            pathsArray.push({ lat: latitude, lng: longitude });
+          }
         };
         new google.maps.Polyline({
           path: pathsArray,

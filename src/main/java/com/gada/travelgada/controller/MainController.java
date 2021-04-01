@@ -31,6 +31,13 @@ public class MainController {
 
 		return modelAndView;
 	}
+	
+	@GetMapping("/payment")
+	public ModelAndView payment(ModelAndView modelAndView) {
+		modelAndView.setViewName("shopping/payment");
+		
+		return modelAndView;
+	}
 
 	@GetMapping("/example")
 	public ModelAndView example(ModelAndView modelAndView) {
