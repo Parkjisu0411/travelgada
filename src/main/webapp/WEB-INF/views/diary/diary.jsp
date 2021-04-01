@@ -143,7 +143,7 @@
 		 		       	//다이어리
  		  		      	htmls +='<div class="col-sm-3">';
 		   		     	htmls +='<div class="dropdown">';
-		   		     	htmls +='<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style="height: 20px;float: right;"/>';    
+		   		     	htmls +='<img src="resources/diary/dot3.png" class="btn dropdown-toggle" data-toggle="dropdown" style="height: 20px;float: right;"/>';    
 		   		     	htmls +='<div class="dropdown-menu">';
 		 	 	      	htmls +='<a class="dropdown-item" onclick="window.open(\'${pageContext.request.contextPath}/diary_modify_view/'+this.diary_id+'&'+this.planner_id+'\',\'popwin2\',\'width=1250,height=800,left=300, top=120\')">수정</a>';
 		 	 	      	htmls +='<a class="delete dropdown-item" href="diary/'+ this.diary_id +'">삭제</a>';

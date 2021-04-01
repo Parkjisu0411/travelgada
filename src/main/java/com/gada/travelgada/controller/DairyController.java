@@ -31,167 +31,166 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class DairyController {
 
-   @Autowired
-   private DiaryService diaryService;
+	@Autowired
+	private DiaryService diaryService;
 
-   private static final String FILE_SERVER_PATH = "C:\\Users\\김보람\\git\\travelgada\\src\\main\\webapp\\resources\\diary";
+	private static final String FILE_SERVER_PATH = "C:\\Users\\김보람\\git\\travelgada\\src\\main\\webapp\\resources\\diary";
 
-   // 다이어리
-   @GetMapping("diary")
-   public ModelAndView diary(ModelAndView mav, @AuthenticationPrincipal MemberDetails member) {
-      log.info("controller diary();");
+	// 다이어리
+	@GetMapping("diary")
+	public ModelAndView diary(ModelAndView mav, @AuthenticationPrincipal MemberDetails member) {
+		log.info("controller diary();");
 
-      mav.addObject("diary", diaryService.getDiary(member.getUsername()));
-      mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-      
-      mav.setViewName("diary/diary");
+		mav.addObject("diary", diaryService.getDiary(member.getUsername()));
+		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
 
-      return mav;
+		mav.setViewName("diary/diary");
 
-   }// diary end
+		return mav;
+
+	}// diary end
+
+	// 다이어리 작성 페이지
+	@GetMapping("diary_write_view")
+	public ModelAndView diary_write_view(ModelAndView mav, DiaryVO diaryVO) {
+		log.info("controller diary_write_view();");
+
+		mav.addObject("planner", diaryVO);
+		mav.setViewName("diary/diary_write_view");
+
+		return mav;
+
+	}// diary_write_view end
 
    
-   // 다이어리 작성 페이지
-   @GetMapping("diary_write_view")
-   public ModelAndView diary_write_view(ModelAndView mav, DiaryVO diaryVO) {
-      log.info("controller diary_write_view();");
+	// 다이어리 작성
+	@PostMapping("diary_write")
+	public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO,
+			@AuthenticationPrincipal MemberDetails member) throws IllegalStateException, IOException {
+		log.info("controller diary_write();");
 
-      mav.addObject("planner", diaryVO);
-      mav.setViewName("diary/diary_write_view");
+		String img_path = file.getOriginalFilename();
 
-      return mav;
+		diaryVO.setImg_path(img_path);
+		diaryService.writeDiary(diaryVO);
 
-   }// diary_write_view end
-
-   
-   // 다이어리 작성
-   @PostMapping("diary_write")
-   public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO,
-		   @AuthenticationPrincipal MemberDetails member) throws IllegalStateException, IOException {
-      log.info("controller diary_write();");
-
-      String img_path = file.getOriginalFilename();
-      
-      diaryVO.setImg_path(img_path);
-      diaryService.writeDiary(diaryVO);
-      
 		/* return diaryService.getDiaryOther(diaryVO.getPlanner_id()); */
 
-      mav.addObject("other",diaryVO);
-      mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
-      mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-      mav.setViewName("diary/diary");
-      
-      
-      if (!file.getOriginalFilename().isEmpty()) {
-         file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
+		mav.addObject("other", diaryVO);
+		mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
+		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+		mav.setViewName("diary/diary");
+
+		if (!file.getOriginalFilename().isEmpty()) {
+			file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
 			/* mav.addObject("msg", "File uploaded successfully."); */
-      } else {
+		} else {
 			/* mav.addObject("msg", "Please select a valid mediaFile.."); */
-      }
+		}
 
-      return mav;
+		return mav;
 
-   }// diary_write end
-
-   
-   // 다이어리 수정 페이지
-   @GetMapping("diary_modify_view/{diary_id}&{planner_id}")
-   public ModelAndView diary_modify_view(ModelAndView mav, DiaryVO diaryVO) {
-      log.info("controller diary_write_view();");
-
-      mav.addObject("planner", diaryVO);
-      mav.addObject("diary_view", diaryService.view_Diary(diaryVO.getDiary_id()));
-      mav.setViewName("diary/diary_modify_view");
-
-      return mav;
-
-   }// diary_modify_view end
+	}// diary_write end
 
    
-   // 다이어리 수정
-   @PostMapping("diary_modify")
-   public ModelAndView diary_modify(ModelAndView mav, DiaryVO diaryVO, @RequestParam("uploadfile") MultipartFile file,
-         @RequestParam("currImg") String currImg,@AuthenticationPrincipal MemberDetails member) throws IllegalStateException, IOException {
-      log.info("controller diary_modify()");
-      log.info(currImg);
-         
-      String img_path = file.getOriginalFilename();
-      
-      if(img_path == "") {
-         diaryVO.setImg_path(currImg);
-         diaryService.modifyDiary(diaryVO);
-         
-         log.info(""+diaryVO.getPlanner_id());
-         mav.addObject("other",diaryVO);
-         mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
-         mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-         mav.setViewName("diary/diary");
+	// 다이어리 수정 페이지
+	@GetMapping("diary_modify_view/{diary_id}&{planner_id}")
+	public ModelAndView diary_modify_view(ModelAndView mav, DiaryVO diaryVO) {
+		log.info("controller diary_write_view();");
+
+		mav.addObject("planner", diaryVO);
+		mav.addObject("diary_view", diaryService.view_Diary(diaryVO.getDiary_id()));
+		mav.setViewName("diary/diary_modify_view");
+
+		return mav;
+
+	}// diary_modify_view end
+
+   
+	// 다이어리 수정
+	@PostMapping("diary_modify")
+	public ModelAndView diary_modify(ModelAndView mav, DiaryVO diaryVO, @RequestParam("uploadfile") MultipartFile file,
+			@RequestParam("currImg") String currImg, @AuthenticationPrincipal MemberDetails member)
+			throws IllegalStateException, IOException {
+		log.info("controller diary_modify()");
+		log.info(currImg);
+
+		String img_path = file.getOriginalFilename();
+
+		if (img_path == "") {
+			diaryVO.setImg_path(currImg);
+			diaryService.modifyDiary(diaryVO);
+
+			log.info("" + diaryVO.getPlanner_id());
+			mav.addObject("other", diaryVO);
+			mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
+			mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+			mav.setViewName("diary/diary");
 			/* mav.setViewName("redirect:diary"); */
-            
-      }else {
-         diaryVO.setImg_path(img_path);
-         diaryService.modifyDiary(diaryVO);
-         
-         mav.addObject("other",diaryVO);
-         mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
-         mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-         mav.setViewName("diary/diary");
-            
-      }//if end
 
-      if (!file.getOriginalFilename().isEmpty()) {
-         file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
+		} else {
+			diaryVO.setImg_path(img_path);
+			diaryService.modifyDiary(diaryVO);
+
+			mav.addObject("other", diaryVO);
+			mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
+			mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+			mav.setViewName("diary/diary");
+
+		} // if end
+
+		if (!file.getOriginalFilename().isEmpty()) {
+			file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
 			/* mav.addObject("msg", "File uploaded successfully."); */
 
-      } else {
+		} else {
 			/* mav.addObject("msg", "Please select a valid mediaFile.."); */
 
-      }//if end
+		} // if end
 
-      return mav;
+		return mav;
 
-   }// diary_modify end
+	}// diary_modify end
       
    
-   // 다이어리 삭제
-   @DeleteMapping("/diary/{diary_id}")
-   public ResponseEntity<String> diary_delete(DiaryVO DiaryVO, Model model) {
-      ResponseEntity<String> entity = null;
-      log.info("controller diary_delete()");
-      
-      try {
-         diaryService.deleteDiary(DiaryVO.getDiary_id());
-         entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	// 다이어리 삭제
+	@DeleteMapping("/diary/{diary_id}")
+	public ResponseEntity<String> diary_delete(DiaryVO DiaryVO, Model model) {
+		ResponseEntity<String> entity = null;
+		log.info("controller diary_delete()");
 
-      } catch (Exception e) {
-         e.printStackTrace();
-         entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		try {
+			diaryService.deleteDiary(DiaryVO.getDiary_id());
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 
-      } // try catch end
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 
-      return entity;
+		} // try catch end
 
-   }// diary_delete end
+		return entity;
+
+	}// diary_delete end
       
    
-   // 다른 다이어리로 이동 json
-   @GetMapping("diary_other/{planner_id}")
-   public List<DiaryVO> diary_another(@AuthenticationPrincipal MemberDetails member,DiaryVO diaryVO) {
-   log.info("controller diary_test();");
+	// 다른 다이어리로 이동 json
+	@GetMapping("diary_other/{planner_id}")
+	public List<DiaryVO> diary_another(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO) {
+		log.info("controller diary_test();");
 
-      return diaryService.getDiaryOther(diaryVO.getPlanner_id());
-      
-   }// diary_test end
+		return diaryService.getDiaryOther(diaryVO.getPlanner_id());
+
+	}// diary_test end
    
-   @GetMapping("diary_test")
-   public ModelAndView diary_test(ModelAndView mav) {
-      log.info("controller diary_test();");
+	@GetMapping("diary_test")
+	public ModelAndView diary_test(ModelAndView mav) {
+		log.info("controller diary_test();");
 
-      mav.setViewName("diary/test");
-      
-      return mav;
+		mav.setViewName("diary/test");
 
-   }// diary_test end
+		return mav;
+
+	}// diary_test end
 
 }// Controller end
