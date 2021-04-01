@@ -32,4 +32,6 @@ public interface ScheduleMapper {
 
 	public void updateSchedule(ScheduleVO scheduleVO);
 	
+	public List<ScheduleVO> getMap(@Param("schedule_date") Date schedule_date);
+	
 }

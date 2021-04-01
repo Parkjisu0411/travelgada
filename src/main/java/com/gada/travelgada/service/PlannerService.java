@@ -1,11 +1,15 @@
 package com.gada.travelgada.service;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.mapper.PlannerMapper;
+import com.gada.travelgada.utils.DateCalculator;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +44,20 @@ public class PlannerService {
 	
 	public List<PlannerVO> getPastPlanner(String member_id) {
 		return plannerMapper.selectPastPlanner(member_id); 
+	}
+	
+	public PlannerVO getPlannerById(int planner_id) {
+		return plannerMapper.selectPlannerById(planner_id);
+	}
+	
+	public Map<Integer, Integer> getDDay(String member_id) {
+		Map<Integer, Integer> DDayMap = new HashMap<>();
+		List<PlannerVO> plannerList = getFuturePlanner(member_id);
+		for(PlannerVO vo : plannerList) {
+			DDayMap.put(vo.getPlanner_id(), DateCalculator.getDDay(vo.getStart_date()));
+		}
+		
+		return DDayMap;
 	}
 
 }

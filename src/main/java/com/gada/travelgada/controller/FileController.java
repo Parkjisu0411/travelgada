@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gada.travelgada.domain.MemberDetails;
-import com.gada.travelgada.service.FileServiceImpl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 public class FileController {
-	
-	private FileServiceImpl fileService;
 
 	private static final String FILE_PROFILE_PATH = "/Users/parkjisu/git/travelgada/src/main/webapp/resources/img/profile";
 
@@ -30,7 +27,7 @@ public class FileController {
 		ResponseEntity<String> entity = null;
 		
 		String member_id = memberDetails.getUsername();
-		String profile_img_path = fileService.getNextProfilePath(member_id);
+		String profile_img_path = member_id;
 		log.info("Profile Path : " + profile_img_path);
 		try {
 			if (!file.getOriginalFilename().isEmpty()) {
@@ -39,6 +36,7 @@ public class FileController {
 			} else {
 				entity = new ResponseEntity<String>(profile_img_path, HttpStatus.OK);
 			}
+			memberDetails.setProfile(profile_img_path);
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);

@@ -12,8 +12,26 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 public class MemberDetails implements UserDetails, OAuth2User{
 	
+	private List<ProductVO> cart = new ArrayList<>();
+	private int planner_id;
 	private MemberVO member;
 	private Map<String, Object> attributes;
+	
+	public List<ProductVO> getCart() {
+		return cart;
+	}
+	
+	public void insertIntoCart(ProductVO product) {
+		cart.add(product);
+	}
+	
+	public void setPlanner_id(int planner_id) {
+		this.planner_id = planner_id;
+	}
+	
+	public int getPlanner_id() {
+		return planner_id;
+	}
 	
 	public MemberDetails(MemberVO member) {
 		this.member = member;
@@ -57,6 +75,10 @@ public class MemberDetails implements UserDetails, OAuth2User{
 	
 	public String getProfile() {
 		return member.getProfile_img_path();
+	}
+	
+	public void setProfile(String profile_img_path) {
+		member.setProfile_img_path(profile_img_path);
 	}
 	
 	public boolean canAccess() {

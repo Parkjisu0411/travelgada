@@ -28,6 +28,10 @@ public class DateCalculator {
 		return (int) ((day2.getTime() - day1.getTime())/DAYTIME) + 1;
 	}
 	
+	public static int getDDay(Date day) {
+		return (int) ((day.getTime() - calendar.getTime().getTime()) / DAYTIME) + 1;
+	}
+	
 	public static List<String> getDateList(Date startDate, Date endDate) throws ParseException {
 		List<String> dateList = new ArrayList<String>();
 		Date date = startDate;

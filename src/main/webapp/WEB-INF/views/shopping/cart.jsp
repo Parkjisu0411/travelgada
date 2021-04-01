@@ -38,14 +38,11 @@ html, body {
 	text-align: center;
 }
 
-.member-img {
+.product-img {
 	height: 100px;
 	width: 100px;
 	display: block;
 	vertical-align: middle;
-	margin-top: 50px;
-	margin-bottom: 30px;
-	margin-left: auto;
 	margin-right: auto;
 }
 </style>
@@ -64,41 +61,49 @@ html, body {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="container">
-		<h2 class="headline" style="font-family: 'yg-jalnan'">마이페이지</h2>
+		<h2 style="font-family: 'yg-jalnan'"><i class="fas fa-shopping-cart"></i> 장바구니</h2>
 		<hr />
-		<p class="view-more-p">
-			<button type="button" class="btn btn-secondary"
-				onclick="location.href='/member/modify'">회원정보 수정</button>
-		</p>
-		<div class="row">
-			<div class="col-md-4 member-profile member-profile">
-				<img class="rounded-circle member-img"
-					src="/resources/img/profile/${member.profile_img_path }"
-					onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-				<p>${member.member_name }</p>
-			</div>
-			<div class="col-md-8 member-detail">
-				<table class="table">
+		<table class="table">
+			<colgroup>
+				<col width="5%">
+				<col width="20%">
+				<col width="60%">
+				<col width="15%">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>ㅁ</th>
+					<th>전체선택</th>
+					<th>상품정보</th>
+					<th>상품금액</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="product" items="${cart }">
 					<tr>
-						<th>포인트</th>
-						<td>${point }</td>
-						<td><a href="/member/mypage/point">내역조회</a></td>
+						<td>ㅁ</td>
+						<td>
+							<img class="rounded product-img" src="/resources/img/product/luggage/${product.img_path }">
+						</td>
+						<td>
+							<p>${product.product_name }</p>
+						</td>
+						<td>
+							<p>${product.price }</p>
+						</td>
 					</tr>
-					<tr>
-						<th>이메일</th>
-						<td>${member.email }</td>
-						<td></td>
-					</tr>
-					<tr>
-						<th>배송지 목록</th>
-						<td><c:forEach var="shipping_loc" items="${shippingList }">
-								<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
-							</c:forEach></td>
-						<td><a href="/member/shipping">관리</a></td>
-					</tr>
-				</table>
-			</div>
-		</div>
+				</c:forEach>
+				<tr>
+					<td colspan="3">
+					</td>
+					<td>
+						<p>총 상품가격</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<button type="button" class="btn btn-lg btn-primary">계속 쇼핑하기</button>
+		<button type="button" class="btn btn-lg btn-primary">구매하기</button>
 		<hr />
 	</div>
 	<!-- Footer -->

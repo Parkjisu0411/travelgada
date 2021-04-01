@@ -43,7 +43,11 @@
 	display: inline-block;
 	float: right;
 	color: #A2A2A2;
-	
+}
+
+.date-btn {
+	height: 50px !important;
+	margin: 10px;
 }
 
 .delete-btn {
@@ -87,6 +91,10 @@ thead {
 }
 </style>
 <script type="text/javascript">
+	function sleep(ms) {
+	  return new Promise(resolve=>setTimeout(resolve, ms));
+	}
+
 	//예산 추가/수정
 	function inputBudget(obj) {
 		$(obj).html("<input class='input-budget-area' type='number' name='input-budget-area'>₩</input>");
@@ -247,7 +255,7 @@ thead {
 		$(obj).parent().parent().parent().slideUp(400);
 		$("#map").slideUp(400);
 		setTimeout(function() {
-				$(obj).parent().parent().parent().parent().delay(1000).remove();
+				$(obj).parent().parent().parent().parent().parent().delay(500).remove();
 			}, 350);
 	}
 	//
@@ -423,7 +431,7 @@ thead {
 	//
 	$(document).ready(function () {
 		//slick
-		$('.date-btn').slick({
+		$('.date-group').slick({
 			slide: 'button',
 			arrows: true,
 			infinite: false,
@@ -450,10 +458,11 @@ thead {
 	   });
 		
 		//추가하기 버튼 클릭 이벤트
-		$(".insert-btn").click(function(e) {
+		$(".insert-btn").click(async function(e) {
 			e.preventDefault();
-			if($(".insert-area")) {
+			if($(".insert-area").length) {
 				remove($(".insert-cancel-btn"));
+				await sleep(500);
 			}
 			var date = $(this).parent().parent().attr("id");
 			var schedule_type  = $(this).parent().attr("class");
@@ -588,7 +597,7 @@ thead {
 				cache : false,
 				dataType : "html",
 				success : function(result) {
-					$("body > div.container-floid").html(result);
+					$("body > div.container").html(result);
 				},
 				error : function(e) {
 					console.log(e);
@@ -610,13 +619,21 @@ thead {
 		});
 		//
 		//hover event
+	/* 	$(".content-box").hover(function() {
+			$(this).children(".input-budget-after").css("display","inline");
+		}, function() {
+			$(this).children(".input-budget-after").css("display", "none");
+		}) */
+		//
+		
+	});
+	
+	$(document).on("hover", ".content-box", function() {
 		$(".content-box").hover(function() {
 			$(this).children(".input-budget-after").css("display","inline");
 		}, function() {
 			$(this).children(".input-budget-after").css("display", "none");
 		})
-		//
-		
 	});
 </script>
 <!-- google Map API -->
@@ -627,7 +644,7 @@ thead {
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	
-	<div class="container-floid">
+	<div class="container">
 	
 		<!-- headline -->
 		<h2 class="headline" style="font-family: 'yg-jalnan'">Schedule</h2>
@@ -652,9 +669,9 @@ thead {
 		</form>
 		<!-- date button -->
 		<div class="col-md-12">
-			<div class="date-btn">
+			<div class="date-group">
 				<c:forEach var="date" items="${dateList }">
-					<button class="btn btn-secondary btn-lg" onclick="moveTo('${date}')">
+					<button class="btn btn-secondary btn-lg date-btn" onclick="moveTo('${date}')">
 						${date}
 					</button>
 				</c:forEach>
@@ -759,6 +776,11 @@ thead {
 							</td>
 						</tr>
 					</c:forEach>
+					<tr class="insert-date-area">
+						<td colspan="7">
+							<a>날짜 추가하기</a>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

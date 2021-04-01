@@ -40,34 +40,30 @@ public class ScheduleController {
 	private PlannerService plannerService;
 	
 	@GetMapping("/planner/schedule")
-	public ModelAndView getSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "0") int planner_id) throws ParseException {
-		log.info(String.valueOf(planner_id) + "=====================");
+	public ModelAndView getSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member) throws ParseException {
 		
 		List<PlannerVO> plannerList = plannerService.getPlanner(member.getUsername());
-		PlannerVO planner = null;
-		if(planner_id != 0) {
-			for(PlannerVO vo : plannerList) {
-				if(vo.getPlanner_id() == planner_id) {
-					planner = vo;
-				}
-			}
+		
+		if(member.getPlanner_id() == 0) {
+			log.info("Select planner First ==========");
+			modelAndView.setViewName("redirect:/planner");
 		} else {
-			planner = plannerList.get(0);
+			log.info("View schedule ===========");
+			PlannerVO planner = plannerService.getPlannerById(member.getPlanner_id());
+			List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
+			modelAndView.addObject("planner_id", planner.getPlanner_id());
+			modelAndView.addObject("plannerList", plannerList);
+			modelAndView.addObject("dateList", dateList);
+			modelAndView.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));
+			modelAndView.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
+			modelAndView.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
+			modelAndView.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));
+			modelAndView.addObject("hotelList", scheduleService.getHotel(planner.getPlanner_id()));
+			modelAndView.addObject("dayBudget", scheduleService.getBudget(planner.getPlanner_id()));
+			
+			modelAndView.setViewName("planner/schedule");
+			
 		}
-		
-		List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
-		modelAndView.addObject("planner_id", planner.getPlanner_id());
-		modelAndView.addObject("plannerList", plannerList);
-		modelAndView.addObject("dateList", dateList);
-		modelAndView.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));
-		modelAndView.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
-		modelAndView.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
-		modelAndView.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));
-		modelAndView.addObject("hotelList", scheduleService.getHotel(planner.getPlanner_id()));
-		modelAndView.addObject("dayBudget", scheduleService.getBudget(planner.getPlanner_id()));
-		
-		modelAndView.setViewName("planner/schedule");
-		
 		return modelAndView;
 	}
 	

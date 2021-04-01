@@ -29,18 +29,5 @@ public interface BoardMapper {
 
 	public List<BoardVO> getNotice(int nowPage, int amount);
 
-	public MemberVO boardContentView(MemberVO memberVO);
-
-	
-	
-
-	
-	
-	
-	
-
-	
-
-	
 	
 }

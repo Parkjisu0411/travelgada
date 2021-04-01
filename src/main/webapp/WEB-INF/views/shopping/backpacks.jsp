@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta charset="UTF-8">
-<title>Schedule</title>
+<title>백팩</title>
 <style>
 	.product-img {
 		width: 100%;
@@ -46,12 +46,12 @@
 	<div class="container">
 	
 		<!-- headline -->
-		<h2 style="font-family: 'yg-jalnan'">Shopping</h2>
+		<h2 style="font-family: 'yg-jalnan'">백팩</h2>
 		<!-- Product List -->
 		<div class="row">
 			<c:forEach var="product" items="${productList }">
 				<div class="col-md-3">
-					<div class="product-img"><img src="/resources/img/product/${product.img_path }"></div>
+					<div class="product-img"><img src="/resources/img/product/backpacks/${product.img_path }"></div>
 					<div class="product-info">
 						<strong>${product.product_name }</strong>
 						<p>${product.price }</p>
