@@ -30,6 +30,10 @@ html, body {
 	padding: 0;
 }
 
+thead, tbody{
+	text-align:left;
+}
+
 </style>
 </head>
 <body>
@@ -43,54 +47,25 @@ html, body {
 					<table class="table">
 					<thead>
 						<tr>
-							<th>작성자</th>
-						</tr>
-						<tr>
-							<th><h3>제목</h3></th>
-						</tr>
-						<tr>
-							<th>번호</th>
-						</tr>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>날짜</th>
-							<th>조회수</th>
-						
+							<th><br/>
+								<h3  style="font-family: 'yg-jalnan'; font_weight:lighter;">${bContentView.title }</h3><br/>
+								${bContentView.member_id }&nbsp;&nbsp;&nbsp;
+								${bContentView.board_date }
+								${bContentView.profile_img_path }
+								</th>
+						</tr>						
 					</thead>
 
 					<tbody>
-						<c:forEach items="${boardAccompanyList }" var="boardAccompanyList">
 						<tr>
-							<td>${boardAccompanyList.board_id }</td>
-							<td>
-								<c:forEach begin="1" end="${boardAccompanyList.bindent }">[답변]</c:forEach>
-								<a href="${pageContext.request.contextPath }/board/${boardAccompanyList.board_id}">${boardAccompanyList.title }</a>
-							</td>
-							<td>${boardAccompanyList.member_id }</td>
-							<td>${boardAccompanyList.board_date }</td>
-							<td>${boardAccompanyList.bhit }</td>
+							<th>${bContentView.text }</th>
 						</tr>
-						</c:forEach>
 					</tbody>
 				</table>
 
 			<div>
 				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
 			</div>
-			
-			<ul class="pagination" style="padding:80px 500px;">	
-		  		<c:if test="${pageMaker.prev}">
-	       		  <li class="page-item"><a class="page-link" href="accompany${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
-	     		</c:if>
-
-	      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-	         		<li class="page-item"><a class="page-link" href="accompany${pageMaker.makeQuery(idx)}">${idx}</a></li>
-	      		</c:forEach>
-	      
-	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-	         		<li class="page-item"><a class="page-link" href="accompany${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
-	      		</c:if> <br> 
-		 	</ul>
 
 				<div style="padding:0 400px;">
 				<form class="form-inline">

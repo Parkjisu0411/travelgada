@@ -146,12 +146,12 @@
     						
     				var htmls="";
 
-    			    htmls +='<form id="addToDo" action="/todo" method="POST">'
+    			    htmls +='<form id="addToDo" method="POST">'
     			    htmls +='<input type="hidden" id="todo_type_id" name="todo_type_id" value="' + todo_type_id + '">'
     			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
     			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
     			    htmls +='<input type="text" id="todo_name" name="todo_name" placeholder="ex.카메라">'
-    			    htmls +='<input type="submit" value="체크리스트 만들기"></form>'
+    			    htmls +='<button onclick="function addToDo();">완료</button></form>'
 
     			    $(tr).append(htmls);
     		});
@@ -160,9 +160,8 @@
     
     
     <script>
-    	$(document).ready(function() {
-    		$("#addToDo").submit(function(event) {
-    			event.preventDefault();
+    		function addToDo() {
+    			
     			console.log("addToDo submit");
     			
     			var tr = $(this).parent();
@@ -176,7 +175,7 @@
 				
 				$.ajax({
     				type : "POST",
-    				url : $(this).attr("action"),
+    				url : "",
     				cache : false,
     				data : JSON.stringify(form),
     				contentType : 'application/json; charset=utf-8',
@@ -208,8 +207,8 @@
     				} 
     					
     			}); // ajax end
-    		}) // submit end
-    	});
+    		}
+    	
     </script>
     
     
@@ -234,14 +233,14 @@
 
                      
                 //htmls +='<a class="modify" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_id + '"><input type="hidden" class="todo_Name" value="' + modify_todo_name + '">수정</a>/'
-               htmls +='<a class="modify">수정</a>/';
+                htmls +='<a class="modify">수정</a>/';      
                 htmls +='<a class="delete">삭제</a>';
                 
                 $(tr).append(htmls)
                 
                 
-               // var del_todo_name = $(".modify").parent().find(".modi_todo_name").attr("value");
-               var del_todo_name = document.getElementsByClassName("modi_todo_name").value;
+                var del_todo_name = $("input[name=modi_todo_id]").;
+               //var del_todo_name = document.getElementsByClassName("modi_todo_name").value;
                 console.log(del_todo_name);
                 $(".modify").attr("onclick",'window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + del_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')')
                 /* $("img").attr("width", "500"); */
@@ -457,7 +456,7 @@
 
 							<!-- ajax로 delete 처리 -->
 							<td class="option">
-								 <input type="hidden" class="modi_todo_name" value="${todoName.todo_name }"> 	
+								 <input type="hidden" id="${todoName.todo_id }" name="todo_id" value="${todoName.todo_id }"> 	
 								<%-- <a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a> --%>
 							</td>
 						</tr>

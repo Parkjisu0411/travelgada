@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
+import com.gada.travelgada.domain.MemberVO;
 import com.gada.travelgada.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -48,15 +49,26 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardVO boardContentView(int board_id) {
-		return boardMapper.boardContentView(board_id);
+	public BoardVO boardContentView(BoardVO boardVO) {
+		return boardMapper.boardContentView(boardVO);
 	}
+	
 
 //	@Override
-//	public BoardVO getBoard(int board_id) {
-//		// TODO Auto-generated method stub
-//		return null;
+//	public BoardVO boardContentView(int board_id, String member_id) {
+//		return boardMapper.boardContentView(board_id, member_id);
 //	}
+
+	
+	@Override
+	public List<BoardVO> getNotice(int nowPage, int amount) {
+		return boardMapper.getNotice(nowPage, amount);
+	}
+	
+	
+	
+
+
 
 	@Override
 	public void writeBoard(BoardVO boardVO) {
@@ -75,6 +87,10 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+
+
 
 
 

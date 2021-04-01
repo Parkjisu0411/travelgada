@@ -23,4 +23,5 @@ public class MemberVO {
 	private int withdrawal_code;
 	private String sns_type;
 	private List<AuthVO> authList;
+	private List<BoardVO> boardList;
 }

@@ -54,12 +54,22 @@ html, body {
 				</thead>
 
 				<tbody>
+					<c:forEach items="${boardNoticeList }" var="boardNoticeList">
+						<tr>
+							<td>${boardNoticeList.board_id }</td>
+							<td>${boardNoticeList.title }</td>
+							<td>${boardNoticeList.member_id }</td>
+							<td>${boardNoticeList.board_date }</td>
+							<td>${boardNoticeList.bhit }</td>
+						</tr>
+					</c:forEach>
+				
 					<c:forEach items="${boardReviewList }" var="boardReviewList">
 					<tr>
 						<td>${boardReviewList.board_id }</td>
 						<td>
 							<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
-							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}">${boardReviewList.title }</a>
+							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}&${boardReviewList.member_id}">${boardReviewList.title }</a>
 						</td>
 						<td>${boardReviewList.member_id }</td>
 						<td>${boardReviewList.board_date }</td>

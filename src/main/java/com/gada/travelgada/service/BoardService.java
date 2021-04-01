@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
+import com.gada.travelgada.domain.MemberVO;
 
 public interface BoardService {
 
@@ -19,15 +20,26 @@ public interface BoardService {
 	
 	public int getTotalAccompanyBoard(CriteriaVO cri);
 	
-	public BoardVO boardContentView(int board_id);
+	public BoardVO boardContentView(BoardVO boardVO);
 	
-	//public BoardVO getBoard(int board_id);
+	//public BoardVO boardContentView(int board_id, String member_id);
+
+	public List<BoardVO> getNotice(int nowPage, int amount);
+	
+	
+	
 	
 	public void writeBoard(BoardVO boardVO);
 	
 	public void modifyBoard(int board_id);
 	
 	public void deleteBoard(int board_id);
+
+	
+
+	
+
+	
 
 	
 

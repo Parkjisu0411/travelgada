@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
+import com.gada.travelgada.domain.MemberVO;
 
 @Mapper
 public interface BoardMapper {
@@ -22,8 +23,15 @@ public interface BoardMapper {
 	
 	public int getTotalAccompanyBoard(CriteriaVO cri);
 
-	public BoardVO boardContentView(int board_id);
+	public BoardVO boardContentView(BoardVO boardVO);
 
+	//public BoardVO boardContentView(int board_id, String member_id);
+
+	public List<BoardVO> getNotice(int nowPage, int amount);
+
+	public MemberVO boardContentView(MemberVO memberVO);
+
+	
 	
 
 	

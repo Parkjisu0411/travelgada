@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
+import com.gada.travelgada.domain.MemberVO;
 import com.gada.travelgada.domain.PageVO;
 import com.gada.travelgada.service.BoardService;
 
@@ -41,11 +42,12 @@ public class BoardController {
 	
 	@GetMapping("/board/review")
 	public ModelAndView reviewBoard(ModelAndView modelAndView, CriteriaVO cri) {
-		int nowPage = cri.getNowPage() - 1;
+		//int nowPage = cri.getNowPage() - 1;
 		
 		log.info("reviewBoard");
 		modelAndView.setViewName("/board/review");
-		modelAndView.addObject("boardReviewList", boardService.getReviewBoard(nowPage, cri.getAmount()));
+		modelAndView.addObject("boardReviewList", boardService.getReviewBoard(cri.getNowPage(), cri.getAmount()));
+		modelAndView.addObject("boardNoticeList", boardService.getNotice(cri.getNowPage(), cri.getAmount()));
 		
 		int total = boardService.getTotalReviewBoard(cri);
 		log.info("total" + total);
@@ -84,15 +86,19 @@ public class BoardController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/board/{board_id}")
+	
+	@GetMapping("/board/{board_id}&{member_id}")
 	public ModelAndView boardContentView(ModelAndView modelAndView, BoardVO boardVO) {
 		
 		log.info("boardContentView");
 		modelAndView.setViewName("/board/board_content_view");
-		modelAndView.addObject("bContentView", boardService.boardContentView(boardVO.getBoard_id()));
+		//modelAndView.addObject("bContentView", boardService.boardContentView(boardVO.getBoard_id()));
+		modelAndView.addObject("bContentView", boardService.boardContentView(boardVO));
 		
 		return modelAndView;
 	}
+	
+	
 	
 	
 }

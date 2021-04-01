@@ -39,8 +39,9 @@
 
 
 
+  
    
-     <resultMap id="todoMap" type="com.gada.travelgada.domain.TodoVO">
+   	<resultMap id="todoMap" type="com.gada.travelgada.domain.TodoVO">
        <result property="todo_id" column="todo_id"/>
        <result property="todo_name" column="todo_name"/>
        <result property="complete_flag" column="complete_flag"/>

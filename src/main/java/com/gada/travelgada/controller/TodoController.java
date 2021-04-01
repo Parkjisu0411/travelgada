@@ -129,35 +129,35 @@ public class TodoController {
 //	    return mav;
 //	 }
 	
-	@PostMapping("/todo")
-	public void addToDo(TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
-	   log.info("addToDo");
-	   log.info(todoVO.getTodo_name());
-
-	   todoVO.setTodo_name(todoVO.getTodo_name());
-	   todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
-	   service.addToDo(todoVO);
-	 }
-	
 //	@PostMapping("/todo")
-//	public ResponseEntity<String> addToDo(TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
-//	   ResponseEntity<String> entity = null;
-//	   
+//	public void addToDo(TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
 //	   log.info("addToDo");
 //	   log.info(todoVO.getTodo_name());
-//	   
-//	   try {
-//		   todoVO.setTodo_name(todoVO.getTodo_name());
-//		   todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
-//		   service.addToDo(todoVO);
-//		   entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-//		}catch(Exception e){
-//			e.printStackTrace();
-//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//		}
-//	   
-//	   return entity;
+//
+//	   todoVO.setTodo_name(todoVO.getTodo_name());
+//	   todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
+//	   service.addToDo(todoVO);
 //	 }
+	
+	@PostMapping("/todo")
+	public ResponseEntity<String> addToDo(TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
+	   ResponseEntity<String> entity = null;
+	   
+	   log.info("addToDo");
+	   log.info(todoVO.getTodo_name());
+	   
+	   try {
+		   todoVO.setTodo_name(todoVO.getTodo_name());
+		   todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
+		   service.addToDo(todoVO);
+		   entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	   
+	   return entity;
+	 }
 	
 	 @GetMapping("todo_modify_view/{todo_id}")
 	 public ModelAndView todo_modify_view(ModelAndView mav, TodoVO todoVO) {

@@ -28,7 +28,39 @@
 		]]>
 	</select> -->
 	
-	<select id="selectReviewBoard" resultType="com.gada.travelgada.domain.BoardVO">
+ 	<resultMap id="authMap" type="com.gada.travelgada.domain.AuthVO">
+		<result property="member_id" column="member_id"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+    <resultMap id="BoardMap" type="com.gada.travelgada.domain.BoardVO">
+       <result property="board_id" column="board_id"/>
+       <result property="title" column="title"/>
+       <result property="text" column="text"/>
+       <result property="board_date" column="board_date"/>
+       <result property="bhit" column="bhit"/>
+       <result property="bgroup" column="bgroup"/>
+       <result property="bstep" column="bstep"/>
+       <result property="bindent" column="bindent"/>
+       <result property="board_type_id" column="board_type_id"/>     
+       <result property="member_id" column="member_id"/>
+   </resultMap>
+   
+   <resultMap id="MemberMap" type="com.gada.travelgada.domain.MemberVO">
+      <result property="member_id" column="member_id"/>
+      <result property="pw" column="pw"/>
+      <result property="member_name" column="member_name"/>
+      <result property="email" column="email"/>
+      <result property="phone_num" column="phone_num"/>
+      <result property="profile_img_path" column="profile_img_path"/>
+      <result property="withdrawal_flag" column="withdrawal_flag"/>
+      <result property="withdrawal_code" column="withdrawal_code"/>
+      <result property="sns_type" column="sns_type"/>
+      <collection property="authList" resultMap="authMap"></collection>
+      <collection property="boardList" resultMap="BoardMap"></collection>
+   </resultMap>
+	
+	<select id="selectReviewBoard" resultMap="BoardMap">
 		<![CDATA[
 			select B1.* FROM( SELECT * FROM board where board_type_id = 1 order by bgroup desc, bstep asc ) B1 LIMIT #{nowPage}, #{amount} 	
 		]]>
@@ -40,7 +72,7 @@
 		]]>
 	</select>
 	
-	<select id="selectQnABoard" resultType="com.gada.travelgada.domain.BoardVO">
+	<select id="selectQnABoard" resultMap="BoardMap">
 		<![CDATA[
 			select B2.* FROM( SELECT * FROM board where board_type_id = 2 order by bgroup desc, bstep asc ) B2 LIMIT #{nowPage}, #{amount} 		
 		]]>
@@ -52,7 +84,7 @@
 		]]>
 	</select>	
 	
-	<select id="getAccompanyBoard" resultType="com.gada.travelgada.domain.BoardVO">
+	<select id="getAccompanyBoard" resultMap="BoardMap">
 		<![CDATA[
 			select B3.* FROM( SELECT * FROM board where board_type_id = 3 order by bgroup desc, bstep asc ) B3 LIMIT #{nowPage}, #{amount} 		
 		]]>
@@ -64,11 +96,24 @@
 		]]>
 	</select>	
 	
-	<select id="boardContentView" resultType="com.gada.travelgada.domain.BoardVO">
+	
+	<select id="getNotice" resultMap="BoardMap">
 		<![CDATA[
-			select * from board where board_id = #{board_id}
+			 		
+			select * from (select * from board where board_type_id = 4) a order by a.board_id desc LIMIT #{nowPage}, #{amount}
 		]]>
 	</select>
+	
+	
+	<!-- select * from board where board_id = #{board_id} -->
+	<select id="boardContentView" resultMap="MemberMap">
+		<![CDATA[
+			
+			select * from member, board where board.board_id = #{board_id} and member.member_id = #{member_id}
+		]]>
+	</select>
+	
+		
 
 
 </mapper>
