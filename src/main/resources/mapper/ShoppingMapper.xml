@@ -12,7 +12,7 @@
 	
 	<select id="selectProductByTypeWithSorting" resultType="com.gada.travelgada.domain.ProductVO">
 		<![CDATA[
-			select * from product where product_type_id = #{product_type_id} order by ${order}
+			select * from product where product_type_id = #{product_type_id} order by ${order} limit 0, 12
 		]]>
 	</select>
 	
@@ -21,4 +21,11 @@
 			select * from product where product_id = #{product_id}
 		]]>
 	</select>
+	
+	<select id="selectProductByTypeWithSortingAndPaging" resultType="com.gada.travelgada.domain.ProductVO">
+		<![CDATA[
+			select * from product where product_type_id = #{product_type_id} order by ${order} limit ${page}, 12
+		]]>
+	</select>
+	
 </mapper>

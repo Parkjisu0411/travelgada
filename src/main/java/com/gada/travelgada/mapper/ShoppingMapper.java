@@ -14,6 +14,8 @@ public interface ShoppingMapper {
 	
 	public List<ProductVO> selectProductByTypeWithSorting(@Param("product_type_id") int product_type_id, @Param("order") String order);
 	
+	public List<ProductVO> selectProductByTypeWithSortingAndPaging(@Param("product_type_id") int product_type_id, @Param("order") String order, @Param("page") int page);
+	
 	public List<ProductVO> selectProductList();
 	
 }

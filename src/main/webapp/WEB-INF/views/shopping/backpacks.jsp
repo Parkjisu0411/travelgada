@@ -39,6 +39,16 @@
 	}
 </style>
 <script>
+	//url parsing 
+	$.urlParam = function(name){
+		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+		if (results==null) {
+			return null; }
+		else {
+			return results[1] || 0; }
+	}
+	//
+	//카트에 담기
 	function insertIntoCart(product_id) {
 		var data = {
 				product_id : product_id
@@ -65,6 +75,52 @@
 			}
 		});
 	}
+	//
+	//스크롤 시 페이지 불러오기
+	var page = 1;
+	$(window).scroll(function() {
+		if($(window).scrollTop() == $(document).height() - $(window).height()) {
+			var product_type_id = $.urlParam("product_type_id");
+			var sorter = $.urlParam("sorter");
+			var urlQuery = "?product_type_id=" + product_type_id;
+			if(!$.urlParam("sorter") == "null") {
+				urlQuery += "&sorter=" + $.urlParam(sorter);
+			}
+			urlQuery += "&page=" + page;
+			console.log(urlQuery);
+			
+			$.ajax({
+				type : "GET",
+				url : "/shopping/scroll" + urlQuery,
+				cache : false,
+				dataType : "json",
+				success : function(result) {
+					page = page + 1;
+					
+					console.log($(".row").length);
+					for(var i = 0; i < result.length; i++) {
+						var content = "";
+						content += "<div class='col-md-3'>";
+						content += "<div class='product-img'><img class='rounded' src='/resources/img/product/" + result[i].img_path  + "'></div>";
+						content += "<div class='product-info'>";
+						content += "<strong>" + result[i].product_name + "</strong>";
+						content += "<p>₩ " + result[i].price + "</p>";
+						content += "</div>";
+						content += "<button type='button' class='btn btn-primary' onclick='insertIntoCart(" + result[i].product_id + ")'>장바구니담기</button>";
+						content += "<button type='button' class='btn btn-primary'>바로구매</button>";
+						content += "</div>";
+						$(".row").append(content);
+					}
+				},
+				error : function(e) {
+					console.log(e);
+					alert("에러가 발생했습니다.");
+				}
+			});
+			
+		}
+	})
+	//
 </script>
 </head>
 <body>
