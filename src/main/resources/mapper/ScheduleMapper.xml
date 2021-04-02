@@ -70,8 +70,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getMap" resultType="com.gada.travelgada.domain.ScheduleVO">
 		<![CDATA[	
-			select schedule_date, schedule_order, schedule_type_id, schedule_content, latitude, longitude from schedule where schedule_type_id in (2, 4) and planner_id = #{planner_id} and schedule_date = #{schedule_date}
+			select schedule_date, schedule_type_id, schedule_content, latitude, longitude from schedule where schedule_type_id in (2, 4) and planner_id = #{planner_id} and schedule_date = #{schedule_date}
 		]]>
 	</select>
-
+	
+		<select id="getAllMap" resultType="com.gada.travelgada.domain.ScheduleVO">
+		<![CDATA[	
+			select schedule_type_id, schedule_content, latitude, longitude from schedule where schedule_type_id in (2, 4) and planner_id = #{planner_id}
+		]]>
+	</select>
+	
 </mapper>
