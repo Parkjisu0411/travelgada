@@ -23,11 +23,14 @@ public interface BoardMapper {
 	
 	public int getTotalAccompanyBoard(CriteriaVO cri);
 
-	public BoardVO boardContentView(BoardVO boardVO);
+	//public BoardVO boardContentView(MemberVO memberVO);
 
-	//public BoardVO boardContentView(int board_id, String member_id);
+	public BoardVO boardContentView(int board_id, String member_id);
 
 	public List<BoardVO> getNotice(int nowPage, int amount);
+
+	public void writeBoard(BoardVO boardVO);
+
 
 	
 }

@@ -28,7 +28,8 @@
 		]]>
 	</select> -->
 	
- 	<resultMap id="authMap" type="com.gada.travelgada.domain.AuthVO">
+	
+  	<resultMap id="authMap" type="com.gada.travelgada.domain.AuthVO">
 		<result property="member_id" column="member_id"/>
 		<result property="authority" column="authority"/>
 	</resultMap>
@@ -58,7 +59,9 @@
       <result property="sns_type" column="sns_type"/>
       <collection property="authList" resultMap="authMap"></collection>
       <collection property="boardList" resultMap="BoardMap"></collection>
-   </resultMap>
+   </resultMap> 
+   
+
 	
 	<select id="selectReviewBoard" resultMap="BoardMap">
 		<![CDATA[
@@ -104,16 +107,15 @@
 		]]>
 	</select>
 	
-	
+	<!-- select board.board_id, board.title, board.text, board.board_date, board.bhit, board.bgroup, board.bstep, board.bindent, board.board_type_id, board.member_id, member.profile_img_path  from member, board where board.board_id = #{board_id} and member.member_id = #{member_id} -->
 	<!-- select * from board where board_id = #{board_id} -->
 	<select id="boardContentView" resultMap="MemberMap">
 		<![CDATA[
 			
-			select * from member, board where board.board_id = #{board_id} and member.member_id = #{member_id}
+			select * from board where board_id = #{board_id}
 		]]>
 	</select>
-	
-		
+			
 
 
 </mapper>

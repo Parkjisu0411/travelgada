@@ -1,6 +1,7 @@
 package com.gada.travelgada.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -48,16 +49,16 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.getTotalAccompanyBoard(cri);
 	}
 
-	@Override
-	public BoardVO boardContentView(BoardVO boardVO) {
-		return boardMapper.boardContentView(boardVO);
-	}
+//	@Override
+//	public BoardVO boardContentView(MemberVO memberVO) {
+//		return boardMapper.boardContentView(memberVO);
+//	}
 	
 
-//	@Override
-//	public BoardVO boardContentView(int board_id, String member_id) {
-//		return boardMapper.boardContentView(board_id, member_id);
-//	}
+	@Override
+	public BoardVO boardContentView(int board_id, String member_id) {
+		return boardMapper.boardContentView(board_id, member_id);
+	}
 
 	
 	@Override
@@ -66,14 +67,15 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	
+
+	
 	
 
 
 
 	@Override
 	public void writeBoard(BoardVO boardVO) {
-		// TODO Auto-generated method stub
-		
+		boardMapper.writeBoard(boardVO);
 	}
 
 	@Override
@@ -87,6 +89,9 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
 
 	
 

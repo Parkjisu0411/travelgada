@@ -43,7 +43,7 @@ thead, tbody{
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'">ACCOMPANY</h2>
+			<h2 class="headline" style="font-family: 'yg-jalnan'">BOARD CONTENT</h2>
 					<table class="table">
 					<thead>
 						<tr>
@@ -51,7 +51,7 @@ thead, tbody{
 								<h3  style="font-family: 'yg-jalnan'; font_weight:lighter;">${bContentView.title }</h3><br/>
 								${bContentView.member_id }&nbsp;&nbsp;&nbsp;
 								${bContentView.board_date }
-								${bContentView.profile_img_path }
+							    <%-- ${bContentView.profile_img_path } --%>
 								</th>
 						</tr>						
 					</thead>
