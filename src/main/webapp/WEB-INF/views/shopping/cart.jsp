@@ -47,13 +47,113 @@ html, body {
 }
 </style>
 <script type="text/javascript">
-	window.onload = function() {
-		var result = location.search.substring(1);
-		if (result == 'error') {
-			console.log('Login Error');
-			document.getElementById("errorMsg").innerHTML = "<p style='color: #f00;'>로그인에 실패했습니다. 아이디 또는 패스워드를 다시 입력해주십시오.</p>";
-		}
+	//선택된 상품 금액 총 합 구하기
+	function getTotal() {
+		var totalPrice = 0
+		$("input:checkbox[name=select-product]").each(function() {
+			if($(this).is(":checked")) {
+				var product_id = $(this).parent().parent().parent().attr("id");
+				var price = $("#" + product_id + " .price").text();
+				var quantity = $("#" + product_id + " .quantity").val();
+				totalPrice += price * quantity;
+			}
+		})
+		$("#total-price").html(totalPrice);
 	}
+	//
+	//주문하기
+	function buy() {
+		console.log("buy");
+		
+		var product_id_arr = [];
+		var quantity_arr = [];
+		var price_arr = [];
+		
+		$("input:checkbox[name=select-product]").each(function() {
+			if($(this).is(":checked")) {
+				var product_id = $(this).parent().parent().parent().attr("id");
+				var quantity = $("#" + product_id + " .quantity").val();
+				var price = $("#" + product_id + " .price").text();
+				
+				product_id_arr.push(product_id);
+				quantity_arr.push(quantity);
+				price_arr.push(price);
+			};
+		});
+		if(!product_id_arr.length) {
+			return alert("선택된 상품이 없습니다.");
+		}
+		var form = document.createElement("form");
+		form.method = "get";
+		form.action = "/shopping/order";
+		
+		var inputId = document.createElement("input");
+		inputId.setAttribute("name", "product_id");
+		inputId.setAttribute("value", product_id_arr);
+		
+		var inputQuantity = document.createElement("input");
+		inputQuantity.setAttribute("name", "quantity");
+		inputQuantity.setAttribute("value", quantity_arr);
+		
+		var inputPrice = document.createElement("input");
+		inputPrice.setAttribute("name", "price");
+		inputPrice.setAttribute("value", price_arr);
+		
+		form.appendChild(inputId);
+		form.appendChild(inputQuantity);
+		form.appendChild(inputPrice);
+		
+		document.body.appendChild(form);
+		form.submit();
+	}
+	//
+	$(document).ready(function() {
+		//상품 금액 표시
+		$(".product").each(function() {
+			var product_id = $(this).attr("id");
+			var price = $("#" + product_id + " .price").text();
+			var quantity = $("#" + product_id + " .quantity").val();
+			var mulPrice = price * quantity;
+			$("#" + product_id + " .mul-price").html(mulPrice);
+		});
+		//
+		//상품 갯수 변경 금액 표시
+		$(".quantity").change(function () {
+			var product_id = $(this).parent().parent().parent().parent().attr("id");
+			var price = $("#" + product_id + " .price").text();
+			var quantity = $("#" + product_id + " .quantity").val();
+			var mulPrice = price * quantity;
+			$("#" + product_id + " .mul-price").html(mulPrice);
+		})
+		//
+		//전체 선택
+		$("#select-whole-product").change(function() {
+			if($("#select-whole-product").is(":checked")) {
+				$(".select-product").prop("checked", true);
+				getTotal();
+			} else {
+				$(".select-product").prop("checked", false);
+				getTotal();
+			}
+		});
+		//
+		//선택시 전체 가격 변경
+		$(".select-product").change(function() {
+			
+			$("input:checkbox[name=select-product]").each(function() {
+				if(!$(this).is(":checked")) {
+					$("#select-whole-product").prop("checked", false);
+				}
+			});
+			getTotal();
+		});
+		//개수 변경시 전체 가격 변경
+		$(".quantity").change(function() {
+			getTotal();
+		})
+		//
+	})
+	
 </script>
 </head>
 <body>
@@ -61,8 +161,8 @@ html, body {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="container">
-		<h2 style="font-family: 'yg-jalnan'"><i class="fas fa-shopping-cart"></i> 장바구니</h2>
-		<hr />
+	<h2 style="font-family: 'yg-jalnan'"><i class="fas fa-shopping-cart"></i> 장바구니</h2>
+	<hr />		
 		<table class="table">
 			<colgroup>
 				<col width="5%">
@@ -72,24 +172,39 @@ html, body {
 			</colgroup>
 			<thead>
 				<tr>
-					<th>ㅁ</th>
-					<th>전체선택</th>
+					<th colspan="2">
+						<label>
+							<input type="checkbox" id="select-whole-product"/> 전체선택
+						</label>
+					</th>
 					<th>상품정보</th>
 					<th>상품금액</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="product" items="${cart }">
-					<tr>
-						<td>ㅁ</td>
+					<tr id="${product.product_id }" class="product">
 						<td>
-							<img class="rounded product-img" src="/resources/img/product/luggage/${product.img_path }">
+							<label>
+								<input type="checkbox" class="select-product" name="select-product" value="${product.price }" />
+							</label>
 						</td>
 						<td>
-							<p>${product.product_name }</p>
+							<img class="rounded product-img" src="/resources/img/product/${product.img_path }">
+						</td>
+						<td class="product-status">
+							<div>
+								<p class="product_name">${product.product_name }</p>
+								<p class="price">${product.price }</p>
+							</div>
+							<span>
+								<label>
+									<input type="number" name="quantity" class="quantity" min="1" value="1"/>
+								</label>
+							</span>
 						</td>
 						<td>
-							<p>${product.price }</p>
+							<p class="mul-price"></p>
 						</td>
 					</tr>
 				</c:forEach>
@@ -97,13 +212,13 @@ html, body {
 					<td colspan="3">
 					</td>
 					<td>
-						<p>총 상품가격</p>
+						<span>총 상품가격</span>
+						<span id="total-price"></span>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<button type="button" class="btn btn-lg btn-primary">계속 쇼핑하기</button>
-		<button type="button" class="btn btn-lg btn-primary">구매하기</button>
+		<button type="button" class="btn btn-lg btn-primary" onclick="buy()">구매하기</button>
 		<hr />
 	</div>
 	<!-- Footer -->

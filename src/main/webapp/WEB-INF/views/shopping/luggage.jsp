@@ -89,7 +89,7 @@
 		<div class="row">
 			<c:forEach var="product" items="${productList }">
 				<div class="col-md-3">
-					<div class="product-img"><img class="rounded" src="/resources/img/product/luggage/${product.img_path }"></div>
+					<div class="product-img"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
 					<div class="product-info">
 						<strong>${product.product_name }</strong>
 						<p>₩ ${product.price }</p>

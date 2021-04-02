@@ -1,6 +1,9 @@
 package com.gada.travelgada.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gada.travelgada.domain.BuyDetailVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.service.ShoppingServiceImpl;
@@ -59,5 +63,27 @@ public class ShoppingController {
 		}
 		return entity;
 	}
+	
+	@GetMapping("/shopping/order")
+	public ModelAndView order(ModelAndView modelAndView, HttpServletRequest request) {
+		log.info("order ==================");
+		String[] arrProduct_id = request.getParameterValues("product_id");
+		String[] arrQuantity = request.getParameterValues("quantity");
+		String[] arrPrice = request.getParameterValues("price");
+		
+		List<BuyDetailVO> buyList = new ArrayList<>();
+		BuyDetailVO buy = new BuyDetailVO();
+		for(int i = 0; i < arrProduct_id.length; i++) {
+			buy.setProduct_id(Integer.parseInt(arrProduct_id[i]));
+			buy.setQuantity(Integer.parseInt(arrQuantity[i]));
+			buy.setPrice(Integer.parseInt(arrPrice[i]));
+			buyList.add(buy);
+		}
+		modelAndView.addObject("buyDetailList", buy);
+		modelAndView.setViewName("/shopping/order");
+		
+		return modelAndView;
+	}
+	
 
 }
