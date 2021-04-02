@@ -34,4 +34,6 @@ public interface ScheduleMapper {
 	
 	public List<ScheduleVO> getMap(@Param("planner_id") int planner_id, @Param("schedule_date") Date schedule_date);
 
+	public List<ScheduleVO> getAllMap(int planner_id);
+	
 }

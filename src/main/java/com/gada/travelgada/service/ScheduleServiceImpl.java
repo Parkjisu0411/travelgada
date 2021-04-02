@@ -121,4 +121,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return mapper.getMap(planner_id, schedule_date);
 	}
 
+	@Override
+	public List<ScheduleVO> getAllMap(int planner_id) {
+		return mapper.getAllMap(planner_id);
+	}
+
 }

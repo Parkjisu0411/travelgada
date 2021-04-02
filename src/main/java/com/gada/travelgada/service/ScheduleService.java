@@ -36,5 +36,7 @@ public interface ScheduleService {
 	public List<ScheduleVO> selectAllSchedule(int planner_id);
 	
 	public List<ScheduleVO> getMap(int planner_id, Date schedule_date);
+	
+	public List<ScheduleVO> getAllMap(int planner_id);
 
 }

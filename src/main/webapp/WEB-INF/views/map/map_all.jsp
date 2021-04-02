@@ -75,34 +75,21 @@
 
   <div id="map"></div>
 
-  <select id="centerControlDiv" onchange="location.href=this.value">
-    <c:forEach var="date" items="${dateList}">
-      <c:set var="dayIndex" value="${dayIndex + 1}" />
-      <option value="" hidden selected>${schedule_date}&nbsp;жн&nbsp;DAY&nbsp;<c:out value="${dayIndex}" />
-      </option>
-      <option value="${planner_id}?schedule_date=${date}">${date}&nbsp;жн&nbsp;DAY&nbsp;<c:out value="${dayIndex}" />
-      </option>
-    </c:forEach>
-  </select>
-
   <script>
 
     $.ajax({
-      url: "${pageContext.request.contextPath}/paths/${planner_id}?schedule_date=${schedule_date}",
+      url: "${pageContext.request.contextPath}/all/paths/${planner_id}",
       method: 'GET',
       cache: false,
       contentType: "application/json; charset=utf-8",
       success: function initMap(result) {
         var paths = result;
-        var pathsArray = [];
-        var markerIndex = 1;
 
         var map = new google.maps.Map(document.getElementById('map'), {
           mapTypeControl: false,
           fullscreenControl: false
         });
         /* map.setOptions({draggable: false}); */
-        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
         var bounds = new google.maps.LatLngBounds();
 
         for (var index = 0; index < paths.length; index++) {
@@ -120,7 +107,7 @@
 
           bounds.extend(new google.maps.LatLng(latitude, longitude));
 		  
-          var markerType = paths[index].schedule_type_id == 4 ? markerIndex++ : '<i class="fas fa-bed"></i>';
+          var markerType = paths[index].schedule_type_id == 4 ? '<i class="fas fa-map-marker-alt"></i>' : '<i class="fas fa-bed"></i>';
           var markerContent = '<div id="schedule-content">' + '<strong>' + markerType + '</strong>&nbsp;&nbsp;|&nbsp;&nbsp;' + paths[index].schedule_content + '</div>';
           marker.info = new google.maps.InfoWindow({
             content: markerContent,
@@ -131,24 +118,7 @@
             this.info.open(this.getMap(), this);
           });
           marker.info.open(marker.getMap(), marker);
-
-          if (paths[index].schedule_type_id == 4) {
-            pathsArray.push({ lat: latitude, lng: longitude });
-          }
         };
-        new google.maps.Polyline({
-          path: pathsArray,
-          geodesic: true,
-          strokeColor: '#000000',
-          strokeOpacity: 1,
-          strokeWeight: 2,
-          map: map,
-          icons: [{
-            icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW },
-            offset: '100%',
-            repeat: '150px',
-          }]
-        });
         map.fitBounds(bounds);
       },
       error: function (e) {
@@ -156,6 +126,7 @@
       }
     });
   </script>
+  
 </body>
 
 </html>
