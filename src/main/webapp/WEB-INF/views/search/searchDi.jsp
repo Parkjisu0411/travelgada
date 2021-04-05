@@ -1,17 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
 <title>달력</title>
 
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
 		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
 		crossorigin="anonymous" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
     	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
@@ -20,8 +24,8 @@
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<!-- <script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ -->	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -98,6 +102,34 @@
 /* 모달 스타일 end */
 </style>
 
+<style>
+/* 다이어리 이미지 */
+.diary_img {
+	width: 240px;
+	height: 240px;
+	object-fit: cover;
+	display: block;
+	margin: 0px auto;
+	padding-bottom: 20px;
+}
+</style>
+
+<style>
+/* 모달 스타일 */
+	.dialogDi{
+    	width : 300px;
+   	 	height : 50px;
+    	float: left;
+    	margin-left: 30px;
+    	margin-botton: 10px;
+	}
+
+	.mainImg{
+	    float: left;
+	}
+	
+</style>
+
 <script>
 /* 플래너 생성 경고 */
 	$(document).ready(function(){
@@ -128,7 +160,7 @@
 </script>
 
 <script>
-/* 엔드 날짜 클릭시 시작 날짜로 포거스가게 하기 */
+/* 엔드 날짜 클릭시 시작 날짜로 포커스가게 하기 */
 	$(document).ready(function(){
 		$("#input-end").click(function(){
 			$("#input-start").focus();
@@ -136,6 +168,37 @@
 	});//ready function end
 /* 날짜 동시에 띄우기 end */
 </script>
+
+<script>
+
+$(document).ready(function(){
+	// 숫자 평점을 별로 변환하도록 호출하는 함수
+	$.fn.generateStars = function() {
+    	return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
+    	
+};
+	$('.star-prototype').generateStars();
+	        
+});
+ 
+</script>
+
+<style>
+span.star-prototype, span.star-prototype > * {
+    height: 17px; 
+    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+    width: 80px;
+    display: inline-block;
+}
+ 
+span.star-prototype > * {
+    background-position: 0 0;
+    max-width:80px; 
+}
+
+</style>
+
+
 	
 </head>
 <body>
@@ -143,9 +206,88 @@
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
-	<!--Content -->
+	<!-- 달력 이미지 - container 안에 있으면 안됨 -->
 	<img id="calImg" src="resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
 
+	<!--Content -->
+	<div class="container">
+	
+		<!-- 검색 바 -->
+		<form action="${pageContext.request.contextPath}/search" method="get">			
+			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
+			<button type="submit"><i class="fa fa-search"></i></button>
+		</form>	
+		<hr/>	
+		
+		<!-- 검색 메뉴 -->	
+		<a style="font-family: 'yg-jalnan'" href="${pageContext.request.contextPath}/search?keyword=${keyword}">통합</a>&nbsp;&nbsp;		
+		<a style="font-family: 'yg-jalnan'"  href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic">일정</a>&nbsp;&nbsp;
+		<a style="font-family: 'yg-jalnan'" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">다이어리</a>
+		<hr/>
+		
+		<!-- 다이어리 searchDi -->
+		<span style="font-family: 'yg-jalnan'; font-size:20px;">다이어리</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span class="dropdown">
+			<span class="dropdown-toggle" data-toggle="dropdown">정렬 ↓ </span>
+				<span class="dropdown-menu">
+     		 		<a class="dropdown-item" href="#">관련도순</a>
+    	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">최신순</a>
+    			</span>		
+		</span>
+		 &nbsp;
+		<span class="dropdown">
+			<span class="dropdown-toggle" data-toggle="dropdown">기간 ↓ </span>
+				<span class="dropdown-menu">
+     		 		<a class="dropdown-item" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=day">1일</a>
+    	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=week">1주</a>
+    	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=month">1개월</a>
+    	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=year">1년</a>
+    			</span>		
+		</span>
+		<br/><br/>
+		
+		<!-- 다이어리 반복 -->
+			<div class="row">
+				<c:forEach items="${diMore}" var="di"> 
+					<div class="col-sm-3">
+						<img class="diary_img" src='resources/diary/${di.img_path}' data-toggle="modal" data-target="#myModal${di.diary_id}"/>
+						<div>${di.hashtag}</div>
+						<br/>
+					</div><!-- 다이어리 끝 -->
+					
+				<!-- Modal -->
+				<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
+					<!-- <div class="mySlides"> -->
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h3 class="modal-title" style="font-family: 'yg-jalnan'">diary</h3>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<div class="mainImg">
+									<img class="popup_img" src='resources/diary/${di.img_path}'
+										style='position: relative; width: 400px; height: 400px;' />
+								</div>
+								<div class="dialogDi">
+									<h4 style="font-family: 'yg-jalnan'">${di.diary_date}</h4>
+								</div>
+								<div class="dialogDi">${di.hashtag}</div>
+								<div class="dialogDi">${di.text}</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal end -->
+				</c:forEach><!-- 다이어리 반복 끝 -->
+			</div><!-- 다이어리 row end -->
+		<br/>
+		
+	<!-- 달력 모달 -->
 	<!-- Modal -->
 	<div class="modal" id="calModal" role="dialog">
 		<div class="modal-dialog modal-dialog2">
@@ -155,8 +297,8 @@
 	<!-- 숨겨서 보내야 하는 정보들 -->
 		<input type="hidden" name="member_id" value="${member}"/>
 		<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
-		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
-				<div class="modalWrapper">
+		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>			
+			<div class="modalWrapper">
 				
 					<button type="button" class="close" data-dismiss="modal">&times;</button>  
                     <br>
@@ -182,123 +324,12 @@
 						</div>
 					<br>
 				</div>
-					</form>
-				</div>
-      	  	</div>
+				</form>
+			</div>
 		</div>
-
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
+	</div><!-- 달력 모달 end -->
+	</div><!-- container end -->
+	
 	<!-- 달력 (아래 추가) -->
 	<script src="resources/calendar/datepicker/moment.min.js"></script>
 	<script src="resources/calendar/datepicker/daterangepicker.js"></script>

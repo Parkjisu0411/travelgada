@@ -34,7 +34,7 @@
     	margin-botton: 10px;
 	}
 
-	#mainImg{
+	.mainImg{
 	    float: left;
 	}
 	
@@ -277,7 +277,7 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>  
 				</div>
 				<div class="modal-body" >
-					<div id="mainImg">
+					<div class="mainImg">
 					<img class="popup_img" src='resources/diary/${dto.img_path}' style='position:relative; width: 400px; height: 400px;'/>
 				</div>		
 					<div class="dialog"><h4 style="font-family: 'yg-jalnan'">${dto.diary_date}</h4></div>
