@@ -2,42 +2,116 @@
 <!DOCTYPE mapper 
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.gada.travelgada.mapper.SearchMapper"> 
+<mapper namespace="com.gada.travelgada.mapper.SearchMapper">
 
-	<select id="getSearchPlanner" resultType="com.gada.travelgada.domain.PlannerVO"> 
+	<!-- resultMap -->
+	<!-- 플래너 1 -->
+	<resultMap id="plannerMap"
+		type="com.gada.travelgada.domain.PlannerVO">
+		<result property="planner_id" column="planner_id" />
+		<result property="start_date" column="start_date" />
+		<result property="end_date" column="end_date" />
+		<result property="planner_name" column="planner_name" />
+		<result property="satisfaction" column="satisfaction" />
+		<result property="member_id" column="member_id" />
+
+		<collection property="scheduleVO" resultMap="scheduleMap"></collection>
+	</resultMap>
+   
+      <!-- 스케줄 n -->
+	<resultMap id="scheduleMap"
+		type="com.gada.travelgada.domain.ScheduleVO">
+		<result property="budget" column="budget" />
+		<result property="planner_id" column="planner_id" />
+		<result property="schedule_date" column="schedule_date" />
+		<result property="schedule_id" column="schedule_id" />
+		<result property="schedule_type_id" column="schedule_type_id" />
+		<result property="schedule_content" column="schedule_content" />
+		<result property="latitude" column="latitude" />
+		<result property="longitude" column="longitude" />
+		<result property="schedule_order" column="schedule_order" />
+	</resultMap>
+
+	<!-- 통합 검색 일정 부분 -->
+	<select id="searchPl" resultMap="plannerMap"> 
 		<![CDATA[ 
-			select * from (
-				select @rownum:=@rownum+1 rn,p.* from planner p 
-					where planner_name like CONCAT('%', #{Keyword}, '%') and (@rownum:=0)=0
-			)a where a.rn <= 2
-		]]> 
-	</select> 
+			select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+				where s.planner_id = p.planner_id and  planner_name like CONCAT('%', #{keyword}, '%') 
+					order by p.planner_id desc
+		]]>
+	</select>
 	
-	<select id="getSearchDiary" resultType="com.gada.travelgada.domain.DiaryVO"> 
+	<!-- 통합 검색 다이어리 부분 - 8개만 뽑아냄 -->
+	<select id="searchDi"
+		resultType="com.gada.travelgada.domain.DiaryVO"> 
 		<![CDATA[ 
 			select * from (
 				select @rownum:=@rownum+1 rn,d.* from diary d 
-					where text like CONCAT('%', #{Keyword}, '%') or hashtag like CONCAT('%', #{Keyword}, '%') 
+					where text like CONCAT('%', #{keyword}, '%') or hashtag like CONCAT('%', #{keyword}, '%') 
 						and (@rownum:=0)=0
 			)a where a.rn <= 8
-		]]> 
-	</select> 
-	
-	<select id="searchPlMore" resultType="com.gada.travelgada.domain.PlannerVO"> 
+		]]>
+	</select>
+
+	<!-- 일정 더보기 ( 조건 ) -->
+	<select id="searchPlMore" resultMap="plannerMap"> 
 		<![CDATA[ 
+			select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+				where s.planner_id = p.planner_id 
+					and  planner_name like CONCAT('%', #{keyword}, '%')	
+						${order}
+					
+		]]>
+	</select>
+
+	<!-- 다이어리 더보기 ( 조건 ) -->
+	<select id="searchDiMore"
+		resultType="com.gada.travelgada.domain.DiaryVO"> 
+		<![CDATA[ 
+				select a.* from(select * from diary 
+					where text like CONCAT('%', #{keyword}, '%') or hashtag like CONCAT('%', #{keyword}, '%')) a
+						${order}
+		]]>
+	</select>
+	
+	
+	<!-- 
+	select a.* from(select * from diary 
+					where text like CONCAT('%', #{keyword}, '%') or hashtag like CONCAT('%', #{keyword}, '%')) a
+						where a.diary_date >= DATE_SUB(NOW(), INTERVAL 1 week) 
+							order by a.diary_date desc;
+	 -->
+	
+	
+	
+	
+	<!-- <select id="getSearchPlanner"
+		resultType="com.gada.travelgada.domain.PlannerVO"> 
+		<![CDATA[ 
+			select * from (
 				select @rownum:=@rownum+1 rn,p.* from planner p 
-					where planner_name like CONCAT('%', #{Keyword}, '%') and (@rownum:=0)=0
-						and (@rownum:=0)=0
-		]]> 
-	</select> 
+					where planner_name like CONCAT('%', #{keyword}, '%') and (@rownum:=0)=0
+			)a where a.rn <= 2
+		]]>
+	</select>
+
 	
-	<select id="searchDiMore" resultType="com.gada.travelgada.domain.DiaryVO"> 
+
+
+
+
+
+	<select id="getSearch" resultMap="plannerMap"> 
 		<![CDATA[ 
-				select @rownum:=@rownum+1 rn,d.* from diary d 
-					where text like CONCAT('%', #{Keyword}, '%') or hashtag like CONCAT('%', #{Keyword}, '%')
-						and (@rownum:=0)=0
-		]]> 
-	</select> 
+			select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+				where s.planner_id = p.planner_id and  planner_name like CONCAT('%', #{keyword}, '%') 
+					order by p.planner_id desc
+		]]>
+	</select> -->
 
 
+
+
+ 
+   
 </mapper>

@@ -1,6 +1,7 @@
 package com.gada.travelgada.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,4 +21,5 @@ public class PlannerVO {
 	private int satisfaction;
 	private String member_id;
 
+	private List<ScheduleVO> scheduleVO;
 }

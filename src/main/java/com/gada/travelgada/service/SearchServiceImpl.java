@@ -18,32 +18,143 @@ public class SearchServiceImpl implements SearchService {
 
 	private SearchMapper mapper;
 	
-	//플래너 검색
+	//통합 검색 일정 부분
 	@Override
-	public List<PlannerVO> getSearchPlanner(String keyword) {
-		log.info("ServiceImpl getSearchPlanner()");
-		return mapper.getSearchPlanner(keyword);
-	}
-
-	//다이어리 검색
+	public List<PlannerVO> searchPl(String keyword) {
+		log.info("ServiceImpl searchPl() - 통합 검색 일정 부분");
+			
+		return mapper.searchPl(keyword);
+		
+	}//searchPl end
+	
+	//통합 검색 다이어리 부분
 	@Override
-	public List<DiaryVO> getSearchDiary(String keyword) {
-		log.info("ServiceImpl getSearchDiary()");
-		return mapper.getSearchDiary(keyword);
+	public List<DiaryVO> searchDi(String keyword) {
+		log.info("ServiceImpl searchDi() - 통합 검색 다이어리 부분");
+		
+		return mapper.searchDi(keyword);
 	}
-
+	
 	//일정 더보기
 	@Override
-	public List<PlannerVO> searchPlMore(String keyword) {
-		log.info("ServiceImpl searchPlMore()-일정 더보기");
-		return mapper.searchPlMore(keyword);
-	}
+	public List<PlannerVO> searchPlMore(String keyword, String sorter) {
+		log.info("ServiceImpl searchPlMore() - 일정 더보기");
+		
+		String order = null;
+		
+		switch(sorter) {
+			case("basic")://기본 정렬 (일정 처음 보여지는 부분에서 정렬)
+				order = "order by p.planner_id desc";
+				break;
+			case("startDate") ://최신순 - 여행 시작 날짜를 내림순
+				order = "order by start_date desc";
+				break;
+			case("day") :// 여행 시작 날짜가 오늘 하루 전 날짜부터 검색  
+				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 day) order by start_date desc";
+				break;
+			case("week") :// 일주일 
+				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 week) order by start_date desc";		
+				break;
+			case("month") :// 한달
+				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 month) order by start_date desc";		
+				break;
+			case("year") :// 일년
+				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 year) order by start_date desc";		
+				break;
+		}
+		
+		return mapper.searchPlMore(keyword, order);
+	} 
 	
 	//다이어리 더보기
 	@Override
-	public List<DiaryVO> searchDiMore(String keyword) {
+	public List<DiaryVO> searchDiMore(String keyword, String sorter) {
 		log.info("ServiceImpl searchDiMore()-다이어리 더보기");
-		return mapper.searchDiMore(keyword);
+		
+		String order = null;
+
+		switch (sorter) {
+			case ("basic"):// 기본 정렬 (다이어리 처음 보여지는 부분에서 정렬), 최신순
+				order = "order by diary_date desc";
+				break;
+			case ("day"):// 다이어리 시작 날짜가 오늘 하루 전 날짜부터 검색
+				order = "where a.diary_date >= DATE_SUB(NOW(), INTERVAL 1 day) order by a.diary_date desc";
+				break;
+			case ("week"):// 일주일
+				order = "where a.diary_date >= DATE_SUB(NOW(), INTERVAL 1 week) order by a.diary_date desc";
+				break;
+			case ("month"):// 한달
+				order = "where a.diary_date >= DATE_SUB(NOW(), INTERVAL 1 month) order by a.diary_date desc";
+				break;
+			case ("year"):// 일년
+				order = "where a.diary_date >= DATE_SUB(NOW(), INTERVAL 1 year) order by a.diary_date desc";
+				break;
+		}
+		
+		return mapper.searchDiMore(keyword, order);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	//플래너 검색
+//	@Override
+//	public List<PlannerVO> getSearchPlanner(String keyword) {
+//		log.info("ServiceImpl getSearchPlanner()");
+//		return mapper.getSearchPlanner(keyword);
+//	}
+//
+//
+//
+//	//일정 더보기
+//	@Override
+//	public List<PlannerVO> searchPlMore(String keyword) {
+//		log.info("ServiceImpl searchPlMore()-일정 더보기");
+//		return mapper.searchPlMore(keyword);
+//	}
+//	
+//
+//
+//	
+//	
+//
+//	
+//	@Override
+//	public List<DiaryVO> getSearchDi(String keyword,String sorter) {
+//		log.info("ServiceImpl getSearchDiary()-플래너 조인");
+//		
+//		String order = null;
+//		switch(sorter) {
+//			case("basic"):
+//				order = "order by p.planner_id desc";
+//				break;
+//			case("startDate") :
+//				order = "order by start_date desc";
+//				break;
+//			case("day") :
+//				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 day) order by start_date desc";
+//				break;
+//			case("week") :
+//				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 7 day) order by start_date desc";		
+//				break;
+//			case("month") :
+//				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 month) order by start_date desc";		
+//				break;
+//			case("year") :
+//				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 year) order by start_date desc";		
+//				break;
+//		}
+//		
+//		return mapper.getSearchDi(keyword,order);
+//	}
+	
+	
 
 }
