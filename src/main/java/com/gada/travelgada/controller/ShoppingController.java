@@ -1,7 +1,10 @@
 package com.gada.travelgada.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,7 +54,14 @@ public class ShoppingController {
 	
 	@GetMapping("/shopping/cart")
 	public ModelAndView memberCart(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
-		modelAndView.addObject("cart", memberDetails.getCart());
+		Map<Integer, Integer> cart = memberDetails.getCart(); 
+		Set<Integer> idSet = cart.keySet();
+		Map<ProductVO, Integer> productCart = new HashMap();
+		for(Integer id : idSet) {
+			productCart.put(shoppingService.getProduct(id), cart.get(id));
+		}
+		
+		modelAndView.addObject("cart", productCart);
 		modelAndView.setViewName("/shopping/cart");
 		return modelAndView;
 	}

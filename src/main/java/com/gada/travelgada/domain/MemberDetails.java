@@ -2,6 +2,7 @@ package com.gada.travelgada.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,18 +13,23 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 public class MemberDetails implements UserDetails, OAuth2User{
 	
-	private List<ProductVO> cart = new ArrayList<>();
+	private Map<Integer, Integer> cart = new HashMap<>();
 	private int planner_id;
 	private MemberVO member;
 	private Map<String, Object> attributes;
 	
-	public List<ProductVO> getCart() {
+	public Map<Integer, Integer> getCart() {
 		return cart;
 	}
 	
 	public void insertIntoCart(ProductVO product) {
-		cart.add(product);
-	}
+		int product_id = product.getProduct_id();
+		if(cart.get(product_id) == null) {
+			cart.put(product_id, 1);
+		} else {
+			cart.put(product_id, cart.get(product_id) + 1);
+		}
+	} 
 	
 	public void setPlanner_id(int planner_id) {
 		this.planner_id = planner_id;

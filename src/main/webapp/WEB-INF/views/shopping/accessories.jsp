@@ -22,20 +22,48 @@
 <meta charset="UTF-8">
 <title>캐리어</title>
 <style>
-
-	.product-img {
+	.product-img-area {
 		width: 100%;
+		overflow: hidden;
 		
 	}
 	
-	.product-img:after {
-		padding-bottom: 100%;
-	}
-	
- 	.product-img > img {
-		max-width: 100%;
+ 	.product-img-area > img {
+ 		object-fit: cover;
+		width: 100%;
 		height: 250px;
 		display: block;
+		transform: scale(1);
+  		-webkit-transform: scale(1);
+  		-moz-transform: scale(1);
+  		-ms-transform: scale(1);
+  		-o-transform: scale(1);
+  		transition: all 0.3s ease-in-out;
+	}
+	
+	.product-img-area > img:hover {
+		transform:scale(1.2);
+		-webkit-transform: scale(1.2);
+  		-moz-transform: scale(1.2);
+  		-ms-transform: scale(1.2);
+  		-o-transform: scale(1.2);
+  		
+	}
+	
+	.product-detail-area {
+		padding-left: 15px;
+		padding-right: 15px;
+		padding-top: 15px;
+		margin-left: 20px;
+		margin-top: 10px;
+	}
+	
+	.product-detail-area:hover {
+		cursor: pointer;
+	}
+	
+	.product-btn-area {
+		padding-left: 20px;
 	}
 </style>
 <script>
@@ -100,14 +128,20 @@
 					console.log($(".row").length);
 					for(var i = 0; i < result.length; i++) {
 						var content = "";
-						content += "<div class='col-md-3'>";
-						content += "<div class='product-img'><img class='rounded' src='/resources/img/product/" + result[i].img_path  + "'></div>";
-						content += "<div class='product-info'>";
+						content += "<div class='col-md-4'>";
+						content += "<div class='product-area'>";
+						content += "<div class='product-detail-area'>";
+						content += "<div class='product-img-area'><img class='rounded' src='/resources/img/product/" + result[i].img_path  + "'></div>";
+						content += "<div class='product-info-aread'>";
 						content += "<strong>" + result[i].product_name + "</strong>";
 						content += "<p>₩ " + result[i].price + "</p>";
 						content += "</div>";
+						content += "</div>";
+						content += "<div class='product-btn-area'>";
 						content += "<button type='button' class='btn btn-primary' onclick='insertIntoCart(" + result[i].product_id + ")'>장바구니담기</button>";
 						content += "<button type='button' class='btn btn-primary'>바로구매</button>";
+						content += "</div>";
+						content += "</div>";
 						content += "</div>";
 						$(".row").append(content);
 					}
@@ -131,27 +165,33 @@
 	<div class="container">
 	
 		<!-- headline -->
-		<h2 style="font-family: 'yg-jalnan'">악세사리</h2>
+		<h2 style="font-family: 'yg-jalnan'">캐리어</h2>
 		
 		
-		<a href="/shopping?product_type_id=4&sorter=salePriceAsc">낮은가격순</a>
-		<a href="/shopping?product_type_id=4&sorter=salePriceDesc">높은가격순</a>
+		<a href="/shopping?product_type_id=2&sorter=salePriceAsc">낮은가격순</a>
+		<a href="/shopping?product_type_id=2&sorter=salePriceDesc">높은가격순</a>
 		<a href="#">판매량순</a>
-		<a href="/shopping?product_type_id=4&sorter=latestAsc">최신순</a>
+		<a href="/shopping?product_type_id=2&sorter=latestAsc">최신순</a>
 		
 		<hr />
 		<div class="divider-header-blank"></div>
 		<!-- Product List -->
 		<div class="row">
 			<c:forEach var="product" items="${productList }">
-				<div class="col-md-3">
-					<div class="product-img"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
-					<div class="product-info">
-						<strong>${product.product_name }</strong>
-						<p>₩ ${product.price }</p>
+				<div class="col-md-4">
+					<div class="product-area">
+						<div class="product-detail-area">
+							<div class="product-img-area"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
+							<div class="product-info-area">
+								<strong>${product.product_name }</strong>
+								<p>₩ ${product.price }</p>
+							</div>
+						</div>
+						<div class="product-btn-area">
+							<button type="button" class="btn btn-primary" onclick="insertIntoCart(${product.product_id})">장바구니담기</button>
+							<button type="button" class="btn btn-primary">바로구매</button>
+						</div>
 					</div>
-					<button type="button" class="btn btn-primary" onclick="insertIntoCart(${product.product_id})">장바구니담기</button>
-					<button type="button" class="btn btn-primary">바로구매</button>
 				</div>
 			</c:forEach>
 		</div>
