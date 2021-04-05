@@ -1,6 +1,9 @@
 package com.gada.travelgada.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gada.travelgada.domain.BuyDetailVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.service.ShoppingServiceImpl;
@@ -27,11 +31,16 @@ public class ShoppingController {
 	private ShoppingServiceImpl shoppingService;
 	
 	@GetMapping("/shopping")
-	public ModelAndView shoppingMain(ModelAndView modelAndView, @RequestParam("product_type_id") int product_type_id, @RequestParam(value="sorter", required=false, defaultValue="salePriceAsc") String sorter ) {
+	public ModelAndView shoppingMain(ModelAndView modelAndView, @RequestParam("product_type_id") int product_type_id, @RequestParam(value="sorter", required=false, defaultValue="default") String sorter) {
 		String type = shoppingService.getProductType(product_type_id);
 		modelAndView.addObject("productList", shoppingService.getProductByTypeWithSorting(product_type_id, sorter));
 		modelAndView.setViewName("/shopping/" + type);
 		return modelAndView;
+	}
+	
+	@GetMapping("/shopping/scroll")
+	public List<ProductVO> shoppingPage(@RequestParam("product_type_id") int product_type_id, @RequestParam(value="sorter", required=false, defaultValue="defualt") String sorter, @RequestParam(value="page", required=false, defaultValue="1") int page) {
+		return shoppingService.getProductByTypeWithSortingAndPaging(product_type_id, sorter, page);
 	}
 	
 	@GetMapping("/shopping/{product_id}")
@@ -59,5 +68,32 @@ public class ShoppingController {
 		}
 		return entity;
 	}
-
+	
+	@GetMapping("/shopping/order")
+	public ModelAndView order(ModelAndView modelAndView, HttpServletRequest request) {
+		log.info("order ==================");
+		String product_id = request.getParameter("product_id");
+		String quantity = request.getParameter("quantity");
+		String price = request.getParameter("price");
+		
+		String[] arrProduct_id = product_id.split(",");
+		String[] arrQuantity = quantity.split(",");
+		String[] arrPrice = price.split(",");
+		
+		List<BuyDetailVO> buyList = new ArrayList<>();
+		
+		for(int i = 0; i < arrProduct_id.length; i++) {
+			BuyDetailVO buy = new BuyDetailVO();
+			log.info(arrProduct_id[i].toString());
+			buy.setProduct_id(Integer.parseInt(arrProduct_id[i]));
+			buy.setQuantity(Integer.parseInt(arrQuantity[i]));
+			buy.setPrice(Integer.parseInt(arrPrice[i]));
+			buyList.add(buy);
+		}
+		
+		modelAndView.addObject("buyDetailList", buyList);
+		modelAndView.setViewName("/shopping/order");
+		
+		return modelAndView;
+	}
 }

@@ -45,8 +45,32 @@ public class ShoppingServiceImpl {
 			case("latestAsc") :
 				order = "added_date desc";
 				break;
+			default : 
+					order = "product_name asc";
 		}
 		return shoppingMapper.selectProductByTypeWithSorting(product_type_id, order);
+	}
+	
+	public List<ProductVO> getProductByTypeWithSortingAndPaging(int product_type_id, String sorter, int page) {
+		String order = null;
+		page = page * 12;
+		switch(sorter) {
+			case("salePriceAsc") :
+				order = "price asc";
+				break;
+			case("salePriceDesc") :
+				order = "price desc";
+				break;
+			case("saleCountDesc") :
+				order = "count desc";
+				break;
+			case("latestAsc") :
+				order = "added_date desc";
+				break;
+			default : 
+				order = "product_name asc";
+		}
+		return shoppingMapper.selectProductByTypeWithSortingAndPaging(product_type_id, order, page);
 	}
 
 	public String getProductType(int product_type_id) {

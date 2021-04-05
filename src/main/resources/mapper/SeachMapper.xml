@@ -19,7 +19,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				select @rownum:=@rownum+1 rn,d.* from diary d 
 					where text like CONCAT('%', #{Keyword}, '%') or hashtag like CONCAT('%', #{Keyword}, '%') 
 						and (@rownum:=0)=0
-			)a where a.rn <= 8;
+			)a where a.rn <= 8
+		]]> 
+	</select> 
+	
+	<select id="searchPlMore" resultType="com.gada.travelgada.domain.PlannerVO"> 
+		<![CDATA[ 
+				select @rownum:=@rownum+1 rn,p.* from planner p 
+					where planner_name like CONCAT('%', #{Keyword}, '%') and (@rownum:=0)=0
+						and (@rownum:=0)=0
+		]]> 
+	</select> 
+	
+	<select id="searchDiMore" resultType="com.gada.travelgada.domain.DiaryVO"> 
+		<![CDATA[ 
+				select @rownum:=@rownum+1 rn,d.* from diary d 
+					where text like CONCAT('%', #{Keyword}, '%') or hashtag like CONCAT('%', #{Keyword}, '%')
+						and (@rownum:=0)=0
 		]]> 
 	</select> 
 

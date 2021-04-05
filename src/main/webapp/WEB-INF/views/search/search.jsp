@@ -5,14 +5,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
 <title>달력</title>
 
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
 		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
 		crossorigin="anonymous" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
     	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
@@ -21,8 +24,8 @@
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<!-- <script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ -->	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -100,6 +103,7 @@
 </style>
 
 <style>
+/* 다이어리 이미지 */
 .diary_img {
 	width: 240px;
 	height: 240px;
@@ -148,6 +152,178 @@
 	});//ready function end
 /* 날짜 동시에 띄우기 end */
 </script>
+
+<script>
+/* 일정 더 보기 */
+$(document).ready(function(){
+		$(".searchPlBtn").on('click',function(){
+		
+			console.log("searchPlBtn click function()");
+			
+			var keywordMore = $("#keywordMore").val();
+			console.log("keywordMore : "+ keywordMore);
+			
+			getList();
+			
+			function getList() {
+			var url = "${pageContext.request.contextPath}/searchPl";
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			var form = {
+					keywordMore : keywordMore
+			};
+			
+			console.log(url);
+			
+			$.ajax({
+				type: 'POST',
+				url: url,
+				cache : false,
+				data: {keywordMore : keywordMore},
+				dataType: 'json', 
+		 		beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+					console.log("header 실행 "+header+token)
+					xhr.setRequestHeader(header, token);
+				}, 
+				success: function(result) {					
+					
+					/* 검색 결과를 지우는 부분  */
+					$('#deleteResult').children().remove();
+		       	
+					var htmls="";
+					
+	        		$("#deleteResult").html("");	
+	        		
+	        		htmls +='<h5 style="font-family: \'yg-jalnan\'">일정</h5>';
+	        		
+		       		$(result).each(function(){	
+		       		
+		 	       	//일정 반복	
+		       			htmls +='<div class="row">'
+		       			htmls +='<div class="col-sm-3">일정사진</div>'
+		       			htmls +='<div class="col-sm-3">경로사진</div>'
+		      			htmls +='<div class="col-sm-6">'
+		      			htmls +='국가,도시'
+		       			htmls +='<br/>'
+		       			htmls += this.start_date +'&nbsp; ~ &nbsp;'+ this.end_date;
+		       			htmls +='<br/>'
+		       			htmls += '<span class="star-prototype">'+this.satisfaction+'</span>'
+		       			htmls +='<br/>'
+		       			htmls +='여행 후기'
+		       			htmls +='</div>'
+		       			htmls +='</div>'
+		       			htmls +='<br/>'
+		      		  	
+						
+		        		});//result end
+		
+		        		$("#deleteResult").append(htmls); 
+		        		
+		        		
+		        	
+		        	}//sucess end
+				});//ajax end
+			}//getList end
+		});//change
+	});//document function
+
+</script>
+
+<script>
+/* 다이어리 더 보기 */
+$(document).ready(function(){
+		$(".searchDiBtn").on('click',function(){
+		
+			console.log("searchDiBtn click function()");
+			
+			var keywordMore = $("#keywordMore").val();
+			console.log("keywordMore : "+ keywordMore);
+			
+			getList();
+			
+			function getList() {
+			var url = "${pageContext.request.contextPath}/searchDi";
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			console.log(url);
+			
+			$.ajax({
+				type: 'POST',
+				url: url,
+				cache : false,
+				data: {keywordMore : keywordMore},
+				dataType: 'json', 
+		 		beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+					console.log("header 실행 "+header+token)
+					xhr.setRequestHeader(header, token);
+				}, 
+				success: function(result) {					
+					
+					/* 검색 결과를 지우는 부분  */
+					$('#deleteResult').children().remove();
+		       	
+					var htmls="";
+					
+	        		$("#deleteResult").html("");	
+	        		
+	        		htmls +='<h5 style="font-family: \'yg-jalnan\'">다이어리</h5>';
+	        		htmls += '<br/>'
+			       	htmls += '<div class="row">'
+	        		
+		       		$(result).each(function(){	
+		       		
+		 	       	//다이어리 반복	
+		 	       			
+		       		htmls += '<div class="col-sm-3">'
+		       		htmls += '<img class="diary_img" src=\'resources/diary/'+ this.img_path +'\'/>'
+		       		htmls += '<div>'+this.hashtag+'</div>'
+		       		htmls += '<br/>'
+		       		htmls += '</div>'
+		       		
+
+						
+		        		});//result end
+		        		htmls += '</div>'
+				       		htmls += '<br/>'
+		        		$("#deleteResult").append(htmls); 
+		        	
+		        	}//sucess end
+				});//ajax end
+			}//getList end
+		});//change
+	});//document function
+
+</script>
+
+<script>
+
+
+$(document).ready(function(){
+	// 숫자 평점을 별로 변환하도록 호출하는 함수
+	$.fn.generateStars = function() {
+    return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
+};
+	$('.star-prototype').generateStars();
+	        
+});
+</script>
+
+<style>
+span.star-prototype, span.star-prototype > * {
+    height: 17px; 
+    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+    width: 80px;
+    display: inline-block;
+}
+ 
+span.star-prototype > * {
+    background-position: 0 0;
+    max-width:80px; 
+}
+
+</style>
 	
 </head>
 <body>
@@ -158,7 +334,7 @@
 	<!--Content -->
 	<!-- 달력 이미지는 container 안에 있어서는 아니되오! -->
 	<img id="calImg" src="resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
-	
+	<input id="keywordMore" type="hidden" value= "${keyword}"/>
 	<div class="container">
 		<!-- 검색 바 -->
 		<form action="${pageContext.request.contextPath}/search" method="post">
@@ -166,19 +342,25 @@
 			<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
 			<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
 			
-			<input class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
+			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
 			<button type="submit"><i class="fa fa-search"></i></button>
 		</form>	
 		
 		<hr/>
 		<!-- 검색 메뉴 -->	
 		<a style="font-family: 'yg-jalnan'">통합</a>&nbsp;&nbsp;
-		<a style="font-family: 'yg-jalnan'">일정</a>&nbsp;&nbsp;
-		<a style="font-family: 'yg-jalnan'">다이어리</a>
+		<a style="font-family: 'yg-jalnan'" class="searchPlBtn">일정</a>&nbsp;&nbsp;
+		<a style="font-family: 'yg-jalnan'" class="searchDiBtn">다이어리</a>
 		
 		<hr/>
+		
+		<!-- 여기는 전체적으로 지우는 부분> -->
+		<div id="deleteResult">
+		
+		<!-- 일정 반복하는 부분 -->
 		<!-- 일정 searchPl --> 
 		<h5 style="font-family: 'yg-jalnan'">일정</h5>
+		<br/>
 		<!-- 반복 -->
 		<c:forEach items="${searchPl}" var="pl"> 
 		<div class="row">
@@ -189,31 +371,39 @@
 			<br/>
 			${pl.start_date}&nbsp; ~ &nbsp;${pl.end_date}
 			<br/>
-			만족도 별
+			<span class="star-prototype">${pl.satisfaction}</span>
 			<br/>
 			여행 후기
 			</div>
 		</div>
 		<br/>
 		</c:forEach>
+		<!-- 반복 끝 -->
 		
-		<!-- 다이어리 searchDi -->
 		<br/>
-		<h5 style="font-family: 'yg-jalnan'">다이어리</h5>
+		<button type="button" class="searchPlBtn btn btn-outline-light text-dark btn-sm btn-block">더보기</button>
+		<hr/>
+		<!-- 다이어리 searchDi -->
 		
+		<h5 style="font-family: 'yg-jalnan'">다이어리</h5>
+		<br/>
 			<div class="row">
 				<c:forEach items="${searchDi}" var="di"> 
 					<div class="col-sm-3">
 						<img class="diary_img" src='resources/diary/${di.img_path}'/>
+						<div>${di.hashtag}</div>
+						<br/>
 					</div>
 				</c:forEach>
 			</div>
 		
-	
+		<br/>
+		<button type="button" class="searchDiBtn btn btn-outline-light text-dark btn-sm btn-block">더보기</button>
+		
+		</div>
+		<!-- 삭제 해야 하는 부분 div 끝 -->
 
-
-
-
+	<!-- 달력 모달 -->
 	<!-- Modal -->
 	<div class="modal" id="calModal" role="dialog">
 		<div class="modal-dialog">
@@ -223,8 +413,8 @@
 	<!-- 숨겨서 보내야 하는 정보들 -->
 		<input type="hidden" name="member_id" value="${member}"/>
 		<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
-		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
-				<div class="modalWrapper">
+		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>			
+			<div class="modalWrapper">
 				
 					<button type="button" class="close" data-dismiss="modal">&times;</button>  
                     <br>
@@ -255,6 +445,7 @@
 		</div>
 	</div><!-- 달력 모달 end -->
 	</div><!-- container end -->
+	
 	<!-- 달력 (아래 추가) -->
 	<script src="resources/calendar/datepicker/moment.min.js"></script>
 	<script src="resources/calendar/datepicker/daterangepicker.js"></script>

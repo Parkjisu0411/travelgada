@@ -189,24 +189,23 @@ thead {
 	}
 	//
 	//일정 순서 재정렬
-	function reOrder(obj) {
-		var size = $(obj).children("div").children(".order").size();
+	function reOrder(date) {
+		var size = $("#" + date + " .order").size();
 		for(var i = 0; i < size; i++) {
-			$(obj).children("div").children(".order").eq(i).html(i+1 + ". ");
+			$("#" + date + " .order").eq(i).html(i+1 + ". ");
 		}
 	}
 	
-	function reOrderDB(obj) {
-		var size = $(obj).children("div").children(".order").size();
+	function reOrderDB(date) {
+		var size = $("#" + date + " .order").size();
 		for(var i = 0; i < size; i++) {
 			var index = i + 1;
 			var data = {
 				schedule_order : index,
-				schedule_id : $(obj).children('div').children('.delete-btn').eq(i).attr('id'),
+				schedule_id : $("#" + date + " .schedule-area .delete-btn").eq(i).attr('id'),
 				budget : -1
 			};
-				
-			console.log(data);
+			
 			$.ajax({
 				type : "PUT",
 				url : "/planner/schedule",
@@ -263,12 +262,12 @@ thead {
 	function deleteSchedule(obj) {
 		console.log("delete");
 		
+		var date = $(obj).parent().parent().parent().attr("id");
 		var schedule = $(obj).parent();
-		var td = $(obj).parent().parent();
 		var budget = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total');
 		var now = $(obj).siblings('.budget').text().substr(1, $(obj).siblings('.budget').text().length-3);
 		var total = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total').text();
-		var schedule_type = td.attr('class');
+		var schedule_type = $(obj).parent().parent().attr('class');
 		if(!now) {
 			var next = total
 		} else {
@@ -284,11 +283,11 @@ thead {
 			},
 			success : function(result) {
 				console.log(result);
-				var size = td.children("div").children(".order").size();
 				schedule.remove();
 				budget.html(next);
-				if(schedule_type == 'schedule-area') {
-					reOrder(td);
+				if(schedule_type == 'schedule-area ui-sortable') {
+					reOrder(date);
+					reOrderDB(date);
 				}
 			},
 			error : function(e) {
@@ -612,9 +611,9 @@ thead {
 			placeholder: "ui-state-highlight",
 			handle: ".order-control",
 	        stop: function (event, ui) {
-	        	console.log(this);
-	        	reOrder(this);
-	        	reOrderDB(this);
+	        	var date = $(this).parent().attr("id");
+	        	reOrder(date);
+	        	reOrderDB(date);
 	        }
 		});
 		//
@@ -703,7 +702,7 @@ thead {
 				<tbody>
 					<c:forEach var="date" items="${dateList}">
 						<tr id="${date }">
-							<td style="font-family: yg-jalnan;">${date}</td>
+							<td style="font-family: yg-jalnan;" class="date-area">${date}</td>
 							<td class="country-area">
 								<c:forEach var="country" items="${countryList }">
 									<c:if test="${country.schedule_date eq date}">
@@ -778,7 +777,7 @@ thead {
 					</c:forEach>
 					<tr class="insert-date-area">
 						<td colspan="7">
-							<a>날짜 추가하기</a>
+							<a onclick="">날짜 추가하기</a>
 						</td>
 					</tr>
 				</tbody>

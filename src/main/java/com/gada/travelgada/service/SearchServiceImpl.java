@@ -32,4 +32,18 @@ public class SearchServiceImpl implements SearchService {
 		return mapper.getSearchDiary(keyword);
 	}
 
+	//일정 더보기
+	@Override
+	public List<PlannerVO> searchPlMore(String keyword) {
+		log.info("ServiceImpl searchPlMore()-일정 더보기");
+		return mapper.searchPlMore(keyword);
+	}
+	
+	//다이어리 더보기
+	@Override
+	public List<DiaryVO> searchDiMore(String keyword) {
+		log.info("ServiceImpl searchDiMore()-다이어리 더보기");
+		return mapper.searchDiMore(keyword);
+	}
+
 }
