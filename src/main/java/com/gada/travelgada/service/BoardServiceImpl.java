@@ -23,6 +23,11 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> getReviewBoard(int nowPage, int amount) {
 		return boardMapper.selectReviewBoard(nowPage, amount);
 	}
+	
+//	@Override
+//	public List<BoardVO> getReviewBoard(CriteriaVO cri) {
+//		return boardMapper.selectReviewBoard(cri);
+//	}
 
 	@Override
 	public int getTotalReviewBoard(CriteriaVO cri) {
@@ -48,36 +53,36 @@ public class BoardServiceImpl implements BoardService {
 	public int getTotalAccompanyBoard(CriteriaVO cri) {
 		return boardMapper.getTotalAccompanyBoard(cri);
 	}
-
+	
+	@Override
+	public BoardVO boardContentView(BoardVO boardVO) {
+		return boardMapper.boardContentView(boardVO);
+	}
+	
+	@Override
+	public MemberVO boardImgPath(MemberVO memberVO) {
+		return boardMapper.boardImgPath(memberVO);
+	}
+	
+	@Override
+	public List<BoardVO> getNotice() {
+		return boardMapper.getNotice();
+	}
+	
 //	@Override
-//	public BoardVO boardContentView(MemberVO memberVO) {
-//		return boardMapper.boardContentView(memberVO);
+//	public void writeBoard(BoardVO boardVO, String username) {
+//		boardMapper.writeBoard(boardVO, username);
 //	}
 	
-
-	@Override
-	public BoardVO boardContentView(int board_id, String member_id) {
-		return boardMapper.boardContentView(board_id, member_id);
-	}
-
-	
-	@Override
-	public List<BoardVO> getNotice(int nowPage, int amount) {
-		return boardMapper.getNotice(nowPage, amount);
-	}
-	
-	
-
-	
-	
-
-
-
 	@Override
 	public void writeBoard(BoardVO boardVO) {
 		boardMapper.writeBoard(boardVO);
 	}
 
+	
+	
+	
+	
 	@Override
 	public void modifyBoard(int board_id) {
 		// TODO Auto-generated method stub
@@ -89,6 +94,12 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	
+	
+	
+
 
 
 

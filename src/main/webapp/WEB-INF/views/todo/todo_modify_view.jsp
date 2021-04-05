@@ -17,8 +17,13 @@
  	
  	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	
+	<script type="text/javascript">
+	  var token = $("meta[name='_csrf']").attr("content");
+	  var header = $("meta[name='_csrf_header']").attr("content");
+	  $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+    </script>
+    
 <script type="text/javascript">
-
 $(document).ready(function(){
 	$("#submitBtn").on("click",function(){
 	

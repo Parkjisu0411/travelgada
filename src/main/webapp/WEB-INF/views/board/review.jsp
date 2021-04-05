@@ -31,6 +31,17 @@ html, body {
 }
 </style>
 
+	<script>
+		function check_id(){
+   	 		if('${userName}'==""){
+      	 		 alert("로그인이 필요한 서비스입니다");
+				 location.href="${pageContext.request.contextPath}/member/login";
+     		}else{
+    			 window.location.href="${pageContext.request.contextPath }/board";
+   			}
+   		}
+	</script>
+
 </head>
 <body>
 	<!-- Header -->
@@ -55,7 +66,9 @@ html, body {
 					<c:forEach items="${boardNoticeList }" var="boardNoticeList">
 						<tr>
 							<td>${boardNoticeList.board_id }</td>
-							<td>${boardNoticeList.title }</td>
+							<td>
+								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}&${boardNoticeList.member_id}" style="color:red;">${boardNoticeList.title }</a>
+							</td>
 							<td>${boardNoticeList.member_id }</td>
 							<td>${boardNoticeList.board_date }</td>
 							<td>${boardNoticeList.bhit }</td>
@@ -78,7 +91,7 @@ html, body {
 			</table>
 
 			<div>
-				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+				<button type="button" class="btn-default text-primary" onclick="check_id()" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
 			</div>
 
 			<ul class="pagination" style="padding:80px 500px;">	
@@ -92,7 +105,7 @@ html, body {
 	      
 	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 	         		<li class="page-item"><a class="page-link" href="review${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
-	      		</c:if> <br> 
+	      		</c:if> <br /> 
 		 	</ul>
 
 			<div style="padding:0 400px;">

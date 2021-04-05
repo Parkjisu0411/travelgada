@@ -4,6 +4,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<meta charset="UTF-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script
@@ -23,14 +26,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BOARD WRITE</title>
 
-<!-- include libraries(jQuery, bootstrap) -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
 
 <style>
 	html, body {
@@ -40,16 +39,13 @@
 		padding: 0;
 	}
 
-	thead, tbody{
-		text-align:left;
-	}
-
     #title {
-        width: 100%;
+        width: 900px;
         margin: 3px 0;
         outline: none;
         text-align: left;
-        border : none;
+        border-radius:0.2em;
+    	border:2px solid lightgrey;
     }
     
     .headline{
@@ -66,41 +62,62 @@
     	float:right;
     }
     
+    #bcategory{
+    	 border-radius:0.3em;
+    	 border:2px solid lightgrey;
+    	 width:195px;
+    	 height:38px;
+    	 margin:4px 0;
+    }
+    
+	#btitle{
+		float:right;
+	}
+
+    
 
 </style>
+	<script type="text/javascript">
+	  var token = $("meta[name='_csrf']").attr("content");
+	  var header = $("meta[name='_csrf_header']").attr("content");
+	  $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+    </script>
+    
+	<script>
+	$(function(){
+   	 $("#text").summernote({
+     	   placeholder: '내용을 입력하세요',
+      	  tabsize: 2,
+      	  height: 500
+   	 });
+	});
+	</script>
 
-<script>
-$(function(){
-    $("#description").summernote({
-        placeholder: '내용을 입력하세요',
-        tabsize: 2,
-        height: 500
-    });
-});
-</script>
+	<script>
+	function write_board(){
+   		var title=$("#title").val();
+   		var text=$("#text").val();
+    	//var member_id=$("#member_id").val();
+    	var board_type_id=$("#bcategory").val();
+   	 if(title==""){ //빈값이면
+       	 alert("제목을 입력하세요"); 
+       	 $("#title").focus(); //입력포커스 이동
+       	 return; //함수 종료, 폼 데이터를 제출하지 않음
+     }
+     if(text==""){
+         alert("내용을 입력하세요");
+         $("#text").focus();
+         return;
+     }
+   	 	//폼 데이터를 받을 주소
+    	//document.write.action="${pageContext.request.contextPath}/board?${_csrf.parameterName}=${_csrf.token}";
+    	//폼 데이터를 서버에 전송
+    	//document.write.submit();
+     	$("#write").submit();
+	}
+	</script>
+	
 
-<script>
-function write_board(){
-    var title=$("#title").val();
-    var description=$("#description").val();
-    var member_id=$("#member_id").val();
-    var board_type_id=$("#board_type_id").val();
-    if(title==""){ //빈값이면
-        alert("제목을 입력하세요"); 
-        $("#title").focus(); //입력포커스 이동
-        return; //함수 종료, 폼 데이터를 제출하지 않음
-    }
-    if(description==""){
-        alert("내용을 입력하세요");
-        $("#description").focus();
-        return;
-    }
-    //폼 데이터를 받을 주소
-    document.write.action="${pageContext.request.contextPath}/board";
-    //폼 데이터를 서버에 전송
-    document.write.submit();
-}
-</script>
 
 
 
@@ -113,30 +130,29 @@ function write_board(){
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline">글 작성</h2>
-				<form name="write" method="post" enctype="multipart/form-data">
+			
+				<form id="write" name="write" method="post" action="${pageContext.request.contextPath}/board?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 				<%-- <input type="hidden" id="member_id" name="member_id" value="${bWriteView.member_id }"/>
 				<input type="hidden" id="board_type_id" name="board_type_id" value="${bWriteView.board_type_id }"/> --%>
-					<table class="table">
-					<thead>
-						<tr>
-							<td><h3><input id="title" name="title" placeholder="제목" style="font-family: 'yg-jalnan'"/></h3></td>
-						</tr>				
-					</thead>
+				<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
+				<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
+					<span><select id="bcategory" name="board_type_id">
+						<option value="1">review</option>
+						<option value="2">Q&A</option>
+						<option value="3">동행</option>
+					</select></span>
 					
-					<tbody>
-						<tr>
-							<td><textarea rows="5" cols="60" name="description" id="description"></textarea></td>
-						</tr>
-					</tbody>
-					</table>
-				</form>
-			
-				<p>첨부파일</p>
-				<input type="button" class="btn-default text-primary" value="완료" onclick="javascript:write_board()" >
-				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/review'">목록</button>
+					<span id="btitle"><h3><input id="title" name="title" placeholder="제목을 입력하세요" /></h3></span>
+					<br /><br />
+					<textarea rows="5" cols="60" id="text" name="text"></textarea>
 				
 			
-
+				<p>첨부파일</p>
+				
+				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/review'">목록</button>
+				<input type="button" id="submitBtn" class="btn-default text-primary" value="완료" onclick="write_board()" />
+				</form>
+			
 		</div>
 	</div>
 	<!-- Footer -->

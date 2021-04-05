@@ -89,7 +89,7 @@
 	
 	<select id="getAccompanyBoard" resultMap="BoardMap">
 		<![CDATA[
-			select B3.* FROM( SELECT * FROM board where board_type_id = 3 order by bgroup desc, bstep asc ) B3 LIMIT #{nowPage}, #{amount} 		
+			select B3.* FROM( SELECT * FROM board where board_type_id = 3 order by bgroup desc, bstep asc, board_date desc ) B3 LIMIT #{nowPage}, #{amount} 		
 		]]>
 	</select>
 
@@ -103,19 +103,29 @@
 	<select id="getNotice" resultMap="BoardMap">
 		<![CDATA[
 			 		
-			select * from (select * from board where board_type_id = 4) a order by a.board_id desc LIMIT #{nowPage}, #{amount}
+			select * from (select * from board where board_type_id = 4) a order by a.board_id desc
 		]]>
 	</select>
-	
-	<!-- select board.board_id, board.title, board.text, board.board_date, board.bhit, board.bgroup, board.bstep, board.bindent, board.board_type_id, board.member_id, member.profile_img_path  from member, board where board.board_id = #{board_id} and member.member_id = #{member_id} -->
-	<!-- select * from board where board_id = #{board_id} -->
-	<select id="boardContentView" resultMap="MemberMap">
+
+	<select id="boardContentView" resultMap="BoardMap">
 		<![CDATA[
 			
 			select * from board where board_id = #{board_id}
 		]]>
 	</select>
 			
-
+	<select id="boardImgPath" resultMap="MemberMap">
+		<![CDATA[
+			
+			select * from member where member_id = #{member_id}
+		]]>
+	</select>
+	
+	<insert id="writeBoard"> 
+		<![CDATA[ 
+			insert into board (board_id, title, text, board_date, bgroup, bstep, bindent, board_type_id, member_id)
+			values (get_seq('board_seq'), #{title}, #{text}, sysdate(), 0, 0, 0, #{board_type_id}, #{username})
+		]]> 
+	</insert> 
 
 </mapper>

@@ -51,12 +51,24 @@ html, body {
 				</thead>
 
 				<tbody>
+					<c:forEach items="${boardNoticeList }" var="boardNoticeList">
+						<tr>
+							<td>${boardNoticeList.board_id }</td>
+							<td>
+								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}&${boardNoticeList.member_id}" style="color:red;">${boardNoticeList.title }</a>
+							</td>
+							<td>${boardNoticeList.member_id }</td>
+							<td>${boardNoticeList.board_date }</td>
+							<td>${boardNoticeList.bhit }</td>
+						</tr>
+					</c:forEach>				
+				
 					<c:forEach items="${boardQnAList }" var="boardQnAList">
 					<tr>
 						<td>${boardQnAList.board_id }</td>
 						<td>
 							<c:forEach begin="1" end="${boardQnAList.bindent }">[답변]</c:forEach>
-							<a href="${pageContext.request.contextPath }/board/${boardQnAList.board_id}">${boardQnAList.title }</a>
+							<a href="${pageContext.request.contextPath }/board/${boardQnAList.board_id}&${boardQnAList.member_id}">${boardQnAList.title }</a>
 						</td>
 						<td>${boardQnAList.member_id }</td>
 						<td>${boardQnAList.board_date }</td>

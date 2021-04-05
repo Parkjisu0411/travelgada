@@ -23,16 +23,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BOARD CONTENT</title>
 <style>
-html, body {
-	width: 100%;
-	height: 100%;
-	margins: 0;
-	padding: 0;
-}
+	html, body {
+		width: 100%;
+		height: 100%;
+		margins: 0;
+		padding: 0;
+	}
 
-thead, tbody{
-	text-align:left;
-}
+	thead, tbody{
+		text-align:left;
+	}
+
+    .btn-default{
+    	border-radius:0.2em;
+    	border:none;
+    	float:right;
+    }
+    
+    tbody{
+    	text-align:center;
+    }
 
 </style>
 </head>
@@ -49,9 +59,9 @@ thead, tbody{
 						<tr>
 							<th><br/>
 								<h3  style="font-family: 'yg-jalnan'; font_weight:lighter;">${bContentView.title }</h3><br/>
+								<img class="nav-profile-img" src='resources/img/profile/${bImgPath.profile_img_path }'>&nbsp;
 								${bContentView.member_id }&nbsp;&nbsp;&nbsp;
 								${bContentView.board_date }
-							    <%-- ${bContentView.profile_img_path } --%>
 								</th>
 						</tr>						
 					</thead>
@@ -63,10 +73,11 @@ thead, tbody{
 					</tbody>
 				</table>
 
-			<div>
-				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
-			</div>
+				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" >수정</button>
+			    <button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/review'" >목록</button>
 
+			<div>답변</div>
+			
 				<div style="padding:0 400px;">
 				<form class="form-inline">
 					<select style="border-radius:0.2em; border:2px solid black;">

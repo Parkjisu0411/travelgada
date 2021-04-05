@@ -10,6 +10,7 @@ import com.gada.travelgada.domain.MemberVO;
 public interface BoardService {
 
 	public List<BoardVO> getReviewBoard(int nowPage, int amount);
+	//public List<BoardVO> getReviewBoard(CriteriaVO cri);
 	
 	public int getTotalReviewBoard(CriteriaVO cri);
 	
@@ -21,20 +22,28 @@ public interface BoardService {
 	
 	public int getTotalAccompanyBoard(CriteriaVO cri);
 	
-	//public BoardVO boardContentView(MemberVO memberVO);
+	//public BoardVO boardContentView(MemberVO memberVO);'
 	
-	public BoardVO boardContentView(int board_id, String member_id);
+	public BoardVO boardContentView(BoardVO boardVO);
+	
+	//public BoardVO boardContentView(int board_id, String member_id);
 
-	public List<BoardVO> getNotice(int nowPage, int amount);
-	
+	public List<BoardVO> getNotice();
 	
 	public void writeBoard(BoardVO boardVO);
-	
+	//public void writeBoard(BoardVO boardVO, String username);
 	
 	
 	public void modifyBoard(int board_id);
 	
 	public void deleteBoard(int board_id);
+
+	
+	
+	
+	public MemberVO boardImgPath(MemberVO memberVO);
+
+	
 
 
 
