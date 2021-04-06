@@ -53,7 +53,7 @@ public class ShoppingServiceImpl {
 	
 	public List<ProductVO> getProductByTypeWithSortingAndPaging(int product_type_id, String sorter, int page) {
 		String order = null;
-		page = page * 12;
+		page = page * 9;
 		switch(sorter) {
 			case("salePriceAsc") :
 				order = "price asc";

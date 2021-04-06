@@ -68,12 +68,14 @@ html, body {
 		var product_id_arr = [];
 		var quantity_arr = [];
 		var price_arr = [];
+		var name_arr = [];
 		
 		$("input:checkbox[name=select-product]").each(function() {
 			if($(this).is(":checked")) {
 				var product_id = $(this).parent().parent().parent().attr("id");
 				var quantity = $("#" + product_id + " .quantity").val();
 				var price = $("#" + product_id + " .price").text();
+				var product_name = $("#" + product_id + " .product_name").text();
 				
 				product_id_arr.push(product_id);
 				quantity_arr.push(quantity);
@@ -122,7 +124,6 @@ html, body {
 			var product_id = $(this).parent().parent().parent().parent().attr("id");
 			var price = $("#" + product_id + " .price").text();
 			var quantity = $("#" + product_id + " .quantity").val();
-			var mulPrice = price * quantity;
 			$("#" + product_id + " .mul-price").html(mulPrice);
 		})
 		//
@@ -183,23 +184,23 @@ html, body {
 			</thead>
 			<tbody>
 				<c:forEach var="product" items="${cart }">
-					<tr id="${product.product_id }" class="product">
+					<tr id="${product.key.product_id }" class="product">
 						<td>
 							<label>
-								<input type="checkbox" class="select-product" name="select-product" value="${product.price }" />
+								<input type="checkbox" class="select-product" name="select-product" value="${product.key.price }" />
 							</label>
 						</td>
 						<td>
-							<img class="rounded product-img" src="/resources/img/product/${product.img_path }">
+							<img class="rounded product-img" src="/resources/img/product/${product.key.img_path }">
 						</td>
 						<td class="product-status">
 							<div>
-								<p class="product_name">${product.product_name }</p>
-								<p class="price">${product.price }</p>
+								<p class="product_name">${product.key.product_name }</p>
+								<p class="price">${product.key.price }</p>
 							</div>
 							<span>
 								<label>
-									<input type="number" name="quantity" class="quantity" min="1" value="1"/>
+									<input type="number" name="quantity" class="quantity" min="1" value="${product.value }"/>
 								</label>
 							</span>
 						</td>
