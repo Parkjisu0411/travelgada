@@ -59,7 +59,7 @@
 						<tr>
 							<th><br/>
 								<h3  style="font-family: 'yg-jalnan'; font_weight:lighter;">${bContentView.title }</h3><br/>
-								<img class="nav-profile-img" src='resources/img/profile/${bImgPath.profile_img_path }'>&nbsp;
+								<img class="nav-profile-img" src='resources/img/profile/${bImgPath.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">&nbsp;
 								${bContentView.member_id }&nbsp;&nbsp;&nbsp;
 								${bContentView.board_date }
 								</th>

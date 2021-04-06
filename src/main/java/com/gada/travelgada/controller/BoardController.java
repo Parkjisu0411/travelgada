@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -46,7 +47,7 @@ public class BoardController {
 		//modelAndView.addObject("boardNoticeList", boardService.getNotice(cri.getNowPage(), cri.getAmount()));
 		modelAndView.addObject("boardReviewList", boardService.getReviewBoard(nowPage, cri.getAmount()));
 		modelAndView.addObject("boardNoticeList", boardService.getNotice());
-		modelAndView.addObject("userName", member.getUsername());
+		//modelAndView.addObject("userName", member.getUsername());
 		
 		int total = boardService.getTotalReviewBoard(cri);
 		log.info("total" + total);
@@ -125,13 +126,13 @@ public class BoardController {
 	
 	
 	@PostMapping("/board")
-	public ModelAndView writeBoard(ModelAndView modelAndView, BoardVO boardVO, @AuthenticationPrincipal MemberDetails member) {
+	public ModelAndView writeBoard(ModelAndView modelAndView, BoardVO boardVO, @RequestParam ("username") String username) {
 		
 		log.info("boardWrite");
-		//log.info(member.getUsername());
 		
+		boardVO.setMember_id(username);
+				
 		try {
-			//boardService.writeBoard(boardVO, member.getUsername());
 			boardService.writeBoard(boardVO);
 			modelAndView.setViewName("/board/review");
 		}catch(Exception e){
