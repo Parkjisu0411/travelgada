@@ -30,6 +30,13 @@ html, body {
 	padding: 0;
 }
 </style>
+
+	<script>
+		function check_id(){
+      	 	alert("로그인이 필요한 서비스입니다");
+			location.href="${pageContext.request.contextPath}/member/login";
+   		}
+	</script>
 </head>
 <body>
 	<!-- Header -->
@@ -80,8 +87,14 @@ html, body {
 
 			</table>
 			
-			<div>
-				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+			<div>	
+			<sec:authorize access="isAnonymous()">
+  				<button type="button" class="btn-default text-primary" onclick="check_id()" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+			</sec:authorize>
+
+			<sec:authorize access="isAuthenticated()">
+  				 <button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+			</sec:authorize>	
 			</div>
 
 			<ul class="pagination" style="padding:80px 500px;">	

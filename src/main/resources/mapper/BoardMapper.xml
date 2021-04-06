@@ -65,7 +65,7 @@
 	
 	<select id="selectReviewBoard" resultMap="BoardMap">
 		<![CDATA[
-			select B1.* FROM( SELECT * FROM board where board_type_id = 1 order by bgroup desc, bstep asc ) B1 LIMIT #{nowPage}, #{amount} 	
+			select B1.* FROM( SELECT * FROM board where board_type_id = 1 order by bgroup desc, bstep asc ) B1 LIMIT #{nowPage}, #{amount}
 		]]>
 	</select>
 
@@ -113,6 +113,12 @@
 			select * from board where board_id = #{board_id}
 		]]>
 	</select>
+	
+	<update id="addHit">
+		<![CDATA[
+			update board set bhit = bhit + 1 where board_id = #{board_id}
+		]]>
+	</update>
 			
 	<select id="boardImgPath" resultMap="MemberMap">
 		<![CDATA[
@@ -123,8 +129,8 @@
 	
 	<insert id="writeBoard"> 
 		<![CDATA[ 
-			insert into board (board_id, title, text, board_date, bgroup, bstep, bindent, board_type_id, member_id)
-			values (get_seq('board_seq'), #{title}, #{text}, sysdate(), 0, 0, 0, #{board_type_id}, #{username})
+			insert into board (board_id, title, text, board_date, bhit, bgroup, bstep, bindent, board_type_id, member_id)
+			values (get_seq('board_seq'), #{title}, #{text}, sysdate(), 0, get_seq('bgroup_seq'), 0, 0, #{board_type_id}, #{member_id})
 		]]> 
 	</insert> 
 

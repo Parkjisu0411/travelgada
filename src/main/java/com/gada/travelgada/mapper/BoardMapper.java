@@ -3,6 +3,8 @@ package com.gada.travelgada.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
@@ -30,10 +32,12 @@ public interface BoardMapper {
 
 	public MemberVO boardImgPath(MemberVO memberVO);
 	
+	
+
+	public void addHit(BoardVO boardVO);
+
+	//public void writeBoard(BoardVO boardVO, @Param("username") String username);
 	public void writeBoard(BoardVO boardVO);
-
-	//public void writeBoard(BoardVO boardVO, String username);
-
 
 	
 }

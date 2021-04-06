@@ -72,6 +72,9 @@
     
 	#btitle{
 		float:right;
+		font-family: 'yg-jalnan';
+		font-size:19px;
+
 	}
 
     
@@ -136,13 +139,14 @@
 				<input type="hidden" id="board_type_id" name="board_type_id" value="${bWriteView.board_type_id }"/> --%>
 				<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
 				<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
+				<input type="hidden" id="username" name="username" value="<sec:authentication property="principal.username"/>"/>
 					<span><select id="bcategory" name="board_type_id">
 						<option value="1">review</option>
 						<option value="2">Q&A</option>
 						<option value="3">동행</option>
 					</select></span>
 					
-					<span id="btitle"><h3><input id="title" name="title" placeholder="제목을 입력하세요" /></h3></span>
+					<span id="btitle"><input id="title" name="title" placeholder="제목을 입력하세요" style="height:37px; margin:4px 0;"/></span>
 					<br /><br />
 					<textarea rows="5" cols="60" id="text" name="text"></textarea>
 				

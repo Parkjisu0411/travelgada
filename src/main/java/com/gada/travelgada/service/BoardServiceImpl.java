@@ -56,6 +56,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public BoardVO boardContentView(BoardVO boardVO) {
+		boardMapper.addHit(boardVO);
 		return boardMapper.boardContentView(boardVO);
 	}
 	
