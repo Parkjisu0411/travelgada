@@ -76,6 +76,7 @@
 							onerror="this.src='/resources/img/profile/default_profile_img.jpg'"></a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/member/mypage">회원정보</a>
+							<a class="dropdown-item" href="/shopping/buy_list">주문내역</a>
 							<a class="dropdown-item" href="/shopping/cart">장바구니</a>
 							<div class="dropdown-divider"></div>
 							<form id="logout" action="/member/logout" method="POST">

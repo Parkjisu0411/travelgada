@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gada.travelgada.domain.BuyDetailVO;
+import com.gada.travelgada.domain.BuyVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.service.ShoppingServiceImpl;
@@ -49,6 +50,7 @@ public class ShoppingController {
 	@GetMapping("/shopping/{product_id}")
 	public ModelAndView productView(ModelAndView modelAndView, ProductVO productVO) {
 		modelAndView.addObject("product", shoppingService.getProduct(productVO.getProduct_id()));
+		modelAndView.setViewName("/shopping/product");
 		return modelAndView;
 	}
 	
@@ -56,7 +58,7 @@ public class ShoppingController {
 	public ModelAndView memberCart(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
 		Map<Integer, Integer> cart = memberDetails.getCart(); 
 		Set<Integer> idSet = cart.keySet();
-		Map<ProductVO, Integer> productCart = new HashMap();
+		Map<ProductVO, Integer> productCart = new HashMap<>();
 		for(Integer id : idSet) {
 			productCart.put(shoppingService.getProduct(id), cart.get(id));
 		}
@@ -67,10 +69,10 @@ public class ShoppingController {
 	}
 	
 	@PostMapping("/shopping/cart")
-	public ResponseEntity<String> insertIntoCart(@RequestBody ProductVO productVO, @AuthenticationPrincipal MemberDetails memberDetails) {
+	public ResponseEntity<String> insertIntoCart(@RequestBody BuyDetailVO buyDetailVO, @AuthenticationPrincipal MemberDetails memberDetails) {
 		ResponseEntity<String> entity = null;
 		try {
-			memberDetails.insertIntoCart(shoppingService.getProduct(productVO.getProduct_id()));
+			memberDetails.insertIntoCart(shoppingService.getProduct(buyDetailVO.getProduct_id()), buyDetailVO.getQuantity());
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -104,6 +106,19 @@ public class ShoppingController {
 		modelAndView.addObject("buyDetailList", buyList);
 		modelAndView.setViewName("/shopping/order");
 		
+		return modelAndView;
+	}
+	
+	@GetMapping("/shopping/buy_list")
+	public ModelAndView buyList(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
+		List<BuyVO> buyList = shoppingService.getBuyList(memberDetails.getUsername());
+		Map<String, List<BuyDetailVO>> buyDetailMap = new HashMap<>();
+		for(BuyVO vo : buyList) {
+			buyDetailMap.put(vo.getBuy_id(), shoppingService.getBuyDetailList(vo.getBuy_id()));
+		}
+		modelAndView.addObject("buyList", buyList);
+		modelAndView.addObject("buyDetailMap", buyDetailMap);
+		modelAndView.setViewName("/shopping/buy_list");
 		return modelAndView;
 	}
 }

@@ -18,7 +18,7 @@ public class BuyVO {
 	
 	private String buy_id;
 	private Date buy_date;
-	private int waybill_num;
+	private String waybill_num;
 	private String member_id;
 	private String shipping_loc_name;
 	private List<BuyDetailVO> details;

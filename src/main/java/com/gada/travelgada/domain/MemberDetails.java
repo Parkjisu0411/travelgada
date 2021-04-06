@@ -22,12 +22,12 @@ public class MemberDetails implements UserDetails, OAuth2User{
 		return cart;
 	}
 	
-	public void insertIntoCart(ProductVO product) {
+	public void insertIntoCart(ProductVO product, int quantity) {
 		int product_id = product.getProduct_id();
 		if(cart.get(product_id) == null) {
-			cart.put(product_id, 1);
+			cart.put(product_id, quantity);
 		} else {
-			cart.put(product_id, cart.get(product_id) + 1);
+			cart.put(product_id, cart.get(product_id) + quantity);
 		}
 	} 
 	

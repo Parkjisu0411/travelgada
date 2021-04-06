@@ -67,6 +67,11 @@
 	}
 </style>
 <script>
+	//제품 상세 페이지로 이동
+	function viewDetail(product_id) {
+		location.href = "/shopping/" + product_id;
+	}
+	//
 	//url parsing 
 	$.urlParam = function(name){
 		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -130,7 +135,7 @@
 						var content = "";
 						content += "<div class='col-md-4'>";
 						content += "<div class='product-area'>";
-						content += "<div class='product-detail-area'>";
+						content += "<div class='product-detail-area' onclick='viewDetail(" + result[i].product_id + ")'>";
 						content += "<div class='product-img-area'><img class='rounded' src='/resources/img/product/" + result[i].img_path  + "'></div>";
 						content += "<div class='product-info-aread'>";
 						content += "<strong>" + result[i].product_name + "</strong>";
@@ -180,7 +185,7 @@
 			<c:forEach var="product" items="${productList }">
 				<div class="col-md-4">
 					<div class="product-area">
-						<div class="product-detail-area">
+						<div class="product-detail-area" onclick="viewDetail(${product.product_id})">
 							<div class="product-img-area"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
 							<div class="product-info-area">
 								<strong>${product.product_name }</strong>
@@ -188,7 +193,7 @@
 							</div>
 						</div>
 						<div class="product-btn-area">
-							<button type="button" class="btn btn-primary" onclick="insertIntoCart(${product.product_id})">장바구니담기</button>
+							<button type="button" class="btn btn-primary" onclick="insertIntoCart(${product.product_id})">장바구니</button>
 							<button type="button" class="btn btn-primary">바로구매</button>
 						</div>
 					</div>
