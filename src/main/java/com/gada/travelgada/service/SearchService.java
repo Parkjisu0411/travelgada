@@ -19,19 +19,4 @@ public interface SearchService {
 	//다이어리 더보기
 	public List<DiaryVO> searchDiMore(String keyword, String sorter);
 	
-	
-	
-	/*
-	 * public List<PlannerVO> getSearchPlanner(String keyword);
-	 * 
-	 * 
-	 * 
-	 * public List<PlannerVO> searchPlMore(String keyword);
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * public List<DiaryVO> getSearchDi(String keyword, String sorter);
-	 */
 }

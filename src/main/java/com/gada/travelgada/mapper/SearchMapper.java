@@ -19,20 +19,9 @@ public interface SearchMapper {
 	public List<DiaryVO> searchDi(String keyword);
 	
 	//일정 더보기
-	public List<PlannerVO> searchPlMore(@Param("keyword") String keyword,@Param("order") String order);
+	public List<PlannerVO> searchPlMore(String keyword,String order);
 	
 	//다이어리 더보기
-	public List<DiaryVO> searchDiMore(@Param("keyword") String keyword,@Param("order") String order);
-	
-	
-	
-//	public List<PlannerVO> getSearchPlanner(String keyword);
-//	
-//	public List<PlannerVO> searchPlMore(String keyword);
-	
-	
-	
-	
-	
+	public List<DiaryVO> searchDiMore(String keyword,String order);
 	
 }

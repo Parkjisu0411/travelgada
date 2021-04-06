@@ -198,7 +198,61 @@ span.star-prototype > * {
 
 </style>
 
+<!-- <script>
+/* 해시태그 & 링크 */
+	$(document).ready(function(){
+    var content = $(".text").val();
+    var splitedArray = content.split(' ');
+    var linkedContent = '';
+    var array = content.split('#');
+    for(var word in splitedArray)
+    {
+      word = splitedArray[word];
+       if(word.indexOf('#') == 0)
+       { var word2 = word.substr(1);
+          word = '<a href='+word2+'>'+word+'</a>';
+       }
+       linkedContent += word+' ';
+    }
+    
+    $(".result").append(linkedContent); 
+	});
+</script> -->
 
+<script>
+/* 해시태그 & 링크 */
+	$(document).ready(function(){
+			
+		var content; //내용
+		var splitedArray; //배열
+		var linkedContent; //주소
+		
+		//jstl
+	    <c:forEach items="${diMore}" var="di"> 
+    		
+    	    content = "${di.hashtag}";
+    	    splitedArray = content.split('#');//#으로 구분
+    	    console.log(splitedArray);
+    	    linkedContent = '';
+    	    splitedArray.shift();//첫번째 지워주는 함수
+
+    	    for(var word in splitedArray){
+    	      word = splitedArray[word];
+    	       if(word.indexOf("") == 0)
+    	       { var word2 = "#"+word;
+    	          word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+    	          console.log(word);
+    	          console.log(word2);
+    	       }
+    	       linkedContent += word+' ';
+    	    }
+    	    
+    	    $("#${di.diary_id}").append(linkedContent);
+    	</c:forEach>
+
+	});
+/* 해시태그 & 링크 끝 */
+</script>
 	
 </head>
 <body>
@@ -230,7 +284,6 @@ span.star-prototype > * {
 		<span class="dropdown">
 			<span class="dropdown-toggle" data-toggle="dropdown">정렬 ↓ </span>
 				<span class="dropdown-menu">
-     		 		<a class="dropdown-item" href="#">관련도순</a>
     	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">최신순</a>
     			</span>		
 		</span>
@@ -251,7 +304,7 @@ span.star-prototype > * {
 				<c:forEach items="${diMore}" var="di"> 
 					<div class="col-sm-3">
 						<img class="diary_img" src='resources/diary/${di.img_path}' data-toggle="modal" data-target="#myModal${di.diary_id}"/>
-						<div>${di.hashtag}</div>
+						<span id= "${di.diary_id}"></span>
 						<br/>
 					</div><!-- 다이어리 끝 -->
 					
