@@ -84,8 +84,10 @@
 	//카트에 담기
 	function insertIntoCart(product_id) {
 		var data = {
-				product_id : product_id
+				product_id : product_id,
+				quantity : 1
 		};
+		console.log(data);
 		$.ajax({
 			type : "POST",
 			url : "/shopping/cart",
@@ -170,13 +172,13 @@
 	<div class="container">
 	
 		<!-- headline -->
-		<h2 style="font-family: 'yg-jalnan'">캐리어</h2>
+		<h2 style="font-family: 'yg-jalnan'">백팩</h2>
 		
 		
-		<a href="/shopping?product_type_id=2&sorter=salePriceAsc">낮은가격순</a>
-		<a href="/shopping?product_type_id=2&sorter=salePriceDesc">높은가격순</a>
+		<a href="/shopping?product_type_id=1&sorter=salePriceAsc">낮은가격순</a>
+		<a href="/shopping?product_type_id=1&sorter=salePriceDesc">높은가격순</a>
 		<a href="#">판매량순</a>
-		<a href="/shopping?product_type_id=2&sorter=latestAsc">최신순</a>
+		<a href="/shopping?product_type_id=1&sorter=latestAsc">최신순</a>
 		
 		<hr />
 		<div class="divider-header-blank"></div>

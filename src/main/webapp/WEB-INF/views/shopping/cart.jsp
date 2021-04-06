@@ -45,8 +45,39 @@ html, body {
 	vertical-align: middle;
 	margin-right: auto;
 }
+
+.delete-btn-area {
+	float: right;
+}
 </style>
 <script type="text/javascript">
+	//삭제
+	function remove(product_id) {
+		var data = {
+			product_id : product_id
+		}
+		$.ajax({
+			type : "DELETE",
+			url : "/shopping/cart",
+			data : JSON.stringify(data),
+			contentType : "application/json",
+			cache : false,
+			beforeSend : function(xhr){
+  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(result) {
+				if(result == "SUCCESS") {
+					$("#" + product_id).remove();
+					getTotal();
+				}
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
+			}
+		});
+	}
+	//
 	//선택된 상품 금액 총 합 구하기
 	function getTotal() {
 		var totalPrice = 0
@@ -72,14 +103,15 @@ html, body {
 		
 		$("input:checkbox[name=select-product]").each(function() {
 			if($(this).is(":checked")) {
-				var product_id = $(this).parent().parent().parent().attr("id");
-				var quantity = $("#" + product_id + " .quantity").val();
-				var price = $("#" + product_id + " .price").text();
-				var product_name = $("#" + product_id + " .product_name").text();
-				
-				product_id_arr.push(product_id);
-				quantity_arr.push(quantity);
-				price_arr.push(price);
+	            var product_id = $(this).parent().parent().parent().attr("id");
+	            var quantity = $("#" + product_id + " .quantity").val();
+	            var price = $("#" + product_id + " .price").text();
+	            var product_name = $("#" + product_id + " .product_name").text();
+	            
+	            product_id_arr.push(product_id);
+	            quantity_arr.push(quantity);
+	            price_arr.push(price);
+	            name_arr.push(product_name);
 			};
 		});
 		if(!product_id_arr.length) {
@@ -101,9 +133,14 @@ html, body {
 		inputPrice.setAttribute("name", "price");
 		inputPrice.setAttribute("value", price_arr);
 		
+		var inputName = document.createElement("input");
+		inputName.setAttribute("name", "product_name");
+		inputName.setAttribute("value", name_arr);
+		
 		form.appendChild(inputId);
 		form.appendChild(inputQuantity);
 		form.appendChild(inputPrice);
+		form.appendChild(inputName);
 		
 		document.body.appendChild(form);
 		form.submit();
@@ -124,6 +161,7 @@ html, body {
 			var product_id = $(this).parent().parent().parent().parent().attr("id");
 			var price = $("#" + product_id + " .price").text();
 			var quantity = $("#" + product_id + " .quantity").val();
+			var mulPrice = price * quantity;
 			$("#" + product_id + " .mul-price").html(mulPrice);
 		})
 		//
@@ -203,6 +241,7 @@ html, body {
 									<input type="number" name="quantity" class="quantity" min="1" value="${product.value }"/>
 								</label>
 							</span>
+							<div class="delete-btn-area"><button class="btn btn-secondary delete-btn" onclick="remove(${product.key.product_id})">삭제</button></div>
 						</td>
 						<td>
 							<p class="mul-price"></p>

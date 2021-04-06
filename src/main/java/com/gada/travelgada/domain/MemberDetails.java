@@ -22,8 +22,11 @@ public class MemberDetails implements UserDetails, OAuth2User{
 		return cart;
 	}
 	
-	public void insertIntoCart(ProductVO product, int quantity) {
-		int product_id = product.getProduct_id();
+	public void deleteFromCart(int product_id) {
+		cart.remove(product_id);
+	}
+	
+	public void insertIntoCart(int product_id, int quantity) {
 		if(cart.get(product_id) == null) {
 			cart.put(product_id, quantity);
 		} else {
