@@ -49,9 +49,25 @@ html, body {
 .delete-btn-area {
 	float: right;
 }
+
+.cart-empty {
+	text-align: center;
+	height: 100px;
+	line-height: 100px;
+	color: gray;
+}
 </style>
 <script type="text/javascript">
 	//삭제
+	function removeSelected() {
+		$("input:checkbox[name=select-product]").each(function() {
+			if($(this).is(":checked")) {
+				var product_id = $(this).parent().parent().parent().attr("id");
+				remove(product_id);
+			}
+		})
+	}
+	
 	function remove(product_id) {
 		var data = {
 			product_id : product_id
@@ -191,6 +207,19 @@ html, body {
 			getTotal();
 		})
 		//
+		$(".select-product").prop("checked", true);
+		getTotal();
+		
+		if($("tbody").children("tr").length == 1) {
+			console.log("장바구니가 비어있습니다.")
+			var content = ""
+			content += "<tr>";
+			content += "<td colspan='4'>";
+			content += "<p class='cart-empty'>장바구니가 비어있습니다.</p";
+			content += "</td>";
+			content += "</tr>";
+			$("tbody").children("tr").before(content);
+		}
 	})
 	
 </script>
@@ -250,6 +279,7 @@ html, body {
 				</c:forEach>
 				<tr>
 					<td colspan="3">
+						<button class="btn btn-secondary delete-btn-selected" onclick="removeSelected()" >선택삭제</button>
 					</td>
 					<td>
 						<span>총 상품가격</span>
@@ -258,7 +288,7 @@ html, body {
 				</tr>
 			</tbody>
 		</table>
-		<button type="button" class="btn btn-lg btn-primary" onclick="buy()">구매하기</button>
+		<button type="button" class="btn btn-lg btn-primary" onclick="buy()">주문하기</button>
 		<hr />
 	</div>
 	<!-- Footer -->
