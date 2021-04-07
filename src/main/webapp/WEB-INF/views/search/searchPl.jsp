@@ -226,6 +226,8 @@ span.star-prototype > * {
 			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
 			<button type="submit"><i class="fa fa-search"></i></button>
 		</form>	
+		<br/>
+		<h6>" ${keyword} " 에 관한 검색입니다.</h6>
 		<hr/>	
 		
 		<!-- 검색 메뉴 -->	

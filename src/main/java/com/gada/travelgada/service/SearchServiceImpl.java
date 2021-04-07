@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.gada.travelgada.domain.DiaryVO;
+import com.gada.travelgada.domain.MemberVO;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.mapper.SearchMapper;
 
@@ -29,7 +30,7 @@ public class SearchServiceImpl implements SearchService {
 	
 	//통합 검색 다이어리 부분
 	@Override
-	public List<DiaryVO> searchDi(String keyword) {
+	public List<MemberVO> searchDi(String keyword) {
 		log.info("ServiceImpl searchDi() - 통합 검색 다이어리 부분");
 		
 		return mapper.searchDi(keyword);
@@ -75,19 +76,19 @@ public class SearchServiceImpl implements SearchService {
 
 		switch (sorter) {
 			case ("basic"):// 기본 정렬 (다이어리 처음 보여지는 부분에서 정렬), 최신순
-				order = "order by diary_date desc";
+				order = "order by b.diary_date desc";
 				break;
 			case ("day"):// 다이어리 시작 날짜가 오늘 하루 전 날짜부터 검색
-				order = "where a.diary_date >= DATE_SUB(NOW(), INTERVAL 1 day) order by a.diary_date desc";
+				order = "where b.diary_date >= DATE_SUB(NOW(), INTERVAL 1 day) order by b.diary_date desc";
 				break;
 			case ("week"):// 일주일
-				order = "where a.diary_date >= DATE_SUB(NOW(), INTERVAL 1 week) order by a.diary_date desc";
+				order = "where b.diary_date >= DATE_SUB(NOW(), INTERVAL 1 week) order by b.diary_date desc";
 				break;
 			case ("month"):// 한달
-				order = "where a.diary_date >= DATE_SUB(NOW(), INTERVAL 1 month) order by a.diary_date desc";
+				order = "where b.diary_date >= DATE_SUB(NOW(), INTERVAL 1 month) order by b.diary_date desc";
 				break;
 			case ("year"):// 일년
-				order = "where a.diary_date >= DATE_SUB(NOW(), INTERVAL 1 year) order by a.diary_date desc";
+				order = "where b.diary_date >= DATE_SUB(NOW(), INTERVAL 1 year) order by b.diary_date desc";
 				break;
 		}
 		

@@ -42,10 +42,10 @@ public class SearchController {
 		//통합 검색 일정 부분
 		mav.addObject("searchPl", searchService.searchPl(keyword));
 		//통합 검색 다이어리 부분 getSearchDiary
-		mav.addObject("searchDi", searchService.searchDi(keyword));
+		mav.addObject("member", searchService.searchDi(keyword));
 		//키워드 보내는 부분
 		mav.addObject("keyword",keyword);
-		
+		log.info("====================================================="+searchService.searchDi(keyword));
 		mav.setViewName("search/search");
 
 		return mav;
@@ -76,7 +76,7 @@ public class SearchController {
 		log.info("controller searchDi();");
 
 		//다이어리 더보기
-		mav.addObject("diMore",searchService.searchDiMore(keyword, sorter));
+		mav.addObject("member",searchService.searchDiMore(keyword, sorter));
 		
 		mav.addObject("keyword",keyword);
 		
