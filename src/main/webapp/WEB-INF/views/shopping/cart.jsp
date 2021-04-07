@@ -211,7 +211,6 @@ html, body {
 		getTotal();
 		
 		if($("tbody").children("tr").length == 1) {
-			console.log("장바구니가 비어있습니다.")
 			var content = ""
 			content += "<tr>";
 			content += "<td colspan='4'>";
