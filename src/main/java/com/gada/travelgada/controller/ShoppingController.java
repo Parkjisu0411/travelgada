@@ -1,5 +1,7 @@
 package com.gada.travelgada.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,7 @@ import com.gada.travelgada.domain.BuyDetailVO;
 import com.gada.travelgada.domain.BuyVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.ProductVO;
+import com.gada.travelgada.service.MemberService;
 import com.gada.travelgada.service.ShippingLocServiceImpl;
 import com.gada.travelgada.service.ShoppingServiceImpl;
 import com.gada.travelgada.utils.PointCalculator;
@@ -37,6 +40,7 @@ public class ShoppingController {
 	
 	private ShoppingServiceImpl shoppingService;
 	private ShippingLocServiceImpl shippingService;
+	private MemberService memberService;
 	
 	@GetMapping("/shopping")
 	public ModelAndView shoppingMain(ModelAndView modelAndView, @RequestParam("product_type_id") int product_type_id, @RequestParam(value="sorter", required=false, defaultValue="default") String sorter) {
