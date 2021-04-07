@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,6 +24,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
+.product-img {
+	height: 100px;
+	width: 100px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: auto;
+}
+
+.product-info {
+	display: inline-block;
+}
 </style>
 <script type="text/javascript">
 	
@@ -58,13 +70,18 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="buy" items="${buyList }">
+							<c:forEach var="buyDetail" items="${buyDetailList }">
 								<tr>
 									<td>
+										<img class="product-img rounded" src="/resources/img/product/${productMap[buyDetail.buy_detail_id].img_path }" />
+										<div class="product-info">
+											<strong>${buyDetail.product_name }</strong>
+											<p>₩ ${productMap[buyDetail.buy_detail_id].price }</p>
+										</div>
 									</td>
-									<td>${buy.buy_date }</td>
-									<td>${buy.buy_id }</td>
-									<td></td>
+									<td><fmt:formatDate value="${buyMap[buyDetail.buy_detail_id].buy_date }" pattern="yyyy.MM.dd"/></td>
+									<td><a href="/shopping/buy_list/${buyMap[buyDetail.buy_detail_id].buy_id }">${buyMap[buyDetail.buy_detail_id].buy_id }</a></td>
+									<td>${buyDetail.price }</td>
 									<td>구매확정</td>
 								</tr>
 							</c:forEach>

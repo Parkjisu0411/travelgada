@@ -92,4 +92,15 @@ public class ShoppingServiceImpl {
 		return shoppingMapper.selectBuyDetailById(buy_id);
 	}
 	
+	public BuyVO getBuyByDetail(BuyDetailVO buyDetailVO) {
+		return shoppingMapper.selectBuy(buyDetailVO.getBuy_id());
+	}
+	
+	public ProductVO getProductByDetail(BuyDetailVO buyDetailVO) {
+		return shoppingMapper.selectProduct(buyDetailVO.getProduct_id());
+	}
+	
+	public BuyVO getBuy(String buy_id) {
+		return shoppingMapper.selectBuy(buy_id);
+	}
 }

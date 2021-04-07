@@ -40,4 +40,10 @@
 		]]>
 	</select>
 	
+		<select id="selectBuy" resultType="com.gada.travelgada.domain.BuyVO">
+		<![CDATA[
+			select * from buy where buy_id = #{buy_id}
+		]]>
+	</select>
+	
 </mapper>

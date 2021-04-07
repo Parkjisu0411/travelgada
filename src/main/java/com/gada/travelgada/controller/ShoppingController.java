@@ -23,6 +23,7 @@ import com.gada.travelgada.domain.BuyDetailVO;
 import com.gada.travelgada.domain.BuyVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.ProductVO;
+import com.gada.travelgada.service.ShippingLocServiceImpl;
 import com.gada.travelgada.service.ShoppingServiceImpl;
 
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ShoppingController {
 	
 	private ShoppingServiceImpl shoppingService;
+	private ShippingLocServiceImpl shippingService;
 	
 	@GetMapping("/shopping")
 	public ModelAndView shoppingMain(ModelAndView modelAndView, @RequestParam("product_type_id") int product_type_id, @RequestParam(value="sorter", required=false, defaultValue="default") String sorter) {
@@ -126,13 +128,45 @@ public class ShoppingController {
 	@GetMapping("/shopping/buy_list")
 	public ModelAndView buyList(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
 		List<BuyVO> buyList = shoppingService.getBuyList(memberDetails.getUsername());
-		Map<String, List<BuyDetailVO>> buyDetailMap = new HashMap<>();
+		List<BuyDetailVO> buyDetailList = null;
 		for(BuyVO vo : buyList) {
-			buyDetailMap.put(vo.getBuy_id(), shoppingService.getBuyDetailList(vo.getBuy_id()));
+			if(buyDetailList == null) {
+				buyDetailList = shoppingService.getBuyDetailList(vo.getBuy_id());				
+			} else {
+				for(BuyDetailVO detailVO : shoppingService.getBuyDetailList(vo.getBuy_id())) {
+					buyDetailList.add(detailVO);
+				}
+			}
 		}
-		modelAndView.addObject("buyList", buyList);
-		modelAndView.addObject("buyDetailMap", buyDetailMap);
+		Map<Integer, BuyVO> buyMap = new HashMap<>();
+		Map<Integer, ProductVO> productMap = new HashMap<>();
+		
+		for(BuyDetailVO vo : buyDetailList) {
+			buyMap.put(vo.getBuy_detail_id(), shoppingService.getBuyByDetail(vo));
+			productMap.put(vo.getBuy_detail_id(), shoppingService.getProductByDetail(vo));
+		}
+		
+		modelAndView.addObject("buyDetailList", buyDetailList);
+		modelAndView.addObject("buyMap", buyMap);
+		modelAndView.addObject("productMap", productMap);
 		modelAndView.setViewName("/shopping/buy_list");
+		return modelAndView;
+	}
+	
+	@GetMapping("/shopping/buy_list/{buy_id}")
+	public ModelAndView buyDetailList(ModelAndView modelAndView, BuyVO buyVO) {
+		BuyVO buy = shoppingService.getBuy(buyVO.getBuy_id());
+		List<BuyDetailVO> buyDetailList = shoppingService.getBuyDetailList(buy.getBuy_id());
+		Map<Integer, ProductVO> productMap = new HashMap<>();
+		for(BuyDetailVO vo : buyDetailList) {
+			productMap.put(vo.getBuy_detail_id(), shoppingService.getProductByDetail(vo));
+		}
+		
+		modelAndView.addObject("shoppingLoc", shippingService.getShippingLoc(buy.getMember_id(), buy.getShipping_loc_name()));
+		modelAndView.addObject("buy", buy);
+		modelAndView.addObject("buyDetailList", buyDetailList);
+		modelAndView.addObject("productMap", productMap);
+		modelAndView.setViewName("/shopping/buy_detail_list");
 		return modelAndView;
 	}
 }
