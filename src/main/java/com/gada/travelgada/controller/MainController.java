@@ -21,7 +21,7 @@ public class MainController {
 
 	@Autowired
 	private PlannerService plannerService;
-
+	
 	@GetMapping("/")
 	public ModelAndView main(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
 		modelAndView.addObject("diary", diaryService.getDiary());
@@ -32,13 +32,6 @@ public class MainController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/payment")
-	public ModelAndView payment(ModelAndView modelAndView) {
-		modelAndView.setViewName("shopping/payment");
-		
-		return modelAndView;
-	}
-
 	@GetMapping("/example")
 	public ModelAndView example(ModelAndView modelAndView) {
 		modelAndView.setViewName("example");

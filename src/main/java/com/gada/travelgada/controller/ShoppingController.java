@@ -25,6 +25,7 @@ import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.service.ShippingLocServiceImpl;
 import com.gada.travelgada.service.ShoppingServiceImpl;
+import com.gada.travelgada.utils.PointCalculator;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -98,28 +99,36 @@ public class ShoppingController {
 	}
 	
 	@GetMapping("/shopping/order")
-	public ModelAndView order(ModelAndView modelAndView, HttpServletRequest request) {
+	public ModelAndView order(ModelAndView modelAndView, HttpServletRequest request, @AuthenticationPrincipal MemberDetails memberDetails) {
 		log.info("order ==================");
 		String product_id = request.getParameter("product_id");
 		String quantity = request.getParameter("quantity");
 		String price = request.getParameter("price");
+		String product_name = request.getParameter("product_name");
+		
+		System.out.println(product_name);
 		
 		String[] arrProduct_id = product_id.split(",");
 		String[] arrQuantity = quantity.split(",");
 		String[] arrPrice = price.split(",");
+		String[] arrProduct_name = product_name.split(",");
 		
 		List<BuyDetailVO> buyList = new ArrayList<>();
 		
 		for(int i = 0; i < arrProduct_id.length; i++) {
 			BuyDetailVO buy = new BuyDetailVO();
-			log.info(arrProduct_id[i].toString());
 			buy.setProduct_id(Integer.parseInt(arrProduct_id[i]));
 			buy.setQuantity(Integer.parseInt(arrQuantity[i]));
 			buy.setPrice(Integer.parseInt(arrPrice[i]));
+			buy.setProduct_name(arrProduct_name[i]);
 			buyList.add(buy);
 		}
 		
 		modelAndView.addObject("buyDetailList", buyList);
+		modelAndView.addObject("shippingList", memberService.getShippingLoc(memberDetails.getUsername()));
+		modelAndView.addObject("point", PointCalculator.getCurrentPoint(memberService.getPoint(memberDetails.getUsername())));
+		modelAndView.addObject("member", memberService.getMember(memberDetails.getUsername()));
+		
 		modelAndView.setViewName("/shopping/order");
 		
 		return modelAndView;
