@@ -1,7 +1,5 @@
 package com.gada.travelgada.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -109,8 +107,6 @@ public class ShoppingController {
 		String quantity = request.getParameter("quantity");
 		String price = request.getParameter("price");
 		String product_name = request.getParameter("product_name");
-		
-		System.out.println(product_name);
 		
 		String[] arrProduct_id = product_id.split(",");
 		String[] arrQuantity = quantity.split(",");

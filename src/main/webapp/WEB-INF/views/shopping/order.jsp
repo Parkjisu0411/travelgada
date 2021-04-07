@@ -372,7 +372,11 @@
 				if (rsp.success) {
 					var msg = '결제가 완료되었습니다.\n';
 					msg += '결제 금액 : ' + rsp.paid_amount + '\n';
-					msg += '카드 승인번호 : ' + rsp.apply_num;
+					msg += '카드 승인번호 : ' + rsp.apply_num + '\n';
+					msg += '고유 ID: ' + rsp.imp_uid;
+					
+					var impUid = rsp.imp_uid;
+					sendOrderResult(impUid);
 					// location.replace("http://localhost:8282/");
 				} else {
 					var msg = '결제에 실패하였습니다.\n';
@@ -381,7 +385,71 @@
 				alert(msg);
 			});
 		}
-
+		
+		// 결제 정보를 컨트롤러로 전송
+		function sendOrderResult(impUid) {
+			var productId = getParameterByName("product_id");
+			var quantity = getParameterByName("quantity");
+			var price = getParameterByName("price");
+			var productName = getParameterByName("product_name");
+			var shippingLocName = document.getElementById("address-name").value;
+			
+			console.log(productId);
+			console.log(quantity);
+			console.log(price);
+			console.log(productName);
+			console.log(shippingLocName);
+			
+			var form = document.createElement("form");
+			form.method = "post";
+			form.action = "/shopping/result";
+			
+			var sendProductId = document.createElement("input");
+			sendProductId.setAttribute("name", "product_id");
+			sendProductId.setAttribute("value", productId);
+			
+			var sendQuantity = document.createElement("input");
+			sendQuantity.setAttribute("name", "quantity");
+			sendQuantity.setAttribute("value", quantity);
+			
+			var sendPrice = document.createElement("input");
+			sendPrice.setAttribute("name", "price");
+			sendPrice.setAttribute("value", price);
+			
+			var sendProductName = document.createElement("input");
+			sendProductName.setAttribute("name", "product_name");
+			sendProductName.setAttribute("value", productName);
+			
+			var sendImpUid = document.createElement("input");
+			sendImpUid.setAttribute("name", "imp_uid");
+			sendImpUid.setAttribute("value", impUid);
+			
+			var sendShippingLocName = document.createElement("ipnut");
+			sendShippingLocName.setAttribute("name", "shipping_loc_name");
+			sendShippingLocName.setAttribute("value", shippingLocName);
+			
+			// CSRF 토큰 전송
+			/* var sendCsrfToekn = document.createElement("input");
+			sendCsrfToken.setAttribute("name", "_csrf");
+			sendCsrfToken.setAttribute("value", "${_csrf.token}");
+			
+			var sendCsrfHeaderName = document.createElement("input");
+			sendCsrfHeaderName.setAttribute("name", "_csrf_header");
+			sendCsrfHeaderName.setAttribute("value", "${_csrf.headerName}"); */
+			
+			form.appendChild(sendProductId);
+			form.appendChild(sendQuantity);
+			form.appendChild(sendPrice);
+			form.appendChild(sendProductName);
+			form.appendChild(sendImpUid);
+			form.appendChild(sendShippingLocName);
+			/* form.appendChild(sendCsrfToken);
+			form.appendChild(sendCsrfHeaderName); */
+			
+			document.body.appendChild(form);
+			form.submit();
+		}
+		
 		// 주소록
 		$(".select-shipping-loc").click(function () {
 			var selected = $(this);
@@ -490,7 +558,6 @@
 				alert("보유 포인트를 초과하여 사용할 수 없습니다.");
 				document.getElementById("point").value = totalPoint;
 				printPoint();
-				return;
 			}
 		}
 	</script>
