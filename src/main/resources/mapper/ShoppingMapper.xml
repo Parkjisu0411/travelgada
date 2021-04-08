@@ -46,4 +46,16 @@
 		]]>
 	</select>
 	
+	<insert id="insertPaymentResult">
+		<![CDATA[	
+			insert into buy (buy_id, buy_date, waybill_num, member_id, shipping_loc_name) values (#{buy_id}, sysdate(), 507673031401, #{member_id}, #{shipping_loc_name})
+		]]>
+	</insert>
+	
+	<insert id="insertPaymentResultDetail">
+		<![CDATA[	
+			insert into buy_detail (buy_detail_id, product_name, price, quantity, buy_id, product_id) values (get_seq('buy_detail_seq'), #{product_name}, #{price}, #{quantity}, #{buy_id}, #{product_id})
+		]]>
+	</insert>
+	
 </mapper>

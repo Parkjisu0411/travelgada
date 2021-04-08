@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -253,8 +254,12 @@
 				<span id="use-point" class="use-point">0</span><br>
 				<span class="shipping-fee-title">배송비</span>
 				<span class="shipping-fee">₩&nbsp;0</span><br>
+				<hr>
+				<fmt:parseNumber var="accumulatePoint" value="${totalPrice * 0.01}" integerOnly="true"/>
 				<strong class="payment-amount-title">총 결제 금액</strong>
 				<strong class="krw">₩</strong><strong id="payment-amount" class="payment-amount">${totalPrice}</strong><br>
+				<span>적립 포인트</span>
+				<c:out value="${accumulatePoint}"/>
 				<hr>
 				<input type="checkbox" id="accept">
 				<span>(필수) 상품 및 결제 정보를 확인하였으며, 이에 동의합니다.</span>
@@ -391,18 +396,25 @@
 		// 결제 페이지로 결제 정보 전송
 		function sendPaymentInformation(impUid) {
 			var shippingLocName = document.getElementById("address-name").value;
+			var totalPrice = ${totalPrice};
 			
-			var sendImpUid = document.createElement("input");
-			sendImpUid.setAttribute("type","hidden");
-			sendImpUid.setAttribute("name", "imp_uid");
-			sendImpUid.setAttribute("value", impUid);
-			document.getElementById("form").append(sendImpUid);
+			var sendBuyId = document.createElement("input");
+			sendBuyId.setAttribute("type","hidden");
+			sendBuyId.setAttribute("name", "buy_id");
+			sendBuyId.setAttribute("value", impUid);
+			document.getElementById("form").append(sendBuyId);
 			
 			var sendShippingLocName = document.createElement("input");
 			sendShippingLocName.setAttribute("type", "hidden");
-			sendShippingLocName.setAttribute("name", "address_name");
+			sendShippingLocName.setAttribute("name", "shipping_loc_name");
 			sendShippingLocName.setAttribute("value", shippingLocName);
 			document.getElementById("form").append(sendShippingLocName);
+			
+			var sendTotalPrice = document.createElement("input");
+			sendTotalPrice.setAttribute("type", "hidden");
+			sendTotalPrice.setAttribute("name", "total_price");
+			sendTotalPrice.setAttribute("value", totalPrice);
+			document.getElementById("form").append(sendTotalPrice);
 			
 			document.getElementById("form").submit();
 		}

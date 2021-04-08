@@ -13,9 +13,7 @@ import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.mapper.ShoppingMapper;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class ShoppingServiceImpl {
@@ -102,5 +100,13 @@ public class ShoppingServiceImpl {
 	
 	public BuyVO getBuy(String buy_id) {
 		return shoppingMapper.selectBuy(buy_id);
+	}
+	
+	public void insertPaymentResult(BuyVO buyVO) {
+		shoppingMapper.insertPaymentResult(buyVO);
+	}
+	
+	public List<BuyDetailVO> insertPaymentResultDetail(BuyDetailVO buyDetailVO) {
+		return shoppingMapper.insertPaymentResultDetail(buyDetailVO);
 	}
 }

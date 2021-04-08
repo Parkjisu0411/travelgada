@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gada.travelgada.domain.BuyDetailVO;
+import com.gada.travelgada.domain.BuyVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.service.MainService;
 import com.gada.travelgada.service.MemberService;
 import com.gada.travelgada.service.PlannerService;
+import com.gada.travelgada.service.ShoppingServiceImpl;
 import com.gada.travelgada.utils.PointCalculator;
 
 import lombok.AllArgsConstructor;
@@ -36,6 +38,9 @@ public class MainController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private ShoppingServiceImpl shoppingService;
 	
 	@GetMapping("/")
 	public ModelAndView main(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
@@ -77,22 +82,32 @@ public class MainController {
 	}
 	
 	@PostMapping("/shopping/order/result")
-	public ModelAndView insertOrderResult(HttpServletRequest request, ModelAndView modelAndView) {
+	public ModelAndView insertOrderResult(HttpServletRequest request, ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
 		String[] productName = request.getParameterValues("product_name");
 		String[] quantity = request.getParameterValues("quantity");
 		String[] price = request.getParameterValues("price");
 		String[] productId = request.getParameterValues("product_id");
-		String impUid = request.getParameter("imp_uid");
-		String shippingLocName = request.getParameter("address_name");
+		String buyId = request.getParameter("buy_id");
+		String shippingLocName = request.getParameter("shipping_loc_name");
+		String totalPrice = request.getParameter("total_price");
+		
+		BuyVO buyVO = new BuyVO();
+		buyVO.setBuy_id(buyId);
+		buyVO.setMember_id(memberDetails.getUsername());
+		buyVO.setShipping_loc_name(shippingLocName);
+		shoppingService.insertPaymentResult(buyVO);
 		
 		for (int i = 0; i < productName.length; i++) {
 			System.out.println(productName[i]);
 			System.out.println(quantity[i]);
 			System.out.println(price[i]);
 			System.out.println(productId[i]);
-			System.out.println(impUid);
+			System.out.println(buyId);
 			System.out.println(shippingLocName);
+			System.out.println(totalPrice);
 		}
+		
+		modelAndView.setViewName("shopping/order_result");
 		
 		return modelAndView;
 	}

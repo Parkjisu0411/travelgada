@@ -25,6 +25,8 @@ public interface ShoppingMapper {
 	public List<BuyVO> selectBuyById(String member_id);
 	
 	public List<BuyDetailVO> selectBuyDetailById(String buy_id);
-
 	
+	public void insertPaymentResult(BuyVO buyVO);
+
+	public List<BuyDetailVO> insertPaymentResultDetail(BuyDetailVO buydetailVO);
 }
