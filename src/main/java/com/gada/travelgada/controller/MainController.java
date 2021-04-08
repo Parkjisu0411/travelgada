@@ -89,22 +89,24 @@ public class MainController {
 		String[] productId = request.getParameterValues("product_id");
 		String buyId = request.getParameter("buy_id");
 		String shippingLocName = request.getParameter("shipping_loc_name");
-		String totalPrice = request.getParameter("total_price");
+//		String totalPrice = request.getParameter("total_price");
 		
 		BuyVO buyVO = new BuyVO();
 		buyVO.setBuy_id(buyId);
 		buyVO.setMember_id(memberDetails.getUsername());
 		buyVO.setShipping_loc_name(shippingLocName);
+		
 		shoppingService.insertPaymentResult(buyVO);
 		
 		for (int i = 0; i < productName.length; i++) {
-			System.out.println(productName[i]);
-			System.out.println(quantity[i]);
-			System.out.println(price[i]);
-			System.out.println(productId[i]);
-			System.out.println(buyId);
-			System.out.println(shippingLocName);
-			System.out.println(totalPrice);
+			BuyDetailVO buyDetailVO = new BuyDetailVO();
+			buyDetailVO.setProduct_name(productName[i]);
+			buyDetailVO.setPrice(Integer.parseInt(price[i]));
+			buyDetailVO.setQuantity(Integer.parseInt(quantity[i]));
+			buyDetailVO.setBuy_id(buyId);
+			buyDetailVO.setProduct_id(Integer.parseInt(productId[i]));
+			
+			shoppingService.insertPaymentResultDetail(buyDetailVO);
 		}
 		
 		modelAndView.setViewName("shopping/order_result");

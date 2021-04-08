@@ -28,5 +28,5 @@ public interface ShoppingMapper {
 	
 	public void insertPaymentResult(BuyVO buyVO);
 
-	public List<BuyDetailVO> insertPaymentResultDetail(BuyDetailVO buydetailVO);
+	public void insertPaymentResultDetail(BuyDetailVO buydetailVO);
 }

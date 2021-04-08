@@ -106,7 +106,7 @@ public class ShoppingServiceImpl {
 		shoppingMapper.insertPaymentResult(buyVO);
 	}
 	
-	public List<BuyDetailVO> insertPaymentResultDetail(BuyDetailVO buyDetailVO) {
-		return shoppingMapper.insertPaymentResultDetail(buyDetailVO);
+	public void insertPaymentResultDetail(BuyDetailVO buyDetailVO) {
+		shoppingMapper.insertPaymentResultDetail(buyDetailVO);
 	}
 }
