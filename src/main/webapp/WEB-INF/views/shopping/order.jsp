@@ -369,7 +369,7 @@
 				pg: "html5_inicis",
 				pay_method: "card",
 				merchant_uid: 'merchant_' + new Date().getTime(),
-				name: paymentName(),
+				name: payProductName(),
 				amount: resultPrice,
 				buyer_name: buyerName,
 				buyer_tel: buyerTel,
@@ -397,6 +397,8 @@
 		function sendPaymentInformation(impUid) {
 			var shippingLocName = document.getElementById("address-name").value;
 			var totalPrice = ${totalPrice};
+			var usedPoint = document.getElementById('point').value;
+			var accumulatePoint = ${accumulatePoint};
 			
 			var sendBuyId = document.createElement("input");
 			sendBuyId.setAttribute("type","hidden");
@@ -416,21 +418,33 @@
 			sendTotalPrice.setAttribute("value", totalPrice);
 			document.getElementById("form").append(sendTotalPrice);
 			
+			var sendUsedPoint = document.createElement("input");
+			sendUsedPoint.setAttribute("type", "hidden");
+			sendUsedPoint.setAttribute("name", "used_point");
+			sendUsedPoint.setAttribute("value", usedPoint);
+			document.getElementById("form").append(sendUsedPoint);
+			
+			var sendAccumulatePoint = document.createElement("input");
+			sendAccumulatePoint.setAttribute("type", "hidden");
+			sendAccumulatePoint.setAttribute("name", "accumulate_point");
+			sendAccumulatePoint.setAttribute("value", accumulatePoint);
+			document.getElementById("form").append(sendAccumulatePoint);
+			
 			document.getElementById("form").submit();
 		}
 		
 		// 결제 모듈 - '상품명'에 출력
-		function paymentName() {
-			var paymentName = "";
+		function payProductName() {
+			var payProductName = "";
 			var productName = '<c:out value="${buyDetailList[0].product_name}"/>';
 			var productAmount = '${fn:length(buyDetailList)}';
 			
 			if (productAmount == 1) {
-				paymentName += productName
+				payProductName += productName
 			} else {
-				paymentName += productName + ' 외 ' + (productAmount - 1);
+				payProductName += productName + ' 외 ' + (productAmount - 1);
 			}
-			return paymentName;
+			return payProductName;
 		}
 		
 		// 주소록

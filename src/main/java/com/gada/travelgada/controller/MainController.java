@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gada.travelgada.domain.BuyDetailVO;
 import com.gada.travelgada.domain.BuyVO;
 import com.gada.travelgada.domain.MemberDetails;
+import com.gada.travelgada.domain.PointVO;
 import com.gada.travelgada.service.MainService;
 import com.gada.travelgada.service.MemberService;
 import com.gada.travelgada.service.PlannerService;
@@ -90,24 +91,42 @@ public class MainController {
 		String buyId = request.getParameter("buy_id");
 		String shippingLocName = request.getParameter("shipping_loc_name");
 //		String totalPrice = request.getParameter("total_price");
+		String usedPoint = request.getParameter("used_point");
+		String savePoint = request.getParameter("accumulate_point");
 		
-		BuyVO buyVO = new BuyVO();
-		buyVO.setBuy_id(buyId);
-		buyVO.setMember_id(memberDetails.getUsername());
-		buyVO.setShipping_loc_name(shippingLocName);
+		BuyVO payResult = new BuyVO();
+		payResult.setBuy_id(buyId);
+		payResult.setMember_id(memberDetails.getUsername());
+		payResult.setShipping_loc_name(shippingLocName);
 		
-		shoppingService.insertPaymentResult(buyVO);
+		shoppingService.insertPaymentResult(payResult);
 		
 		for (int i = 0; i < productName.length; i++) {
-			BuyDetailVO buyDetailVO = new BuyDetailVO();
-			buyDetailVO.setProduct_name(productName[i]);
-			buyDetailVO.setPrice(Integer.parseInt(price[i]));
-			buyDetailVO.setQuantity(Integer.parseInt(quantity[i]));
-			buyDetailVO.setBuy_id(buyId);
-			buyDetailVO.setProduct_id(Integer.parseInt(productId[i]));
+			BuyDetailVO payResultDetail = new BuyDetailVO();
+			payResultDetail.setProduct_name(productName[i]);
+			payResultDetail.setPrice(Integer.parseInt(price[i]));
+			payResultDetail.setQuantity(Integer.parseInt(quantity[i]));
+			payResultDetail.setBuy_id(buyId);
+			payResultDetail.setProduct_id(Integer.parseInt(productId[i]));
 			
-			shoppingService.insertPaymentResultDetail(buyDetailVO);
+			shoppingService.insertPaymentResultDetail(payResultDetail);
 		}
+		
+		PointVO accumulatePoint = new PointVO();
+		accumulatePoint.setAmount(Integer.parseInt(savePoint));
+		accumulatePoint.setMember_id(memberDetails.getUsername());
+		
+		shoppingService.accumulatePoint(accumulatePoint);
+		
+		if (Integer.parseInt(usedPoint) > 0) {
+			PointVO deductionPoint = new PointVO();
+			deductionPoint.setAmount(Integer.parseInt(usedPoint));
+			deductionPoint.setMember_id(memberDetails.getUsername());
+			
+			shoppingService.deductionPoint(deductionPoint);
+		}
+		
+		// TODO 결제 페이지 뒤로가기 막기
 		
 		modelAndView.setViewName("shopping/order_result");
 		

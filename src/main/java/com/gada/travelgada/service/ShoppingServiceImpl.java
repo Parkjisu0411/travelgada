@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.gada.travelgada.domain.BuyDetailVO;
 import com.gada.travelgada.domain.BuyVO;
+import com.gada.travelgada.domain.PointVO;
 import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.mapper.ShoppingMapper;
 
@@ -108,5 +109,13 @@ public class ShoppingServiceImpl {
 	
 	public void insertPaymentResultDetail(BuyDetailVO buyDetailVO) {
 		shoppingMapper.insertPaymentResultDetail(buyDetailVO);
+	}
+	
+	public void accumulatePoint(PointVO pointVO) {
+		shoppingMapper.accumulatePoint(pointVO);
+	}
+	
+	public void deductionPoint(PointVO pointVO) {
+		shoppingMapper.deductionPoint(pointVO);
 	}
 }
