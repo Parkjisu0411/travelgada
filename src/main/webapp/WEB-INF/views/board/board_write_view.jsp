@@ -27,10 +27,12 @@
 <title>BOARD WRITE</title>
 
 <!-- include summernote css/js -->
-  <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
+<%--   <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
   <script src="${pageContext.request.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css"> --%>
 
+<!-- CKeditor -->
+	 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 <style>
 	html, body {
 		width: 100%;
@@ -86,19 +88,25 @@
 	  $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
     </script>
     
-	<script>
+    <!-- summernote -->
+<!-- 	<script>
 	$(function(){
    	 $("#text").summernote({
-     	   placeholder: '내용을 입력하세요',
+     	  placeholder: '내용을 입력하세요',
       	  tabsize: 2,
       	  height: 500
    	 });
 	});
-	</script>
+	</script> -->
+	
 
-	<script>
+
+<!-- 	<script>
 	function write_board(){
    		var title=$("#title").val();
+   		//var text=document.getElementById("#text").value;
+   		var tt=$("#tt").val();
+   		console.log(tt);
    		var text=$("#text").val();
     	//var member_id=$("#member_id").val();
     	var board_type_id=$("#bcategory").val();
@@ -107,7 +115,7 @@
        	 $("#title").focus(); //입력포커스 이동
        	 return; //함수 종료, 폼 데이터를 제출하지 않음
      }
-     if(text==""){
+     if(text == ""){
          alert("내용을 입력하세요");
          $("#text").focus();
          return;
@@ -118,8 +126,43 @@
     	//document.write.submit();
      	$("#write").submit();
 	}
-	</script>
+	</script> -->
+
 	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#submitBtn").submit(function(event){			
+			event.preventDefault();
+			console.log("modify click");
+			
+			var title = $("#title").val(); 
+			var text = $("#text").val(); 
+			var board_type_id = $("#bcategory").val(); 
+			
+			var form = {
+				title : title,
+				text : text,
+				board_type_id : board_type_id
+			}
+			
+			$.ajax({
+				type : "PUT",
+				url : $(this).attr("action"),
+				cache : false,
+				data : JSON.stringify(form),
+				contentType : 'application/json; charset=utf-8',
+				success : function(result){
+					console.log("result : " + result );
+					$(location).attr('href', '${pageContext.request.contextPath}/board/review')
+				},
+				error : function(e){
+					alert("오류가 발생했습니다.");
+					console.log(e);
+				}
+			}); // ajax end
+		}); // event end
+	}); // ready end
+	</script>
 
 
 
@@ -134,7 +177,7 @@
 		<div class="container">
 			<h2 class="headline">글 작성</h2>
 			
-				<form id="write" name="write" method="post" action="${pageContext.request.contextPath}/board?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+				<form id="write" method="post" action="${pageContext.request.contextPath}/board?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 				<%-- <input type="hidden" id="member_id" name="member_id" value="${bWriteView.member_id }"/>
 				<input type="hidden" id="board_type_id" name="board_type_id" value="${bWriteView.board_type_id }"/> --%>
 				<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
@@ -146,15 +189,24 @@
 						<option value="3">동행</option>
 					</select></span>
 					
+					<!-- summernote -->
+<!-- 					<span id="btitle"><input id="title" name="title" placeholder="제목을 입력하세요" style="height:37px; margin:4px 0;"/></span>
+					<br /><br />
+					<textarea rows="5" cols="60" id="text" name="text"></textarea> -->
+					
+					<!-- CKeditor -->
 					<span id="btitle"><input id="title" name="title" placeholder="제목을 입력하세요" style="height:37px; margin:4px 0;"/></span>
 					<br /><br />
-					<textarea rows="5" cols="60" id="text" name="text"></textarea>
-				
-			
-				<p>첨부파일</p>
+					<textarea class="form-control" id="text" name="text"></textarea>
+					
+					<!-- CKeditor -->
+					<script type="text/javascript">
+ 						CKEDITOR.replace('text');
+					</script>
+
 				
 				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/review'">목록</button>
-				<input type="button" id="submitBtn" class="btn-default text-primary" value="완료" onclick="write_board()" />
+				<input type="submit" id="submitBtn" class="btn-default text-primary" value="완료"  />
 				</form>
 			
 		</div>

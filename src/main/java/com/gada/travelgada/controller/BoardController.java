@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -143,6 +144,54 @@ public class BoardController {
 	}
 	
 	
+	@GetMapping("/board/modify/{board_id}&{member_id}")
+	public ModelAndView boardModifyView(ModelAndView modelAndView, MemberVO memberVO, BoardVO boardVO) {
+
+		log.info("boardModifyView");
+
+		modelAndView.setViewName("/board/board_modify_view");
+		
+		modelAndView.addObject("bContentView", boardService.boardContentView(boardVO));
+		modelAndView.addObject("bImgPath", boardService.boardImgPath(memberVO));
+		
+		return modelAndView;
+	}
+	
+	
+	@PutMapping("/board/{board_id}")
+	public ResponseEntity<String> modifyContent(@RequestBody BoardVO boardVO) {
+		ResponseEntity<String> entity = null;
+		
+		log.info("modifyContent");
+		
+		try {
+			boardService.modifyBoardContent(boardVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	
+		return entity;
+	}
+	
+	
+	@DeleteMapping("/board/{board_id}")
+	public ResponseEntity<String> deleteBoard( BoardVO boardVO){
+		ResponseEntity<String> entity = null;
+		
+		log.info("deleteBoard");
+		
+		try {
+			boardService.deleteBoard(boardVO);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	
+		return entity;
+	}
 	
 	
 }

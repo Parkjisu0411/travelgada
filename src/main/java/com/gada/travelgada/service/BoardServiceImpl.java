@@ -1,9 +1,17 @@
 package com.gada.travelgada.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
@@ -80,21 +88,65 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.writeBoard(boardVO);
 	}
 
-	
-	
-	
-	
 	@Override
-	public void modifyBoard(int board_id) {
-		// TODO Auto-generated method stub
-		
+	public void modifyBoardContent(BoardVO boardVO) {
+		boardMapper.modifyBoardContent(boardVO);
 	}
 
+
 	@Override
-	public void deleteBoard(int board_id) {
-		// TODO Auto-generated method stub
-		
+	public void deleteBoard(BoardVO boardVO) {
+		boardMapper.deleteBoard(boardVO);
 	}
+
+//	@Override
+//	@SuppressWarnings("resource")
+//	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, MultipartFile upload) {
+//		OutputStream out = null;
+//
+//		PrintWriter printWriter = null;	
+//
+//		String fileName = upload.getOriginalFilename();
+//
+//		byte[] bytes = upload.getBytes();
+//
+//		String uploadPath = "C:\\Users\\김슬기\\git\\travelgada\\src\\main\\webapp\\resources\\ckeditor" + "\\" + fileName;
+//
+//		
+//
+//		System.out.println(uploadPath);
+//
+//		out = new FileOutputStream(new File(uploadPath));
+//
+//		out.write(bytes);
+//
+//		String callback = request.getParameter("CKEditorFuncNum");
+//
+//		
+//
+//		printWriter = response.getWriter();
+//		
+//		String save_url = "/board/board_modify_view";
+//
+//		String fileUrl = request.getContextPath() + save_url + "/" +fileName; //url 경로
+//
+//		
+//
+//		printWriter.println("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
+//
+//	               + callback
+//
+//	               + ",'"
+//
+//	               + fileUrl
+//
+//	               + "','이미지를 업로드 하였습니다.'"
+//
+//	               + ")</script>");
+//
+//	       printWriter.flush();
+//	}
+
 
 	
 	
