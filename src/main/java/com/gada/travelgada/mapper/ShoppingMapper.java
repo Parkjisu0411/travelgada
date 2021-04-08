@@ -34,4 +34,6 @@ public interface ShoppingMapper {
 	public void accumulatePoint(PointVO pointVO);
 	
 	public void deductionPoint(PointVO pointVO);
+	
+	public List<BuyDetailVO> getPaymentResult(String buy_id);
 }

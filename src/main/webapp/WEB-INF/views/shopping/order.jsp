@@ -211,7 +211,7 @@
 				<hr>
 				<h2 class="information-headline">포인트 사용</h2>
 				<br>
-				<input type="number" id="point" onchange='printPoint()' placeholder="포인트">
+				<input type="number" id="point" onchange='printPoint()' min="0" value="0" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
 				<input type="button" onclick='useAllPoint()' value="모두 사용" />&nbsp;보유 포인트 ${point}p<br>
 				<hr>
 			</div>

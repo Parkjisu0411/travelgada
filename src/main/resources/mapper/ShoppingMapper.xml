@@ -70,4 +70,10 @@
 		]]>
 	</insert>
 	
+	<select id="getPaymentResult" resultType="com.gada.travelgada.domain.BuyDetailVO">
+		<![CDATA[
+			select product_name, price, quantity, buy_id, product_id from buy_detail where buy_id = #{buy_id}
+		]]>
+	</select>
+	
 </mapper>

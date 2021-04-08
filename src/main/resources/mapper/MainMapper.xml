@@ -7,7 +7,7 @@
 
 	<select id="getDiary" resultType="com.gada.travelgada.domain.MainVO">
 	<![CDATA[
-		select diary_id, img_path, text, hashtag, diary_date from diary order by diary_date desc
+		select diary_id, img_path, text, hashtag, diary_date from diary order by diary_date desc limit 6
 	]]>
 	</select>
 

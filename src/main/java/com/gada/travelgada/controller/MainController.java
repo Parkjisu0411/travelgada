@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,9 +54,9 @@ public class MainController {
 		return modelAndView;
 	}
 	
+	// 결제 페이지
 	@PostMapping("/shopping/order")
 	public ModelAndView sendOrderPage(@RequestParam("product_id") String productId, @RequestParam("quantity") String quantity, @RequestParam("price") String price, @RequestParam("product_name") String productName, ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
-		log.info("order ==================");
 		String[] arrProduct_id = productId.split(",");
 		String[] arrQuantity = quantity.split(",");
 		String[] arrPrice = price.split(",");
@@ -82,6 +83,7 @@ public class MainController {
 		return modelAndView;
 	}
 	
+	// 결제 정보, 포인트 사용-적립 내역을 테이블에 저장
 	@PostMapping("/shopping/order/result")
 	public ModelAndView insertOrderResult(HttpServletRequest request, ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
 		String[] productName = request.getParameterValues("product_name");
@@ -90,10 +92,10 @@ public class MainController {
 		String[] productId = request.getParameterValues("product_id");
 		String buyId = request.getParameter("buy_id");
 		String shippingLocName = request.getParameter("shipping_loc_name");
-//		String totalPrice = request.getParameter("total_price");
 		String usedPoint = request.getParameter("used_point");
-		String savePoint = request.getParameter("accumulate_point");
+		String savedPoint = request.getParameter("accumulate_point");
 		
+		// buy 테이블에 결제 내역 저장
 		BuyVO payResult = new BuyVO();
 		payResult.setBuy_id(buyId);
 		payResult.setMember_id(memberDetails.getUsername());
@@ -101,6 +103,7 @@ public class MainController {
 		
 		shoppingService.insertPaymentResult(payResult);
 		
+		// buy_detail 테이블에 결제 상세 내역 저장
 		for (int i = 0; i < productName.length; i++) {
 			BuyDetailVO payResultDetail = new BuyDetailVO();
 			payResultDetail.setProduct_name(productName[i]);
@@ -112,12 +115,14 @@ public class MainController {
 			shoppingService.insertPaymentResultDetail(payResultDetail);
 		}
 		
+		// 결제 금액의 1%를 포인트로 적립
 		PointVO accumulatePoint = new PointVO();
-		accumulatePoint.setAmount(Integer.parseInt(savePoint));
+		accumulatePoint.setAmount(Integer.parseInt(savedPoint));
 		accumulatePoint.setMember_id(memberDetails.getUsername());
 		
 		shoppingService.accumulatePoint(accumulatePoint);
 		
+		// 결제 단게에서 포인트 사용 시 포인트 차감
 		if (Integer.parseInt(usedPoint) > 0) {
 			PointVO deductionPoint = new PointVO();
 			deductionPoint.setAmount(Integer.parseInt(usedPoint));
@@ -126,7 +131,15 @@ public class MainController {
 			shoppingService.deductionPoint(deductionPoint);
 		}
 		
-		// TODO 결제 페이지 뒤로가기 막기
+		modelAndView.setViewName("redirect:/shopping/order/" + buyId);
+		
+		return modelAndView;
+	}
+	
+	// 결제 완료 페이지
+	@GetMapping("/shopping/order/{buy_id}")
+	public ModelAndView getOrderResultPage(@PathVariable("buy_id") String buyId, ModelAndView modelAndView) {
+		modelAndView.addObject("payResultInformation", shoppingService.getPaymentResult(buyId));
 		
 		modelAndView.setViewName("shopping/order_result");
 		
