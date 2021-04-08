@@ -198,45 +198,55 @@ span.star-prototype > * {
 
 </style>
 
+<style>
+/* 도시, 국가 ... */
+	.box{
+		width:310px;	
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
+
 <script>
-var str = "aa/bb/cc/dd/ee";  
+/* 해시태그 & 링크 */
+	$(document).ready(function(){
+			
+		var content; //내용
+		var splitedArray; //배열
+		var linkedContent; //주소
+		
+		//jstl
+	    
+	    <c:forEach items="${member}" var="member">
+	    <c:forEach items="${member.plannerVO}" var="pl">
+	    <c:forEach items="${pl.diaryVO}" var="di">
+    		console.log("${di.hashtag}")
+    	    content = "${di.hashtag}";
+    	    splitedArray = content.split('#');//#으로 구분
+    	    console.log(splitedArray);
+    	    linkedContent = '';
+    	    splitedArray.shift();//첫번째 지워주는 함수
 
-var arr = str.split(""); // ""를 구분자로 지정했을때 문자열을 하나씩 나누어 배열로 반환한다.
-console.log(arr);  // ["a", "a", "/", "b", "b", "/", "c", "c", "/", "d", "d", "/", "e", "e"]
- 
-var arr = str.split("/");  // 구분자를 통해 나뉜 결과는 배열로 저장된다.
-console.log(arr);   // ["aa", "bb", "cc", "dd", "ee"]
-  
- 
-arr = str.split("/", 2); // 분할 개수를 정하면, 그 개수를 넘어가는 문자열은 반환되지 않는다.
-console.log(arr);
-
-$(document).ready(function(){
-
-
-var tag = $(".tag").val();
-console.log(tag);
-tag = tag.split("#");
-console.log(tag);
-
-
-/* function tagToLink(str){
-    //var newText = str;
-    var newText = tag.replace(//g, "\r\n");
-    var txt = newText.replace(/#[^#\s,;]+/gm, 
-    		function(tag) {
-        		var tag_name = tag.replace(/#/g, ""); 		// 여기서는 a링크에 연결하기위해 #을 지움
-        		return '' + tag + ''
-    });
-    txt = txt.replace(/\n/g, "")
-    console.log(txt);
-    return txt;
-} */
-
-
-
-});
-
+    	    for(var word in splitedArray){
+    	      word = splitedArray[word];
+    	       if(word.indexOf("") == 0)
+    	       { var word2 = "#"+word;
+    	          word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+    	          console.log(word);
+    	          console.log(word2);
+    	       }
+    	       linkedContent += word+' ';
+    	    }
+    	    
+    	    $("#${di.diary_id}").append(linkedContent);
+    	    $("#modal${di.diary_id}").append(linkedContent);
+    	</c:forEach>
+    	</c:forEach>
+    	</c:forEach>
+    	
+	});
+/* 해시태그 & 링크 끝 */
 </script>
 
 </head>
@@ -256,6 +266,8 @@ console.log(tag);
 			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
 			<button type="submit"><i class="fa fa-search"></i></button>
 		</form>	
+		<br/>
+		<h6>" ${keyword} " 에 관한 검색입니다.</h6>
 		<hr/>
 		
 		<!-- 검색 메뉴 -->	
@@ -274,29 +286,32 @@ console.log(tag);
 			<div class="col-sm-5">일정사진</div>
 			<div class="col-sm-7"><!-- 국가, 도시, 만족도 -->
 			
-			국가 :
-			<c:forEach items="${pl.scheduleVO}" var="sc" begin="1" end="100">
-				
-				<c:if test="${sc.schedule_type_id eq 5}">
-					${sc.schedule_content}
-				</c:if>
-				<!-- ...으로 바꾸기 -->
-			</c:forEach>
+			<div class="box">
+			국가 : &nbsp;
+				<c:forEach items="${pl.scheduleVO}" var="sc">
+					<c:if test="${sc.schedule_type_id eq 5}">
+						${sc.schedule_content}
+					</c:if>
+				</c:forEach>
+			</div>
 			<br/>
 			
-			도시 :
-			<c:forEach items="${pl.scheduleVO}" var="sc" begin="1" end="100">
+			<div class="box">
+			도시 : &nbsp;
+			<c:forEach items="${pl.scheduleVO}" var="sc">
 				<c:if test="${sc.schedule_type_id eq 1}"> 
 					${sc.schedule_content}
 				  </c:if>
 			</c:forEach>
 			<br/>
+			<br/>
+			</div>
 			
 			${pl.start_date}&nbsp; ~ &nbsp;${pl.end_date}
-			<br/>
+			<br/><br/>
 			
 			<span class="star-prototype">${pl.satisfaction}</span>
-			<br/>
+			<br/><br/>
 			
 			</div><!-- 국가, 도시, 만족도 끝 -->
 		</div><!-- 일정 검색 -->
@@ -313,14 +328,23 @@ console.log(tag);
 		<br/>
 		
 		<!-- 다이어리 반복 -->
+		
 			<div class="row">
-				<c:forEach items="${searchDi}" var="di"> 
+			<c:forEach items="${member}" var="member">
+			<c:forEach items="${member.plannerVO}" var="pl">
+			<c:forEach items="${pl.diaryVO}" var="di"> 
 					<div class="col-sm-3">
 						<img class="diary_img" src='resources/diary/${di.img_path}' data-toggle="modal" data-target="#myModal${di.diary_id}"/>
-						<div class="contentElement">${di.hashtag}</div>
+						<div>
+							<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+									${member.member_id}	
+						</div>	
+						<span id= "${di.diary_id}"></span>
+						
 						<br/>
-					</div><!-- 다이어리 끝 -->
-					
+						<br/>
+					</div>
+					<!-- 다이어리 끝 -->
 				<!-- Modal -->
 				<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
 					<!-- <div class="mySlides"> -->
@@ -336,10 +360,14 @@ console.log(tag);
 										style='position: relative; width: 400px; height: 400px;' />
 								</div>
 								<div class="dialogDi">
+									<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+									${member.member_id}								
+								</div>
+								<div class="dialogDi">
 									<h4 style="font-family: 'yg-jalnan'">${di.diary_date}</h4>
 								</div>
-								<div class="dialogDi">${di.hashtag}</div>
 								<div class="dialogDi">${di.text}</div>
+								<div class="dialogDi"><span id= "modal${di.diary_id}"></span></div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
@@ -348,9 +376,14 @@ console.log(tag);
 						</div><!-- modal-content end -->
 					</div>
 				</div>
+				</c:forEach>
 				<!-- Modal end -->
 				</c:forEach><!-- 다이어리 반복 끝 -->
+				</c:forEach>
+			
+		
 			</div><!-- 다이어리 row end -->
+		
 		<br/>
 		
 		<!-- 다이어리 더보기 버튼 -->

@@ -45,8 +45,55 @@ html, body {
 	vertical-align: middle;
 	margin-right: auto;
 }
+
+.delete-btn-area {
+	float: right;
+}
+
+.cart-empty {
+	text-align: center;
+	height: 100px;
+	line-height: 100px;
+	color: gray;
+}
 </style>
 <script type="text/javascript">
+	//삭제
+	function removeSelected() {
+		$("input:checkbox[name=select-product]").each(function() {
+			if($(this).is(":checked")) {
+				var product_id = $(this).parent().parent().parent().attr("id");
+				remove(product_id);
+			}
+		})
+	}
+	
+	function remove(product_id) {
+		var data = {
+			product_id : product_id
+		}
+		$.ajax({
+			type : "DELETE",
+			url : "/shopping/cart",
+			data : JSON.stringify(data),
+			contentType : "application/json",
+			cache : false,
+			beforeSend : function(xhr){
+  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(result) {
+				if(result == "SUCCESS") {
+					$("#" + product_id).remove();
+					getTotal();
+				}
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
+			}
+		});
+	}
+	//
 	//선택된 상품 금액 총 합 구하기
 	function getTotal() {
 		var totalPrice = 0
@@ -72,14 +119,15 @@ html, body {
 		
 		$("input:checkbox[name=select-product]").each(function() {
 			if($(this).is(":checked")) {
-				var product_id = $(this).parent().parent().parent().attr("id");
-				var quantity = $("#" + product_id + " .quantity").val();
-				var price = $("#" + product_id + " .price").text();
-				var product_name = $("#" + product_id + " .product_name").text();
-				
-				product_id_arr.push(product_id);
-				quantity_arr.push(quantity);
-				price_arr.push(price);
+	            var product_id = $(this).parent().parent().parent().attr("id");
+	            var quantity = $("#" + product_id + " .quantity").val();
+	            var price = $("#" + product_id + " .price").text();
+	            var product_name = $("#" + product_id + " .product_name").text();
+	            
+	            product_id_arr.push(product_id);
+	            quantity_arr.push(quantity);
+	            price_arr.push(price);
+	            name_arr.push(product_name);
 			};
 		});
 		if(!product_id_arr.length) {
@@ -101,9 +149,14 @@ html, body {
 		inputPrice.setAttribute("name", "price");
 		inputPrice.setAttribute("value", price_arr);
 		
+		var inputName = document.createElement("input");
+		inputName.setAttribute("name", "product_name");
+		inputName.setAttribute("value", name_arr);
+		
 		form.appendChild(inputId);
 		form.appendChild(inputQuantity);
 		form.appendChild(inputPrice);
+		form.appendChild(inputName);
 		
 		document.body.appendChild(form);
 		form.submit();
@@ -124,6 +177,7 @@ html, body {
 			var product_id = $(this).parent().parent().parent().parent().attr("id");
 			var price = $("#" + product_id + " .price").text();
 			var quantity = $("#" + product_id + " .quantity").val();
+			var mulPrice = price * quantity;
 			$("#" + product_id + " .mul-price").html(mulPrice);
 		})
 		//
@@ -153,6 +207,18 @@ html, body {
 			getTotal();
 		})
 		//
+		$(".select-product").prop("checked", true);
+		getTotal();
+		
+		if($("tbody").children("tr").length == 1) {
+			var content = ""
+			content += "<tr>";
+			content += "<td colspan='4'>";
+			content += "<p class='cart-empty'>장바구니가 비어있습니다.</p";
+			content += "</td>";
+			content += "</tr>";
+			$("tbody").children("tr").before(content);
+		}
 	})
 	
 </script>
@@ -203,6 +269,7 @@ html, body {
 									<input type="number" name="quantity" class="quantity" min="1" value="${product.value }"/>
 								</label>
 							</span>
+							<div class="delete-btn-area"><button class="btn btn-secondary delete-btn" onclick="remove(${product.key.product_id})">삭제</button></div>
 						</td>
 						<td>
 							<p class="mul-price"></p>
@@ -211,6 +278,7 @@ html, body {
 				</c:forEach>
 				<tr>
 					<td colspan="3">
+						<button class="btn btn-secondary delete-btn-selected" onclick="removeSelected()" >선택삭제</button>
 					</td>
 					<td>
 						<span>총 상품가격</span>
@@ -219,7 +287,7 @@ html, body {
 				</tr>
 			</tbody>
 		</table>
-		<button type="button" class="btn btn-lg btn-primary" onclick="buy()">구매하기</button>
+		<button type="button" class="btn btn-lg btn-primary" onclick="buy()">주문하기</button>
 		<hr />
 	</div>
 	<!-- Footer -->

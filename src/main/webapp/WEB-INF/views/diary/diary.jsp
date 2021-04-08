@@ -72,7 +72,7 @@
 <script type="text/javascript">
     	
 	$(document).ready(function(){
-		$(document).on("click",".delete",function(event){				
+		$(document).on("click",".delete",function(event){//※주의※		
 			event.preventDefault();
 			console.log("delete click");
 			
@@ -108,7 +108,7 @@
 <!-- 다른 플래너로 전환 -->
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#selectDiary").on('change',function(){
+		$(document).on("change","#selectDiary",function(event){
 			
 			var planner_id = this.value;
 			console.log(planner_id);
@@ -137,6 +137,10 @@
 						var htmls="";
 					
 		        		$("#diaryDiv").html("");	
+		        		
+		        		var content; //내용
+	            		var splitedArray; //배열
+	            		var linkedContent; //주소
 
 		        		$(result).each(function(){	
 		        		
@@ -154,7 +158,7 @@
 		      		  	htmls +='<img class="diary_img" src="resources/diary/'+ this.img_path +'" data-toggle="modal" data-target="#myModal'+ this.diary_id +'"/>';
 		    	    	htmls +='</div></td></tr>';
 		       		 	htmls +='<tr class="table-light"><td>'+ this.diary_date +'</td></tr>';
-		     		   	htmls +='<tr class="table-light"><td>'+ this.hashtag +'</td></tr></table></div>';
+		     		   	htmls +='<tr class="table-light"><td><span id="'+ this.diary_id +'"></span></td></tr></table></div>';
 		        	
 		        		//modal
 		      		  	htmls +='<div class="modal fade" id="myModal'+ this.diary_id +'" role="dialog">';
@@ -164,18 +168,36 @@
 		      		  	htmls +='<div class="modal-body"><div id="mainImg">';
 		      		  	htmls +='<img class="popup_img" src="resources/diary/'+this.img_path+'" style="position:relative; width: 400px; height: 400px;"/></div>';
 		        		htmls +='<div class="dialog"><h4 style="font-family: \'yg-jalnan\'">'+this.diary_date+'</h4></div>';
-		       		 	htmls +='<div class="dialog">'+this.hashtag+'</div><div class="dialog">'+this.text+'</div></div>';
+		       		 	htmls +='<div class="dialog"><span id="modal'+ this.diary_id +'"></span></div><div class="dialog">'+this.text+'</div></div>';
 		      		  	htmls +='<div class="modal-footer">';
 		      		  	htmls +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
 		      		  	htmls +='</div></div></div></div></div>';  
 		      		  	
-						
+		      		  $("#diaryDiv").append(htmls);
+		      		  	
+		      		  console.log("너 안됨"+this.hashtag)
+	            		content = this.hashtag;
+	            		array = content.split("#");
+	            		console.log(array);
+	            		linkedContent = '';
+	            		array.shift();//첫번째 지워주는 함수
+
+	            		for(var word in array){
+	            			word = array[word];
+	            			if(word.indexOf("") == 0){ 
+	            				var word2 = "#"+word;
+	            				word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+	            				console.log(word);
+	                	          console.log(word2);
+	            			}//if end
+	            			linkedContent += word+' ';
+	            		}//for end
+	                	 
+	            		console.log(this.diary_id);
+	            		$('#'+this.diary_id).append(linkedContent);
+	            		$('#modal'+this.diary_id).append(linkedContent);
+		      		  	
 		        		});//result end
-		        		
-		        		//console.log(htmls);
-		        	
-		        		$("#diaryDiv").append(htmls); 
-		        	
 		        	}//sucess end
 				});//ajax end
 			}//getList end
@@ -183,8 +205,8 @@
 	});//document function
 </script>
 
-<!-- 작성 팝업 -->
 <script>
+/* 작성 팝업 */
 	function openwin() {
 		window.open('about:blank','popwin',
 		  'width=1250,height=800,toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, left=300, top=120');
@@ -193,15 +215,59 @@
 </script>
 
  <script type="text/javascript">
-  $(document).ready(function(){
+ /* select box 새로운 플래너 값 고정 */
+	$(document).ready(function(){
 	
-	 var currPlanner_id= ${other.planner_id};  
-	console.log("현재 플래너의 아이디 : "+ currPlanner_id);
+		var currPlanner_id= ${other.planner_id};  
+		console.log("현재 플래너의 아이디 : "+ currPlanner_id);
 	
-	$("#selectDiary").val(currPlanner_id).prop("selected", true);
-}); 
+		$("#selectDiary").val(currPlanner_id).prop("selected", true);
+	}); 
  
 </script> 
+
+<script>
+/* 해시태그 & 링크 */
+	$(document).ready(function(){
+		
+		link();
+
+	});//function end
+	
+	function link() {
+		var content; //내용
+		var splitedArray; //배열
+		var linkedContent; //주소
+		
+		//jstl
+	    <c:forEach items="${diary}" var="di"> 
+    		console.log("${di.hashtag}")
+			content = "${di.hashtag}";//# 해시태그
+			splitedArray = content.split('#');//#으로 구분
+			console.log(splitedArray);
+			linkedContent = '';
+			splitedArray.shift();//첫번째 지워주는 함수
+
+			for(var word in splitedArray){
+				word = splitedArray[word];
+				if(word.indexOf("") == 0){ 
+					var word2 = "#"+word;
+					word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+					console.log(word);
+    	          	console.log(word2);
+				}//if end
+				linkedContent += word+' ';
+			}//for end
+    	    
+			$("#${di.diary_id}").append(linkedContent);
+			$("#modal${di.diary_id}").append(linkedContent);
+    	
+		</c:forEach>
+
+		};
+		
+/* 해시태그 & 링크 끝 */
+</script>
 
 </head>
 <body>
@@ -234,16 +300,16 @@
 	<!-- 다이어리  -->
 	<div class="row"  id="diaryDiv">
 		<!-- 다이어리 반복문 -->
-		<c:forEach items="${diary}" var="dto">
+		<c:forEach items="${diary}" var="di">
 			<!-- ajax 써야 하는 부분 -->
 			<div class="col-sm-3"> 
 				<!-- 다이어리 수정, 삭제 -->
    				<div class="dropdown" >
     				<img src="resources/diary/dot3.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>
     				<div class="dropdown-menu" >
-      					<a class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${dto.diary_id}&${dto.planner_id}',
+      					<a class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}&${di.planner_id}',
       					'popwin2','width=1250,height=800,left=300, top=120')">수정</a>
-      					<a class="delete dropdown-item" href="diary/${dto.diary_id}">삭제</a>
+      					<a class="delete dropdown-item" href="diary/${di.diary_id}">삭제</a>
     				</div>
   				</div>
   				<!-- 다이어리 테이블 -->
@@ -252,15 +318,15 @@
       					<td>
       						<div >
       							<!-- 다이어리 이미지 -->
-      							<img class='diary_img' src='resources/diary/${dto.img_path}' data-toggle="modal" data-target="#myModal${dto.diary_id}"/>
+      							<img class='diary_img' src='resources/diary/${di.img_path}' data-toggle="modal" data-target="#myModal${di.diary_id}"/>
 							</div>
 						</td>
 					</tr> 
 					<tr class="table-light">
-      					<td>${dto.diary_date}</td>
+      					<td>${di.diary_date}</td>
 					</tr>
 					<tr class="table-light">
-      					<td>${dto.hashtag}</td>
+      					<td><span id= "${di.diary_id}"></span></td>
 					</tr>
 				</table>
 			</div> 
@@ -268,7 +334,7 @@
 	<!-- Modal -->
 	<!-- 	<div class="row justify-content-center"> -->
 
-	<div class="modal fade" id="myModal${dto.diary_id}" role="dialog">
+	<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
 		<!-- <div class="mySlides"> -->
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -278,11 +344,11 @@
 				</div>
 				<div class="modal-body" >
 					<div class="mainImg">
-					<img class="popup_img" src='resources/diary/${dto.img_path}' style='position:relative; width: 400px; height: 400px;'/>
+					<img class="popup_img" src='resources/diary/${di.img_path}' style='position:relative; width: 400px; height: 400px;'/>
 				</div>		
-					<div class="dialog"><h4 style="font-family: 'yg-jalnan'">${dto.diary_date}</h4></div>
-        			<div class="dialog">${dto.hashtag}</div>
-       				<div class="dialog">${dto.text}</div>
+					<div class="dialog"><h4 style="font-family: 'yg-jalnan'">${di.diary_date}</h4></div>
+        			<div class="dialog"><span id= "modal${di.diary_id}"></span></div>
+       				<div class="dialog">${di.text}</div>
       			</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

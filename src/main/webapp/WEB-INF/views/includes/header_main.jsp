@@ -63,8 +63,8 @@
 						</div>
 					</li>
 				</ul>
-				<form class="form-inline">
-					<input class="form-control mr-sm-2" type="text" aria-label="Search">
+				<form class="form-inline" action="${pageContext.request.contextPath}/search" method="get">
+					<input id="keyword" class="form-control mr-sm-2" type="text" aria-label="Search" name="keyword" placeholder="검색">
 					<button class="btn btn-outline-white btn-sm my-0" type="submit">
 						<i class="fas fa-search"></i>
 					</button>
@@ -79,6 +79,7 @@
 							onerror="this.src='/resources/img/profile/default_profile_img.jpg'"></a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/member/mypage">회원정보</a>
+							<a class="dropdown-item" href="/shopping/buy_list">주문내역</a>
 							<a class="dropdown-item" href="/shopping/cart">장바구니</a>
 							<div class="dropdown-divider"></div>
 							<form id="logout" action="/member/logout" method="POST">

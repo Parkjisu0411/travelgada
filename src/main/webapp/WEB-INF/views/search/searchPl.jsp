@@ -197,6 +197,16 @@ span.star-prototype > * {
 
 </style>
 
+<style>
+/* 도시, 국가 ... */
+	.box{
+		width:310px;	
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
+
 
 	
 </head>
@@ -216,6 +226,8 @@ span.star-prototype > * {
 			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
 			<button type="submit"><i class="fa fa-search"></i></button>
 		</form>	
+		<br/>
+		<h6>" ${keyword} " 에 관한 검색입니다.</h6>
 		<hr/>	
 		
 		<!-- 검색 메뉴 -->	
@@ -229,7 +241,6 @@ span.star-prototype > * {
 		<span class="dropdown">
 			<span class="dropdown-toggle" data-toggle="dropdown">정렬 ↓ </span>
 				<span class="dropdown-menu">
-     		 		<a class="dropdown-item" href="#">관련도순</a>
     	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=startDate">최신순</a>
     			</span>		
 		</span>
@@ -251,26 +262,32 @@ span.star-prototype > * {
 			<div class="col-sm-5">일정사진</div>
 			<div class="col-sm-7"><!-- 국가, 도시, 만족도 -->
 			
-			국가 :
+			<div class="box">
+			국가 : &nbsp;
 			<c:forEach items="${pl.scheduleVO}" var="sc" begin="1" end="100">
 				<c:if test="${sc.schedule_type_id eq 5}">
 					${sc.schedule_content}
 				</c:if>
 			</c:forEach>
+			</div>
 			<br/>
 			
-			도시 :
+			<div class="box">
+			도시 : &nbsp;
 			<c:forEach items="${pl.scheduleVO}" var="sc" begin="1" end="100">
 				<c:if test="${sc.schedule_type_id eq 1}"> 
 					${sc.schedule_content}
 				  </c:if>
 			</c:forEach>
+			</div>
 			<br/>
 			
 			${pl.start_date}&nbsp; ~ &nbsp;${pl.end_date}
 			<br/>
+			<br/>
 			
 			<span class="star-prototype">${pl.satisfaction}</span>
+			<br/>
 			<br/>
 			
 			</div><!-- 국가, 도시, 만족도 끝 -->

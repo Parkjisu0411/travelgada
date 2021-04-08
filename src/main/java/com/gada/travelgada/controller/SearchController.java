@@ -42,10 +42,10 @@ public class SearchController {
 		//통합 검색 일정 부분
 		mav.addObject("searchPl", searchService.searchPl(keyword));
 		//통합 검색 다이어리 부분 getSearchDiary
-		mav.addObject("searchDi", searchService.searchDi(keyword));
+		mav.addObject("member", searchService.searchDi(keyword));
 		//키워드 보내는 부분
 		mav.addObject("keyword",keyword);
-		
+		log.info("====================================================="+searchService.searchDi(keyword));
 		mav.setViewName("search/search");
 
 		return mav;
@@ -76,7 +76,7 @@ public class SearchController {
 		log.info("controller searchDi();");
 
 		//다이어리 더보기
-		mav.addObject("diMore",searchService.searchDiMore(keyword, sorter));
+		mav.addObject("member",searchService.searchDiMore(keyword, sorter));
 		
 		mav.addObject("keyword",keyword);
 		
@@ -86,56 +86,4 @@ public class SearchController {
 
 	}// search end
 	
-	
-	
-	
-	
-//	@PostMapping("searchAll")
-//	public ModelAndView searchAll(ModelAndView mav, @RequestParam("keyword") String keyword,PlannerVO plannerVO) {
-//		log.info("controller searchAll();");
-//
-//		mav.addObject("searchPl", searchService.getSearchPlanner(keyword));
-//		mav.addObject("searchDi", searchService.getSearchDiary(keyword));
-//		mav.addObject("search",searchService.getSearch(keyword));
-//		mav.addObject("keyword",keyword);
-//		log.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++"+plannerVO.getPlanner_id());
-//		log.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++"+plannerVO.getMember_id());
-//		log.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++"+plannerVO.getPlanner_name());
-//		log.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++"+plannerVO.getSatisfaction());
-//		log.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++"+plannerVO.hashCode());
-//		log.info("++++++++++++++++++++++++++++++++++++++++++++++++++++++"+plannerVO.getPlanner_id());
-//		mav.addObject("vo",plannerVO.getScheduleVO());
-//		
-//		mav.setViewName("redirect:search/search");
-//
-//		return mav;
-//
-//	}// search end
-//	
-	
-//	// 일정 더보기 json
-//	@PostMapping("searchPl")
-//	public List<PlannerVO> searchPl(@RequestParam("keywordMore")String keyword) {
-//		log.info("controller searchPl();");
-//		log.info(keyword);
-//
-//		return searchService.searchPlMore(keyword);
-//
-//	}// searchPl end
-	
-//	// 다이어리 더보기 json
-//	@PostMapping("searchDi")
-//	public List<DiaryVO> searchDi(@RequestParam("keywordMore")String keyword) {
-//		log.info("controller searchDi();");
-//		log.info(keyword);
-//
-//		return searchService.searchDiMore(keyword);
-//
-//	}// searchDi end
-	
-	
-	
-	
-	
-
 }// Controller end

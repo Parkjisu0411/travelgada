@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gada.travelgada.domain.BuyDetailVO;
+import com.gada.travelgada.domain.BuyVO;
 import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.mapper.ShoppingMapper;
 
@@ -80,5 +82,25 @@ public class ShoppingServiceImpl {
 		typeMap.put(3, "bags");
 		typeMap.put(4, "accessories");
 		return typeMap.get(product_type_id);
+	}
+	
+	public List<BuyVO> getBuyList(String member_id) {
+		return shoppingMapper.selectBuyById(member_id);
+	}
+	
+	public List<BuyDetailVO> getBuyDetailList(String buy_id) {
+		return shoppingMapper.selectBuyDetailById(buy_id);
+	}
+	
+	public BuyVO getBuyByDetail(BuyDetailVO buyDetailVO) {
+		return shoppingMapper.selectBuy(buyDetailVO.getBuy_id());
+	}
+	
+	public ProductVO getProductByDetail(BuyDetailVO buyDetailVO) {
+		return shoppingMapper.selectProduct(buyDetailVO.getProduct_id());
+	}
+	
+	public BuyVO getBuy(String buy_id) {
+		return shoppingMapper.selectBuy(buy_id);
 	}
 }

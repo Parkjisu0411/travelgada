@@ -20,6 +20,7 @@ public class PlannerVO {
 	private String planner_name;
 	private int satisfaction;
 	private String member_id;
-
+	
 	private List<ScheduleVO> scheduleVO;
+	private List<DiaryVO> diaryVO;
 }

@@ -198,7 +198,45 @@ span.star-prototype > * {
 
 </style>
 
+<script>
+/* 해시태그 & 링크 */
+	$(document).ready(function(){
+			
+		var content; //내용
+		var splitedArray; //배열
+		var linkedContent; //주소
+		
+		//jstl
+	     <c:forEach items="${member}" var="member">
+	    <c:forEach items="${member.plannerVO}" var="pl">
+	    <c:forEach items="${pl.diaryVO}" var="di">
+    		
+    	    content = "${di.hashtag}";
+    	    splitedArray = content.split('#');//#으로 구분
+    	    console.log(splitedArray);
+    	    linkedContent = '';
+    	    splitedArray.shift();//첫번째 지워주는 함수
 
+    	    for(var word in splitedArray){
+    	      word = splitedArray[word];
+    	       if(word.indexOf("") == 0)
+    	       { var word2 = "#"+word;
+    	          word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+    	          console.log(word);
+    	          console.log(word2);
+    	       }
+    	       linkedContent += word+' ';
+    	    }
+    	    
+    	    $("#${di.diary_id}").append(linkedContent);
+    	    $("#modal${di.diary_id}").append(linkedContent);
+    	</c:forEach>
+    	</c:forEach>
+    	</c:forEach>
+
+	});
+/* 해시태그 & 링크 끝 */
+</script>
 	
 </head>
 <body>
@@ -217,6 +255,8 @@ span.star-prototype > * {
 			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
 			<button type="submit"><i class="fa fa-search"></i></button>
 		</form>	
+		<br/>
+		<h6>" ${keyword} " 에 관한 검색입니다.</h6>
 		<hr/>	
 		
 		<!-- 검색 메뉴 -->	
@@ -230,7 +270,6 @@ span.star-prototype > * {
 		<span class="dropdown">
 			<span class="dropdown-toggle" data-toggle="dropdown">정렬 ↓ </span>
 				<span class="dropdown-menu">
-     		 		<a class="dropdown-item" href="#">관련도순</a>
     	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">최신순</a>
     			</span>		
 		</span>
@@ -248,10 +287,18 @@ span.star-prototype > * {
 		
 		<!-- 다이어리 반복 -->
 			<div class="row">
-				<c:forEach items="${diMore}" var="di"> 
+				<c:forEach items="${member}" var="member">
+				<c:forEach items="${member.plannerVO}" var="pl">
+				<c:forEach items="${pl.diaryVO}" var="di"> 
 					<div class="col-sm-3">
 						<img class="diary_img" src='resources/diary/${di.img_path}' data-toggle="modal" data-target="#myModal${di.diary_id}"/>
-						<div>${di.hashtag}</div>
+						<div>
+							<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+									${member.member_id}	
+						</div>
+						<span id= "${di.diary_id}"></span>
+						
+						<br/>
 						<br/>
 					</div><!-- 다이어리 끝 -->
 					
@@ -270,10 +317,14 @@ span.star-prototype > * {
 										style='position: relative; width: 400px; height: 400px;' />
 								</div>
 								<div class="dialogDi">
+									<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+									${member.member_id}								
+								</div>
+								<div class="dialogDi">
 									<h4 style="font-family: 'yg-jalnan'">${di.diary_date}</h4>
 								</div>
-								<div class="dialogDi">${di.hashtag}</div>
 								<div class="dialogDi">${di.text}</div>
+								<div class="dialogDi"><span id= "modal${di.diary_id}"></span></div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
@@ -282,8 +333,11 @@ span.star-prototype > * {
 						</div>
 					</div>
 				</div>
+				</c:forEach>
 				<!-- Modal end -->
 				</c:forEach><!-- 다이어리 반복 끝 -->
+				</c:forEach>
+				
 			</div><!-- 다이어리 row end -->
 		<br/>
 		

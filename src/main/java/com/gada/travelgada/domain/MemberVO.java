@@ -24,4 +24,6 @@ public class MemberVO {
 	private String sns_type;
 	private List<AuthVO> authList;
 	private BoardVO boardList;
+	private List<PlannerVO> plannerVO;
+	
 }
