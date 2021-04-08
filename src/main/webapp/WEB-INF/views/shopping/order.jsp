@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -9,6 +10,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
 	<title>결제</title>
 
 	<style>
@@ -143,6 +145,7 @@
 				<h2 class="information-headline">수령인 정보</h2>
 				<br>
 
+				<!-- 주소록 -->
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
 					주소록
 				</button>
@@ -187,6 +190,7 @@
 					</div>
 				</div>
 
+				<!-- 배송 정보 입력 -->
 				<div class="shipping-loc-area">
 					<input type="text" id="address-name" maxlength="13" placeholder="배송지명"><br>
 					<input type="text" id="recipient" maxlength="13" placeholder="수령인"><br>
@@ -211,9 +215,11 @@
 				<hr>
 			</div>
 
-			<!-- Widget -->
+			<!-- 결제 정보 -->
 			<div class="col-md-4 widget">
 				<div class="product-area">
+				<form id="form" action="${pageContext.request.contextPath}/shopping/order/result" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<c:forEach items="${buyDetailList}" var="productInformation">
 						<div class="row widget-product-information">
 							<div class="col-md-5">
@@ -222,10 +228,16 @@
 							<div class="col-md-7">
 								<a href="#">물품 항목</a><br>
 								<span class="product-name">${productInformation.product_name}</span><br>
-								<span>₩${productInformation.price}&nbsp;/&nbsp;${productInformation.quantity}개</span><br>
+								<span>₩${productInformation.price}&nbsp;/&nbsp;${productInformation.quantity}개</span>
+								
+								<input type="hidden" name="product_id" value="${productInformation.product_id}"/>
+								<input type="hidden" name="product_name" value="${productInformation.product_name}"/>
+								<input type="hidden" name="price" value="${productInformation.price}"/>
+								<input type="hidden" name="quantity" value="${productInformation.quantity}"/>
 							</div>
 						</div>
 					</c:forEach>
+					</form>
 				</div>
 				<hr>
 				<h2 class="information-headline">결제 세부정보</h2>
@@ -334,21 +346,12 @@
 			document.getElementById("payment-amount").innerHTML = resultPrice;
 		}
 
-		// URL 파라미터에서 물품명을 갖고 오기 위한 함수(정규식)
-		function getParameterByName(name) {
-			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-				results = regex.exec(location.search);
-			return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-		}
-
 		// 결제 모듈
 		function payCard() {
 			var buyerName = document.getElementById("recipient").value;
 			var buyerTel = document.getElementById("tel").value;
 			var buyerAddr = document.getElementById("address").value + " " + document.getElementById("detailAddress").value;
 			var buyerPostCode = document.getElementById("postcode").value;
-			var productName = getParameterByName("product_name");
 			var buyerEmail = '<c:out value="${member.email}"/>';
 			
 			var totalPrice = ${ totalPrice };
@@ -361,7 +364,7 @@
 				pg: "html5_inicis",
 				pay_method: "card",
 				merchant_uid: 'merchant_' + new Date().getTime(),
-				name: productName,
+				name: paymentName(),
 				amount: resultPrice,
 				buyer_name: buyerName,
 				buyer_tel: buyerTel,
@@ -376,8 +379,7 @@
 					msg += '고유 ID: ' + rsp.imp_uid;
 					
 					var impUid = rsp.imp_uid;
-					sendOrderResult(impUid);
-					// location.replace("http://localhost:8282/");
+					sendPaymentInformation(impUid);
 				} else {
 					var msg = '결제에 실패하였습니다.\n';
 					msg += rsp.error_msg;
@@ -386,68 +388,37 @@
 			});
 		}
 		
-		// 결제 정보를 컨트롤러로 전송
-		function sendOrderResult(impUid) {
-			var productId = getParameterByName("product_id");
-			var quantity = getParameterByName("quantity");
-			var price = getParameterByName("price");
-			var productName = getParameterByName("product_name");
+		// 결제 페이지로 결제 정보 전송
+		function sendPaymentInformation(impUid) {
 			var shippingLocName = document.getElementById("address-name").value;
 			
-			console.log(productId);
-			console.log(quantity);
-			console.log(price);
-			console.log(productName);
-			console.log(shippingLocName);
-			
-			var form = document.createElement("form");
-			form.method = "post";
-			form.action = "/shopping/result";
-			
-			var sendProductId = document.createElement("input");
-			sendProductId.setAttribute("name", "product_id");
-			sendProductId.setAttribute("value", productId);
-			
-			var sendQuantity = document.createElement("input");
-			sendQuantity.setAttribute("name", "quantity");
-			sendQuantity.setAttribute("value", quantity);
-			
-			var sendPrice = document.createElement("input");
-			sendPrice.setAttribute("name", "price");
-			sendPrice.setAttribute("value", price);
-			
-			var sendProductName = document.createElement("input");
-			sendProductName.setAttribute("name", "product_name");
-			sendProductName.setAttribute("value", productName);
-			
 			var sendImpUid = document.createElement("input");
+			sendImpUid.setAttribute("type","hidden");
 			sendImpUid.setAttribute("name", "imp_uid");
 			sendImpUid.setAttribute("value", impUid);
+			document.getElementById("form").append(sendImpUid);
 			
-			var sendShippingLocName = document.createElement("ipnut");
-			sendShippingLocName.setAttribute("name", "shipping_loc_name");
+			var sendShippingLocName = document.createElement("input");
+			sendShippingLocName.setAttribute("type", "hidden");
+			sendShippingLocName.setAttribute("name", "address_name");
 			sendShippingLocName.setAttribute("value", shippingLocName);
+			document.getElementById("form").append(sendShippingLocName);
 			
-			// CSRF 토큰 전송
-			/* var sendCsrfToekn = document.createElement("input");
-			sendCsrfToken.setAttribute("name", "_csrf");
-			sendCsrfToken.setAttribute("value", "${_csrf.token}");
+			document.getElementById("form").submit();
+		}
+		
+		// 결제 모듈 - '상품명'에 출력
+		function paymentName() {
+			var paymentName = "";
+			var productName = '<c:out value="${buyDetailList[0].product_name}"/>';
+			var productAmount = '${fn:length(buyDetailList)}';
 			
-			var sendCsrfHeaderName = document.createElement("input");
-			sendCsrfHeaderName.setAttribute("name", "_csrf_header");
-			sendCsrfHeaderName.setAttribute("value", "${_csrf.headerName}"); */
-			
-			form.appendChild(sendProductId);
-			form.appendChild(sendQuantity);
-			form.appendChild(sendPrice);
-			form.appendChild(sendProductName);
-			form.appendChild(sendImpUid);
-			form.appendChild(sendShippingLocName);
-			/* form.appendChild(sendCsrfToken);
-			form.appendChild(sendCsrfHeaderName); */
-			
-			document.body.appendChild(form);
-			form.submit();
+			if (productAmount == 1) {
+				paymentName += productName
+			} else {
+				paymentName += productName + ' 외 ' + (productAmount - 1);
+			}
+			return paymentName;
 		}
 		
 		// 주소록

@@ -100,40 +100,6 @@ public class ShoppingController {
 		return entity;
 	}
 	
-	@GetMapping("/shopping/order")
-	public ModelAndView order(ModelAndView modelAndView, HttpServletRequest request, @AuthenticationPrincipal MemberDetails memberDetails) {
-		log.info("order ==================");
-		String product_id = request.getParameter("product_id");
-		String quantity = request.getParameter("quantity");
-		String price = request.getParameter("price");
-		String product_name = request.getParameter("product_name");
-		
-		String[] arrProduct_id = product_id.split(",");
-		String[] arrQuantity = quantity.split(",");
-		String[] arrPrice = price.split(",");
-		String[] arrProduct_name = product_name.split(",");
-		
-		List<BuyDetailVO> buyList = new ArrayList<>();
-		
-		for(int i = 0; i < arrProduct_id.length; i++) {
-			BuyDetailVO buy = new BuyDetailVO();
-			buy.setProduct_id(Integer.parseInt(arrProduct_id[i]));
-			buy.setQuantity(Integer.parseInt(arrQuantity[i]));
-			buy.setPrice(Integer.parseInt(arrPrice[i]));
-			buy.setProduct_name(arrProduct_name[i]);
-			buyList.add(buy);
-		}
-		
-		modelAndView.addObject("buyDetailList", buyList);
-		modelAndView.addObject("shippingList", memberService.getShippingLoc(memberDetails.getUsername()));
-		modelAndView.addObject("point", PointCalculator.getCurrentPoint(memberService.getPoint(memberDetails.getUsername())));
-		modelAndView.addObject("member", memberService.getMember(memberDetails.getUsername()));
-		
-		modelAndView.setViewName("/shopping/order");
-		
-		return modelAndView;
-	}
-	
 	@GetMapping("/shopping/buy_list")
 	public ModelAndView buyList(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
 		List<BuyVO> buyList = shoppingService.getBuyList(memberDetails.getUsername());
