@@ -5,7 +5,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.gada.travelgada.mapper.SearchMapper">
 
 	<!-- resultMap -->
-	<!-- 플래너 1 -->
+	
+	<!-- 멤버 1 -->
+	<resultMap id="memberMap"
+		type="com.gada.travelgada.domain.MemberVO">
+		<result property="member_id" column="member_id" />
+		<result property="pw" column="pw" />
+		<result property="member_name" column="member_name" />
+		<result property="email" column="email" />
+		<result property="phone_num" column="phone_num" />
+		<result property="profile_img_path" column="profile_img_path" />
+		<result property="withdrawal_flag" column="withdrawal_flag" />
+		<result property="withdrawal_code" column="withdrawal_code" />
+		<result property="sns_type" column="sns_type" />
+		
+		<collection property="plannerVO" resultMap="plannerMap"></collection>
+	</resultMap>
+	
+	<!-- 플래너 1, 멤버에 대해서는 플래너가 n-->
 	<resultMap id="plannerMap"
 		type="com.gada.travelgada.domain.PlannerVO">
 		<result property="planner_id" column="planner_id" />
@@ -15,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="satisfaction" column="satisfaction" />
 		<result property="member_id" column="member_id" />
 
+		<collection property="diaryVO" resultMap="diaryMap"></collection>
 		<collection property="scheduleVO" resultMap="scheduleMap"></collection>
 	</resultMap>
    
@@ -31,7 +49,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="longitude" column="longitude" />
 		<result property="schedule_order" column="schedule_order" />
 	</resultMap>
-
+	
+	<!-- 다이어리 n -->
+	<resultMap id="diaryMap"
+		type="com.gada.travelgada.domain.DiaryVO">
+		<result property="diary_id" column="diary_id" />
+		<result property="img_path" column="img_path" />
+		<result property="text" column="text" />
+		<result property="hashtag" column="hashtag" />
+		<result property="diary_date" column="diary_date" />
+		<result property="planner_id" column="planner_id" />
+		
+	</resultMap>
+	
 	<!-- 통합 검색 일정 부분 -->
 	<select id="searchPl" resultMap="plannerMap"> 
 		<![CDATA[ 
@@ -42,15 +72,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 	
-	<!-- 통합 검색 다이어리 부분 - 8개만 뽑아냄 -->
-	<select id="searchDi"
-		resultType="com.gada.travelgada.domain.DiaryVO"> 
+	<!-- 통합 검색 다이어리 부분 -->
+	<select id="searchDi" resultMap="memberMap"> 
 		<![CDATA[ 
-			select * from (
-				select @rownum:=@rownum+1 rn,d.* from diary d 
-					where text like CONCAT('%', #{keyword}, '%') or hashtag like CONCAT('%', #{keyword}, '%') 
-						and (@rownum:=0)=0
-			)a where a.rn <= 8
+			select a.* from (select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
+				where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
+					where a.text like CONCAT('%', #{keyword}, '%') or a.hashtag like CONCAT('%', #{keyword}, '%')
+		 	
 		]]>
 	</select>
 
@@ -66,12 +94,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<!-- 다이어리 더보기 ( 조건 ) -->
-	<select id="searchDiMore"
-		resultType="com.gada.travelgada.domain.DiaryVO"> 
+	<select id="searchDiMore" resultMap="memberMap"> 
 		<![CDATA[ 
-				select a.* from(select * from diary 
-					where text like CONCAT('%', #{keyword}, '%') or hashtag like CONCAT('%', #{keyword}, '%')) a
-						${order}
+		
+			select b.* from(select a.* from (select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
+				where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
+					where a.text like CONCAT('%', #{keyword}, '%') or a.hashtag like CONCAT('%', #{keyword}, '%'))b 
+						${order};
+		
 		]]>
 	</select>
    

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.gada.travelgada.domain.DiaryVO;
+import com.gada.travelgada.domain.MemberVO;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.domain.ProductVO;
 
@@ -16,7 +17,7 @@ public interface SearchMapper {
 	public List<PlannerVO> searchPl(String keyword);
 	
 	//통합 검색 다이어리 부분
-	public List<DiaryVO> searchDi(String keyword);
+	public List<MemberVO> searchDi(String keyword);
 	
 	//일정 더보기
 	public List<PlannerVO> searchPlMore(String keyword,String order);

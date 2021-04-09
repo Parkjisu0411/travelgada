@@ -39,5 +39,9 @@ public interface BoardMapper {
 	//public void writeBoard(BoardVO boardVO, @Param("username") String username);
 	public void writeBoard(BoardVO boardVO);
 
+	public void modifyBoardContent(BoardVO boardVO);
+
+	public void deleteBoard(BoardVO boardVO);
+
 	
 }

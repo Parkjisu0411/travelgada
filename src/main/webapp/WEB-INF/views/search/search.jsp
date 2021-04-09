@@ -217,7 +217,10 @@ span.star-prototype > * {
 		var linkedContent; //주소
 		
 		//jstl
-	    <c:forEach items="${searchDi}" var="di"> 
+	    
+	    <c:forEach items="${member}" var="member">
+	    <c:forEach items="${member.plannerVO}" var="pl">
+	    <c:forEach items="${pl.diaryVO}" var="di">
     		console.log("${di.hashtag}")
     	    content = "${di.hashtag}";
     	    splitedArray = content.split('#');//#으로 구분
@@ -237,8 +240,11 @@ span.star-prototype > * {
     	    }
     	    
     	    $("#${di.diary_id}").append(linkedContent);
+    	    $("#modal${di.diary_id}").append(linkedContent);
     	</c:forEach>
-
+    	</c:forEach>
+    	</c:forEach>
+    	
 	});
 /* 해시태그 & 링크 끝 */
 </script>
@@ -260,6 +266,8 @@ span.star-prototype > * {
 			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
 			<button type="submit"><i class="fa fa-search"></i></button>
 		</form>	
+		<br/>
+		<h6>" ${keyword} " 에 관한 검색입니다.</h6>
 		<hr/>
 		
 		<!-- 검색 메뉴 -->	
@@ -322,18 +330,21 @@ span.star-prototype > * {
 		<!-- 다이어리 반복 -->
 		
 			<div class="row">
-			
-				<c:forEach items="${searchDi}" var="di"> 
+			<c:forEach items="${member}" var="member">
+			<c:forEach items="${member.plannerVO}" var="pl">
+			<c:forEach items="${pl.diaryVO}" var="di"> 
 					<div class="col-sm-3">
 						<img class="diary_img" src='resources/diary/${di.img_path}' data-toggle="modal" data-target="#myModal${di.diary_id}"/>
-						<span class = "mom">
-							<span id= "${di.diary_id}"></span>
-						</span>
+						<div>
+							<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+									${member.member_id}	
+						</div>	
+						<span id= "${di.diary_id}"></span>
 						
 						<br/>
 						<br/>
-					</div><!-- 다이어리 끝 -->
-					
+					</div>
+					<!-- 다이어리 끝 -->
 				<!-- Modal -->
 				<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
 					<!-- <div class="mySlides"> -->
@@ -349,10 +360,14 @@ span.star-prototype > * {
 										style='position: relative; width: 400px; height: 400px;' />
 								</div>
 								<div class="dialogDi">
+									<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+									${member.member_id}								
+								</div>
+								<div class="dialogDi">
 									<h4 style="font-family: 'yg-jalnan'">${di.diary_date}</h4>
 								</div>
-								<div class="dialogDi">${di.hashtag}</div>
 								<div class="dialogDi">${di.text}</div>
+								<div class="dialogDi"><span id= "modal${di.diary_id}"></span></div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
@@ -361,8 +376,12 @@ span.star-prototype > * {
 						</div><!-- modal-content end -->
 					</div>
 				</div>
+				</c:forEach>
 				<!-- Modal end -->
 				</c:forEach><!-- 다이어리 반복 끝 -->
+				</c:forEach>
+			
+		
 			</div><!-- 다이어리 row end -->
 		
 		<br/>

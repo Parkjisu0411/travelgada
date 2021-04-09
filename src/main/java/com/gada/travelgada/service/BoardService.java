@@ -3,6 +3,11 @@ package com.gada.travelgada.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.MemberVO;
@@ -34,17 +39,14 @@ public interface BoardService {
 	//public void writeBoard(BoardVO boardVO, String username);
 	
 	
-	public void modifyBoard(int board_id);
-	
-	public void deleteBoard(int board_id);
-
-	
-	
-	
 	public MemberVO boardImgPath(MemberVO memberVO);
 
-	
+	public void modifyBoardContent(BoardVO boardVO);
 
+	
+	public void deleteBoard(BoardVO boardVO);
+
+	//public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, MultipartFile upload);
 
 
 	

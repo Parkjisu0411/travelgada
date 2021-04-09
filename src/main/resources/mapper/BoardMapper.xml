@@ -3,31 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gada.travelgada.mapper.BoardMapper"> 
-
-<!-- < 	<select id="selectReviewBoard" resultType="com.gada.travelgada.domain.BoardVO">
-		<![CDATA[
-			select * from board where board_type_id = 1
-		]]>
-	</select> 
-	
-	<select id="selectQnABoard" resultType="com.gada.travelgada.domain.BoardVO">
-		<![CDATA[
-			select * from board where board_type_id = 2
-		]]>
-	</select>
-	
-	<select id="selectAccompanyBoard" resultType="com.gada.travelgada.domain.BoardVO">
-		<![CDATA[
-			select * from board where board_type_id = 3
-		]]>
-	</select>
-	
-	<select id="selectAnnouncementBoard" resultType="com.gada.travelgada.domain.BoardVO">
-		<![CDATA[
-			select * from board where board_type_id = 4
-		]]>
-	</select> -->
-	
 	
   	<resultMap id="authMap" type="com.gada.travelgada.domain.AuthVO">
 		<result property="member_id" column="member_id"/>
@@ -133,5 +108,16 @@
 			values (get_seq('board_seq'), #{title}, #{text}, sysdate(), 0, get_seq('bgroup_seq'), 0, 0, #{board_type_id}, #{member_id})
 		]]> 
 	</insert> 
-
+	
+	<update id="modifyBoardContent">
+		<![CDATA[
+			update board set title=#{title}, text=#{text}, board_type_id=#{board_type_id} where board_id = #{board_id}
+		]]>
+	</update>
+	
+	<delete id="deleteBoard">
+		<![CDATA[
+			delete from board where board_id = #{board_id}
+		]]>
+	</delete>
 </mapper>
