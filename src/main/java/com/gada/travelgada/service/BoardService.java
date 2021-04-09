@@ -15,9 +15,10 @@ import com.gada.travelgada.domain.MemberVO;
 public interface BoardService {
 
 	public List<BoardVO> getReviewBoard(int nowPage, int amount);
+	public List<BoardVO> getReviewBoard(int nowPage, int amount, int board_type_id);
 	//public List<BoardVO> getReviewBoard(CriteriaVO cri);
 	
-	public int getTotalReviewBoard(CriteriaVO cri);
+	public int getTotalReviewBoard(int i);
 	
 	public List<BoardVO> getQnABoard(int nowPage, int amount);
 	
@@ -46,7 +47,13 @@ public interface BoardService {
 	
 	public void deleteBoard(BoardVO boardVO);
 
-	//public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, MultipartFile upload);
+	public List<BoardVO> getReply(BoardVO boardVO);
+
+	public void writeReply(BoardVO boardVO);
+
+	
+
+	
 
 
 	

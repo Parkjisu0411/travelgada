@@ -9,6 +9,15 @@
 		<result property="authority" column="authority"/>
 	</resultMap>
 	
+	  <resultMap id="answerMap" type="com.gada.travelgada.domain.AnswerVO">
+		<result property="answer_id" column="answer_id"/>
+		<result property="member_id" column="member_id"/>
+		<result property="text" column="text"/>
+		<result property="answer_date" column="answer_date"/>
+		<result property="top_answer_id" column="top_answer_id"/>
+		<result property="board_id" column="board_id"/>
+	</resultMap>
+	
     <resultMap id="BoardMap" type="com.gada.travelgada.domain.BoardVO">
        <result property="board_id" column="board_id"/>
        <result property="title" column="title"/>
@@ -20,6 +29,8 @@
        <result property="bindent" column="bindent"/>
        <result property="board_type_id" column="board_type_id"/>     
        <result property="member_id" column="member_id"/>
+       
+       <collection property="answerList" resultMap="answerMap"></collection>
    </resultMap>
    
    <resultMap id="MemberMap" type="com.gada.travelgada.domain.MemberVO">
@@ -40,13 +51,13 @@
 	
 	<select id="selectReviewBoard" resultMap="BoardMap">
 		<![CDATA[
-			select B1.* FROM( SELECT * FROM board where board_type_id = 1 order by bgroup desc, bstep asc ) B1 LIMIT #{nowPage}, #{amount}
+			select B1.* FROM( SELECT * FROM board where board_type_id = #{board_type_id} order by bgroup desc, bstep asc ) B1 LIMIT #{nowPage}, #{amount}
 		]]>
 	</select>
 
 	<select id="getTotalReviewBoard" resultType="int">
 		<![CDATA[
-			select count(*) from board where board_type_id = 1
+			select count(*) from board where board_type_id = #{i}
 		]]>
 	</select>
 	
@@ -120,4 +131,18 @@
 			delete from board where board_id = #{board_id}
 		]]>
 	</delete>
+	
+	<select id="getReply" resultMap="BoardMap">
+		<![CDATA[
+			select * from board, answer where board.board_id = answer.board_id
+		]]>
+	</select>
+	
+	<insert id="writeReply"> 
+		<![CDATA[ 
+			insert into answer (answer_id, member_id, text, answer_date, top_answer_id, board_id)
+			values (get_seq('answer_seq'), #{member_id}, #{text}, sysdate(), 0, #{board_id})
+		]]> 
+	</insert> 
+	
 </mapper>

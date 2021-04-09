@@ -131,9 +131,9 @@
 	
 	<script type="text/javascript">
 	$(document).ready(function(){
-		$("#submitBtn").submit(function(event){			
+		$("#write").submit(function(event){	
 			event.preventDefault();
-			console.log("modify click");
+			console.log("write click");
 			
 			var title = $("#title").val(); 
 			var text = $("#text").val(); 
@@ -145,6 +145,17 @@
 				board_type_id : board_type_id
 			}
 			
+		   	 if(title==""){ //빈값이면
+		       	 alert("제목을 입력하세요"); 
+		       	 $("#title").focus(); //입력포커스 이동
+		       	 return; //함수 종료, 폼 데이터를 제출하지 않음
+		     }
+		     if(text == ""){
+		         alert("내용을 입력하세요");
+		         $("#text").focus();
+		         return;
+		     }
+
 			$.ajax({
 				type : "PUT",
 				url : $(this).attr("action"),
@@ -153,7 +164,7 @@
 				contentType : 'application/json; charset=utf-8',
 				success : function(result){
 					console.log("result : " + result );
-					$(location).attr('href', '${pageContext.request.contextPath}/board/review')
+					
 				},
 				error : function(e){
 					alert("오류가 발생했습니다.");
@@ -177,7 +188,7 @@
 		<div class="container">
 			<h2 class="headline">글 작성</h2>
 			
-				<form id="write" method="post" action="${pageContext.request.contextPath}/board?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+				<form id="write" method="post" action="${pageContext.request.contextPath}/board/?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 				<%-- <input type="hidden" id="member_id" name="member_id" value="${bWriteView.member_id }"/>
 				<input type="hidden" id="board_type_id" name="board_type_id" value="${bWriteView.board_type_id }"/> --%>
 				<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
@@ -199,14 +210,23 @@
 					<br /><br />
 					<textarea class="form-control" id="text" name="text"></textarea>
 					
-					<!-- CKeditor -->
+<!-- CKeditor -->
 					<script type="text/javascript">
- 						CKEDITOR.replace('text');
+						 var ckeditor_config = {
+							   resize_enaleb : false,
+							   enterMode : CKEDITOR.ENTER_BR,
+							   shiftEnterMode : CKEDITOR.ENTER_P,
+							  
+							   filebrowserUploadUrl :  '<c:url value="${pageContext.request.contextPath}/admin/goods/ckUpload" />?${_csrf.parameterName}=${_csrf.token}'
+								 
+							 }; 
+ 						CKEDITOR.replace('text', ckeditor_config 
+						);
 					</script>
 
 				
 				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/review'">목록</button>
-				<input type="submit" id="submitBtn" class="btn-default text-primary" value="완료"  />
+				<button id="submitBtn" class="btn-default text-primary">완료</button>
 				</form>
 			
 		</div>
