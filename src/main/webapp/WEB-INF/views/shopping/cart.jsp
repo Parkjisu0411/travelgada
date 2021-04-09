@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>Login Form</title>
 <style>
 html, body {
@@ -134,29 +135,39 @@ html, body {
 			return alert("선택된 상품이 없습니다.");
 		}
 		var form = document.createElement("form");
-		form.method = "get";
+		form.method = "post";
 		form.action = "/shopping/order";
 		
 		var inputId = document.createElement("input");
+        inputId.setAttribute("type","hidden");
 		inputId.setAttribute("name", "product_id");
 		inputId.setAttribute("value", product_id_arr);
 		
 		var inputQuantity = document.createElement("input");
+        inputQuantity.setAttribute("type","hidden");
 		inputQuantity.setAttribute("name", "quantity");
 		inputQuantity.setAttribute("value", quantity_arr);
 		
 		var inputPrice = document.createElement("input");
+        inputPrice.setAttribute("type","hidden");
 		inputPrice.setAttribute("name", "price");
 		inputPrice.setAttribute("value", price_arr);
 		
 		var inputName = document.createElement("input");
+        inputName.setAttribute("type","hidden");
 		inputName.setAttribute("name", "product_name");
 		inputName.setAttribute("value", name_arr);
+		
+		var inputCsrfToken = document.createElement("input");
+		inputCsrfToken.setAttribute("type","hidden");
+		inputCsrfToken.setAttribute("name", "${_csrf.parameterName}");
+		inputCsrfToken.setAttribute("value", "${_csrf.token}");
 		
 		form.appendChild(inputId);
 		form.appendChild(inputQuantity);
 		form.appendChild(inputPrice);
 		form.appendChild(inputName);
+		form.appendChild(inputCsrfToken);
 		
 		document.body.appendChild(form);
 		form.submit();

@@ -61,7 +61,7 @@
 		]]>
 	</select>
 	
-	<select id="selectQnABoard" resultMap="BoardMap">
+<!-- 	<select id="selectQnABoard" resultMap="BoardMap">
 		<![CDATA[
 			select B2.* FROM( SELECT * FROM board where board_type_id = 2 order by bgroup desc, bstep asc ) B2 LIMIT #{nowPage}, #{amount} 		
 		]]>
@@ -83,7 +83,7 @@
 		<![CDATA[
 			select count(*) from board where board_type_id = 3
 		]]>
-	</select>	
+	</select>	 -->
 	
 	
 	<select id="getNotice" resultMap="BoardMap">

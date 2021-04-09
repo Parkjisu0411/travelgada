@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -9,6 +11,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<title>결제</title>
 
 	<style>
@@ -143,6 +146,7 @@
 				<h2 class="information-headline">수령인 정보</h2>
 				<br>
 
+				<!-- 주소록 -->
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
 					주소록
 				</button>
@@ -187,6 +191,7 @@
 					</div>
 				</div>
 
+				<!-- 배송 정보 입력 -->
 				<div class="shipping-loc-area">
 					<input type="text" id="address-name" maxlength="13" placeholder="배송지명"><br>
 					<input type="text" id="recipient" maxlength="13" placeholder="수령인"><br>
@@ -206,26 +211,35 @@
 				<hr>
 				<h2 class="information-headline">포인트 사용</h2>
 				<br>
-				<input type="number" id="point" onchange='printPoint()' placeholder="포인트">
+				<input type="number" id="point" onchange='printPoint()' min="0" value="0"
+					onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" />
 				<input type="button" onclick='useAllPoint()' value="모두 사용" />&nbsp;보유 포인트 ${point}p<br>
 				<hr>
 			</div>
 
-			<!-- Widget -->
+			<!-- 결제 정보 -->
 			<div class="col-md-4 widget">
 				<div class="product-area">
-					<c:forEach items="${buyDetailList}" var="productInformation">
-						<div class="row widget-product-information">
-							<div class="col-md-5">
-								<img src="#" class="product-img">
+					<form id="form" action="${pageContext.request.contextPath}/shopping/order/result" method="post">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<c:forEach items="${buyDetailList}" var="productInformation">
+							<div class="row widget-product-information">
+								<div class="col-md-5">
+									<img src="#" class="product-img">
+								</div>
+								<div class="col-md-7">
+									<a href="#">물품 항목</a><br>
+									<span class="product-name">${productInformation.product_name}</span><br>
+									<span>₩${productInformation.price}&nbsp;/&nbsp;${productInformation.quantity}개</span>
+
+									<input type="hidden" name="product_id" value="${productInformation.product_id}" />
+									<input type="hidden" name="product_name" value="${productInformation.product_name}" />
+									<input type="hidden" name="price" value="${productInformation.price}" />
+									<input type="hidden" name="quantity" value="${productInformation.quantity}" />
+								</div>
 							</div>
-							<div class="col-md-7">
-								<a href="#">물품 항목</a><br>
-								<span class="product-name">${productInformation.product_name}</span><br>
-								<span>₩${productInformation.price}&nbsp;/&nbsp;${productInformation.quantity}개</span><br>
-							</div>
-						</div>
-					</c:forEach>
+						</c:forEach>
+					</form>
 				</div>
 				<hr>
 				<h2 class="information-headline">결제 세부정보</h2>
@@ -241,8 +255,12 @@
 				<span id="use-point" class="use-point">0</span><br>
 				<span class="shipping-fee-title">배송비</span>
 				<span class="shipping-fee">₩&nbsp;0</span><br>
+				<hr>
+				<fmt:parseNumber var="accumulatePoint" value="${totalPrice * 0.05}" integerOnly="true" />
 				<strong class="payment-amount-title">총 결제 금액</strong>
 				<strong class="krw">₩</strong><strong id="payment-amount" class="payment-amount">${totalPrice}</strong><br>
+				<span>적립 포인트</span>
+				<c:out value="${accumulatePoint}" />
 				<hr>
 				<input type="checkbox" id="accept">
 				<span>(필수) 상품 및 결제 정보를 확인하였으며, 이에 동의합니다.</span>
@@ -334,34 +352,25 @@
 			document.getElementById("payment-amount").innerHTML = resultPrice;
 		}
 
-		// URL 파라미터에서 물품명을 갖고 오기 위한 함수(정규식)
-		function getParameterByName(name) {
-			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-				results = regex.exec(location.search);
-			return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-		}
-
 		// 결제 모듈
 		function payCard() {
 			var buyerName = document.getElementById("recipient").value;
 			var buyerTel = document.getElementById("tel").value;
 			var buyerAddr = document.getElementById("address").value + " " + document.getElementById("detailAddress").value;
 			var buyerPostCode = document.getElementById("postcode").value;
-			var productName = getParameterByName("product_name");
 			var buyerEmail = '<c:out value="${member.email}"/>';
-			
+
 			var totalPrice = ${ totalPrice };
 			var usedPoint = document.getElementById('point').value;
 			var resultPrice = totalPrice - usedPoint;
-			
+
 			IMP.init('imp06631679');
 
 			IMP.request_pay({
 				pg: "html5_inicis",
 				pay_method: "card",
 				merchant_uid: 'merchant_' + new Date().getTime(),
-				name: productName,
+				name: payProductName(),
 				amount: resultPrice,
 				buyer_name: buyerName,
 				buyer_tel: buyerTel,
@@ -372,14 +381,71 @@
 				if (rsp.success) {
 					var msg = '결제가 완료되었습니다.\n';
 					msg += '결제 금액 : ' + rsp.paid_amount + '\n';
-					msg += '카드 승인번호 : ' + rsp.apply_num;
-					// location.replace("http://localhost:8282/");
+					msg += '카드 승인번호 : ' + rsp.apply_num + '\n';
+					msg += '고유 ID: ' + rsp.imp_uid;
+
+					var impUid = rsp.imp_uid;
+					sendPaymentInformation(impUid);
 				} else {
 					var msg = '결제에 실패하였습니다.\n';
 					msg += rsp.error_msg;
 				}
 				alert(msg);
 			});
+		}
+
+		// 결제 페이지로 결제 정보 전송
+		function sendPaymentInformation(impUid) {
+			var shippingLocName = document.getElementById("address-name").value;
+			var totalPrice = ${ totalPrice };
+			var usedPoint = document.getElementById('point').value;
+			var accumulatePoint = ${ accumulatePoint };
+
+			var sendBuyId = document.createElement("input");
+			sendBuyId.setAttribute("type", "hidden");
+			sendBuyId.setAttribute("name", "buy_id");
+			sendBuyId.setAttribute("value", impUid);
+			document.getElementById("form").append(sendBuyId);
+
+			var sendShippingLocName = document.createElement("input");
+			sendShippingLocName.setAttribute("type", "hidden");
+			sendShippingLocName.setAttribute("name", "shipping_loc_name");
+			sendShippingLocName.setAttribute("value", shippingLocName);
+			document.getElementById("form").append(sendShippingLocName);
+
+			var sendTotalPrice = document.createElement("input");
+			sendTotalPrice.setAttribute("type", "hidden");
+			sendTotalPrice.setAttribute("name", "total_price");
+			sendTotalPrice.setAttribute("value", totalPrice);
+			document.getElementById("form").append(sendTotalPrice);
+
+			var sendUsedPoint = document.createElement("input");
+			sendUsedPoint.setAttribute("type", "hidden");
+			sendUsedPoint.setAttribute("name", "used_point");
+			sendUsedPoint.setAttribute("value", usedPoint);
+			document.getElementById("form").append(sendUsedPoint);
+
+			var sendAccumulatePoint = document.createElement("input");
+			sendAccumulatePoint.setAttribute("type", "hidden");
+			sendAccumulatePoint.setAttribute("name", "accumulate_point");
+			sendAccumulatePoint.setAttribute("value", accumulatePoint);
+			document.getElementById("form").append(sendAccumulatePoint);
+
+			document.getElementById("form").submit();
+		}
+
+		// 결제 모듈 - '상품명'에 출력
+		function payProductName() {
+			var payProductName = "";
+			var productName = '<c:out value="${buyDetailList[0].product_name}"/>';
+			var productAmount = '${fn:length(buyDetailList)}';
+
+			if (productAmount == 1) {
+				payProductName += productName
+			} else {
+				payProductName += productName + ' 외 ' + (productAmount - 1);
+			}
+			return payProductName;
 		}
 
 		// 주소록
@@ -402,7 +468,7 @@
 			$('#address').val(address);
 			$('#detailAddress').val(detailAddress);
 			$('#tel').val(recipientTel);
-			
+
 			$("#exampleModalCenter").modal('hide');
 		});
 
@@ -490,7 +556,6 @@
 				alert("보유 포인트를 초과하여 사용할 수 없습니다.");
 				document.getElementById("point").value = totalPoint;
 				printPoint();
-				return;
 			}
 		}
 	</script>
