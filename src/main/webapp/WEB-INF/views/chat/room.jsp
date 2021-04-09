@@ -91,6 +91,7 @@
 	
 	$(document).ready(function() {
 		getRoom();
+		wsOpen();
 	})
 	
 	function getRoom(){
@@ -101,8 +102,7 @@
 				if($(result).length) {
 					var content = "<tr><th class='room'>방 이름</th><th class='go'></th></tr>";
 					$(result).each(function() {
-						console.log(this);
-						content += "<tr>";
+						content += "<tr id='" + this + "'>";
 						content += "	<td class='room'>" + this + "</td>";
 						content += "	<td class='go'><button type='button' onclick='join(\"" + String(this) + "\")'>참여</button></td>";
 						content += "</tr>";
@@ -116,10 +116,55 @@
 		});
 	}
 	
+	function wsOpen() {
+		ws = new WebSocket("ws://" + location.host + "/chatting/admin");
+		wsEvt();
+	}
+	
+	function wsEvt() {
+		ws.onopen = function(data) {
+		}
+	
+		ws.onmessage = function(data) {
+			//메시지를 받으면 동작
+			var msg = data.data;
+			console.log(msg);
+			if(msg != null && msg.trim() != ''){
+				var d = JSON.parse(msg);
+				if(d.type == "getId"){
+					var si = d.sessionId != null ? d.sessionId : "";
+					if(si != ''){
+						$("#sessionId").val(si); 
+					}
+				}else if(d.type == "alert"){
+					if(d.msg == "enter") {
+						if(d.sessionId == $("#sessionId").val()){
+							
+						}else{
+							var content = "";
+							content += "<tr id=" + d.username + ">";
+							content += "	<td class='room'>" + d.username + "</td>";
+							content += "	<td class='go'><button type='button' onclick='join(\"" + d.username + "\")'>참여</button></td>";
+							content += "</tr>";
+							$("#roomList").append(content);
+						}
+					} else {
+						$("#" + d.username).remove();
+					}
+					
+						
+				}else{
+					console.warn("unknown type!")
+				}
+			}
+		}
+	}
+	
 	function join(username){
-		console.log(username);
 		window.open("/chat/" + username, username, "width=400px, height=600px");
 	}
+	
+	
 	
 </script>
 </head>

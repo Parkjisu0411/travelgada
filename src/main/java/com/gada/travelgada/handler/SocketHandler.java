@@ -39,37 +39,36 @@ public class SocketHandler extends TextWebSocketHandler {
 		//메시지 발송
 		String msg = message.getPayload();
 		JSONObject obj = jsonToObjectParser(msg);
-		log.info("message : " + msg);
 		String username = (String) obj.get("username");
+		String type = (String) obj.get("type");
 		HashMap<String, Object> temp = new HashMap<String, Object>();
-		if(roomList.size() > 0) {
-			for(int i = 0; i < roomList.size(); i++) {
-				String room = (String) roomList.get(i).get("username");
-				log.info("====================== user list : " + room);
-				if(room.equals(username)) {
-					temp = roomList.get(i);
-					break;
+		
+		if(type.equals("alert")) {
+			alertToAdmin(session, message);
+		} else {
+			if(roomList.size() > 0) {
+				for(int i = 0; i < roomList.size(); i++) {
+					String room = (String) roomList.get(i).get("username");
+					if(room.equals(username)) {
+						temp = roomList.get(i);
+						break;
+					}
 				}
-			}
-			for(String key : temp.keySet()) {
-				log.info("====================== key : " + key);
-				log.info("====================== key : " + temp.get(key));
-				if(key.equals("username")) {
-					continue;
-				}
-				
-				WebSocketSession wss = (WebSocketSession) temp.get(key);
-				if(wss != null) {
-					try {
-						wss.sendMessage(new TextMessage(obj.toJSONString()));
-						if(chatBot.isBasicQuestion((String) obj.get("msg"))) {
-							log.info("===================== 기본질문응답");
-							log.info(chatBot.basicAnswer((String) obj.get("msg")));
-							obj = jsonToObjectParser(chatBot.basicAnswer((String) obj.get("msg")));
+				for(String key : temp.keySet()) {
+					if(key.equals("username")) {
+						continue;
+					}
+					WebSocketSession wss = (WebSocketSession) temp.get(key);
+					if(wss != null) {
+						try {
 							wss.sendMessage(new TextMessage(obj.toJSONString()));
+							if(chatBot.isBasicQuestion((String) obj.get("msg"))) {
+								obj = jsonToObjectParser(chatBot.basicAnswer((String) obj.get("msg")));
+								wss.sendMessage(new TextMessage(obj.toJSONString()));
+							}
+						} catch(Exception e) {
+							e.printStackTrace();
 						}
-					} catch(Exception e) {
-						e.printStackTrace();
 					}
 				}
 			}
@@ -83,7 +82,6 @@ public class SocketHandler extends TextWebSocketHandler {
 		super.afterConnectionEstablished(session);
 		boolean flag = false;
 		String url = session.getUri().toString();
-		log.info("========================= url : " + url);
 		String username = url.split("/chatting/")[1];
 		int idx = roomList.size();
 		
@@ -100,11 +98,9 @@ public class SocketHandler extends TextWebSocketHandler {
 		}
 		
 		if(flag) { //방이 존재 할 경우
-			log.info("====================== " +  session.getId() +  "가 방에 입장합니다.");
 			HashMap<String, Object> map = roomList.get(idx);
 			map.put(session.getId(), session);
 		} else { //없을 경우
-			log.info("====================== " +  session.getId() +  "가 방을 생성합니다.");
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("username", username);
 			map.put(session.getId(), session);
@@ -120,12 +116,46 @@ public class SocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		// 소켓 종료
-		log.info("====================== 소켓 종료");
 		if(roomList.size() > 0) {
 			for(int i = 0; i < roomList.size(); i++) {
+				JSONObject obj = new JSONObject();
+				obj.put("type", "alert");
+				obj.put("sessionId", session.getId());
+				obj.put("msg", "exit");
+				obj.put("username", roomList.get(i).get("username"));
+				alertToAdmin(session, new TextMessage(obj.toJSONString()));
+				
 				roomList.get(i).remove(session.getId());
 			}
 		}
 		super.afterConnectionClosed(session, status);
+	}
+	
+	private void alertToAdmin(WebSocketSession session, TextMessage message) {
+		
+		String msg = message.getPayload();
+		JSONObject obj = jsonToObjectParser(msg);
+		HashMap<String, Object> temp = new HashMap<String, Object>();
+		
+		for(int i = 0; i < roomList.size(); i++) {
+			String room = (String) roomList.get(i).get("username");
+			if(room.equals("admin")) {
+				temp = roomList.get(i);
+				break;
+			}
+		}
+			for(String key : temp.keySet()) {
+				if(key.equals("username")) {						
+					continue;
+				}
+			WebSocketSession wss = (WebSocketSession) temp.get(key);
+			if(wss != null) {
+				try {
+					wss.sendMessage(new TextMessage(obj.toJSONString()));
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

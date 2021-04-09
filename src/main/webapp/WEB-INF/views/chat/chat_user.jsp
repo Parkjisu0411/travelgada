@@ -120,6 +120,14 @@
 				console.log(e);
 			}
 		});
+		
+		var data = {
+				type : "alert",
+				sessionId : $("#sessionId").val(),
+				username : username,
+				msg : "enter"
+		}
+		ws.send(JSON.stringify(data));
 	}
 	
 	function typing(obj) {
