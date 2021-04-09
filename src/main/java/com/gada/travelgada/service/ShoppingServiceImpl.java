@@ -9,13 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.gada.travelgada.domain.BuyDetailVO;
 import com.gada.travelgada.domain.BuyVO;
+import com.gada.travelgada.domain.PointVO;
 import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.mapper.ShoppingMapper;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class ShoppingServiceImpl {
@@ -102,5 +101,25 @@ public class ShoppingServiceImpl {
 	
 	public BuyVO getBuy(String buy_id) {
 		return shoppingMapper.selectBuy(buy_id);
+	}
+	
+	public void insertPaymentResult(BuyVO buyVO) {
+		shoppingMapper.insertPaymentResult(buyVO);
+	}
+	
+	public void insertPaymentResultDetail(BuyDetailVO buyDetailVO) {
+		shoppingMapper.insertPaymentResultDetail(buyDetailVO);
+	}
+	
+	public void updateAccumulatePoint(PointVO pointVO) {
+		shoppingMapper.updateAccumulatePoint(pointVO);
+	}
+	
+	public void updateDeductionPoint(PointVO pointVO) {
+		shoppingMapper.updateDeductionPoint(pointVO);
+	}
+	
+	public List<BuyDetailVO> getPaymentResult(String buy_id) {
+		return shoppingMapper.getPaymentResult(buy_id);
 	}
 }

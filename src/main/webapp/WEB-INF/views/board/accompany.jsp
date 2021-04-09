@@ -98,15 +98,15 @@ html, body {
 			
 			<ul class="pagination" style="padding:80px 500px;">	
 		  		<c:if test="${pageMaker.prev}">
-	       		  <li class="page-item"><a class="page-link" href="accompany${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
+	       		  <li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
 	     		</c:if>
 
 	      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-	         		<li class="page-item"><a class="page-link" href="accompany${pageMaker.makeQuery(idx)}">${idx}</a></li>
+	         		<li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(idx)}">${idx}</a></li>
 	      		</c:forEach>
 	      
 	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-	         		<li class="page-item"><a class="page-link" href="accompany${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
+	         		<li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
 	      		</c:if> <br> 
 		 	</ul>
 

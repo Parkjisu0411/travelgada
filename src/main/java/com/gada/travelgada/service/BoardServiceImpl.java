@@ -32,15 +32,21 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.selectReviewBoard(nowPage, amount);
 	}
 	
+	@Override
+	public List<BoardVO> getReviewBoard(int nowPage, int amount, int board_type_id) {
+		return boardMapper.selectReviewBoard(nowPage, amount, board_type_id);
+	}
+	
 //	@Override
 //	public List<BoardVO> getReviewBoard(CriteriaVO cri) {
 //		return boardMapper.selectReviewBoard(cri);
 //	}
-
+	
 	@Override
-	public int getTotalReviewBoard(CriteriaVO cri) {
-		return boardMapper.getTotalReviewBoard(cri);
+	public int getTotalReviewBoard(int i) {
+		return boardMapper.getTotalReviewBoard(i);
 	}
+
 	
 	@Override
 	public List<BoardVO> getQnABoard(int nowPage, int amount) {
@@ -99,53 +105,19 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.deleteBoard(boardVO);
 	}
 
-//	@Override
-//	@SuppressWarnings("resource")
-//	public void ckeditorImageUpload(HttpServletRequest request, HttpServletResponse response, MultipartFile upload) {
-//		OutputStream out = null;
-//
-//		PrintWriter printWriter = null;	
-//
-//		String fileName = upload.getOriginalFilename();
-//
-//		byte[] bytes = upload.getBytes();
-//
-//		String uploadPath = "C:\\Users\\김슬기\\git\\travelgada\\src\\main\\webapp\\resources\\ckeditor" + "\\" + fileName;
-//
-//		
-//
-//		System.out.println(uploadPath);
-//
-//		out = new FileOutputStream(new File(uploadPath));
-//
-//		out.write(bytes);
-//
-//		String callback = request.getParameter("CKEditorFuncNum");
-//
-//		
-//
-//		printWriter = response.getWriter();
-//		
-//		String save_url = "/board/board_modify_view";
-//
-//		String fileUrl = request.getContextPath() + save_url + "/" +fileName; //url 경로
-//
-//		
-//
-//		printWriter.println("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
-//
-//	               + callback
-//
-//	               + ",'"
-//
-//	               + fileUrl
-//
-//	               + "','이미지를 업로드 하였습니다.'"
-//
-//	               + ")</script>");
-//
-//	       printWriter.flush();
-//	}
+	@Override
+	public List<BoardVO> getReply(BoardVO boardVO) {
+		return boardMapper.getReply(boardVO);
+	}
+
+	@Override
+	public void writeReply(BoardVO boardVO) {
+		boardMapper.writeReply(boardVO);
+	}
+
+
+
+
 
 
 	

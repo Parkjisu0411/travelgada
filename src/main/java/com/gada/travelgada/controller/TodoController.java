@@ -39,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @RestController
 public class TodoController {
+	
 	@Autowired
 	private TodoService service;
 	private ScheduleService scheduleService;

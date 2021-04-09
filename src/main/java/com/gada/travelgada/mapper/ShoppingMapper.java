@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.gada.travelgada.domain.BuyDetailVO;
 import com.gada.travelgada.domain.BuyVO;
+import com.gada.travelgada.domain.PointVO;
 import com.gada.travelgada.domain.ProductVO;
 
 @Mapper
@@ -25,6 +26,14 @@ public interface ShoppingMapper {
 	public List<BuyVO> selectBuyById(String member_id);
 	
 	public List<BuyDetailVO> selectBuyDetailById(String buy_id);
-
 	
+	public void insertPaymentResult(BuyVO buyVO);
+
+	public void insertPaymentResultDetail(BuyDetailVO buydetailVO);
+	
+	public void updateAccumulatePoint(PointVO pointVO);
+	
+	public void updateDeductionPoint(PointVO pointVO);
+	
+	public List<BuyDetailVO> getPaymentResult(String buy_id);
 }
