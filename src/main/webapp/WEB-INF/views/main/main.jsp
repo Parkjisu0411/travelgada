@@ -252,7 +252,9 @@ footer {
 			</div>
 		</div>
 	</section>
-
+	
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp"%>
+	
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 </body>
