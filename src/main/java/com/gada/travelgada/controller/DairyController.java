@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSessionEvent;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gada.travelgada.domain.DiaryVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.service.DiaryService;
+import com.gada.travelgada.service.UserCounter;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +43,7 @@ public class DairyController {
 	@GetMapping("diary")
 	public ModelAndView diary(ModelAndView mav, @AuthenticationPrincipal MemberDetails member) {
 		log.info("controller diary();");
-
+		
 		mav.addObject("diary", diaryService.getDiary(member.getUsername()));
 		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
 
@@ -180,16 +183,6 @@ public class DairyController {
 		log.info("controller diary_test();");
 
 		return diaryService.getDiaryOther(diaryVO.getPlanner_id());
-
-	}// diary_test end
-   
-	@GetMapping("diary_test")
-	public ModelAndView diary_test(ModelAndView mav) {
-		log.info("controller diary_test();");
-
-		mav.setViewName("diary/test");
-
-		return mav;
 
 	}// diary_test end
 
