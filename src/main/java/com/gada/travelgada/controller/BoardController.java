@@ -1,10 +1,15 @@
 package com.gada.travelgada.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
@@ -192,6 +197,8 @@ public class BoardController {
 	
 		return entity;
 	}
+	
+
 	
 	
 }
