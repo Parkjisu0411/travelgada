@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class diaryConfig {
+public class DiaryConfig {
 	
 	
 
