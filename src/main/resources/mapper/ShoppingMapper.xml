@@ -58,13 +58,13 @@
 		]]>
 	</insert>
 	
-	<insert id="accumulatePoint">
+	<insert id="updateAccumulatePoint">
 		<![CDATA[
 			insert into point (point_id, member_id, amount, save_date, save_flag) values (get_seq('point_seq'), #{member_id}, #{amount}, sysdate(), 0)
 		]]>
 	</insert>
 	
-	<insert id="deductionPoint">
+	<insert id="updateDeductionPoint">
 		<![CDATA[
 			insert into point (point_id, member_id, amount, save_date, save_flag) values (get_seq('point_seq'), #{member_id}, #{amount}, sysdate(), 1)
 		]]>

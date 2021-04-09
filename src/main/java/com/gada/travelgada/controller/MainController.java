@@ -96,23 +96,23 @@ public class MainController {
 		String savedPoint = request.getParameter("accumulate_point");
 		
 		// buy 테이블에 결제 내역 저장
-		BuyVO payResult = new BuyVO();
-		payResult.setBuy_id(buyId);
-		payResult.setMember_id(memberDetails.getUsername());
-		payResult.setShipping_loc_name(shippingLocName);
+		BuyVO paymentResult = new BuyVO();
+		paymentResult.setBuy_id(buyId);
+		paymentResult.setMember_id(memberDetails.getUsername());
+		paymentResult.setShipping_loc_name(shippingLocName);
 		
-		shoppingService.insertPaymentResult(payResult);
+		shoppingService.insertPaymentResult(paymentResult);
 		
 		// buy_detail 테이블에 결제 상세 내역 저장
 		for (int i = 0; i < productName.length; i++) {
-			BuyDetailVO payResultDetail = new BuyDetailVO();
-			payResultDetail.setProduct_name(productName[i]);
-			payResultDetail.setPrice(Integer.parseInt(price[i]));
-			payResultDetail.setQuantity(Integer.parseInt(quantity[i]));
-			payResultDetail.setBuy_id(buyId);
-			payResultDetail.setProduct_id(Integer.parseInt(productId[i]));
+			BuyDetailVO paymentResultDetail = new BuyDetailVO();
+			paymentResultDetail.setProduct_name(productName[i]);
+			paymentResultDetail.setPrice(Integer.parseInt(price[i]));
+			paymentResultDetail.setQuantity(Integer.parseInt(quantity[i]));
+			paymentResultDetail.setBuy_id(buyId);
+			paymentResultDetail.setProduct_id(Integer.parseInt(productId[i]));
 			
-			shoppingService.insertPaymentResultDetail(payResultDetail);
+			shoppingService.insertPaymentResultDetail(paymentResultDetail);
 		}
 		
 		// 결제 금액의 1%를 포인트로 적립
@@ -120,7 +120,7 @@ public class MainController {
 		accumulatePoint.setAmount(Integer.parseInt(savedPoint));
 		accumulatePoint.setMember_id(memberDetails.getUsername());
 		
-		shoppingService.accumulatePoint(accumulatePoint);
+		shoppingService.updateAccumulatePoint(accumulatePoint);
 		
 		// 결제 단게에서 포인트 사용 시 포인트 차감
 		if (Integer.parseInt(usedPoint) > 0) {
@@ -128,7 +128,7 @@ public class MainController {
 			deductionPoint.setAmount(Integer.parseInt(usedPoint));
 			deductionPoint.setMember_id(memberDetails.getUsername());
 			
-			shoppingService.deductionPoint(deductionPoint);
+			shoppingService.updateDeductionPoint(deductionPoint);
 		}
 		
 		modelAndView.setViewName("redirect:/shopping/order/" + buyId);

@@ -111,12 +111,12 @@ public class ShoppingServiceImpl {
 		shoppingMapper.insertPaymentResultDetail(buyDetailVO);
 	}
 	
-	public void accumulatePoint(PointVO pointVO) {
-		shoppingMapper.accumulatePoint(pointVO);
+	public void updateAccumulatePoint(PointVO pointVO) {
+		shoppingMapper.updateAccumulatePoint(pointVO);
 	}
 	
-	public void deductionPoint(PointVO pointVO) {
-		shoppingMapper.deductionPoint(pointVO);
+	public void updateDeductionPoint(PointVO pointVO) {
+		shoppingMapper.updateDeductionPoint(pointVO);
 	}
 	
 	public List<BuyDetailVO> getPaymentResult(String buy_id) {
