@@ -45,8 +45,8 @@
 .go-top{
   width: 60px;
   height: 60px;
-  bottom:calc(10% - 35px);
   position: fixed;
+  bottom:calc(10% - 35px);
   right: calc((100% - 1200px)/ 2 - 80px);
   display: inline-block;
   border: none;
