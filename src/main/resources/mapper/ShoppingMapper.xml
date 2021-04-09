@@ -46,4 +46,34 @@
 		]]>
 	</select>
 	
+	<insert id="insertPaymentResult">
+		<![CDATA[	
+			insert into buy (buy_id, buy_date, waybill_num, member_id, shipping_loc_name) values (#{buy_id}, sysdate(), 507673031401, #{member_id}, #{shipping_loc_name})
+		]]>
+	</insert>
+	
+	<insert id="insertPaymentResultDetail">
+		<![CDATA[	
+			insert into buy_detail (buy_detail_id, product_name, price, quantity, buy_id, product_id) values (get_seq('buy_detail_seq'), #{product_name}, #{price}, #{quantity}, #{buy_id}, #{product_id})
+		]]>
+	</insert>
+	
+	<insert id="updateAccumulatePoint">
+		<![CDATA[
+			insert into point (point_id, member_id, amount, save_date, save_flag) values (get_seq('point_seq'), #{member_id}, #{amount}, sysdate(), 0)
+		]]>
+	</insert>
+	
+	<insert id="updateDeductionPoint">
+		<![CDATA[
+			insert into point (point_id, member_id, amount, save_date, save_flag) values (get_seq('point_seq'), #{member_id}, #{amount}, sysdate(), 1)
+		]]>
+	</insert>
+	
+	<select id="getPaymentResult" resultType="com.gada.travelgada.domain.BuyDetailVO">
+		<![CDATA[
+			select product_name, price, quantity, buy_id, product_id from buy_detail where buy_id = #{buy_id}
+		]]>
+	</select>
+	
 </mapper>
