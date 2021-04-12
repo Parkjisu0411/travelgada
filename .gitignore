@@ -14,6 +14,12 @@ local.properties
 .loadpath
 .recommenders
 
+<<<<<<< HEAD
+=======
+# ignore properties file
+.properties
+
+>>>>>>> parent of 9c321e7... Update .gitignore
 # External tool builders
 .externalToolBuilders/
 
