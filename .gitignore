@@ -15,7 +15,7 @@ local.properties
 .recommenders
 
 # ignore properties file
-.properties
+*.properties
 
 # External tool builders
 .externalToolBuilders/
