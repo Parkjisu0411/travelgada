@@ -1,6 +1,7 @@
 package com.gada.travelgada.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,4 +36,6 @@ public class BoardVO {
 	private int bindent;
 	private int board_type_id;
 	private String member_id;
+	
+	private List<AnswerVO> answerList;
 }

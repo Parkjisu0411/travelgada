@@ -45,9 +45,9 @@
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 커뮤니티 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/board/qna">Q&amp;A</a>
-							<a class="dropdown-item" href="/board/review">리뷰</a>
-							<a class="dropdown-item" href="/board/accompany">동행</a>
+							<a class="dropdown-item" href="/board/2">Q&amp;A</a>
+							<a class="dropdown-item" href="/board/1">리뷰</a>
+							<a class="dropdown-item" href="/board/3">동행</a>
 						</div>
 					</li>
 					<li class="nav-item dropdown">

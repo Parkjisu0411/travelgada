@@ -92,21 +92,21 @@ html, body {
 			</sec:authorize>
 
 			<sec:authorize access="isAuthenticated()">
-  				 <button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+  				 <button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
 			</sec:authorize>	
 			</div>
 
 			<ul class="pagination" style="padding:80px 500px;">	
 		  		<c:if test="${pageMaker.prev}">
-	       		  <li class="page-item"><a class="page-link" href="review${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
+	       		  <li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
 	     		</c:if>
 
 	      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-	         		<li class="page-item"><a class="page-link" href="review${pageMaker.makeQuery(idx)}">${idx}</a></li>
+	         		<li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(idx)}">${idx}</a></li>
 	      		</c:forEach>
 	      
 	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-	         		<li class="page-item"><a class="page-link" href="review${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
+	         		<li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
 	      		</c:if> <br /> 
 		 	</ul>
 

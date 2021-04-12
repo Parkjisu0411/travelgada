@@ -67,44 +67,45 @@
 		xhr.setRequestHeader(header, token);
 	});
 </script> -->
-     
+
 <!-- 삭제 ajax -->
 <script type="text/javascript">
-    	
-	$(document).ready(function(){
-		$(document).on("click",".delete",function(event){//※주의※		
-			event.preventDefault();
-			console.log("delete click");
-			
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-				
-			var tr = $(this).parent().parent().parent();
-				
-			$.ajax({
-				type : "DELETE",
-				url : $(this).attr("href"),
-				cache : false,
-		 		beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-					console.log("header 실행 "+header+token)
-					xhr.setRequestHeader(header, token);
-				}, 
-				success : function(result){
-					console.log("result : " + result );
-					if(result == "SUCCESS"){
-						alert("삭제하시겠습니까?");
-						$(tr).remove();
+	$(document).ready(function() {
+		$(document).on("click", ".delete", function(event) {//※주의※		
+			if (confirm("삭제하시겠습니까?")) {
+				event.preventDefault();
+				console.log("delete click");
+
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+
+				var tr = $(this).parent().parent().parent();
+
+				$.ajax({
+					type : "DELETE",
+					url : $(this).attr("href"),
+					cache : false,
+					beforeSend : function(xhr) { /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+						console.log("header 실행 " + header + token)
+						xhr.setRequestHeader(header, token);
+					},
+					success : function(result) {
+						console.log("result : " + result);
+						if (result == "SUCCESS") {
+							alert("삭제하시겠습니까?");
+							$(tr).remove();
+						}
+					},
+					error : function(e) {
+						alert("오류가 발생했습니다.");
+						console.log(e);
 					}
-				},
-				error : function(e){
-					alert("오류가 발생했습니다.");
-					console.log(e);
-				}
-			}); // ajax end
+				}); // ajax end
+			};
 		}); // event end
 	}); // ready end
 </script>
-	
+
 <!-- 다른 플래너로 전환 -->
 <script type="text/javascript">
 	$(document).ready(function(){

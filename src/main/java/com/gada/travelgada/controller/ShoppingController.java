@@ -31,6 +31,7 @@ import com.gada.travelgada.service.ShoppingServiceImpl;
 import com.gada.travelgada.utils.PointCalculator;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @AllArgsConstructor

@@ -14,9 +14,10 @@ import com.gada.travelgada.domain.MemberVO;
 public interface BoardMapper {
 
 	public List<BoardVO> selectReviewBoard(int nowPage, int amount);
+	public List<BoardVO> selectReviewBoard(int nowPage, int amount, int board_type_id);
 	//public List<BoardVO> selectReviewBoard(CriteriaVO cri);
 	
-	public int getTotalReviewBoard(CriteriaVO cri);
+	public int getTotalReviewBoard(int i);
 
 	public List<BoardVO> selectQnABoard(int nowPage, int amount);
 	
@@ -42,6 +43,12 @@ public interface BoardMapper {
 	public void modifyBoardContent(BoardVO boardVO);
 
 	public void deleteBoard(BoardVO boardVO);
+
+	public List<BoardVO> getReply(BoardVO boardVO);
+
+	public void writeReply(BoardVO boardVO);
+
+	
 
 	
 }

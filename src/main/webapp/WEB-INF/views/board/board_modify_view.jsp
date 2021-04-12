@@ -161,9 +161,13 @@
 					
 					<!-- CKeditor -->
 					<script type="text/javascript">
- 						CKEDITOR.replace('text'{
- 						    filebrowserImageUploadUrl : '${pageContext.request.contextPath}/file/ckeditorImageUpload.do'
- 					    });
+						 var ckeditor_config = {
+							   resize_enaleb : false,
+							   enterMode : CKEDITOR.ENTER_BR,
+							   shiftEnterMode : CKEDITOR.ENTER_P,
+							   filebrowserUploadUrl :  '<c:url value="${pageContext.request.contextPath}/admin/goods/ckUpload" />?${_csrf.parameterName}=${_csrf.token}'
+							 }; 
+ 						CKEDITOR.replace('text', ckeditor_config);
 					</script>
 				
 				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/review'">목록</button>
