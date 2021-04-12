@@ -1,11 +1,16 @@
 package com.gada.travelgada.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import org.apache.ibatis.exceptions.IbatisException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -32,10 +37,13 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class MemberController {
 	
+
+	@Autowired
+	private JavaMailSender javaMailSender;
 	@Autowired
 	private MemberServiceImpl memberService;
-	
 	private MemberValidator memberValidator;
+	
 	
 	@GetMapping("/member")
 	public ModelAndView signUpForm(ModelAndView mv) {
@@ -155,4 +163,26 @@ public class MemberController {
 		return entity;
 		
 	}
+	
+	@PostMapping("/member/authMail")
+	public String authMail(@RequestBody MemberVO memberVO) {
+		log.info("=========================== email : " + memberVO.getEmail());
+		Random random = new Random();
+		String key = "";
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(memberVO.getEmail());
+		
+		for(int i = 0; i < 3; i++) {
+			int idx = random.nextInt(25) + 65;
+			key += (char) idx;
+		}
+		int ranNum = random.nextInt(8999) + 1000;
+		key += ranNum;
+		mailMessage.setSubject("GADA 인증번호 전송");
+		mailMessage.setText("인증 번호 : " + key);
+		javaMailSender.send(mailMessage);
+		
+		return key;
+	}
+	
 }

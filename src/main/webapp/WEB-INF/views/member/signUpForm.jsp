@@ -50,7 +50,48 @@ html, body {
 }
 </style>
 <script type="text/javascript">
+	var idFlag = false;
+	var pwFlag = false;
+	var submitFlag = false;
+	var emailFlag = false;
+
 	/* 공통함수 */
+	function authEmail() {
+		var email = $("#email").val();
+		console.log(email);
+		if(checkEmail() && email != "") {
+			var data = {
+				email : email		
+			};
+			$.ajax({
+				type : "POST",
+				url : "/member/authMail",
+				data : JSON.stringify(data),
+				contentType : "application/json",
+				cache : false,
+				beforeSend : function(xhr){
+	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				success : function(result) {
+					alert("인증번호가 발송됐습니다.");
+					console.log(result);
+					$("#auth-code").css("display", "block");
+					$("#auth-code").keyup(function() {
+						if($("#auth-code").val() == result) {
+							$("#auth-code").css("display", "none");
+							showSuccessMsg($("#emailMsg"), "인증되었습니다.");
+							$("#emailSend-btn").css("display", "none");
+							emailFlag = true;
+						}
+					})
+				},
+				error : function(e) {
+					console.log(e)
+				}
+			});
+		}
+	}
+	
 	function showErrorMsg(obj, msg) {
 		obj.attr("class", "error_next_box");
 		obj.html(msg);
@@ -63,20 +104,6 @@ html, body {
 	}
 	function hideMsg(obj) {
 		obj.hide();
-	}
-
-	function setFocusToInputObject(obj) {
-		if (submitFlag) {
-			submitFlag = false;
-			obj.focus();
-		}
-	}
-	function submitClose() {
-		submitFlag = true;
-		$("#btnJoin").attr("disabled", true);
-	}
-	function submitOpen() {
-		$("#btnJoin").attr("disabled", false);
 	}
 
 	function checkSpace(str) {
@@ -124,18 +151,15 @@ html, body {
 
 		var id = $("#id").val();
 		var oMsg = $("#idMsg");
-		var oInput = $("#id");
 
 		if (id == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
-			setFocusToInputObject(oInput);
 			return false;
 		}
 
 		var isID = /^[a-z0-9]{5,20}$/;
 		if (!isID.test(id)) {
 			showErrorMsg(oMsg, "5~20자의 영문 소문자와 숫자만 사용 가능합니다.");
-			setFocusToInputObject(oInput);
 			return false;
 		}
 
@@ -155,7 +179,6 @@ html, body {
 					idFlag = true;
 				} else {
 					showErrorMsg(oMsg, "이미 사용중이거나 탈퇴한 아이디입니다.");
-					setFocusToInputObject(oInput);
 				}
 			}
 		});
@@ -172,11 +195,9 @@ html, body {
 		var oImg = $("#pswd1Img");
 		var oSpan = $("#pswd1Span");
 		var oMsg = $("#pswd1Msg");
-		var oInput = $("#pswd1");
 
 		if (pw == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
-			setFocusToInputObject(oInput);
 			pwFlag = false;
 			return false;
 		}
@@ -184,7 +205,6 @@ html, body {
 		var isPW = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
 		if (!isPW.test(pw)) {
 			showErrorMsg(oMsg, "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
-			setFocusToInputObject(oInput);
 			pwFlag = false;
 			return false;
 		}
@@ -200,18 +220,15 @@ html, body {
 		var oMsg = $("#pswd2Msg");
 		var oImg = $("#pswd2Img");
 		var oBlind = $("#pswd2Blind");
-		var oInput = $("#pswd2");
 
 		if (pswd2.val() == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
 			oBlind.html("");
-			setFocusToInputObject(oInput);
 			return false;
 		}
 		if (pswd1.val() != pswd2.val()) {
 			showErrorMsg(oMsg, "비밀번호가 일치하지 않습니다.");
 			oBlind.html("");
-			setFocusToInputObject(oInput);
 			return false;
 		} else {
 			oBlind.html("일치합니다");
@@ -227,15 +244,12 @@ html, body {
 		var nonchar = /[^가-힣a-zA-Z0-9]/gi;
 
 		var name = $("#name").val();
-		var oInput = $("#name");
 		if (name == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
-			setFocusToInputObject(oInput);
 			return false;
 		}
 		if (name != "" && nonchar.test(name)) {
 			showErrorMsg(oMsg, "한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용 불가)");
-			setFocusToInputObject(oInput);
 			return false;
 		}
 
@@ -246,11 +260,9 @@ html, body {
 	function checkEmail() {
 		var email = $("#email").val();
 		var oMsg = $("#emailMsg");
-		var oInput = $("#email");
 
 		if (email == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
-			setFocusToInputObject(oInput);
 			return true;
 		}
 
@@ -258,7 +270,6 @@ html, body {
 		var isHan = /[ㄱ-ㅎ가-힣]/g;
 		if (!isEmail.test(email) || isHan.test(email)) {
 			showErrorMsg(oMsg, "이메일 주소를 다시 확인해주세요.");
-			setFocusToInputObject(oInput);
 			return false;
 		}
 
@@ -269,11 +280,9 @@ html, body {
 	function checkPhoneNo() {
 		var phoneNo = $("#phoneNo").val();
 		var oMsg = $("#phoneNoMsg");
-		var oInput = $("#phoneNo");
 
 		if (phoneNo == "") {
 			showErrorMsg(oMsg, "필수 정보입니다.");
-			setFocusToInputObject(oInput);
 			return false;
 		}
 
@@ -294,104 +303,75 @@ html, body {
         }
     }
 
-	function mainSubmit() {
+	$(document).ready(function() {
 
-		if (!checkUnrealInput()) {
-			submitOpen();
-			return false;
-		}
+		//Check SignUpForm
+		$("#id").keyup(function() {
+			idFlag = false;
+			checkId("first");
+		});
+		$("#pswd1").keyup(function() {
+			pwFlag = false;
+			checkPswd1();
+		});
+		$("#pswd2").keyup(function() {
+			checkPswd2();
+		});
+		$("#name").keyup(function() {
+			checkName();
+		});
+		$("#email").keyup(function() {
+			emailFlag = false;
+			$("#emailSend-btn").css("display", "block");
+			checkEmail();
+		});
 
-		if (idFlag && pwFlag && authFlag) {
-			$("#join_form").submit();
-		} else {
-			submitOpen();
-			return false;
-		}
-	}
-
-	$(document)
-			.ready(
-					function() {
-
-						$("#btnJoin").click(function(event) {
-							clickcr(this, 'sup.signup', '', '', event);
-							submitClose();
-							if (idFlag && pwFlag && authFlag) {
-								mainSubmit();
-							} else {
-								setTimeout(function() {
-									mainSubmit();
-								}, 700);
-							}
-						});
-
-						//Check SignUpForm
-						$("#id").keyup(function() {
-							idFlag = false;
-							checkId("first");
-						});
-						$("#pswd1").keyup(function() {
-							pwFlag = false;
-							checkPswd1();
-						});
-						$("#pswd2").keyup(function() {
-							checkPswd2();
-						});
-						$("#name").keyup(function() {
-							checkName();
-						});
-						$("#email").keyup(function() {
-							checkEmail();
-						});
-
-						//Submit SignUpForm
-						$("#btnSubmit")
-								.click(
-										function(event) {
-											event.preventDefault();
-											var form = {
-												member_id : $("#id").val(),
-												pw : $("#pswd1").val(),
-												member_name : $("#name").val(),
-												email : $("#email").val(),
-												phone_num : $("#phone_num")
-														.val(),
-											};
-
-											$
-													.ajax({
-														type : "POST",
-														url : "${pageContext.request.contextPath}/member",
-														data : JSON
-																.stringify(form),
-														contentType : 'application/json',
-														beforeSend : function(
-																xhr) {
-															xhr
-																	.setRequestHeader(
-																			"${_csrf.headerName}",
-																			"${_csrf.token}");
-														},
-														success : function(
-																result) {
-															if (result == "SUCCESS") {
-																alert("회원가입 완료.");
-																$(location)
-																		.attr(
-																				'href',
-																				'${pageContext.request.contextPath}/');
-															}
-														},
-														error : function(e) {
-															console.log(
-																	"ERROR : ",
-																	e);
-															alert("회원가입 실패.");
-															return false;
-														}
-													});
-										});
-					})
+		//Submit SignUpForm
+		$("#btnSubmit").click(function(event) {
+			event.preventDefault();
+			if(!idFlag) {
+				$("#id").focus();
+				return false;
+			} else if(!pwFlag) {
+				$("#pswd1").focus();
+				return false;
+			} else if($("#name").val() == "") {
+				$("#name").focus();
+				return false;
+			} else if(!emailFlag) {
+				$("#email").focus();
+				return false;
+			}
+			
+			var form = {
+				member_id : $("#id").val(),
+				pw : $("#pswd1").val(),
+				member_name : $("#name").val(),
+				email : $("#email").val(),
+				phone_num : $("#phone_num").val(),
+			};
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/member",
+				data : JSON.stringify(form),
+				contentType : 'application/json',
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				success : function(result) {
+					if (result == "SUCCESS") {
+						alert("회원가입 완료.");
+						$(location).attr('href', '${pageContext.request.contextPath}/');
+					}
+				},
+				error : function(e) {
+					console.log("ERROR : ",e);
+					alert("회원가입 실패.");
+					return false;
+				}
+			});
+		});
+	})
 </script>
 </head>
 <body>
@@ -434,10 +414,12 @@ html, body {
 							aria-live="assertive"></span>
 					</div>
 					<div class="form-group">
-						<label for="email">이메일:</label> <input type="email"
+						<label for="email">이메일:</label> <input type="text"
 							class="form-control" placeholder="Email" id="email"
 							maxlength="40" /> <span class="error_next_box" id="emailMsg"
 							style="display: none" aria-live="assertive"></span>
+						<button type="button" class="btn btn-secondary" onclick="authEmail()" id="emailSend-btn">인증번호 전송</button>
+						<input type="text" class="form-control" style="display:none" id="auth-code" />
 					</div>
 					<div class="form-group">
 						<label for="phone_num">휴대폰:</label> <input type="text"
@@ -450,11 +432,5 @@ html, body {
 	</div>
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
-
-	<script>
-		var idFlag = false;
-		var pwFlag = false;
-		var submitFlag = false;
-	</script>
 </body>
 </html>
