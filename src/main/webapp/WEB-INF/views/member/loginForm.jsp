@@ -63,7 +63,7 @@ html, body {
 	<div id="wrap">
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">
-				<img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다 로그인
+				<img class="nav-logo-img" src="${contextPath}/resources/img/main/logo.png">가다 로그인
 			</h2>
 			<div class="col-md-6" id="login-form">
 				<form action="/member/login" method="POST">

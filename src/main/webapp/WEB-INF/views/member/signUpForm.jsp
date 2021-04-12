@@ -55,7 +55,6 @@ html, body {
 	var submitFlag = false;
 	var emailFlag = false;
 
-	/* 공통함수 */
 	function authEmail() {
 		var email = $("#email").val();
 		console.log(email);
@@ -91,7 +90,8 @@ html, body {
 			});
 		}
 	}
-	
+
+	/* 공통함수 */
 	function showErrorMsg(obj, msg) {
 		obj.attr("class", "error_next_box");
 		obj.html(msg);
@@ -119,8 +119,6 @@ html, body {
 		if (str == "") {
 			return false;
 		}
-
-		/* check whether input value is included space or not */
 		var retVal = checkSpace(str);
 		if (retVal) {
 			return false;
@@ -383,7 +381,7 @@ html, body {
 		<div class="container">
 			<div class="col-md-6" id="signup-form">
 				<h2 class="headline" style="font-family: 'yg-jalnan'">
-					<img class="nav-logo-img" src="${contextPath}/resources/logo.png">가다
+					<img class="nav-logo-img" src="${contextPath}/resources/img/main/logo.png">가다
 					회원가입
 				</h2>
 				<form id="join_form">
