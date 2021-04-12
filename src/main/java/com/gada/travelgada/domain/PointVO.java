@@ -15,6 +15,7 @@ import lombok.ToString;
 @ToString
 public class PointVO {
 	
+	private int point_id;
 	private String member_id;
 	private int amount;
 	private Date save_date;
