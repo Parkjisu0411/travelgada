@@ -125,7 +125,16 @@
 				contentType : 'application/json; charset=utf-8',
 				success : function(result){
 					console.log("result : " + result );
-					$(location).attr('href', '${pageContext.request.contextPath}/board/review')
+						if(board_type_id == 1) {
+							$(location).attr('href', '${pageContext.request.contextPath}/board/1');
+							//modelAndView.setViewName("redirect:/board/review");
+						}else if(board_type_id == 2) {
+							$(location).attr('href', '${pageContext.request.contextPath}/board/2');
+							//modelAndView.setViewName("redirect:/board/Q&A");
+						}else {
+							$(location).attr('href', '${pageContext.request.contextPath}/board/3');
+							//modelAndView.setViewName("redirect:/board/accompany");
+						} 
 				},
 				error : function(e){
 					alert("오류가 발생했습니다.");

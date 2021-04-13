@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gada.travelgada.domain.AnswerVO;
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.MemberVO;
@@ -20,13 +21,13 @@ public interface BoardService {
 	
 	public int getTotalReviewBoard(int i);
 	
-	public List<BoardVO> getQnABoard(int nowPage, int amount);
-	
-	public int getTotalQnABoard(CriteriaVO cri);
-	
-	public List<BoardVO> getAccompanyBoard(int nowPage, int amount);
-	
-	public int getTotalAccompanyBoard(CriteriaVO cri);
+//	public List<BoardVO> getQnABoard(int nowPage, int amount);
+//	
+//	public int getTotalQnABoard(CriteriaVO cri);
+//	
+//	public List<BoardVO> getAccompanyBoard(int nowPage, int amount);
+//	
+//	public int getTotalAccompanyBoard(CriteriaVO cri);
 	
 	//public BoardVO boardContentView(MemberVO memberVO);'
 	
@@ -46,10 +47,17 @@ public interface BoardService {
 
 	
 	public void deleteBoard(BoardVO boardVO);
+	public void delete_allAnswer(BoardVO boardVO);
 
 	public List<BoardVO> getReply(BoardVO boardVO);
 
 	public void writeReply(BoardVO boardVO);
+	public List<BoardVO> getRecentReply(BoardVO boardVO);
+	public void deleteReply(AnswerVO answerVO);
+	public BoardVO boardAnswerView(BoardVO boardVO);
+	public void boardAnswer(BoardVO boardVO);
+	public int getReply_count(int board_id);
+	
 
 	
 

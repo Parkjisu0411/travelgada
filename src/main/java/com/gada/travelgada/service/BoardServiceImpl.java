@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gada.travelgada.domain.AnswerVO;
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.MemberVO;
@@ -48,25 +49,25 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	
-	@Override
-	public List<BoardVO> getQnABoard(int nowPage, int amount) {
-		return boardMapper.selectQnABoard(nowPage, amount);
-	}
-	
-	@Override
-	public int getTotalQnABoard(CriteriaVO cri) {
-		return boardMapper.getTotalQnABoard(cri);
-	}
-
-	@Override
-	public List<BoardVO> getAccompanyBoard(int nowPage, int amount) {
-		return boardMapper.getAccompanyBoard(nowPage, amount);
-	}
-	
-	@Override
-	public int getTotalAccompanyBoard(CriteriaVO cri) {
-		return boardMapper.getTotalAccompanyBoard(cri);
-	}
+//	@Override
+//	public List<BoardVO> getQnABoard(int nowPage, int amount) {
+//		return boardMapper.selectQnABoard(nowPage, amount);
+//	}
+//	
+//	@Override
+//	public int getTotalQnABoard(CriteriaVO cri) {
+//		return boardMapper.getTotalQnABoard(cri);
+//	}
+//
+//	@Override
+//	public List<BoardVO> getAccompanyBoard(int nowPage, int amount) {
+//		return boardMapper.getAccompanyBoard(nowPage, amount);
+//	}
+//	
+//	@Override
+//	public int getTotalAccompanyBoard(CriteriaVO cri) {
+//		return boardMapper.getTotalAccompanyBoard(cri);
+//	}
 	
 	@Override
 	public BoardVO boardContentView(BoardVO boardVO) {
@@ -100,10 +101,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
-	@Override
-	public void deleteBoard(BoardVO boardVO) {
-		boardMapper.deleteBoard(boardVO);
-	}
+
 
 	@Override
 	public List<BoardVO> getReply(BoardVO boardVO) {
@@ -115,8 +113,44 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.writeReply(boardVO);
 	}
 
+	@Override
+	public List<BoardVO> getRecentReply(BoardVO boardVO) {
+		return boardMapper.getRecentReply(boardVO);
+	}
 
 
+
+	
+	@Override
+	public void deleteBoard(BoardVO boardVO) {
+		boardMapper.deleteBoard(boardVO);
+	}
+
+	@Override
+	public void delete_allAnswer(BoardVO boardVO) {
+		boardMapper.delete_allAnswer(boardVO);		
+	}
+
+	@Override
+	public void deleteReply(AnswerVO answerVO) {
+		boardMapper.deleteReply(answerVO);
+	}
+
+	@Override
+	public BoardVO boardAnswerView(BoardVO boardVO) {
+		return boardMapper.boardAnswerView(boardVO);
+	}
+
+	@Override
+	public void boardAnswer(BoardVO boardVO) {
+		boardMapper.boardAnswerGroup(boardVO);
+		boardMapper.boardAnswer(boardVO);
+	}
+
+	@Override
+	public int getReply_count(int board_id) {
+		return boardMapper.getReply_count(board_id);
+	}
 
 
 

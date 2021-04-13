@@ -62,7 +62,7 @@ html, body {
 						<tr>
 							<td>${boardNoticeList.board_id }</td>
 							<td>
-								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}&${boardNoticeList.member_id}" style="color:red;">${boardNoticeList.title }</a>
+								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}/${boardNoticeList.member_id}" style="color:red;">${boardNoticeList.title }</a>
 							</td>
 							<td>${boardNoticeList.member_id }</td>
 							<td>${boardNoticeList.board_date }</td>
@@ -70,21 +70,19 @@ html, body {
 						</tr>
 					</c:forEach>				
 				
-					<c:forEach items="${boardQnAList }" var="boardQnAList">
+					<c:forEach items="${boardReviewList }" var="boardReviewList">
 					<tr>
-						<td>${boardQnAList.board_id }</td>
+						<td>${boardReviewList.board_id }</td>
 						<td>
-							<c:forEach begin="1" end="${boardQnAList.bindent }">[답변]</c:forEach>
-							<a href="${pageContext.request.contextPath }/board/${boardQnAList.board_id}&${boardQnAList.member_id}">${boardQnAList.title }</a>
+							<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
+							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}">${boardReviewList.title }</a>
 						</td>
-						<td>${boardQnAList.member_id }</td>
-						<td>${boardQnAList.board_date }</td>
-						<td>${boardQnAList.bhit }</td>
+						<td>${boardReviewList.member_id }</td>
+						<td>${boardReviewList.board_date }</td>
+						<td>${boardReviewList.bhit }</td>
 					</tr>
 					</c:forEach>
 				</tbody>
-				
-
 			</table>
 			
 			<div>	

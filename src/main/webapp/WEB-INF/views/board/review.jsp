@@ -63,7 +63,7 @@ html, body {
 						<tr>
 							<td>${boardNoticeList.board_id }</td>
 							<td>
-								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}&${boardNoticeList.member_id}" style="color:red;">${boardNoticeList.title }</a>
+								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}/${boardNoticeList.member_id}" style="color:red;">${boardNoticeList.title }</a>
 							</td>
 							<td>${boardNoticeList.member_id }</td>
 							<td>${boardNoticeList.board_date }</td>
@@ -76,7 +76,10 @@ html, body {
 						<td>${boardReviewList.board_id }</td>
 						<td>
 							<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
-							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}&${boardReviewList.member_id}">${boardReviewList.title }</a>
+							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}">${boardReviewList.title }</a>
+							
+							<a>${getReplyCount }</a>
+							
 						</td>
 						<td>${boardReviewList.member_id }</td>
 						<td>${boardReviewList.board_date }</td>
@@ -96,7 +99,7 @@ html, body {
 			</sec:authorize>	
 			</div>
 
-			<ul class="pagination" style="padding:80px 500px;">	
+			<ul class="pagination" style="padding:80px 350px;">	
 		  		<c:if test="${pageMaker.prev}">
 	       		  <li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
 	     		</c:if>
