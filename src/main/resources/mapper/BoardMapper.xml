@@ -132,9 +132,21 @@
 		]]>
 	</delete>
 	
+	<delete id="delete_allAnswer">
+		<![CDATA[
+			delete from answer where board_id = #{board_id}
+		]]>
+	 </delete>
+	 
+	 <delete id="deleteReply">
+		<![CDATA[
+			delete from answer where answer_id = #{answer_id}
+		]]>
+	 </delete>
+	
 	<select id="getReply" resultMap="BoardMap">
 		<![CDATA[
-			select * from board, answer where board.board_id = answer.board_id
+			select answer.answer_id, answer.text, answer.answer_date, answer.member_id from board, answer where #{board_id} = answer.board_id order by answer.answer_date desc
 		]]>
 	</select>
 	
@@ -144,5 +156,36 @@
 			values (get_seq('answer_seq'), #{member_id}, #{text}, sysdate(), 0, #{board_id})
 		]]> 
 	</insert> 
+	
+	<select id="getRecentReply" resultMap="BoardMap">
+		<![CDATA[
+			select answer.answer_id, answer.text, answer.answer_date, answer.member_id from board, answer where #{board_id} = answer.board_id order by answer.answer_date desc LIMIT 1
+		]]>
+	</select>
+	
+	<select id="boardAnswerView" resultMap="BoardMap">
+		<![CDATA[
+			select * from board where board_id = #{board_id}
+		]]>
+	</select>
+	
+	<insert id="boardAnswer">
+		<![CDATA[
+			insert into board (board_id, title, text, board_date, bhit, bgroup, bstep, bindent, board_type_id, member_id) values (get_seq('board_seq'), #{title}, #{text}, sysdate(), 0, #{bgroup}, #{bstep}+1, #{bindent}+1, #{board_type_id}, #{member_id} )
+		]]>
+	</insert>
+	
+	<update id="boardAnswerGroup">
+		<![CDATA[
+			update board set bstep = bstep + 1 where bgroup = #{bgroup} and bstep > #{bstep}
+		]]>
+	</update>
+	
+	<select id="getReply_count" resultType="int">
+		<![CDATA[
+			select count(a.text) from (select answer.text, answer.board_id from answer, board where answer.board_id = board.board_id) a where a.board_id = #{board_id}
+		]]>
+	</select>
+	
 	
 </mapper>

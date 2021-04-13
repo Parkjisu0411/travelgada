@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gada.travelgada.domain.AnswerVO;
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.MemberVO;
@@ -19,13 +20,13 @@ public interface BoardMapper {
 	
 	public int getTotalReviewBoard(int i);
 
-	public List<BoardVO> selectQnABoard(int nowPage, int amount);
-	
-	public int getTotalQnABoard(CriteriaVO cri);
-
-	public List<BoardVO> getAccompanyBoard(int nowPage, int amount);
-	
-	public int getTotalAccompanyBoard(CriteriaVO cri);
+//	public List<BoardVO> selectQnABoard(int nowPage, int amount);
+//	
+//	public int getTotalQnABoard(CriteriaVO cri);
+//
+//	public List<BoardVO> getAccompanyBoard(int nowPage, int amount);
+//	
+//	public int getTotalAccompanyBoard(CriteriaVO cri);
 	
 	public BoardVO boardContentView(BoardVO boardVO);
 
@@ -43,10 +44,18 @@ public interface BoardMapper {
 	public void modifyBoardContent(BoardVO boardVO);
 
 	public void deleteBoard(BoardVO boardVO);
+	public void delete_allAnswer(BoardVO boardVO);
 
 	public List<BoardVO> getReply(BoardVO boardVO);
 
 	public void writeReply(BoardVO boardVO);
+	public List<BoardVO> getRecentReply(BoardVO boardVO);
+	public void deleteReply(AnswerVO answerVO);
+	public BoardVO boardAnswerView(BoardVO boardVO);
+	public void boardAnswer(BoardVO boardVO);
+	public void boardAnswerGroup(BoardVO boardVO);
+	public int getReply_count(int board_id);
+	
 
 	
 

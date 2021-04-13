@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gada.travelgada.domain.AnswerVO;
 import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.MemberVO;
@@ -24,112 +25,145 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
 public class BoardServiceImpl implements BoardService {
-	
-	private BoardMapper boardMapper;
-	
-	@Override
-	public List<BoardVO> getReviewBoard(int nowPage, int amount) {
-		return boardMapper.selectReviewBoard(nowPage, amount);
-	}
-	
-	@Override
-	public List<BoardVO> getReviewBoard(int nowPage, int amount, int board_type_id) {
-		return boardMapper.selectReviewBoard(nowPage, amount, board_type_id);
-	}
-	
-//	@Override
-//	public List<BoardVO> getReviewBoard(CriteriaVO cri) {
-//		return boardMapper.selectReviewBoard(cri);
-//	}
-	
-	@Override
-	public int getTotalReviewBoard(int i) {
-		return boardMapper.getTotalReviewBoard(i);
-	}
+   
+   private BoardMapper boardMapper;
+   
+   @Override
+   public List<BoardVO> getReviewBoard(int nowPage, int amount) {
+      return boardMapper.selectReviewBoard(nowPage, amount);
+   }
+   
+   @Override
+   public List<BoardVO> getReviewBoard(int nowPage, int amount, int board_type_id) {
+      return boardMapper.selectReviewBoard(nowPage, amount, board_type_id);
+   }
+   
+//   @Override
+//   public List<BoardVO> getReviewBoard(CriteriaVO cri) {
+//      return boardMapper.selectReviewBoard(cri);
+//   }
+   
+   @Override
+   public int getTotalReviewBoard(int i) {
+      return boardMapper.getTotalReviewBoard(i);
+   }
 
-	
-	@Override
-	public List<BoardVO> getQnABoard(int nowPage, int amount) {
-		return boardMapper.selectQnABoard(nowPage, amount);
-	}
-	
-	@Override
-	public int getTotalQnABoard(CriteriaVO cri) {
-		return boardMapper.getTotalQnABoard(cri);
-	}
+   
+//   @Override
+//   public List<BoardVO> getQnABoard(int nowPage, int amount) {
+//      return boardMapper.selectQnABoard(nowPage, amount);
+//   }
+//   
+//   @Override
+//   public int getTotalQnABoard(CriteriaVO cri) {
+//      return boardMapper.getTotalQnABoard(cri);
+//   }
+//
+//   @Override
+//   public List<BoardVO> getAccompanyBoard(int nowPage, int amount) {
+//      return boardMapper.getAccompanyBoard(nowPage, amount);
+//   }
+//   
+//   @Override
+//   public int getTotalAccompanyBoard(CriteriaVO cri) {
+//      return boardMapper.getTotalAccompanyBoard(cri);
+//   }
+   
+   @Override
+   public BoardVO boardContentView(BoardVO boardVO) {
+      boardMapper.addHit(boardVO);
+      return boardMapper.boardContentView(boardVO);
+   }
+   
+   @Override
+   public MemberVO boardImgPath(MemberVO memberVO) {
+      return boardMapper.boardImgPath(memberVO);
+   }
+   
+   @Override
+   public List<BoardVO> getNotice() {
+      return boardMapper.getNotice();
+   }
+   
+//   @Override
+//   public void writeBoard(BoardVO boardVO, String username) {
+//      boardMapper.writeBoard(boardVO, username);
+//   }
+   
+   @Override
+   public void writeBoard(BoardVO boardVO) {
+      boardMapper.writeBoard(boardVO);
+   }
 
-	@Override
-	public List<BoardVO> getAccompanyBoard(int nowPage, int amount) {
-		return boardMapper.getAccompanyBoard(nowPage, amount);
-	}
-	
-	@Override
-	public int getTotalAccompanyBoard(CriteriaVO cri) {
-		return boardMapper.getTotalAccompanyBoard(cri);
-	}
-	
-	@Override
-	public BoardVO boardContentView(BoardVO boardVO) {
-		boardMapper.addHit(boardVO);
-		return boardMapper.boardContentView(boardVO);
-	}
-	
-	@Override
-	public MemberVO boardImgPath(MemberVO memberVO) {
-		return boardMapper.boardImgPath(memberVO);
-	}
-	
-	@Override
-	public List<BoardVO> getNotice() {
-		return boardMapper.getNotice();
-	}
-	
-//	@Override
-//	public void writeBoard(BoardVO boardVO, String username) {
-//		boardMapper.writeBoard(boardVO, username);
-//	}
-	
-	@Override
-	public void writeBoard(BoardVO boardVO) {
-		boardMapper.writeBoard(boardVO);
-	}
-
-	@Override
-	public void modifyBoardContent(BoardVO boardVO) {
-		boardMapper.modifyBoardContent(boardVO);
-	}
-
-
-	@Override
-	public void deleteBoard(BoardVO boardVO) {
-		boardMapper.deleteBoard(boardVO);
-	}
-
-	@Override
-	public List<BoardVO> getReply(BoardVO boardVO) {
-		return boardMapper.getReply(boardVO);
-	}
-
-	@Override
-	public void writeReply(BoardVO boardVO) {
-		boardMapper.writeReply(boardVO);
-	}
+   @Override
+   public void modifyBoardContent(BoardVO boardVO) {
+      boardMapper.modifyBoardContent(boardVO);
+   }
 
 
 
 
+   @Override
+   public List<BoardVO> getReply(BoardVO boardVO) {
+      return boardMapper.getReply(boardVO);
+   }
+
+   @Override
+   public void writeReply(BoardVO boardVO) {
+      boardMapper.writeReply(boardVO);
+   }
+
+   @Override
+   public List<BoardVO> getRecentReply(BoardVO boardVO) {
+      return boardMapper.getRecentReply(boardVO);
+   }
 
 
-	
-	
-	
-	
+
+   
+   @Override
+   public void deleteBoard(BoardVO boardVO) {
+      boardMapper.deleteBoard(boardVO);
+   }
+
+   @Override
+   public void delete_allAnswer(BoardVO boardVO) {
+      boardMapper.delete_allAnswer(boardVO);      
+   }
+
+   @Override
+   public void deleteReply(AnswerVO answerVO) {
+      boardMapper.deleteReply(answerVO);
+   }
+
+   @Override
+   public BoardVO boardAnswerView(BoardVO boardVO) {
+      return boardMapper.boardAnswerView(boardVO);
+   }
+
+   @Override
+   public void boardAnswer(BoardVO boardVO) {
+      boardMapper.boardAnswerGroup(boardVO);
+      boardMapper.boardAnswer(boardVO);
+   }
+
+   @Override
+   public int getReply_count(int board_id) {
+      return boardMapper.getReply_count(board_id);
+   }
+
+
+
+   
+   
+   
+   
 
 
 
 
 
-	
+   
 
 
 

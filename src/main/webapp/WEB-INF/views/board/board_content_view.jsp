@@ -8,6 +8,7 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}" />
 <meta id="_csrf_header" name="_csrf_header"
 	content="${_csrf.headerName}" />
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script
@@ -56,10 +57,17 @@
     }
 
 </style>
+
+	<script>
+		function check_id(){
+      	 	alert("로그인이 필요한 서비스입니다.");
+			location.href="${pageContext.request.contextPath}/member/login";
+   		}
+	</script>
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#delete").click(function(event){		
+			$(document).on('click', ".delete", function(event){		
 				if (confirm("삭제하시겠습니까?")) {
 				event.preventDefault();
 				console.log("delete click");
@@ -76,7 +84,7 @@
 					success : function(result){
 						console.log("result : " + result );
 						if(result == "SUCCESS"){
-							$(location).attr('href', '${pageContext.request.contextPath}/board/review');
+							window.history.back();
 						}
 					},
 					error : function(e){
@@ -92,6 +100,44 @@
 	</script>
 	
 	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".deleteAnswer").on('click', function(event){		
+				if (confirm("삭제하시겠습니까?")) {
+				event.preventDefault();
+				console.log("deleteAnswer click");
+				
+				var aId = $(".answer_id").val();
+				
+				var tr = $(this).parent().parent();
+				
+				$.ajax({
+					type : "DELETE",
+					url : "${pageContext.request.contextPath }/board/reply/" + aId,
+					cache : false,
+					beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+   	                 console.log("header 실행 "+header+token)
+   	                 //console.log(sentence.toLowerCase());
+   	                 xhr.setRequestHeader(header, token);
+					},
+					success : function(result){
+						console.log("result : " + result );
+						if(result == "SUCCESS"){
+							$(tr).remove();
+						}
+					},
+					error : function(e){
+						alert("오류가 발생했습니다.");
+						console.log(e);
+					}
+				}); // ajax end
+			}else{
+				return false;
+			}
+			}); // event end
+		}); // ready end
+	</script>
+	
+<!-- 	<script type="text/javascript">
 	$(document).ready(function(){
 		$("#cmcnt-btn").submit(function(event){	
 			event.preventDefault();
@@ -125,7 +171,7 @@
 			}); // ajax end
 		}); // event end
 	}); // ready end
-	</script>
+	</script> -->
 
 <!-- 	<script type="text/javascript">
 
@@ -171,21 +217,27 @@
 	</script> -->
 	
 	
-	<script>
+	<!-- <script>
     	$(document).ready(function() {
-    		$("#writeReply").submit(function(event) {
+    		$("#writeReply").on('submit', function(event) {
     			event.preventDefault();
     			console.log("writeReply submit");
 
     			var board_id = $("#board_id").val();
     			var member_id = $("#member_id").val();
-     			var cmcnt = $("#cmcnt").val();
+     			var text = $("#text").val();
     			
     			var form = {
     					board_id : board_id,
     					member_id : member_id,
-    					cmcnt : cmcnt
+    					text : text
     			};
+    			
+    			if(member_id.length == 0){
+    				alert("로그인이 필요한 서비스입니다.");
+    				location.href="${pageContext.request.contextPath}/member/login";
+    				return;
+    			}
     				
     			$.ajax({
     				type : "POST",
@@ -199,21 +251,26 @@
     	                 xhr.setRequestHeader(header, token);
     	            },
     				success : function(result){
+    					if(result == "SUCCESS"){
     		        	console.log("성공?????");
-    		            var a =''; 
-    		            $(result).each(function(key, value){ 
-    		            	a += '<c:forEach items="${bReply }" var="bReply">';
-    		            	a += '<c:forEach items="${bReply.answerList }" var="answer">';
-    		                a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-    		                a += '<div class="commentInfo'+ ${answer.answer_id}'">'+'댓글번호 : '+${answer.answer_id}+' / 작성자 : '+${bReply.member_id};
-    		                a += '<a onclick="commentUpdate('+${answer.answer_id}+',\''+${bReply.text}+'\');"> 수정 </a>';
-    		                a += '<a onclick="commentDelete('+${answer.answer_id}+');"> 삭제 </a> </div>';
-    		                a += '<div class="commentContent'+${answer.answer_id}+'"> <p> 내용 : '+${bReply.text} +'</p>';
-    		                a += '</div></div></c:forEach></c:forEach>';
-    		            });
+    		        	var a = '';
+
+    		           	a += '<table class="table"><c:forEach items="${bRecentReply }" var="bRecentReply">';
+    		            a += '<c:forEach items="${bRecentReply.answerList }" var="answerList">';
+						a+='<tr class="answerList">';
+						a+='<td>${answerList.answer_id }</td>';
+						a+='<td>${answerList.member_id }</td>';
+						a+='<td>${answerList.answer_date }</td>';
+						a+='<td><c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answerList.member_id }">';
+						a+='<button type="button" class="btn-default text-primary" onclick="window.location.href=\'${pageContext.request.contextPath }/board/modify/${bContentView.board_id}/${bContentView.member_id }\'">수정</button>';
+						a+='<button type="button" class="delete btn-default text-primary">삭제</button>';
+						a+='</c:if></td>';
+						a+='<td>${answerList.text }</td></tr></c:forEach></c:forEach></table>';
+    		    
     		            
     		            $(".commentList").append(a);
     					}  
+    					
     				},
     				error : function(e){
     					console.log(e);
@@ -222,7 +279,135 @@
     			}); // ajax end
     		}) // submit end
     	});
-    </script>
+    </script> -->
+    
+     <script>
+    	$(document).ready(function() {
+    		$("#cmcnt-btn").on('click', function(event) {
+    			event.preventDefault();
+    			console.log("writeReply submit");
+
+    			var board_id = $("#board_id").val();
+    			var member_id = $("#member_id").val();
+     			var text = $("#text").val();
+    			
+    			var form = {
+    					board_id : board_id,
+    					member_id : member_id,
+    					text : text
+    			};
+    			
+    			if(member_id.length == 0){
+    				alert("로그인이 필요한 서비스입니다.");
+    				location.href="${pageContext.request.contextPath}/member/login";
+    				return;
+    			}
+    				
+    			$.ajax({
+    				type : "PUT",
+    				url : $(this).attr("action"),
+    				cache : false,
+    				data: JSON.stringify(form),
+    				contentType : 'application/json; charset=utf-8',
+    	            beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+    	                 console.log("header 실행 "+header+token)
+    	                 //console.log(sentence.toLowerCase());
+    	                 xhr.setRequestHeader(header, token);
+    	            },
+    				success : function(result){
+    					if(result == "SUCCESS"){
+    		        	console.log("성공?????");
+    		        	$("#writeReply").submit();
+    		        	show_reply();
+/*      		        	var a = '';
+
+    		           	a += '<table class="table"><c:forEach items="${bRecentReply }" var="bRecentReply">';
+    		            a += '<c:forEach items="${bRecentReply.answerList }" var="answerList">';
+						a+='<tr class="answerList">';
+						a+='<td>${answerList.answer_id }</td>';
+						a+='<td>${answerList.member_id }</td>';
+						a+='<td>${answerList.answer_date }</td>';
+						a+='<td><c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answerList.member_id }">';
+						a+='<button type="button" class="btn-default text-primary" onclick="window.location.href=\'${pageContext.request.contextPath }/board/modify/${bContentView.board_id}/${bContentView.member_id }\'">수정</button>';
+						a+='<button type="button" class="delete btn-default text-primary">삭제</button>';
+						a+='</c:if></td>';
+						a+='<td>${answerList.text }</td></tr></c:forEach></c:forEach></table>';
+			             
+						
+						$(".commentList").prepend(a);
+						
+		                 var list = document.getElementsByClassName(".answerList");
+		                 for(let i=0 ; i<list.length; i++) {
+		                	 list[i].value = i;
+		                 } */
+
+    					}  
+    					
+    				},
+    				error : function(e){
+    					console.log(e);
+    				}
+    				
+    			}); // ajax end
+    		}) // submit end
+    	});
+    </script> 
+    
+    <script>
+	function show_reply(){
+     	var a = '';
+
+       	a += '<table class="table"><c:forEach items="${bRecentReply }" var="bRecentReply">';
+        a += '<c:forEach items="${bRecentReply.answerList }" var="answerList">';
+		a+='<tr class="answerList">';
+		a+='<td>${answerList.answer_id }</td>';
+		a+='<td>${answerList.member_id }</td>';
+		a+='<td>${answerList.answer_date }</td>';
+		a+='<td><c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answerList.member_id }">';
+		a+='<button type="button" class="btn-default text-primary" onclick="window.location.href=\'${pageContext.request.contextPath }/board/modify/${bContentView.board_id}/${bContentView.member_id }\'">수정</button>';
+		a+='<button type="button" class="delete btn-default text-primary">삭제</button>';
+		a+='</c:if></td>';
+		a+='<td>${answerList.text }</td></tr></c:forEach></c:forEach></table>';
+         
+		
+		$(".commentList").prepend(a);
+		
+         var list = document.getElementsByClassName(".answerList");
+         for(let i=0 ; i<list.length; i++) {
+        	 list[i].value = i;
+         }
+	}
+	</script>  
+    
+
+<!--   	<script>
+	function write_reply(){
+   		var board_id=$("#board_id").val();
+   		//var text=document.getElementById("#text").value;
+   		//var text=$("#text").val();
+    	//var member_id=$("#member_id").val();
+    	var member_id = $("#member_id").val();
+    	var text=$("#text").val();
+    	
+		if(member_id.length == 0){
+			alert("로그인이 필요한 서비스입니다.");
+			location.href="${pageContext.request.contextPath}/member/login";
+			return;
+		}
+		
+   	 	//폼 데이터를 받을 주소
+    	//$("#write").action="${pageContext.request.contextPath}/board/write?${_csrf.parameterName}=${_csrf.token}";
+    	//폼 데이터를 서버에 전송
+    	//document.write.submit();
+     	$("#writeReply").submit();
+     	if(result == "SUCCESS"){
+     		show_reply();
+     	}
+     	
+	}
+	</script>   -->
+
+
 
 </head>
 <body>
@@ -256,29 +441,54 @@
 				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/${bContentView.board_type_id}'" >목록</button>
 
 				 <c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq bContentView.member_id}">
-					<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/modify/${bContentView.board_id}&${bContentView.member_id }'">수정</button>
-			   		<button id="delete" type="button" class="btn-default text-primary" >삭제</button>
+					<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/modify/${bContentView.board_id}/${bContentView.member_id }'">수정</button>
+			   		<button type="button" class="delete btn-default text-primary">삭제</button>
 			    </c:if> 
+			    
+			    <sec:authorize access="isAnonymous()">
+  					<button type="button" class="btn-default text-primary" onclick="check_id()" style="border-radius:0.2em; border:none; float:right;">답글 달기</button>
+				</sec:authorize>
+
+				<sec:authorize access="isAuthenticated()">
+					<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/answer/${bContentView.board_id}'" style="border-radius:0.2em; border:none; float:right;">답글 달기</button>
+				</sec:authorize>
 			
 			    <div class="container">
         			<label for="content">comment</label>
        				 <form id="writeReply" method="post" action="${pageContext.request.contextPath}/board/reply?${_csrf.parameterName}=${_csrf.token}">
        				 <input type="hidden" id="board_id" name="board_id" value="${bContentView.board_id }"/>
 					 <input type="hidden" id="member_id" name="member_id" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}"/>
-          			 	<div class="comment-text">
-               				<textarea id="cmcnt" name="text" placeholder="댓글을 입력해주세요."></textarea>
-              			 	<span class="comment-button">
-                    			<input type="submit" id="cmcnt-btn" name="cmcnt-btn" class="btn-default text-primary" value="완료"  />
-               				</span>
-              			</div>
-        			</form>
-    			</div>
-
+          			 <input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
+					 <input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>	
+						<textarea id="text" class="form-control col-sm-11" rows="" name="text" placeholder="댓글을 입력해주세요."></textarea>
+              			<!-- <input type="submit" id="cmcnt-btn" name="cmcnt-btn" class="btn-default text-primary" value="완료"  /> -->
+        				 <button type="button" id="cmcnt-btn" class="btn-default text-primary" >완료</button> 
+        			</form>	
+    			</div><br />
+				
 			    <div class="container">
         			<div class="commentList"></div>
-        			
+        			 <table class="table">
+        			<c:forEach items="${bReply }" var="bReply">
+        				<c:forEach items="${bReply.answerList }" var="answer">
+        				<input type="hidden" class="answer_id" name="answer_id" value="${answer.answer_id }"/>
+						<tr class="answerList">
+							<td>${answer.answer_id }</td>
+							<td>${answer.member_id }</td>
+							<td>${answer.answer_date }</td>
+							<td>${answer.text }</td>
+							<td>
+								<c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answer.member_id }">
+									<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/modify/${bContentView.board_id}&${bContentView.member_id }'">수정</button>
+									<button type="button" class="deleteAnswer btn-default text-primary">삭제</button>
+								</c:if>
+	
+							</td>
+						</tr>
+						</c:forEach>
+					</c:forEach>
+					</table>
     			</div>
-
 			
 				<div style="padding:0 400px;">
 				<form class="form-inline">

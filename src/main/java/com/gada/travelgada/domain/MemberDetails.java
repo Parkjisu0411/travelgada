@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -117,6 +119,13 @@ public class MemberDetails implements UserDetails, OAuth2User{
 	public boolean isEnabled() {
 		return true;
 	}
+	
+	public static boolean hasAdminRole() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority>  authorities = authentication.getAuthorities();
+		return authorities.stream().filter(o -> o.getAuthority().equals("ROLE_ADMIN")).findAny().isPresent(); 
+	}
+
 
 }
  
