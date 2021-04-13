@@ -61,10 +61,10 @@
 					</li>
 				</ul>
 				<form class="form-inline" action="${pageContext.request.contextPath}/search" method="get">
-					<input id="keyword" class="form-control mr-sm-2" type="text" aria-label="Search" name="keyword" placeholder="검색">
 					<button class="btn btn-outline-white btn-sm my-0" type="submit">
 						<i class="fas fa-search"></i>
 					</button>
+					<input id="keyword" class="form-control mr-sm-2" type="text" aria-label="Search" name="keyword" placeholder="검색">
 				</form>
 				<div class="nav-item dropdown">
 					<sec:authorize access="isAuthenticated()">

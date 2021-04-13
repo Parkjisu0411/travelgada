@@ -5,6 +5,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<style>
+.navbar-expand-lg.fixed-top.scrolled {
+  background-color: #ffffff !important;
+  transition: background-color 200ms linear;
+}
+
+.navbar-expand-lg.fixed-top.scrolled * {
+  color: #000000 !important;
+}
+
+/* navbar navbar-expand-lg navbar-light fixed-top py-3 */
+
+</style>
 <meta charset="UTF-8">
 <title>Header</title>
 
@@ -17,12 +31,13 @@
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-<script type="text/javascript">
-	
-</script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+	<nav class="navbar navbar-expand-lg fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="/"><img class="nav-logo-img"
 				src="${contextPath}/resources/img/main/logo.png">가다</a>
@@ -62,11 +77,17 @@
 							<a class="dropdown-item" href="/shopping?product_type_id=4">악세사리</a>
 						</div>
 					</li>
+					<li class="nav-item dropdown">
+					<a
+						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">숙소&nbsp;예약</a>
+					</li>
 				</ul>
 				<form class="form-inline" action="${pageContext.request.contextPath}/search" method="get">
-					<input id="keyword" class="form-control mr-sm-2" type="text" aria-label="Search" name="keyword" placeholder="검색">
+					<i class="fas fa-search"></i>
+					<input id="keyword" class="form-control mr-sm-2" type="text" aria-label="Search" name="keyword">
 					<button class="btn btn-outline-white btn-sm my-0" type="submit">
-						<i class="fas fa-search"></i>
 					</button>
 				</form>
 				<div class="nav-item dropdown">
@@ -100,5 +121,14 @@
 			</div>
 		</div>
 	</nav>
+	
+	<script>
+	$(function () {
+		  $(document).scroll(function () {
+			  var $nav = $(".navbar-expand-lg");
+			  $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+			});
+		});
+	</script>
 </body>
 </html>

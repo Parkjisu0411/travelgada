@@ -20,14 +20,6 @@ public class DestinationController {
 	@Autowired
 	private DestinationService destinationService;
 	
-	// 그래프 예제: 도넛 그래프
-	@GetMapping("/destination")
-	public ModelAndView example(ModelAndView modelAndView) {
-		modelAndView.setViewName("statistic/destination");
-
-		return modelAndView;
-	}
-	
 	// JSON
 	@GetMapping("/destination/json/total")
 	public List<DestinationVO> getDestinationTotalToJson(ModelAndView modelAndView) {
@@ -49,7 +41,7 @@ public class DestinationController {
 	
 	@GetMapping("/destination/month")
 	public ModelAndView getDestinationMonth(ModelAndView modelAndView) {
-		modelAndView.setViewName("statisti/destination_month");
+		modelAndView.setViewName("statistic/destination_month");
 		
 		return modelAndView;
 	}
