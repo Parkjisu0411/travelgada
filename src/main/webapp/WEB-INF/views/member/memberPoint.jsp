@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -41,13 +42,9 @@ html, body {
 }
 </style>
 <script type="text/javascript">
-	window.onload = function() {
-		var result = location.search.substring(1);
-		if (result == 'error') {
-			console.log('Login Error');
-			document.getElementById("errorMsg").innerHTML = "<p style='color: #f00;'>로그인에 실패했습니다. 아이디 또는 패스워드를 다시 입력해주십시오.</p>";
-		}
-	}
+	$(document).ready(function() {
+		console.log($("tbody tr").length);
+	})
 </script>
 </head>
 <body>
@@ -62,7 +59,7 @@ html, body {
 					<table class="table">
 						<thead>
 							<tr>
-								<th>적립 사용</th>
+								<th>적립/사용</th>
 								<th>일시</th>
 								<th>포인트</th>
 								<th>잔여 포인트</th>
@@ -70,8 +67,8 @@ html, body {
 						</thead>
 						<tbody>
 							<c:forEach var="point" items="${pointList }">
-								<tr>
-									<td>
+								<tr id="${point.point_id }">
+									<td class="flag">
 										<c:choose>
 											<c:when test="${point.save_flag eq 0 }">
 												적립
@@ -81,10 +78,10 @@ html, body {
 											</c:otherwise>
 										</c:choose>
 									</td>
-									<td>${point.save_date }</td>
-									<td>${point.amount }</td>
-									<td>
-										${amount }
+									<td class="date"><fmt:formatDate value="${point.save_date }" pattern="yyyy.MM.dd"/></td>
+									<td class="point">${point.amount }</td>
+									<td class="amount">
+										
 									</td>
 								</tr>
 							</c:forEach>

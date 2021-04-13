@@ -68,8 +68,8 @@
 	});
 </script> -->
 
-<!-- 삭제 ajax -->
 <script type="text/javascript">
+/* 삭제 ajax */
 	$(document).ready(function() {
 		$(document).on("click", ".delete", function(event) {//※주의※		
 			if (confirm("삭제하시겠습니까?")) {

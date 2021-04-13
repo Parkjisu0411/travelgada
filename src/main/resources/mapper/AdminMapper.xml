@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.gada.travelgada.mapper.AdminMapper"> 
+	
+	<!-- member list -->
+	<select id="getMemberList" resultType="com.gada.travelgada.domain.MemberVO"> 
+		<![CDATA[ 
+			select a.* from(select * from member) a LIMIT #{nowPage}, #{amount};
+		]]> 
+	</select> 
+	
+	<!-- member 수 -->
+	<select id="getTotal" resultType="int"> 
+		<![CDATA[ 
+			select count(*) from member
+		]]> 
+	</select> 
+	
+	<!-- 탈퇴한 member 수 -->
+	<select id="getWithdrawal" resultType="int"> 
+		<![CDATA[ 
+			select count(*) from member where withdrawal_flag = 1
+		]]> 
+	</select> 
+	
+	<!-- member list -->
+	<select id="getWithdrawalList" resultType="com.gada.travelgada.domain.MemberVO"> 
+		<![CDATA[ 
+			select a.* from(select * from member where withdrawal_flag = 1) a LIMIT #{nowPage}, #{amount};
+		]]> 
+	</select> 
+	
+	<!-- 회원 탈퇴 -->
+	<select id="withdrawal" >
+		<![CDATA[
+			UPDATE member SET withdrawal_flag = #{withdrawal_flag} ,withdrawal_code = #{withdrawal_code} WHERE member_id = #{member_id};
+		]]>
+	</select>
+	
+	<!-- 검색 -->
+	<select id="search" resultType="com.gada.travelgada.domain.MemberVO"> 
+		<![CDATA[ 
+			select a.* from(
+				select * from member where member_id like CONCAT('%', #{keyword}, '%') 
+					or member_name like CONCAT('%', #{keyword}, '%') 
+					or email like CONCAT('%', #{keyword}, '%') 
+					or phone_num like CONCAT('%', #{keyword}, '%')
+					or withdrawal_flag like CONCAT('%', #{keyword}, '%') 
+					or withdrawal_code like CONCAT('%', #{keyword}, '%') 
+					or sns_type like CONCAT('%', #{keyword}, '%')
+				) a LIMIT #{nowPage}, #{amount};
+		]]> 
+	</select>
+	
+	<!-- 검색 된 글 수 -->
+	<select id="searchTotal" resultType="int"> 
+		<![CDATA[ 
+			select count(*) from member 
+				where member_id like CONCAT('%', #{keyword}, '%') 
+					or member_name like CONCAT('%', #{keyword}, '%') 
+					or email like '%%' and phone_num like CONCAT('%', #{keyword}, '%')
+					or withdrawal_flag like CONCAT('%', #{keyword}, '%') 
+					or withdrawal_code like CONCAT('%', #{keyword}, '%') 
+					or sns_type like CONCAT('%', #{keyword}, '%');
+		]]> 
+	</select> 
+	
+	<select id="selectShippingLoc" resultType="com.gada.travelgada.domain.ShippingLocVO">
+		<![CDATA[
+			select * from shipping_loc where member_id = #{member_id}
+		]]>
+	</select>
+
+	<resultMap id="memberMap" type="com.gada.travelgada.domain.MemberVO">
+	    <result property="member_id" column="member_id"/>
+	    <result property="pw" column="pw"/>
+	    <result property="member_name" column="member_name"/>
+	    <result property="email" column="email"/>
+	    <result property="phone_num" column="phone_num"/>
+	    <result property="profile_img_path" column="profile_img_path"/>
+	    <result property="withdrawal_code" column="withdrawal_code"/>
+	    <result property="withdrawal_flag" column="withdrawal_flag"/>
+	    <result property="sns_type" column="sns_type"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap id="authMap" type="com.gada.travelgada.domain.AuthVO">
+		<result property="member_id" column="member_id"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<select id="selectMember" resultMap="memberMap">
+		select * from member , authorities 
+		where member.member_id = authorities.member_id and member.member_id = #{member_id}
+	</select>
+	
+	<select id="selectPoint" resultType="com.gada.travelgada.domain.PointVO">
+		<![CDATA[
+			select * from point where member_id = #{member_id}
+		]]>
+	</select>
+
+</mapper>

@@ -1,131 +1,323 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
-
-<title>방문자 통계</title>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
-		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
-		crossorigin="anonymous" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
-    	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
-    	crossorigin="anonymous"></script>
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
-	
-	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+	<meta name="description" content=""/>
+	<meta name="author" content=""/>
+	<title>방문자 통계</title>
+	<!-- loader-->
+	<link href="resources/assets/css/pace.min.css" rel="stylesheet"/>
+	<script src="resources/assets/js/pace.min.js"></script>
+	<!--favicon-->
+	<link rel="icon" href="resources/assets/images/favicon.ico" type="image/x-icon">
+	<!-- simplebar CSS-->
+	<link href="resources/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+	<!-- Bootstrap core CSS-->
+	<link href="resources/assets/css/bootstrap.min.css" rel="stylesheet"/>
+	<!-- animate CSS-->
+	<link href="resources/assets/css/animate.css" rel="stylesheet" type="text/css"/>
+	<!-- Icons CSS-->
+	<link href="resources/assets/css/icons.css" rel="stylesheet" type="text/css"/>
+	<!-- Sidebar CSS-->
+	<link href="resources/assets/css/sidebar-menu.css" rel="stylesheet"/>
+	<!-- Custom Style-->
+	<link href="resources/assets/css/app-style.css" rel="stylesheet"/>
+  
+  	<%-- <link rel="stylesheet" href="${contextPath}/resources/css/font.css"> --%>
+  	<!-- 폰트 수정 필요 -->
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	<!-- 차트 -->
-	<!-- Icons CSS 필수 -->
-	<link href="resources/visitor/icons.css" rel="stylesheet" type="text/css"/>
-	<!-- Custom Style 필수 -->
-	<link href="resources/visitor/app-style.css" rel="stylesheet"/>
-
+  
 </head>
-<body>
+
+<body class="bg-theme bg-theme9">
 
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+ 
+	<!-- Start wrapper-->
+ 	<div id="wrapper">
+ 
+ 
+ 
+  <!--Start sidebar-wrapper-->
+   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+     <div class="brand-logo">
+      <a href="index.html">
+       <img src="resources/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+       
+     </a>
+   </div>
+   <ul class="sidebar-menu do-nicescrol">
+      <!-- <li class="sidebar-header">MAIN NAVIGATION</li> -->
+      <li>
+        <a href="/admin">
+          <i class="zmdi zmdi-view-dashboard"></i> <span>회원 관리</span>
+        </a>
+      </li>
 
-	<!--Content -->
-	<div class="container">
-	<br/><br/><br/>
-	
- 	
-	<h3> ${year}년 ${month}월 ${day}일</h3>
-	<%--<br/>
-	<h3>월별 방문자</h3>
-	<br/>
-	<% int month=1;%>
-	<c:forEach items= "${monthCount}" var="monthVisitor">
-	 <%= month %> <% month++; %>
-		윌 : ${monthVisitor}
-	&nbsp;&nbsp;&nbsp;
-	</c:forEach>
-	
-	<br/><br/>
-	<h3> 일별 방문자</h3>
-	<br/>
-	
-	<% int day=1;%>
-	<c:forEach items= "${dayCount}" var="dayVisitor">
-	 <%= day %> <% day++; %>
-		윌 : ${dayVisitor}
-	&nbsp;&nbsp;&nbsp;
-	</c:forEach> --%>
+      <li>
+        <a href="/visitor">
+          <i class="zmdi zmdi-invert-colors"></i> <span>방문자 통계</span>
+        </a>
+      </li>
 
-	<!-- 차트 부분 -->
-	<!-- 여기 부분 월별 방문자 수 -->
+      <li>
+        <a href="forms.html">
+          <i class="zmdi zmdi-format-list-bulleted"></i> <span>매출 통계</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="tables.html">
+          <i class="zmdi zmdi-grid"></i> <span>여행지 통계</span>
+        </a>
+      </li>
+
+     <!--   <li>
+        <a href="calendar.html">
+          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
+          <small class="badge float-right badge-light">New</small>
+        </a>
+      </li>
+
+      <li>
+        <a href="profile.html">
+          <i class="zmdi zmdi-face"></i> <span>Profile</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="login.html" target="_blank">
+          <i class="zmdi zmdi-lock"></i> <span>Login</span>
+        </a>
+      </li>
+
+       <li>
+        <a href="register.html" target="_blank">
+          <i class="zmdi zmdi-account-circle"></i> <span>Registration</span>
+        </a>
+      </li>  -->
+
+   <!--    <li class="sidebar-header">LABELS</li>
+      <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
+      <li><a href="javaScript:void();"><i class="zmdi zmdi-chart-donut text-success"></i> <span>Warning</span></a></li>
+      <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Information</span></a></li>
+ -->
+    </ul>
+   
+   </div>
+   <!--End sidebar-wrapper-->
+
+
+
+<div class="clearfix"></div>
+	
+  <div class="content-wrapper">
+    <div class="container-fluid">
+
+  <!--Start Dashboard Content-->
+<h3> ${year}년 ${month}월 ${day}일</h3>
+<br/>
+
+	  
 	<div class="row">
-		<div class="col-6">
+		<div class="col-12 col-lg-8 col-xl-8">
 			<div class="card">
 				<div class="card-header">
-					<h4>월별 방문자</h4>
+					월별 방문자
 				</div>
 				<div class="card-body">
 						<div id="chart-profile-visit"></div>
 					</div>
 				</div>
 			</div>
-			
-						<div class="col-6">
-				<div class="card">
-					<div class="card-header">
-						일일 방문자
-						<div class="card-action"></div>
-					</div>
-					<div class="card-body">
-						<ul class="list-inline">
-							<li class="list-inline-item"><i
-								class="fa fa-circle mr-2 text-white"></i>Visitor</li>
-						</ul>
-						<div class="chart-container-1">
-							<canvas id="chart1"></canvas>
-						</div>
-					</div>
 
-				</div>
+
+     <div class="col-12 col-lg-4 col-xl-4">
+        <div class="card">
+           <div class="card-header">회원 &nbsp;: ${total}
+             <div class="card-action">
+<!--              <div class="dropdown">
+             <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+              <i class="icon-options"></i>
+             </a>
+<               <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void();">Action</a>
+              <a class="dropdown-item" href="javascript:void();">Another action</a>
+              <a class="dropdown-item" href="javascript:void();">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="javascript:void();">Separated link</a>
+               </div> 
+              </div> -->
+             </div>
+           </div>
+           <div class="card-body">
+		     <div class="chart-container-2">
+               <canvas id="chart2"></canvas>
+			  </div>
+           </div>
+           <div class="table-responsive">
+             <table class="table align-items-center">
+               <tbody>
+                 <tr>
+                   <td><i class="fa fa-circle text-white mr-2"></i> 가입한 회원</td>
+                   <td>${total-withdrawal}</td>
+                   <td>${(total-withdrawal)/total*100}%</td>
+                 </tr>
+<!--                  <tr>
+                   <td><i class="fa fa-circle text-light-1 mr-2"></i>탈퇴</td>
+                   <td>$2602</td>
+                   <td>+25%</td>
+                 </tr>
+                 <tr>
+                   <td><i class="fa fa-circle text-light-2 mr-2"></i></td>
+                   <td>$1802</td>
+                   <td>+15%</td>
+                 </tr> -->
+                 <tr>
+                   <td><i class="fa fa-circle text-light-3 mr-2"></i>탈퇴한 회원</td>
+                   <td>${withdrawal}</td>
+                   <td>${withdrawal/total*100}%</td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+         </div>
+     </div>
+	</div><!--End Row-->
+	
+	<div class="row">
+     <div class="col-12 col-lg-12 col-xl-12">
+	    <div class="card">
+		 <div class="card-header">일일 방문자
+		   <div class="card-action">
+			 <!-- <div class="dropdown">
+			 <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+			  <i class="icon-options"></i>
+			 </a>
+				<div class="dropdown-menu dropdown-menu-right">
+				<a class="dropdown-item" href="javascript:void();">Action</a>
+				<a class="dropdown-item" href="javascript:void();">Another action</a>
+				<a class="dropdown-item" href="javascript:void();">Something else here</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="javascript:void();">Separated link</a>
+			   </div>
+			  </div> -->
+		   </div>
+		 </div>
+		 <div class="card-body">
+		    <ul class="list-inline">
+			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>daily visitors</li>
+			</ul>
+			<div class="chart-container-1">
+			  <canvas id="chart1"></canvas>
 			</div>
+		 </div>
+		 
+	<!-- 	 <div class="row m-0 row-group text-center border-top border-light-3">
+		   <div class="col-12 col-lg-4">
+		     <div class="p-3">
+		       <h5 class="mb-0">45.87M</h5>
+			   <small class="mb-0">Overall Visitor <span> <i class="fa fa-arrow-up"></i> 2.43%</span></small>
+		     </div>
+		   </div>
+		   <div class="col-12 col-lg-4">
+		     <div class="p-3">
+		       <h5 class="mb-0">15:48</h5>
+			   <small class="mb-0">Visitor Duration <span> <i class="fa fa-arrow-up"></i> 12.65%</span></small>
+		     </div>
+		   </div>
+		   <div class="col-12 col-lg-4">
+		     <div class="p-3">
+		       <h5 class="mb-0">245.65</h5>
+			   <small class="mb-0">Pages/Visit <span> <i class="fa fa-arrow-up"></i> 5.62%</span></small>
+		     </div>
+		   </div>
+		 </div> -->
+		 
 		</div>
-		<!-- 월별 방문자 수 -->
+	 </div>
+	</div>
 
-		<!-- 여기 동그라미 -->
-		<!--       <div class="card">
-                            <div class="card-header">
-                                <h4>Visitor Profile</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="chart-visitors-profile"></div>
-                            </div>
-                        </div> -->
-		<!-- 여기 동그라미 -->
 
-		<!-- 여기가 카드 부분이다. -->
+      <!--End Dashboard Content-->
+	  
+	<!--start overlay-->
+		  <div class="overlay toggle-menu"></div>
+		<!--end overlay-->
+		
+    </div>
+    <!-- End container-fluid-->
+    
+    </div><!--End content-wrapper-->
+   <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
 
-		<div class="row">
+	
+  <!--start color switcher-->
+   <div class="right-sidebar">
+    <div class="switcher-icon">
+      <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+    </div>
+    <div class="right-sidebar-content">
 
-		</div>
-		<!-- Chart js 필수 -->
-  </div><!-- container end -->
+      <p class="mb-0">Gaussion Texture</p>
+      <hr>
+      
+      <ul class="switcher">
+        <li id="theme1"></li>
+        <li id="theme2"></li>
+        <li id="theme3"></li>
+        <li id="theme4"></li>
+        <li id="theme5"></li>
+        <li id="theme6"></li>
+      </ul>
+
+      <p class="mb-0">Gradient Background</p>
+      <hr>
+      
+      <ul class="switcher">
+        <li id="theme7"></li>
+        <li id="theme8"></li>
+        <li id="theme9"></li>
+        <li id="theme10"></li>
+        <li id="theme11"></li>
+        <li id="theme12"></li>
+		<li id="theme13"></li>
+        <li id="theme14"></li>
+        <li id="theme15"></li>
+      </ul>
+      
+     </div>
+   </div>
+  <!--end color switcher-->
+   
+  </div><!--End wrapper-->
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="resources/assets/js/jquery.min.js"></script>
+  <script src="resources/assets/js/popper.min.js"></script>
+  <script src="resources/assets/js/bootstrap.min.js"></script>
+	
+ <!-- simplebar js -->
+  <script src="resources/assets/plugins/simplebar/js/simplebar.js"></script>
+  <!-- sidebar-menu js -->
+  <script src="resources/assets/js/sidebar-menu.js"></script>
+  <!-- loader scripts -->
+<!--   <script src="resources/assets/js/jquery.loading-indicator.js"></script> -->
+  <!-- Custom scripts -->
+  <script src="resources/assets/js/app-script.js"></script>
+  <!-- Chart js -->
   
-  <script src="resources/visitor/Chart.js/Chart.min.js"></script>
+  <script src="resources/assets/plugins/Chart.js/Chart.min.js"></script>
  
   <!-- Index js -->
   <!-- 일일 방문자 수  -->
@@ -134,7 +326,7 @@
 	    "use strict";
 
 	     // chart 1
- 
+ 			console.log(${dayCount});
 			  var ctx = document.getElementById('chart1').getContext('2d');
 			
 				var myChart = new Chart(ctx, {
@@ -143,9 +335,9 @@
 						labels: ["1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일",
 							"11일","12일","13일","14일","15일","16일","17일","18일","19일","20일","21일","22일","23일","24일","25일","26일","27일","28일","29일","30일","31일"],
 						datasets: [{ 
-							label: 'Old Visitor',
+							label: '월별 방문자',
 							data: ${dayCount},
-							backgroundColor: "rgba(255, 255, 255, 0.25)",//그래프 색깔
+							backgroundColor: "rgba(255, 255, 255,0.60)",//그래프 색깔
 							borderColor: "transparent",
 							pointRadius :"0",
 							borderWidth: 1
@@ -188,12 +380,48 @@
 
 				 }
 				});  
+				
+				 // chart 2
+
+				var ctx = document.getElementById("chart2").getContext('2d');
+					var myChart = new Chart(ctx, {
+						type: 'doughnut',
+						data: {
+							labels: ["Direct", "Affiliate", "E-mail", "Other"],
+							datasets: [{
+								backgroundColor: [
+									"#ffffff",
+									/* "rgba(255, 255, 255, 0.70)",
+									"rgba(255, 255, 255, 0.50)", */
+									"rgba(255, 255, 255, 0.20)"
+								],
+								data: [${total-withdrawal}, ${withdrawal}],
+								borderWidth: [0, 0, 0, 0]
+							}]
+						},
+					options: {
+						maintainAspectRatio: false,
+					   legend: {
+						 position :"bottom",	
+						 display: false,
+						    labels: {
+							  fontColor: '#ddd',  
+							  boxWidth:15
+						   }
+						}
+						,
+						tooltips: {
+						  displayColors:false
+						}
+					   }
+					});
+				
 	   });	 
 	   </script>
 
 	<!-- 차트 끝 -->
-
- 	<!-- 여기는 들어가야 한다!!!! -->
+  
+  	<!-- 여기는 들어가야 한다!!!! -->
      <script src="resources/visitor/apexcharts.js"></script>
      <!-- 쟤는 위여야 한다. -->
      <!-- 여기가 밑이어야 한다.  -->
@@ -220,7 +448,7 @@ var optionsProfileVisit = {
 			name: 'sales',
 			data: ${monthCount}
 		}],
-		colors: '#435ebe',
+		colors: '#ffffff',
 		xaxis: {
 			categories: ["1월","2월","3월","4월","5월","6월","7월", "8월","9월","10월","11월","12월"],
 		},
@@ -304,7 +532,6 @@ var optionsProfileVisit = {
 	}
 
 
-
 	var chartProfileVisit = new ApexCharts(document.querySelector("#chart-profile-visit"), optionsProfileVisit);
 	var chartVisitorsProfile = new ApexCharts(document.getElementById('chart-visitors-profile'), optionsVisitorsProfile)
 	var chartEurope = new ApexCharts(document.querySelector("#chart-europe"), optionsEurope);
@@ -319,276 +546,33 @@ var optionsProfileVisit = {
 
 
 </script>
-	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
+  
 </body>
-=======
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
-
-<title>달력</title>
-
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
-		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
-		crossorigin="anonymous" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
-    	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
-    	crossorigin="anonymous"></script>
-	
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- <script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- -->	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link
-		href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
-		rel="stylesheet">
-	
-
-	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	<!-- 달력 부분 -->
-	<link href="resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-    <link href="resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
-
 
 <style>
-/* 달력 생성 모달 */
-	/* 달력 아이콘 */
-	#calImg {
-		position: fixed;
-		right: 20px;
-		width: 25px;
-		height: 30px;
+
+	
+ 	.apexcharts-tooltip.apexcharts-theme-light{
+		background: black;
 	}
 
-	/* 모달 스타일 */
-	.modalInput{
-        margin-left: 20px;
-    }
-
-	.modal_input-style{
-		border: none;
-		font-size: 15px;
-		background-color: rgb(238, 237, 237);
-		outline: none;
-		height: 40px;
-		width: 270px;
-		border-radius: 15px;
-		padding-left: 20px;
-	}
-
-	.modal-submit{
-		border: none;
-		height: 40px;
-		width: 270px;
-		border-radius: 15px;
-		background-color: rgb(211, 211, 211);
-	}
-
-	.modalLabel{
-		margin:15px 10px 10px 10px;			
-		font-size: 12px;
-		color: black;
-		display: block;
-		height: 10px;
-		font-weight: bold;
-	}
-            
-	/* 모달 배경 투명 */
-	.modal-backdrop {
-		background-color: rgba(0,0,0,.0001) !important;
+	.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+		background: black;
 	}
 	
-	.modal-dialog2{
-		position: fixed;
-		top:60px;
-		right: 60px;
-		width:310px;
+	.apexcharts-tooltip{
+		background: black;
+	} 
+	
+	.apexcharts-menu{
+		background: black;
 	}
+	
+	text{
+		fill : white;
+	}
+	
 
-/* 모달 스타일 end */
 </style>
-
-<style>
-/* 다이어리 이미지 */
-.diary_img {
-	width: 240px;
-	height: 240px;
-	object-fit: cover;
-	display: block;
-	margin: 0px auto;
-	padding-bottom: 20px;
-}
-</style>
-
-<style>
-/* 모달 스타일 */
-	.dialogDi{
-    	width : 300px;
-   	 	height : 50px;
-    	float: left;
-    	margin-left: 30px;
-    	margin-botton: 10px;
-	}
-
-	.mainImg{
-	    float: left;
-	}
-	
-</style>
-
-<script>
-/* 플래너 생성 경고 */
-	$(document).ready(function(){
-		$(".modal-submit").click(function(){
-			if($("#planner_name").val().length==0){
-				alert("플래너 이름을 입력하세요!");
-				$("#planner_name").focus();
-				return false;
-			}//if end
-			if($("#input-start").val().length==0){
-				alert("여행 기간을 선택해주세요!");
-				$("#input-start").focus();
-				return false;
-			}//if end
-			if($("#input-end").val().length==0){
-				alert("여행 기간을 선택해주세요!");
-				$("#input-start").focus();
-				return false;
-			}//if end
-			if($("#schedule_content").val().length==0){
-				alert("나라를 입력하세요!");
-				$("#schedule_content").focus();
-				return false;
-			}//if end
-		});//click function end
-	});//ready function end
-/* 플래너 생성 경고 end */
-</script>
-
-<script>
-/* 엔드 날짜 클릭시 시작 날짜로 포커스가게 하기 */
-	$(document).ready(function(){
-		$("#input-end").click(function(){
-			$("#input-start").focus();
-		});//click function end
-	});//ready function end
-/* 날짜 동시에 띄우기 end */
-</script>
-
-</head>
-<body>
-
-	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
-
-	<!-- 달력 이미지 - container 안에 있으면 안됨 -->
-	<img id="calImg" src="resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
-
-	<!--Content -->
-	<div class="container">
-	<br/><br/><br/><br/><br/><br/>
-	
-	<!-- 데이트에서 4월을 빼고 
-		날짜를 뽑아주고
-	--> 
-	<h3> ${year}년 ${month}월 ${day}일</h3>
-	<br/>
-	<h3>월별 방문자</h3>
-	<br/>
-	<% int month=1;%>
-	<c:forEach items= "${monthCount}" var="monthVisitor">
-	 <%= month %> <% month++; %>
-		윌 : ${monthVisitor}
-	&nbsp;&nbsp;&nbsp;
-	</c:forEach>
-	
-	<br/><br/>
-	<h3> 일별 방문자</h3>
-	<br/>
-	
-	<% int day=1;%>
-	<c:forEach items= "${dayCount}" var="dayVisitor">
-	 <%= day %> <% day++; %>
-		윌 : ${dayVisitor}
-	&nbsp;&nbsp;&nbsp;
-	</c:forEach>
-
-	<br/><br/><br/><br/><br/><br/>
-	
-	
-	</div><!-- container end -->
-	
-
-	<!-- 달력 모달 -->
-	<!-- Modal -->
-	<div class="modal" id="calModal" role="dialog">
-		<div class="modal-dialog modal-dialog2">
-			<div class="modal-content">
-				<form class="form" action="${pageContext.request.contextPath}/planner_create" method="post">
-
-	<!-- 숨겨서 보내야 하는 정보들 -->
-		<input type="hidden" name="member_id" value="${member}"/>
-		<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
-		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>			
-			<div class="modalWrapper">
-				
-					<button type="button" class="close" data-dismiss="modal">&times;</button>  
-                    <br>
-                    <div class="modalInput">
-                        <h3 class="modalLabel">플래너 이름</h3>
-                            <input style="font-family: 'yg-jalnan'" name="planner_name" class="modal_input-style" type="text" placeholder="가다랑 함께 즐거운 여행!" id="planner_name">
-                        </div>
-                        <div class="modalInput">
-                            <h3 class="modalLabel">여행시작</h3>
-                            <input style="font-family: 'yg-jalnan'" name="start_date" class="modal_input-style" type="text"  placeholder="YYYY/MM/DD" id="input-start">
-                        </div>
-                        <div class="modalInput">
-                            <h3 class="modalLabel">여행종료</h3>
-                            <input style="font-family: 'yg-jalnan'" name="end_date" class="modal_input-style" type="text"  placeholder="YYYY/MM/DD" id="input-end">
-                        </div>
-                        <div class="modalInput">
-                            <h3 class="modalLabel">나라</h3>
-                            <input style="font-family: 'yg-jalnan'" name="schedule_content" class="modal_input-style" type="text" placeholder="어디로 여행 갈까요?" id="schedule_content">
-                        </div>
-                        <br>
-						<div class="modalInput">
-                        	<input class="modal-submit" style="font-family: 'yg-jalnan'" type="submit" value="작성"/>
-						</div>
-					<br>
-				</div>
-				</form>
-			</div>
-		</div>
-	</div><!-- 달력 모달 end -->
-
-	<!-- 달력 (아래 추가) -->
-	<script src="resources/calendar/datepicker/moment.min.js"></script>
-	<script src="resources/calendar/datepicker/daterangepicker.js"></script>
-    <script src="resources/calendar/js/global.js"></script>
-
-	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
-
-</body>
 </html>
