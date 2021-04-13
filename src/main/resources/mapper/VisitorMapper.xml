@@ -24,5 +24,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				where year(visit_date) = #{year} and month(visit_date) = #{month}
 		]]> 
 	</select> 
+	
+	<!-- member 수 -->
+	<select id="getTotal" resultType="int"> 
+		<![CDATA[ 
+			select count(*) from member
+		]]> 
+	</select> 
+	
+	<!-- 탈퇴한 member 수 -->
+	<select id="getWithdrawal" resultType="int"> 
+		<![CDATA[ 
+			select count(*) from member where withdrawal_flag = 1
+		]]> 
+	</select> 
 
 </mapper>

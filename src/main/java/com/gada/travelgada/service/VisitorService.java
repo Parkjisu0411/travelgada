@@ -62,4 +62,18 @@ public class VisitorService {
 		
 	}
 
+	//총 member 수
+	public int getTotal() {
+		log.info("AdminService getTotal()");
+		
+		return mapper.getTotal();
+	}
+
+	//탈퇴한 member 수
+	public int getWithdrawal() {
+		log.info("AdminService getWithdrawal()");
+		
+		return mapper.getWithdrawal();
+	}
+
 }

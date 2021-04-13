@@ -28,7 +28,7 @@ public class VisitorController {
 	public ModelAndView diary_test(ModelAndView mav, HttpSession session) {
 		log.info("controller diary_test();");
 
-		mav.setViewName("statistic/test");
+		mav.setViewName("statistic/index3");
 		//dd
 		return mav;
 
@@ -53,6 +53,13 @@ public class VisitorController {
 		mav.addObject("year",year);
 		mav.addObject("month",month);
 		mav.addObject("day",day);
+		
+		int total = service.getTotal();
+		
+		//전체 회원 수 
+		mav.addObject("total", total);
+		//탈퇴한 회원 수 
+		mav.addObject("withdrawal",service.getWithdrawal());
 		
 		mav.addObject("monthCount",service.getMonthCount(year));
 		log.info("+++++++++월별나와요+++++++++++"+ service.getMonthCount(year));

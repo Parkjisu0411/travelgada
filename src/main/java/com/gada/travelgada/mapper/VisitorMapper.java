@@ -10,5 +10,9 @@ public interface VisitorMapper {
 	public int getMonthCount(String year,int month);
 
 	public void setCount();
+
+	public int getTotal();
+
+	public int getWithdrawal();
 	
 }
