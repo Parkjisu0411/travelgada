@@ -1,5 +1,6 @@
 package com.gada.travelgada.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gada.travelgada.domain.BuyVO;
+import com.gada.travelgada.domain.ProductCountVO;
 import com.gada.travelgada.mapper.AdminMapper_sales;
 
 import lombok.NoArgsConstructor;
@@ -21,23 +22,31 @@ public class AdminService_sales {
 	@Autowired
 	private AdminMapper_sales adminMapper;
 	
-	public Map<Integer, Integer> getMonthlySales(String year) {
-		Map<Integer, Integer> monthlySalesMap = new HashMap<>();
+	public List<Integer> getMonthlySales(String year) {
+		List<Integer> monthlySalesList = new ArrayList<>();
 		for(int i = 1; i <= 12; i++) {
-			monthlySalesMap.put(i, adminMapper.selectBuyByMonth(year, String.valueOf(i)));
+			monthlySalesList.add(adminMapper.selectBuyByMonth(year, String.valueOf(i)));
 		}
 		
-		return monthlySalesMap;
+		return monthlySalesList;
 	}
 	
-	public Map<Integer, Integer> getDailySales(String year, String month) {
-		Map<Integer, Integer> dailySalesMap = new HashMap<>();
+	public List<Integer> getDailySales(String year, String month) {
+		List<Integer> dailySalesList = new ArrayList<>();
 		for(int i = 1; i <= 31; i++) {
-			dailySalesMap.put(i, adminMapper.selectBuyByDay(year, month, String.valueOf(i)));
+			dailySalesList.add(adminMapper.selectBuyByDay(year, month, String.valueOf(i)));
 		}
 		
-		return dailySalesMap;
+		return dailySalesList;
 	}
 	
-	
+	public List<ProductCountVO> getProductSales(String year, String month) {
+		List<ProductCountVO> productCountList = new ArrayList<>();
+		if(month.equals("0")) {
+			productCountList = adminMapper.selectProductCount();
+		} else {
+			
+		}
+		return productCountList;
+	}
 }
