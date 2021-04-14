@@ -82,4 +82,14 @@ public class AdminService {
 		return mapper.selectMember(member_id);
 	}
 
+	public int searchWidthTotal(String keyword) {
+		log.info("searchWidthTotal searchTotal()");
+		return mapper.searchWidthTotal(keyword);
+	}
+
+	public List<MemberVO> searchWithdrawal(int nowPage, int amount, String keyword) {
+		log.info("searchWithdrawal searchTotal()");
+		return mapper.searchWithdrawal(nowPage, amount, keyword);
+	}
+
 }

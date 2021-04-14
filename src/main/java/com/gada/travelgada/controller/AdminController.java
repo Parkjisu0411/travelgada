@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,7 +51,7 @@ public class AdminController {
 		//탈퇴한 회원 수 
 		mav.addObject("withdrawal",service.getWithdrawal());
 		
-		mav.setViewName("admin/admin2");
+		mav.setViewName("admin/admin");
 		
 		return mav;
 
@@ -116,28 +117,22 @@ public class AdminController {
 	@GetMapping("search/member")
 	public ModelAndView search(ModelAndView mav, @RequestParam("keyword") String keyword, CriteriaVO cri) {
 		log.info("controller search();");
+		log.info(keyword);
 		
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
 		int total = service.searchTotal(keyword);
-		int totalMember = service.getTotal();
 		
-		mav.addObject("memberList",service.search(nowPage, cri.getAmount(),keyword));
-		mav.addObject("pageMaker", new PageVO(cri, total));
-		
-		//전체 회원 수 
-		mav.addObject("total", totalMember);
-		//탈퇴한 회원 수 
-		mav.addObject("withdrawal",service.getWithdrawal());
-		
-		mav.addObject("keyword",keyword);
-		
-		mav.setViewName("admin/admin2");
+			mav.addObject("memberList",service.search(nowPage, cri.getAmount(),keyword));
+			mav.addObject("pageMaker", new PageVO(cri, total));
+	
+			mav.addObject("keyword",keyword);
+			mav.setViewName("admin/admin");
 
 		return mav;
 
 	}// search end
 	
-	//검색
+	//회원 상세 정보
 	@GetMapping("memberDetailList/{member_id}")
 	public ModelAndView memberDetailList(ModelAndView mav, MemberVO memberVO) {
 		log.info("controller memberDetailList();");
@@ -158,5 +153,30 @@ public class AdminController {
 		return mav;
 
 	}// memberDetailList end
+	
+	//탈퇴한 회원 검색
+	@GetMapping("search/memberWithdrawal")
+	public ModelAndView memberWithdrawal(ModelAndView mav, @RequestParam("keyword") String keyword, CriteriaVO cri) {
+		log.info("controller search();");
+		log.info(keyword);
+		
+		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
+		int total = service.searchWidthTotal(keyword);
+		int totalMember = service.getTotal();
+		
+			mav.addObject("memberList",service.searchWithdrawal(nowPage, cri.getAmount(),keyword));
+			mav.addObject("pageMaker", new PageVO(cri, total));
+			
+			//전체 회원 수 
+			mav.addObject("total", totalMember);
+			//탈퇴한 회원 수 
+			mav.addObject("withdrawal",service.getWithdrawal());
+	
+			mav.addObject("keyword",keyword);
+			mav.setViewName("admin/adminWithdrawal");
+
+		return mav;
+
+	}// memberWithdrawal end
 	
 }

@@ -9,10 +9,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 	<meta name="description" content=""/>
 	<meta name="author" content=""/>
-	<title>방문자 통계</title>
+	<title>이게 진짜</title>
 	<!-- loader-->
-	<link href="resources/assets/css/pace.min.css" rel="stylesheet"/>
-	<script src="resources/assets/js/pace.min.js"></script>
+<!-- 	<link href="resources/assets/css/pace.min.css" rel="stylesheet"/>
+	<script src="resources/assets/js/pace.min.js"></script> -->
 	<!--favicon-->
 	<link rel="icon" href="resources/assets/images/favicon.ico" type="image/x-icon">
 	<!-- simplebar CSS-->
@@ -44,8 +44,6 @@
 	<!-- Start wrapper-->
  	<div id="wrapper">
  
- 
- 
   <!--Start sidebar-wrapper-->
    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
      <div class="brand-logo">
@@ -69,7 +67,7 @@
       </li>
 
       <li>
-        <a href="forms.html">
+        <a href="/statistic/sales">
           <i class="zmdi zmdi-format-list-bulleted"></i> <span>매출 통계</span>
         </a>
       </li>
@@ -80,42 +78,11 @@
         </a>
       </li>
 
-     <!--   <li>
-        <a href="calendar.html">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
-        </a>
-      </li>
 
-      <li>
-        <a href="profile.html">
-          <i class="zmdi zmdi-face"></i> <span>Profile</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="login.html" target="_blank">
-          <i class="zmdi zmdi-lock"></i> <span>Login</span>
-        </a>
-      </li>
-
-       <li>
-        <a href="register.html" target="_blank">
-          <i class="zmdi zmdi-account-circle"></i> <span>Registration</span>
-        </a>
-      </li>  -->
-
-   <!--    <li class="sidebar-header">LABELS</li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-chart-donut text-success"></i> <span>Warning</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Information</span></a></li>
- -->
     </ul>
    
    </div>
    <!--End sidebar-wrapper-->
-
-
 
 <div class="clearfix"></div>
 	
@@ -144,18 +111,7 @@
         <div class="card">
            <div class="card-header">회원 &nbsp;: ${total}
              <div class="card-action">
-<!--              <div class="dropdown">
-             <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
-              <i class="icon-options"></i>
-             </a>
-<               <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="javascript:void();">Action</a>
-              <a class="dropdown-item" href="javascript:void();">Another action</a>
-              <a class="dropdown-item" href="javascript:void();">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="javascript:void();">Separated link</a>
-               </div> 
-              </div> -->
+
              </div>
            </div>
            <div class="card-body">
@@ -171,16 +127,7 @@
                    <td>${total-withdrawal}</td>
                    <td>${(total-withdrawal)/total*100}%</td>
                  </tr>
-<!--                  <tr>
-                   <td><i class="fa fa-circle text-light-1 mr-2"></i>탈퇴</td>
-                   <td>$2602</td>
-                   <td>+25%</td>
-                 </tr>
-                 <tr>
-                   <td><i class="fa fa-circle text-light-2 mr-2"></i></td>
-                   <td>$1802</td>
-                   <td>+15%</td>
-                 </tr> -->
+
                  <tr>
                    <td><i class="fa fa-circle text-light-3 mr-2"></i>탈퇴한 회원</td>
                    <td>${withdrawal}</td>
@@ -198,18 +145,7 @@
 	    <div class="card">
 		 <div class="card-header">일일 방문자
 		   <div class="card-action">
-			 <!-- <div class="dropdown">
-			 <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
-			  <i class="icon-options"></i>
-			 </a>
-				<div class="dropdown-menu dropdown-menu-right">
-				<a class="dropdown-item" href="javascript:void();">Action</a>
-				<a class="dropdown-item" href="javascript:void();">Another action</a>
-				<a class="dropdown-item" href="javascript:void();">Something else here</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="javascript:void();">Separated link</a>
-			   </div>
-			  </div> -->
+
 		   </div>
 		 </div>
 		 <div class="card-body">
@@ -221,26 +157,7 @@
 			</div>
 		 </div>
 		 
-	<!-- 	 <div class="row m-0 row-group text-center border-top border-light-3">
-		   <div class="col-12 col-lg-4">
-		     <div class="p-3">
-		       <h5 class="mb-0">45.87M</h5>
-			   <small class="mb-0">Overall Visitor <span> <i class="fa fa-arrow-up"></i> 2.43%</span></small>
-		     </div>
-		   </div>
-		   <div class="col-12 col-lg-4">
-		     <div class="p-3">
-		       <h5 class="mb-0">15:48</h5>
-			   <small class="mb-0">Visitor Duration <span> <i class="fa fa-arrow-up"></i> 12.65%</span></small>
-		     </div>
-		   </div>
-		   <div class="col-12 col-lg-4">
-		     <div class="p-3">
-		       <h5 class="mb-0">245.65</h5>
-			   <small class="mb-0">Pages/Visit <span> <i class="fa fa-arrow-up"></i> 5.62%</span></small>
-		     </div>
-		   </div>
-		 </div> -->
+
 		 
 		</div>
 	 </div>
@@ -474,73 +391,10 @@ var optionsProfileVisit = {
 		}
 	}
 
-	var optionsEurope = {
-		series: [{
-			name: 'series1',
-			data: [310, 800, 600, 430, 540, 340, 605, 805,430, 540, 340, 605]
-		}],
-		chart: {
-			height: 80,
-			type: 'area',
-			toolbar: {
-				show:false,
-			},
-		},
-		colors: ['#5350e9'],
-		stroke: {
-			width: 2,
-		},
-		grid: {
-			show:false,
-		},
-		dataLabels: {
-			enabled: false
-		},
-		xaxis: {
-			type: 'datetime',
-			categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z","2018-09-19T07:30:00.000Z","2018-09-19T08:30:00.000Z","2018-09-19T09:30:00.000Z","2018-09-19T10:30:00.000Z","2018-09-19T11:30:00.000Z"],
-			axisBorder: {
-				show:false
-			},
-			axisTicks: {
-				show:false
-			},
-			labels: {
-				show:false,
-			}
-		},
-		show:false,
-		yaxis: {
-			labels: {
-				show:false,
-			},
-		},
-		tooltip: {
-			x: {
-				format: 'dd/MM/yy HH:mm'
-			},
-		},
-	};
-
-	let optionsAmerica = {
-		...optionsEurope,
-		colors: ['#008b75'],
-	}
-	let optionsIndonesia = {
-		...optionsEurope,
-		colors: ['#dc3545'],
-	}
-
 
 	var chartProfileVisit = new ApexCharts(document.querySelector("#chart-profile-visit"), optionsProfileVisit);
 	var chartVisitorsProfile = new ApexCharts(document.getElementById('chart-visitors-profile'), optionsVisitorsProfile)
-	var chartEurope = new ApexCharts(document.querySelector("#chart-europe"), optionsEurope);
-	var chartAmerica = new ApexCharts(document.querySelector("#chart-america"), optionsAmerica);
-	var chartIndonesia = new ApexCharts(document.querySelector("#chart-indonesia"), optionsIndonesia);
 
-	chartIndonesia.render();
-	chartAmerica.render();
-	chartEurope.render();
 	chartProfileVisit.render();
 	chartVisitorsProfile.render()
 

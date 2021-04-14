@@ -38,4 +38,10 @@ public interface AdminMapper {
 
 	public MemberVO selectMember(String member_id);
 
+	//
+	public List<MemberVO> searchWithdrawal(int nowPage, int amount, String keyword);
+
+	//
+	public int searchWidthTotal(String keyword);
+
 }

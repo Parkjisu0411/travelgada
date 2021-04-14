@@ -60,7 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select count(*) from member 
 				where member_id like CONCAT('%', #{keyword}, '%') 
 					or member_name like CONCAT('%', #{keyword}, '%') 
-					or email like '%%' and phone_num like CONCAT('%', #{keyword}, '%')
+					or email like CONCAT('%', #{keyword}, '%')  
+					or phone_num like CONCAT('%', #{keyword}, '%')
 					or withdrawal_flag like CONCAT('%', #{keyword}, '%') 
 					or withdrawal_code like CONCAT('%', #{keyword}, '%') 
 					or sns_type like CONCAT('%', #{keyword}, '%');
@@ -99,6 +100,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectPoint" resultType="com.gada.travelgada.domain.PointVO">
 		<![CDATA[
 			select * from point where member_id = #{member_id}
+		]]>
+	</select>
+	
+		<!-- 검색 된 글 수 -->
+	<select id="searchWidthTotal" resultType="int"> 
+		<![CDATA[ 
+			select count(*) from(
+				select * from member 
+				where member_id like CONCAT('%', #{keyword}, '%') 
+					or member_name like CONCAT('%', #{keyword}, '%') 
+					or email like CONCAT('%', #{keyword}, '%') 
+					or phone_num like CONCAT('%', #{keyword}, '%')
+					or withdrawal_flag like CONCAT('%', #{keyword}, '%') 
+					or withdrawal_code like CONCAT('%', #{keyword}, '%') 
+					or sns_type like CONCAT('%', #{keyword}, '%'))a where a.withdrawal_flag = 1
+		]]> 
+	</select> 
+	
+		<!-- 검색 -->
+	<select id="searchWithdrawal" resultType="com.gada.travelgada.domain.MemberVO"> 
+		<![CDATA[ 
+			select a.* from(
+				select * from member where member_id like CONCAT('%', #{keyword}, '%') 
+					or member_name like CONCAT('%', #{keyword}, '%') 
+					or email like CONCAT('%', #{keyword}, '%') 
+					or phone_num like CONCAT('%', #{keyword}, '%')
+					or withdrawal_flag like CONCAT('%', #{keyword}, '%') 
+					or withdrawal_code like CONCAT('%', #{keyword}, '%') 
+					or sns_type like CONCAT('%', #{keyword}, '%')
+				)a where a.withdrawal_flag = 1 LIMIT #{nowPage}, #{amount}
 		]]>
 	</select>
 
