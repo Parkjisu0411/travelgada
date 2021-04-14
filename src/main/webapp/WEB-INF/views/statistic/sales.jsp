@@ -58,6 +58,12 @@
 	text{
 		fill : white;
 	}
+	
+	#chart-product-list td {
+		max-width: 180px;
+		overflow: hidden;
+		table-layout: fixed;
+	}
 </style>
 <script>
 	var productChart = null;
@@ -215,12 +221,13 @@
 				},
 				chart: {
 					type: 'bar',
-					height: 300,
+					height: 380,
 					events: {
 						click: function(series) {
 							var ele = series.toElement;
 							var month = parseInt($(ele).attr("j")) + parseInt(1);
 							getDailySales(month);
+							getProductSales(month);
 						}
 					}
 				},
@@ -305,7 +312,7 @@
 					<!-- start product sales -->
 					<div class="col-12 col-lg-4 col-xl-4">
 						<div class="card">
-							<div class="card-header">상품 매출
+							<div class="card-header">상품 매출 &nbsp;<span style="float:right;" onclick="getProductSales(0)">전체기간 조회</span>
 								<div class="card-action"></div>
 							</div>
 							<div class="card-body">
@@ -316,7 +323,7 @@
 							<div class="table-responsive">
 								<table class="table align-items-center">
 									<tbody id = "chart-product-list">
-										<tr><td>상품 입력</td></tr>
+										
 									</tbody>
 								</table>
 							</div>

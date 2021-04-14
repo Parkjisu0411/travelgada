@@ -45,7 +45,7 @@ public class AdminService_sales {
 		if(month.equals("0")) {
 			productCountList = adminMapper.selectProductCount();
 		} else {
-			
+			productCountList = adminMapper.selectProductCountByMonth(year, month);
 		}
 		return productCountList;
 	}

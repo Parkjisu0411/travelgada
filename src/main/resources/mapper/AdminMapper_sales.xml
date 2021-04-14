@@ -46,7 +46,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectProductCount" resultType="com.gada.travelgada.domain.ProductCountVO">
 		<![CDATA[
-			select product_name, sum(price) as total_price, count(*) as count from buy_detail group by product_name order by count desc;
+			select product_name, sum(price) as total_price, count(*) as count from buy_detail group by product_name order by count desc, total_price desc;
+		]]>
+	</select>
+	
+		<select id="selectProductCountByMonth" resultType="com.gada.travelgada.domain.ProductCountVO">
+		<![CDATA[
+			select product_name, sum(price) as total_price, count(*) as count from buy_detail D, buy B where D.buy_id = B.buy_id and year(B.buy_date) = #{year} and month(B.buy_date) = #{month} group by D.product_name order by count desc, total_price desc;
 		]]>
 	</select>
 	

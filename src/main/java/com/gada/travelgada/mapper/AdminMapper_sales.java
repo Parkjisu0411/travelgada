@@ -15,4 +15,6 @@ public interface AdminMapper_sales {
 	public int selectBuyByDay(@Param("year") String year, @Param("month") String month, @Param("day") String day);
 	
 	public List<ProductCountVO> selectProductCount();
+
+	public List<ProductCountVO> selectProductCountByMonth(@Param("year") String year, @Param("month") String month);
 }
