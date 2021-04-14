@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-<title>관리자</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
+	<meta charset="UTF-8">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+  
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
@@ -19,41 +22,50 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
     	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
     	crossorigin="anonymous"></script>
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
-	
-	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+    	
+	<!-- simplebar CSS-->
+ 	<link href="/resources/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+	<!-- Bootstrap core CSS-->
+	<link href="/resources/assets/css/bootstrap.min.css" rel="stylesheet"/>
+	<!-- Icons CSS-->
+	<link href="/resources/assets/css/icons.css" rel="stylesheet" type="text/css"/>
+	<!-- Sidebar CSS-->
+	<link href="/resources/assets/css/sidebar-menu.css" rel="stylesheet"/>
+	<!-- Custom Style-->
+	<link href="/resources/assets/css/app-style.css" rel="stylesheet"/>
+  
+  	<%-- <link rel="stylesheet" href="${contextPath}/resources/css/font.css"> --%>
+  	<!-- 폰트 수정 필요 -->
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<style>
-/* 테이블 */
-	/* pw */
-	.pwWidth{
-		width: 100px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
 	
-/* 검색 */
-	/* 검색 박스 */
-/* 	.searchBox{
-		overflow: right;
-	}  */
-
+	<!-- Bootstrap core JavaScript-->
+	<script src="/resources/assets/js/jquery.min.js"></script>
+	<script src="/resources/assets/js/popper.min.js"></script>
+	<script src="/resources/assets/js/bootstrap.min.js"></script>
+  
+	<title>회원 관리</title>
+  
+<style>
 /* 탈퇴된 경우 */
   	.selected {
 	  	text-decoration:line-through grey;
 	  	color: red;
-
   	}
-	
+/* 검색 창 */
+ 	#searchMember{
+		text-align: right;
+	}
+/* 모달 색깔 */
+	.bg-modal{
+		background-color : black;
+	}
+
+/* 검색 글자 색*/
+	#memberKeyword{
+		color : white;
+	}
 </style>
 
 <script type="text/javascript">
@@ -98,7 +110,7 @@
 					$("#btn_"+member_id).children().remove();
 					$("#td_"+member_id).children().remove();
 					
-					htmls += '<button type="button" data-toggle="modal" data-target="#return_'+member_id+'">되돌리기</button>'
+					htmls += '<button type="button" class=" btn-light btn-round px-5" data-toggle="modal" data-target="#return_'+member_id+'">되돌리기</button>'
 					tdHtmls += '<div>탈퇴</div>'
 					
 					$("#btn_"+member_id).append(htmls);
@@ -157,7 +169,7 @@
 					$("#btn_"+member_id).children().remove();
 					$("#td_"+member_id).children().remove();
 							
-					htmls += '<button type="button" data-toggle="modal" data-target="#withdrawal_'+member_id+'">탈퇴</button>'
+					htmls += '<button type="button" class=" btn-light btn-round px-5" data-toggle="modal" data-target="#withdrawal_'+member_id+'">탈퇴</button>'
 					tdHtmls += '<div>회원</div>'
 					
 					$("#btn_"+member_id).append(htmls);
@@ -193,132 +205,169 @@
 
 </head>
 
-<body>
+<body class="bg-theme bg-theme9">
 
-
+	<!-- Header -->
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	
-	<br/><br/>	
-	
-	<!--Content -->
-	<div class="container">
-		<span class="headline" style="font-family: 'yg-jalnan'; font-size:30px;">
-			<a href="/admin">회원 관리</a>
-		</span> &nbsp;
+	<!-- Start wrapper-->
+ 	<div id="wrapper">
 		
-		<span><a href="/admin/withdrawal">탈퇴한 회원</a></span>
-		<br/>
-		
-		총 회원 수 : ${total} &nbsp;&nbsp; 탈퇴한 회원 수 : ${withdrawal}
-		<div class="progress">
-			<div class="progress-bar" style="width:${(total-withdrawal)/total*100}%">${total-withdrawal}</div>
+		<!--Start sidebar-wrapper-->
+		<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+			<div class="brand-logo"></div>
+   				<ul class="sidebar-menu do-nicescrol">
+      				<li>
+        				<a href="/admin">
+          					<i class="zmdi zmdi-view-dashboard"></i> <span>회원 관리</span>
+        				</a>
+      				</li>
+					<li>
+						<a href="/visitor"> <i class="zmdi zmdi-invert-colors"></i>
+							<span>방문자 통계</span>
+						</a>
+					</li>
+					<li>
+						<a href="/statistic/sales">
+							<i class="zmdi zmdi-format-list-bulleted"></i> <span>매출 통계</span>
+						</a>
+					</li>
+					<li>
+						<a href="tables.html">
+							<i class="zmdi zmdi-grid"></i> <span>여행지 통계</span>
+						</a>
+					</li>
+				</ul>
 		</div>
-		<br/>
-		<div class="progress">
-			<div class="progress-bar bg-warning" style="width:${withdrawal/total*100}%"> ${withdrawal}</div>	
-		</div>
-		
-		<!-- 검색 -->
-		<form action="${pageContext.request.contextPath}/search/member" method="get">			
-			<input class="col-3" type="text" name="keyword" placeholder="회원 검색" value="${keyword}"/>
-			<button type="submit"><i class="fa fa-search"></i></button>
-		</form>
+		<!--End sidebar-wrapper-->
 	
-		<!-- member list -->
-		<table class="table">
-			<thead>
-				<tr>
-					<th>이름</th>
-					<th>아이디</th>
-					<th>sns 타입</th>
-					<th>이메일</th>
-					<th>휴대폰</th>
-					<th>회원/탈퇴</th>
-					<th>관리</th>
-				</tr>
-			</thead>
-				<tbody>
-					<c:forEach items="${memberList}" var="member" varStatus="status">
-						<tr id = "tr_${member.member_id}">
-							<td>${member.member_name }</td>
-							<td><a href="/memberDetailList/${member.member_id }">${member.member_id }</a></td>
-							<td>
-								<c:choose>
-    								<c:when test="${member.sns_type eq null}">
-        								일반
-    								</c:when>
-    								<c:otherwise>
-        								${member.sns_type }
-    								</c:otherwise>
-								</c:choose>
-							</td>
-							<td>${member.email }</td>
-							<td>${member.phone_num }</td>
-							<td id= "td_${member.member_id}">
-								<div>					
-									<c:choose>
-    									<c:when test="${member.withdrawal_flag eq 0}">
-        									회원
-    									</c:when>
-    									<c:otherwise>
-        									탈퇴
-    									</c:otherwise>
-									</c:choose>
-								</div>	
-							</td>
-							<td id= "btn_${member.member_id}">
-								<c:choose>
-    								<c:when test="${member.withdrawal_flag eq 0}">
-        								<button type="button" data-toggle="modal" data-target="#withdrawal_${member.member_id }">탈퇴</button>
-    								</c:when>
-    								<c:otherwise>
-        								<button type="button" data-toggle="modal" data-target="#return_${member.member_id }">되돌리기</button>
-    								</c:otherwise>
-								</c:choose>
-							</td>
-						</tr>
-					</c:forEach>				
-				</tbody>
-			</table>
-			<!-- member list end -->
+		<div class="content-wrapper">
+			<div class="container-fluid">
 			
-			<!-- 페이징 -->
-			<ul class="pagination" style="padding:80px 500px;">	
-		  		<c:if test="${pageMaker.prev}">
-	       		  <li class="page-item"><a class="page-link" href="${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
-	     		</c:if>
-	      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-	         		<li class="page-item"><a class="page-link" href="${pageMaker.makeQuery(idx)}">${idx}</a></li>
-	      		</c:forEach>
-	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-	         		<li class="page-item"><a class="page-link" href="${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
-	      		</c:if>
-		 	</ul>
-		 	<!-- 페이징 끝 -->
+			<span class="headline" style="font-family: 'yg-jalnan'; font-size:30px;">
+				<a href="/admin">회원 관리</a>
+			</span> &nbsp; 
+			
+ 			<span><a href="/admin/withdrawal">탈퇴한 회원</a></span> &nbsp;&nbsp;
+	
+			<!-- 검색 -->
+			<div id="searchMember">
+			<form class="search-bar" action="${pageContext.request.contextPath}/search/member" method="get">			
+				<input id="memberKeyword" class="col-2" type="text" class="form-control" name="keyword" placeholder="회원 검색" value="${keyword}"/>
+				<button type="submit" class="searchM-btn btn-light"><i class="icon-magnifier"></i></button>
+			</form>
+			</div>
+			
+				<!-- member list 테이블 -->
+				<div class="row mt-3">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body">
+              					<div class="table-responsive">
+              						총 회원 수 : ${total} &nbsp;&nbsp; 탈퇴한 회원 수 : ${withdrawal} 
+								<!-- member list -->
+								<table class="table">
+									<thead>
+										<tr>
+											<th>이름</th>
+											<th>아이디</th>
+											<th>sns 타입</th>
+											<th>이메일</th>
+											<th>휴대폰</th>
+											<th>회원/탈퇴</th>
+											<th>관리</th>
+										</tr>
+									</thead>
+										<tbody>
+											<c:forEach items="${memberList}" var="member" varStatus="status">
+												<tr id = "tr_${member.member_id}">
+													<td>${member.member_name }</td>
+													<td><a href="/memberDetailList/${member.member_id }">${member.member_id }</a></td>
+													<td>
+														<c:choose>
+						    								<c:when test="${member.sns_type eq null}">
+						        								일반
+						    								</c:when>
+						    								<c:otherwise>
+						        								${member.sns_type }
+						    								</c:otherwise>
+														</c:choose>
+													</td>
+													<td>${member.email }</td>
+													<td>${member.phone_num }</td>
+													<td id= "td_${member.member_id}">
+														<div>					
+															<c:choose>
+						    									<c:when test="${member.withdrawal_flag eq 0}">
+						        									회원
+						    									</c:when>
+						    									<c:otherwise>
+						        									탈퇴
+						    									</c:otherwise>
+															</c:choose>
+														</div>	
+													</td>
+													<td id= "btn_${member.member_id}">
+														<c:choose>
+						    								<c:when test="${member.withdrawal_flag eq 0}">
+						        								<button type="button" class=" btn-light btn-round px-5" data-toggle="modal" data-target="#withdrawal_${member.member_id }">탈퇴</button>
+						    									
+						    								</c:when>
+						    								<c:otherwise>
+						        								<button type="button" class=" btn-light btn-round px-5" data-toggle="modal" data-target="#return_${member.member_id }">되돌리기</button>
+						    								</c:otherwise>
+														</c:choose>
+													</td>
+												</tr>
+											</c:forEach>			
+										</tbody>
+									</table>
+			     				</div>
+            				</div>
+          				</div>
+          			</div>
+          		</div>	
+				<!-- member list 테이블 end -->
+				
+				<!-- 페이징 -->
+				<ul class="pagination" style="padding:80px 500px;">	
+			  		<c:if test="${pageMaker.prev}">
+		       		  <li class="page-item"><a class="page-link" href="${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
+		     		</c:if>
+		      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+		         		<li class="page-item"><a class="page-link" href="${pageMaker.makeQuery(idx)}">${idx}</a></li>
+		      		</c:forEach>
+		      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+		         		<li class="page-item"><a class="page-link" href="${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
+		      		</c:if>
+			 	</ul>
+				 <!-- 페이징 끝 -->
+		 
 	
 	<!-- The Modal -->
 	<c:forEach items="${memberList}" var="member" varStatus="status">
 	<!-- 회원 탈퇴 -->
 	<div class="modal" id="withdrawal_${member.member_id}">
-    	<div class="modal-dialog">
-			<div class="modal-content"> 
+    	<div class="modal-dialog ">
+			<div class="modal-content bg-modal"> 
         		<!-- Modal body -->
         		<div class="modal-body">
         			<br/>
-          			<div>${member.member_id}님을 정말 탈퇴시키겠습니까?</div>
+          			<div><span style="color:green; font-size:22px; font-weight:border;">${member.member_id}</span> 님을 정말 탈퇴시키겠습니까?</div>
           			<br/>
           		
           			<select name="withdrawal_code" id="select_${member.member_id}">
-          				<option value="1" >홍보성 글 작성</option>
-          				<option value="2" >부적절한 글 작성</option>
-        			  	<option value="3" >??</option>
-        			  	<option value="4" >기타</option>
+          				<option value="1" style="background : white;" >부적절한 홍보 게시물</option>
+          				<option value="2" style="background : white;">음란성 또는 청소년에게 부적합한 내용</option>
+        			  	<option value="3" style="background : white;">명예훼손/사생활 침해 및 저작권 침해</option>
+        			  	<option value="4" style="background : white;">기타</option>
        			   </select>
        		   </div>
         
         		<!-- Modal footer -->
         		<div class="modal-footer">
-        			<button type="submit" class="btn btn-danger" data-dismiss="modal" onclick="widthrawal('${member.member_id}')">확인</button>
-          			<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+        			<button type="submit" class="btn-danger btn-round px-5" data-dismiss="modal" onclick="widthrawal('${member.member_id}')">확인</button>
+          			<button type="button" class=" btn-round px-5" data-dismiss="modal">취소</button>
         		</div>
       		</div>
     	</div>
@@ -329,20 +378,22 @@
 	<!-- The Modal -->
 	<div class="modal" id="return_${member.member_id }">
     	<div class="modal-dialog">
-      		<div class="modal-content">
+      		<div class="modal-content bg-modal">
 				<!-- Modal body -->
         		<div class="modal-body">
-          			<div>${member.member_id }님을 다시 회원으로 되돌리시겠습니까?</div>
+        			<br/>
+          			<div><span style="color:green; font-size:22px; font-weight:border;">${member.member_id }</span> 님을 다시 회원으로 되돌리시겠습니까?</div>
+          			<br/>
           				회원 탈퇴 사유 : 
           					<c:choose>
     							<c:when test="${member.withdrawal_code eq 1}">
-        							홍보성 글 작성
+        							부적절한 홍보 게시물
     							</c:when>
     							<c:when test="${member.withdrawal_code eq 2}">
-        							부적절한 글 작성
+        							음란성 또는 청소년에게 부적합한 내용
     							</c:when>
     							<c:when test="${member.withdrawal_code eq 3}">
-        							??
+        							명예훼손/사생활 침해 및 저작권 침해
     							</c:when>
     							<c:when test="${member.withdrawal_code eq 4}">
         							기타
@@ -352,8 +403,8 @@
         		
         		<!-- Modal footer -->
         		<div class="modal-footer">
-        			<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="returnMember('${member.member_id}')">확인</button>
-          			<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+        			<button type="button" class=" btn-danger btn-round px-5" data-dismiss="modal" onclick="returnMember('${member.member_id}')">확인</button>
+          			<button type="button" class=" btn-round px-5" data-dismiss="modal">취소</button>
         		</div>
       		</div>
       	</div>
@@ -361,11 +412,48 @@
 	</c:forEach>
 	<!-- 모달 반복 끝 -->
 	
+			</div><!-- content-wrapper end -->
+		</div><!-- container-fluid end-->
+
+	<!--start color switcher - 색깔 바꾸기 -->
+	<div class="right-sidebar">
+		<div class="switcher-icon">
+			<i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+		</div>
+		<div class="right-sidebar-content">
+	
+			<p class="mb-0">Gaussion Texture</p>
+			<hr>
+	      
+			<ul class="switcher">
+				<li id="theme1"></li>
+				<li id="theme2"></li>
+				<li id="theme3"></li>
+				<li id="theme4"></li>
+				<li id="theme5"></li>
+				<li id="theme6"></li>
+			</ul>
+	
+			<p class="mb-0">Gradient Background</p>
+			<hr>
+		
+			<ul class="switcher">
+				<li id="theme7"></li>
+				<li id="theme8"></li>
+				<li id="theme9"></li>
+				<li id="theme10"></li>
+				<li id="theme11"></li>
+				<li id="theme12"></li>
+				<li id="theme13"></li>
+				<li id="theme14"></li>
+				<li id="theme15"></li>
+			</ul>
+		</div>
 	</div>
-	<!--Content end -->
-
-	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
-
+	<!--end color switcher - 색깔 바꾸기 -->
+	
+	</div><!--End wrapper-->
+  
 </body>
+
 </html>

@@ -36,6 +36,33 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
+  
+  <style>
+
+	
+/*  	.apexcharts-tooltip.apexcharts-theme-light{
+		background: black;
+	}
+
+	.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+		background: black;
+	}
+	
+	.apexcharts-tooltip{
+		background: black;
+	} 
+	
+	.apexcharts-menu{
+		background: black;
+	} */
+	
+	text{
+		fill : white;
+	}
+	
+
+</style>
+  
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -554,29 +581,5 @@ var optionsProfileVisit = {
   
 </body>
 
-<style>
 
-	
- 	.apexcharts-tooltip.apexcharts-theme-light{
-		background: black;
-	}
-
-	.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
-		background: black;
-	}
-	
-	.apexcharts-tooltip{
-		background: black;
-	} 
-	
-	.apexcharts-menu{
-		background: black;
-	}
-	
-	text{
-		fill : white;
-	}
-	
-
-</style>
 </html>

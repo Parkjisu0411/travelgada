@@ -207,7 +207,7 @@ span.star-prototype > * {
 		var linkedContent; //주소
 		
 		//jstl
-	     <c:forEach items="${member}" var="member">
+	    <c:forEach items="${member}" var="member">
 	    <c:forEach items="${member.plannerVO}" var="pl">
 	    <c:forEach items="${pl.diaryVO}" var="di">
     		
