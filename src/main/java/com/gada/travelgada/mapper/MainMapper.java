@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.gada.travelgada.domain.MainVO;
+import com.gada.travelgada.domain.MemberVO;
 
 @Mapper
 public interface MainMapper {
-	public List<MainVO> getDiary();
+	public List<MemberVO> getDiary();
 }

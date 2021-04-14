@@ -27,7 +27,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-<%-- <link rel="stylesheet" href="${contextPath}/resources/css/header.css"> --%>
+<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 
   

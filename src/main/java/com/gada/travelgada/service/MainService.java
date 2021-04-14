@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gada.travelgada.domain.MainVO;
+import com.gada.travelgada.domain.MemberVO;
 import com.gada.travelgada.mapper.MainMapper;
 
 import lombok.AllArgsConstructor;
@@ -15,9 +15,9 @@ import lombok.AllArgsConstructor;
 public class MainService {
 	
 	@Autowired
-	private MainMapper diaryMapper;
+	private MainMapper mainMapper;
 	
-	public List<MainVO> getDiary() {
-		return diaryMapper.getDiary();
+	public List<MemberVO> getDiary() {
+		return mainMapper.getDiary();
 	}
 }

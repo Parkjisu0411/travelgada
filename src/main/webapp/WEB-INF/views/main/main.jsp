@@ -5,257 +5,245 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <title>메인</title>
 
 <head>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 
-<!-- CSS -->
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+  <!-- Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-<style>
-footer {
-	background-color: #f5f5f7;
-	width: 100%;
-}
-</style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+  <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+  <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+  <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+
+  <style>
+    footer {
+      background-color: #F5F5F5;
+      width: 100%;
+    }
+    
+    .main-main-headline {
+      padding-top: 230px;
+      font-size: 100px;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: underline;
+      text-decoration-color: #A2C21D;
+    }
+
+    .main-advice-img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .main-advice-button {
+      color: #ffffff;
+      background-color: #000000;
+      border-radius: 64px;
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-top: 14px;
+      padding-bottom: 14px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .main-advice-button:hover {
+      background-color: #484848;
+      cursor: pointer;
+    }
+
+    .main-advice-title {
+      font-size: 25px;
+      font-weight: 700;
+    }
+
+    .main-advice-content {
+      font-size: 14px;
+    }
+
+    .main-product-img {
+      width: 250px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .main-recommendation-area {
+      overflow-x: scroll;
+      white-space: nowrap;
+    }
+
+    .col-md-3 {
+      display: inline-block;
+      width: auto;
+    }
+    
+    .main-advice-planner-inner-area {
+      width: 100%;
+      height: 100%;
+    }
+    
+  </style>
 </head>
 
 <body>
 
-	<%@ include file="/WEB-INF/views/includes/header_main.jsp"%>
+  <%@ include file="/WEB-INF/views/includes/header_main.jsp" %>
+  
+  <div style="padding: 40px"></div>
 
-	<header>
-		<div id="carouselExampleIndicators" class="carousel slide"
-			data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#carouselExampleIndicators" data-slide-to="0"
-					class="active"></li>
-				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-			</ol>
-			<div class="carousel-inner" role="listbox">
-				<div class="carousel-item active"
-					style="background-image: url('${contextPath}/resources/img/main/flight.png')">
-					<div class="carousel-caption d-none d-md-block">
-						<h2 class="display-4">First Slide</h2>
-						<p class="lead">This is a description for the first slide.</p>
-					</div>
-				</div>
-				<div class="carousel-item"
-					style="background-image: url('${contextPath}/resources/img/main/map.jpg')">
-					<div class="carousel-caption d-none d-md-block">
-						<h2 class="display-4">Second Slide</h2>
-						<p class="lead">This is a description for the second slide.</p>
-					</div>
-				</div>
-				<div class="carousel-item"
-					style="background-image: url('${contextPath}/resources/img/main/truck.jpg')">
-					<div class="carousel-caption d-none d-md-block">
-						<h2 class="display-4">Third Slide</h2>
-						<p class="lead">This is a description for the third slide.</p>
-					</div>
-				</div>
-			</div>
-			<a class="carousel-control-prev" href="#carouselExampleIndicators"
-				role="button" data-slide="prev"> <span
-				class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-				class="sr-only">Previous</span>
-			</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
-				role="button" data-slide="next"> <span
-				class="carousel-control-next-icon" aria-hidden="true"></span> <span
-				class="sr-only">Next</span>
-			</a>
-		</div>
-	</header>
+    <header class="main-main-img">
+    <div class="container">
+    <br><br>
+    <%@ include file="/WEB-INF/views/calendar/calendar.jsp"%>
+    <h1 class="main-main-headline">나만의<br>여행 플래너</h1>
+    </div>
+    </header>
 
-	<div class="covid-19">
-		<a
-			href="https://www.0404.go.kr/dev/newest_view.mofa?id=ATC0000000008500&pagenum=1&mst_id=MST0000000000040&ctnm=&div_cd=&st=title&stext="
-			class="covid-19-link">발효중인 여행 주의보</a>
-	</div>
+    <div class="main-covid-19">
+      <a href="https://www.0404.go.kr/dev/newest_view.mofa?id=ATC0000000008500&pagenum=1&mst_id=MST0000000000040&ctnm=&div_cd=&st=title&stext="
+        target="_blank" class="main-covid-19-link"><i class="fas fa-info-circle main-notice-icon"></i>발효중인 여행 주의보</a>
+    </div>
 
-	<div class="divider-header-blank"></div>
+    <div class="main-divider-header-blank"></div>
 
-	<div class="planner">
-		<h2 class="headline">가다에서 여행을 계획해 보세요</h2>
-		<div class="container">
-			<p class="view-more-p">
-				<a class="view-more-a" href="/member/planner">더 보기</a>
-			</p>
-			<sec:authorize access="isAnonymous()">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="planner-content"
-							onclick="location.href='/planner/write';">
-							<div class="planner-content-align"></div>
-							<h4 class="planner-title">일정 추가</h4>
-							<i class="fal fa-plus fa-3x"></i>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="planner-content">
-							<h4 class="planner-title">체코 여행</h4>
-							<h2 class="planner-d-day">D-3</h2>
-							<hr class="planner-divider-solid">
-							<h5 class="planner-date">3월 16일</h5>
-							<p class="planner-route">까를 → 구시가지 광장 → 프라하 성 → 프라하 천문시계 → 성
-								비투스 대성당 → 브니트르주니 므네스트</p>
-							<h5 class="planner-date">3월 17일</h5>
-							<p class="planner-route">댄싱 하우스 → 틴 성모 마리아 교회 → 세들레츠 납골당 → 존
-								레논 벽 → 프라하 시민 회관 → 바츨라프 광장</p>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="planner-content">
-							<h4 class="planner-title">무려 30자를 넘는 엄청난 길이의 플래너 제목을 가진 한
-								가족의 너무너무너무너무너무즐거운 슬로베니아 가족여행</h4>
-							<h2 class="planner-d-day">D+100</h2>
-							<hr class="planner-divider-solid">
-							<h5 class="planner-date">대충 날짜</h5>
-							<p class="planner-route">대충 슬로베니아 여행 코스</p>
-						</div>
-					</div>
-				</div>
-			</sec:authorize>
-			<sec:authorize access="isAuthenticated()">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="planner-content"
-							onclick="location.href='/planner/write';">
-							<div class="planner-content-align"></div>
-							<h4 class="planner-title">일정 추가</h4>
-							<i class="fal fa-plus fa-3x"></i>
-						</div>
-					</div>
-					<c:forEach var="planner" items="${plannerList }">
-						<div class="col-md-4">
-							<div class="planner-content">
-								<h4 class="planner-title">${planner.planner_name }</h4>
-								<jsp:useBean id="now" class="java.util.Date" />
-								<fmt:parseNumber value="${now.time / (1000*60*60*24) }" integerOnly="true" var="today" scope="request"/>
-								<fmt:parseNumber value="${planner.start_date.time / (1000*60*60*24) }" integerOnly="true" var="start_date" scope="request"/>
-								<c:if test="${start_date - today >= 0}">
-									<span class="badge badge-success">D - ${start_date - today + 1 }</span>
-								</c:if>
-								<h5 style="font-size:1.3em;" class="planner-d-day">${planner.start_date } ~ ${planner.end_date }</h5>
-								<hr class="planner-divider-solid">
-								<h5 class="planner-date">3월 16일</h5>
-								<p class="planner-route">까를 → 구시가지 광장 → 프라하 성 → 프라하 천문시계 → 성
-									비투스 대성당 → 브니트르주니 므네스트</p>
-								<h5 class="planner-date">3월 17일</h5>
-								<p class="planner-route">댄싱 하우스 → 틴 성모 마리아 교회 → 세들레츠 납골당 → 존
-									레논 벽 → 프라하 시민 회관 → 바츨라프 광장</p>
-							</div>
-						</div>
-					</c:forEach>
-				</div>
-			</sec:authorize>
-		</div>
-	</div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 advice-image-area">
+          <img src="${pageContext.request.contextPath}/resources/img/main/camping.jpg" class="main-advice-img">
+        </div>
+        <div class="col-md-4 advice-planner-outer-area">
+        <div class="main-advice-planner-inner-area">
+          <h2 class="main-advice-title">가다에서 일정을 계획해 보세요</h2>
+          <p class="main-advice-content">플래너를 이용하여 여행 계획을 세우고 챙겨야 할 준비물을 확인할 수 있습니다</p>
+          <br>
+          <span class="main-advice-button" onclick="location.href='http://localhost:8282/planner/schedule'">일정
+            생성하기</span>
+            </div>
+        </div>
+      </div>
+    </div>
 
-	<div class="divider-card-blank"></div>
+    <div class="main-divider-section-blank"></div>
 
-	<div class="mb-4">
-		<hr class="divider-card-solid">
-	</div>
+    <div class="container">
+      <h2 class="main-section-headline">가다가 추천하는 여행지</h2>
+    </div>
+    <div class="container main-recommendation-area">
+      <div class="row flex-nowrap">
+        <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+        </div>
+        <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+        </div>
+        <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+        </div>
+        <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+        </div>
+                <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+        </div>
+      </div>
+    </div>
 
-	<section class="card-recommendation-section">
-		<h2 class="headline">가다가 추천하는 여행지</h2>
-		<div class="container">
-			<p class="view-more-p">
-				<a class="view-more-a" href="#">더 보기</a>
-			</p>
-			<div class="row">
-				<!-- Insert Here -->
-				<div class="col-md-3">
-					<div class="recommendation-content">
-						<img src="https://source.unsplash.com/TMgQMXoglsM/500x350"
-							class="card-img-top recommendation" alt="...">
-						<div class="card-body text-center">
-							<span class="recommendation-country-name">프랑스</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="recommendation-content">
-						<img src="https://source.unsplash.com/TMgQMXoglsM/500x350"
-							class="card-img-top recommendation" alt="...">
-						<div class="card-body text-center">
-							<span class="recommendation-country-name">프랑스</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="recommendation-content">
-						<img src="https://source.unsplash.com/TMgQMXoglsM/500x350"
-							class="card-img-top recommendation" alt="...">
-						<div class="card-body text-center">
-							<span class="recommendation-country-name">프랑스</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="recommendation-content">
-						<img src="https://source.unsplash.com/TMgQMXoglsM/500x350"
-							class="card-img-top recommendation" alt="...">
-						<div class="card-body text-center">
-							<span class="recommendation-country-name">프랑스</span>
-						</div>
-					</div>
-				</div>
-				<!-- /Insert Here -->
-			</div>
-		</div>
-	</section>
+    <div class="main-divider-section-blank"></div>
 
-	<div class="divider-card-blank"></div>
+    <section class="main-card-diary-section">
+      <div class="container">
+        <h2 class="main-section-headline">가다에서 추억을 공유해 보세요</h2>
+      </div>
+      <div class="container">
+        <div class="row">
+          <c:forEach var="member" items="${member}">
+          	<c:forEach var="pl" items="${member.plannerVO }">
+          		<c:forEach var="di" items="${pl.diaryVO }">
+		            <div class="col-md-4">
+		              <div class="main-card-diary-area">
+		                <img src="resources/diary/${di.img_path}" class="main-card-diary-img" loading="lazy">
+		                <div class="main-card-diary-content">
+		                  <div class="main-card-diary-profile">
+		                    <img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+		                    <a class="main-card-diary-profile-id" href="#">${member.member_id}</a>
+		                  </div>
+		                  <div class="main-card-diary-hashtag-area">
+		                    <a class="main-card-diary-hashtag" href="#">${di.hashtag}</a>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+          		</c:forEach>
+          	</c:forEach>
+          </c:forEach>
+        </div>
+      </div>
+    </section>
 
-	<div class="mb-4">
-		<hr class="divider-card-solid">
-	</div>
+    <div class="main-divider-section-blank"></div>
 
-	<section class="diary">
-		<h2 class="headline">가다에서 추억을 공유해 보세요</h2>
-		<div class="container">
-			<p class="view-more-p">
-				<a class="view-more-a" href="/diary">더 보기</a>
-			</p>
-			<div class="row">
-				<c:forEach var="diary" items="${diary}" end="5">
-					<div class="col-md-4">
-						<div class="card-diary">
-							<img src="resources/diary/${diary.img_path}" class="card-img-top diary" alt="...">
-							<div class="diary-content">
-								<div class="diary-profile">
-									<img class="diary-profile-img"
-										src="${contextPath}/resources/museum.jpg"> <a
-										class="diary-profile-id" href="#">닉네임</a>
-								</div>
-								<p class="diary-text">${diary.text}</p>
-								<div class="diary-hashtag-area">
-									<a class="diary-hashtag" href="#">${diary.hashtag}</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-		</div>
-	</section>
-	
-	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp"%>
-	
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 advice-image-area">
+          <img src="${pageContext.request.contextPath}/resources/img/main/product.jpg" class="main-advice-img">
+        </div>
+        <div class="col-md-4 advice-content-area">
+          <h2 class="main-advice-title">가다에서 여행에 필요한 물품을 구매해 보세요</h2>
+          <p class="main-advice-content">스토어를 이용하여 여행에 필요한 물품을 구매할 수 있습니다</p>
+          <br>
+          <span class="main-advice-button" onclick="location.href='http://localhost:8282/planner/schedule'">물품
+            구매하기</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-divider-section-blank"></div>
+
+    <div class="container">
+      <h2 class="main-section-headline">가다가 추천하는 아이템</h2>
+    </div>
+    <div class="container main-recommendation-area">
+      <div class="row flex-nowrap">
+        <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+          <p>캐리어</p>
+        </div>
+        <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+          <p>캐리어</p>
+        </div>
+        <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+          <p>캐리어</p>
+        </div>
+        <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+          <p>캐리어</p>
+        </div>
+        <div class="col-md-3">
+          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+          <p>캐리어</p>
+        </div>
+      </div>
+    </div>
+
+    <%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
+    
+    <div style="padding: 70px"></div>
+    
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 
 </body>
 

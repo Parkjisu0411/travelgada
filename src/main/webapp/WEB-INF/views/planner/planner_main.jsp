@@ -60,6 +60,7 @@ html, body {
 		<div class="container">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">MY PLANNER</h2>
 			<%@ include file="/WEB-INF/views/calendar/calendar.jsp"%>
+			<br><br><br>
 			<div class="divider-header-blank"></div>
 			<div class="row">
 				<c:forEach var="planner" items="${plannerList }">
