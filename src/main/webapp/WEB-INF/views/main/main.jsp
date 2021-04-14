@@ -168,22 +168,25 @@
       </div>
       <div class="container">
         <div class="row">
-          <c:forEach var="diary" items="${diary}">
-            <div class="col-md-4">
-              <div class="main-card-diary-area">
-                <img src="resources/diary/${diary.img_path}" class="main-card-diary-img" loading="lazy">
-                <div class="main-card-diary-content">
-                  <div class="main-card-diary-profile">
-                    <img class="main-card-diary-profile-img" src="${contextPath}/resources/museum.jpg"> <a
-                      class="main-card-diary-profile-id" href="#">닉네임</a>
-                  </div>
-                  <p class="main-card-diary-content-area">${diary.text}</p>
-                  <div class="main-card-diary-hashtag-area">
-                    <a class="main-card-diary-hashtag" href="#">${diary.hashtag}</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <c:forEach var="member" items="${member}">
+          	<c:forEach var="pl" items="${member.plannerVO }">
+          		<c:forEach var="di" items="${pl.diaryVO }">
+		            <div class="col-md-4">
+		              <div class="main-card-diary-area">
+		                <img src="resources/diary/${di.img_path}" class="main-card-diary-img" loading="lazy">
+		                <div class="main-card-diary-content">
+		                  <div class="main-card-diary-profile">
+		                    <img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+		                    <a class="main-card-diary-profile-id" href="#">${member.member_id}</a>
+		                  </div>
+		                  <div class="main-card-diary-hashtag-area">
+		                    <a class="main-card-diary-hashtag" href="#">${di.hashtag}</a>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+          		</c:forEach>
+          	</c:forEach>
           </c:forEach>
         </div>
       </div>

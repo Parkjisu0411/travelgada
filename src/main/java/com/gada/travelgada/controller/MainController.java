@@ -17,14 +17,15 @@ import lombok.AllArgsConstructor;
 public class MainController {
 
 	@Autowired
-	private MainService diaryService;
+	private MainService mainService;
 
 	@Autowired
 	private PlannerService plannerService;
 	
 	@GetMapping("/")
 	public ModelAndView main(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
-		modelAndView.addObject("diary", diaryService.getDiary());
+		
+		modelAndView.addObject("member", mainService.getDiary());
 		if (memberDetails != null)
 			modelAndView.addObject("plannerList", plannerService.getMainPlanner(memberDetails.getUsername()));
 		modelAndView.setViewName("main/main");

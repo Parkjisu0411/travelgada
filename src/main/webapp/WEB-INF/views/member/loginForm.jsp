@@ -16,7 +16,6 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
