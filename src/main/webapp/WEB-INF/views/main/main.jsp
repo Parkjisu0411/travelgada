@@ -26,7 +26,7 @@
 
   <style>
     footer {
-      background-color: #f5f5f7;
+      background-color: #F5F5F5;
       width: 100%;
     }
     
@@ -237,6 +237,9 @@
     </div>
 
     <%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
+    
+    <div style="padding: 70px"></div>
+    
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 
 </body>

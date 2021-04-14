@@ -4,7 +4,7 @@
 Case1. 컨텐츠가 어느 정도 있는 경우(한 페이지에 모든 컨텐츠가 보여지지 않는 경우) =>
 
 footer {
-	background-color: #f5f5f7;
+	background-color: #F5F5F5;
 	width: 100%;
 }
 
@@ -25,8 +25,8 @@ footer {
  */
 
 .footer-company-info {
-	text-align: center;
-	padding: 50px;
-	font-size: 14px;
-	border-top: 1px solid #DDDDDD;
+	padding-top: 64px;
+	padding-bottom: 64px;
+	font-size: 12px;
+	color: #111111;
 }
