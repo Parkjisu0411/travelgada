@@ -28,6 +28,7 @@ html, body {
 	height: 100%;
 	margins: 0;
 	padding: 0;
+	background-color: #f5f5f5; 
 }
 
 #wrap {
@@ -45,6 +46,10 @@ html, body {
 #login-form {
 	margin: 0 auto;
 }
+
+#login-card {
+	padding: 20px;
+}
 </style>
 <script type="text/javascript">
 	window.onload = function() {
@@ -59,45 +64,36 @@ html, body {
 <body>
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
-	<!--Content -->
-	<div id="wrap">
-		<div class="container">
+	
+	<div class="container">
+		<div class="card" id="login-card">
 			<h2 class="headline" style="font-family: 'yg-jalnan'">
 				<img class="nav-logo-img" src="${contextPath}/resources/img/main/logo.png">가다 로그인
 			</h2>
 			<div class="col-md-6" id="login-form">
 				<form action="/member/login" method="POST">
-					<input name="${_csrf.parameterName}" type="hidden"
-						value="${_csrf.token}" />
+					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" />
 					<div class="form-group">
-						<label for="id">아이디:</label> <input type="text"
-							class="form-control" placeholder="ID" id="id" name="username" />
+						<label for="id">아이디</label> <input type="text" class="form-control" placeholder="ID" id="id" name="username" />
 					</div>
 					<div class="form-group">
-						<label for="pw">비밀번호:</label> <input type="password"
-							class="form-control" placeholder="Password" id="pw"
-							name="password" />
+						<label for="pw">비밀번호</label> <input type="password" class="form-control" placeholder="Password" id="pw" name="password" />
 					</div>
 					<div id="errorMsg"></div>
 					<input type="checkbox" id="remember-me" name="remember-me" class="form-check-input" />
-					<label class"form-check-label" for="remember-me">Remember me</label>
-					&nbsp;&nbsp; <a href="/member">회원가입</a>
-					<button type="submit" class="btn btn-primary login-icon"
-						id="btnSubmit">로그인</button>
+					<label class="form-check-label" for="remember-me">Remember me &nbsp;&nbsp;</label>
+					<a href="/member">회원가입</a>
+					<button type="submit" class="btn btn-primary login-icon" id="btnSubmit">로그인</button>
 				</form>
 				<div class="mb-auto">
 					<hr />
 				</div>
-				<a href="/oauth2/authorization/kakao"><img class="login-icon"
-					src="/resources/img/social/kakao_login_medium_wide.png"></a> <a
-					href="/oauth2/authorization/google "><img class="login-icon"
-					src="/resources/img/social/btn_google_signin_light_normal_web@2x.png"></a>
-				<a href="/oauth2/authorization/naver "><img class="login-icon"
-					src="/resources/img/social/naver_login_wide_white.PNG"></a>
+				<a href="/oauth2/authorization/kakao"><img class="login-icon" src="/resources/img/social/kakao_login_medium_wide.png"></a>
+				<a href="/oauth2/authorization/google "><img class="login-icon" src="/resources/img/social/btn_google_signin_light_normal_web@2x.png"></a>
+				<a href="/oauth2/authorization/naver "><img class="login-icon" src="/resources/img/social/naver_login_wide_white.PNG"></a>
 			</div>
 		</div>
 	</div>
-
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>
