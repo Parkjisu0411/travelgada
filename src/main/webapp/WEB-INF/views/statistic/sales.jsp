@@ -263,17 +263,12 @@
 
 <body class="bg-theme bg-theme9">
 
-	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
- 
 	<!-- Start wrapper-->
  	<div id="wrapper">
  		<!--Start sidebar-wrapper-->
 		<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
 			<div class="brand-logo">
-				<a href="index.html">
-					<img src="/resources/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-				</a>
+				<a href="/" style="font-family:yg-jalnan"><img src="/resources/img/main/logo.png" class="logo-icon" alt="logo icon">가다</a>
 			</div>
 			<ul class="sidebar-menu do-nicescrol">
 			<!-- <li class="sidebar-header">MAIN NAVIGATION</li> -->
