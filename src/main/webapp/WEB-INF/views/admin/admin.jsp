@@ -34,9 +34,7 @@
 	<!-- Custom Style-->
 	<link href="/resources/assets/css/app-style.css" rel="stylesheet"/>
   
-  	<%-- <link rel="stylesheet" href="${contextPath}/resources/css/font.css"> --%>
-  	<!-- 폰트 수정 필요 -->
-	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+  	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
@@ -207,15 +205,14 @@
 
 <body class="bg-theme bg-theme9">
 
-	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
-	
 	<!-- Start wrapper-->
  	<div id="wrapper">
 		
 		<!--Start sidebar-wrapper-->
 		<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
-			<div class="brand-logo"></div>
+			<div class="brand-logo">
+				<a href="/" style="font-family:yg-jalnan"><img src="/resources/img/main/logo.png" class="logo-icon" alt="logo icon">가다</a>
+			</div>
    				<ul class="sidebar-menu do-nicescrol">
       				<li>
         				<a href="/admin">
