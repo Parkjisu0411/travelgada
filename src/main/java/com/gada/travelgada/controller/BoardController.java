@@ -43,7 +43,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("/board/{board_type_id}")
-	public ModelAndView reviewBoard(ModelAndView modelAndView, Model model, CriteriaVO cri, @AuthenticationPrincipal MemberDetails member, BoardVO boardVO) {
+	public ModelAndView reviewBoard(ModelAndView modelAndView, CriteriaVO cri, @AuthenticationPrincipal MemberDetails member, BoardVO boardVO) {
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
 		
 		log.info("reviewBoard");
@@ -62,12 +62,6 @@ public class BoardController {
 		modelAndView.addObject("boardReviewList", boardService.getReviewBoard(nowPage, cri.getAmount(), boardVO.getBoard_type_id() ));
 		modelAndView.addObject("boardNoticeList", boardService.getNotice());
 		modelAndView.addObject("getBoardTypeId", boardVO.getBoard_type_id());
-		
-//		int replyCount = boardService.getReply_count(boardVO.getBoard_id());
-//		log.info("확인222222222" + boardVO.getBoard_id());
-//		
-//		//modelAndView.addObject("getReplyCount", replyCount);
-//		model.addAttribute("getReplyCount", replyCount);
 		
 		int total = boardService.getTotalReviewBoard(boardVO.getBoard_type_id());
 		log.info("total" + total);
@@ -119,6 +113,27 @@ public class BoardController {
 		
 	
 		modelAndView.setViewName("/board/board_content_view");
+		//modelAndView.addObject("bContentView", boardService.boardContentView(boardVO.getBoard_id(), memberVO.getMember_id()));
+		//modelAndView.addObject("bContentView", boardService.boardContentView(memberVO));
+		modelAndView.addObject("bContentView", boardService.boardContentView(boardVO));
+		modelAndView.addObject("bImgPath", boardService.boardImgPath(memberVO));
+		
+		//boardService.writeReply(boardVO);
+		modelAndView.addObject("bReply", boardService.getReply(boardVO));
+		modelAndView.addObject("bRecentReply", boardService.getRecentReply(boardVO));
+		
+		
+		return modelAndView;
+	}
+	
+	@GetMapping("/board/replyContent/{board_id}/{member_id}")
+	public ModelAndView boardReplyContentView(ModelAndView modelAndView, MemberVO memberVO, BoardVO boardVO) {
+
+		log.info("boardContentView");
+		log.info("확인!!!!!!" + memberVO.getProfile_img_path());
+		
+	
+		modelAndView.setViewName("/board/board_content_view_reply");
 		//modelAndView.addObject("bContentView", boardService.boardContentView(boardVO.getBoard_id(), memberVO.getMember_id()));
 		//modelAndView.addObject("bContentView", boardService.boardContentView(memberVO));
 		modelAndView.addObject("bContentView", boardService.boardContentView(boardVO));
@@ -285,6 +300,7 @@ public class BoardController {
 		
 		return entity;
 	}
+	
 
 	
 	// ck 에디터에서 파일 업로드

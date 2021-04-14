@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -16,7 +17,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+<%-- <link rel="stylesheet" href="${contextPath}/resources/css/main.css"> --%>
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
@@ -35,6 +36,12 @@ html, body {
 		function check_id(){
       	 	alert("로그인이 필요한 서비스입니다.");
 			location.href="${pageContext.request.contextPath}/member/login";
+   		}
+	</script>
+	
+	<script>
+		function show_member_history(){
+			
    		}
 	</script>
 
@@ -66,7 +73,7 @@ html, body {
 								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}/${boardNoticeList.member_id}" style="color:red;">${boardNoticeList.title }</a>
 							</td>
 							<td>${boardNoticeList.member_id }</td>
-							<td>${boardNoticeList.board_date }</td>
+							<td><fmt:formatDate value="${boardNoticeList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
 							<td>${boardNoticeList.bhit }</td>
 						</tr>
 					</c:forEach>
@@ -76,13 +83,11 @@ html, body {
 						<td>${boardReviewList.board_id }</td>
 						<td>
 							<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
-							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}">${boardReviewList.title }</a>
-							
-							<a>${getReplyCount }</a>
-							
+							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}">${boardReviewList.title }</a>			
+							<a href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}">[${boardReviewList.cnt }]</a>	
 						</td>
-						<td>${boardReviewList.member_id }</td>
-						<td>${boardReviewList.board_date }</td>
+						<td><<a href="#" onclick="delchk();">>${boardReviewList.member_id }</a></td>
+						<td><fmt:formatDate value="${boardReviewList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
 						<td>${boardReviewList.bhit }</td>
 					</tr>
 					</c:forEach>
@@ -126,6 +131,8 @@ html, body {
 				</button>
 			</form>
 			</div>
+			
+			
 		</div>
 	</div>
 	<!-- Footer -->

@@ -29,6 +29,7 @@
        <result property="bindent" column="bindent"/>
        <result property="board_type_id" column="board_type_id"/>     
        <result property="member_id" column="member_id"/>
+       <result property="cnt" column="cnt"/>
        
        <collection property="answerList" resultMap="answerMap"></collection>
    </resultMap>
@@ -48,10 +49,10 @@
    </resultMap> 
    
 
-	
+	<!-- select B1.* FROM ( SELECT * FROM board where board_type_id = #{board_type_id} order by bgroup desc, bstep asc ) B1 LIMIT #{nowPage}, #{amount} -->
 	<select id="selectReviewBoard" resultMap="BoardMap">
 		<![CDATA[
-			select B1.* FROM( SELECT * FROM board where board_type_id = #{board_type_id} order by bgroup desc, bstep asc ) B1 LIMIT #{nowPage}, #{amount}
+			select B1.*, (select count(*) from answer where answer.board_id = B1.board_id) cnt from (SELECT * FROM board where board_type_id = #{board_type_id} order by bgroup desc, bstep asc ) B1 LIMIT #{nowPage}, #{amount}
 		]]>
 	</select>
 
@@ -116,7 +117,7 @@
 	<insert id="writeBoard"> 
 		<![CDATA[ 
 			insert into board (board_id, title, text, board_date, bhit, bgroup, bstep, bindent, board_type_id, member_id)
-			values (get_seq('board_seq'), #{title}, #{text}, sysdate(), 0, get_seq('bgroup_seq'), 0, 0, #{board_type_id}, #{member_id})
+			values (get_seq('board_seq'), #{title}, #{text}, DEFAULT, 0, get_seq('bgroup_seq'), 0, 0, #{board_type_id}, #{member_id})
 		]]> 
 	</insert> 
 	
@@ -153,7 +154,7 @@
 	<insert id="writeReply"> 
 		<![CDATA[ 
 			insert into answer (answer_id, member_id, text, answer_date, top_answer_id, board_id)
-			values (get_seq('answer_seq'), #{member_id}, #{text}, sysdate(), 0, #{board_id})
+			values (get_seq('answer_seq'), #{member_id}, #{text}, DEFAULT, 0, #{board_id})
 		]]> 
 	</insert> 
 	
@@ -171,7 +172,7 @@
 	
 	<insert id="boardAnswer">
 		<![CDATA[
-			insert into board (board_id, title, text, board_date, bhit, bgroup, bstep, bindent, board_type_id, member_id) values (get_seq('board_seq'), #{title}, #{text}, sysdate(), 0, #{bgroup}, #{bstep}+1, #{bindent}+1, #{board_type_id}, #{member_id} )
+			insert into board (board_id, title, text, board_date, bhit, bgroup, bstep, bindent, board_type_id, member_id) values (get_seq('board_seq'), #{title}, #{text}, DEFAULT, 0, #{bgroup}, #{bstep}+1, #{bindent}+1, #{board_type_id}, #{member_id} )
 		]]>
 	</insert>
 	

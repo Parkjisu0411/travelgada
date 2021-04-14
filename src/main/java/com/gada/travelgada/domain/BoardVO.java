@@ -1,6 +1,7 @@
 package com.gada.travelgada.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -29,13 +30,14 @@ public class BoardVO {
 	private int board_id;
 	private String title;
 	private String text;
-	private Date board_date;
+	private Timestamp board_date;
 	private int bhit;
 	private int bgroup;
 	private int bstep;
 	private int bindent;
 	private int board_type_id;
 	private String member_id;
+	private int cnt;
 	
 	private List<AnswerVO> answerList;
 }
