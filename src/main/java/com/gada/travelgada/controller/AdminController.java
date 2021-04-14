@@ -3,13 +3,12 @@ package com.gada.travelgada.controller;
 import java.util.List;
 
 import org.apache.ibatis.exceptions.IbatisException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,12 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gada.travelgada.domain.CriteriaVO;
-import com.gada.travelgada.domain.DiaryVO;
 import com.gada.travelgada.domain.MemberVO;
 import com.gada.travelgada.domain.PageVO;
 import com.gada.travelgada.domain.ShippingLocVO;
 import com.gada.travelgada.service.AdminService;
-import com.gada.travelgada.service.VisitorService;
 import com.gada.travelgada.utils.PointCalculator;
 
 import lombok.AllArgsConstructor;
@@ -33,10 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class AdminController {
 	
-	@Autowired
 	private AdminService service;
 
-	//회원 관리 페이지
+	//회원
 	@GetMapping("admin")
 	public ModelAndView admin(ModelAndView mav, CriteriaVO cri) {
 		log.info("controller admin();");
@@ -57,6 +53,7 @@ public class AdminController {
 
 	}// admin end
 	
+	//탈퇴한 회원
 	@GetMapping("admin/withdrawal")
 	public ModelAndView withdrawalList(ModelAndView mav, CriteriaVO cri) {
 		log.info("controller withdrawal();");
@@ -67,6 +64,7 @@ public class AdminController {
 
 		mav.addObject("memberList",service.getWithdrawalList(nowPage, cri.getAmount()));
 		mav.addObject("pageMaker", new PageVO(cri, total));
+		
 		//전체 회원 수 
 		mav.addObject("total", totalMember);
 		//탈퇴한 회원 수 
@@ -78,7 +76,7 @@ public class AdminController {
 
 	}// withdrawal end
 	
-	//회원 탈퇴
+	//회원 탈퇴 시키기
 	@PutMapping("withdrawalMember")
 	public ResponseEntity<String> withdrawal(@RequestBody MemberVO memberVO, Model model) {
 		ResponseEntity<String> entity = null;
@@ -122,11 +120,11 @@ public class AdminController {
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
 		int total = service.searchTotal(keyword);
 		
-			mav.addObject("memberList",service.search(nowPage, cri.getAmount(),keyword));
-			mav.addObject("pageMaker", new PageVO(cri, total));
-	
-			mav.addObject("keyword",keyword);
-			mav.setViewName("admin/admin");
+		mav.addObject("memberList",service.search(nowPage, cri.getAmount(),keyword));
+		mav.addObject("pageMaker", new PageVO(cri, total));
+
+		mav.addObject("keyword",keyword);
+		mav.setViewName("admin/admin");
 
 		return mav;
 
@@ -143,7 +141,7 @@ public class AdminController {
 		List<ShippingLocVO> shippingList = null;
 		try {
 			shippingList = service.getShippingLoc(memberVO.getMember_id());
-		} catch(IbatisException e) {
+		}catch(IbatisException e) {
 			log.info(memberVO.getMember_id() + "의 배송지 목록이 없습니다.");
 			shippingList.add(new ShippingLocVO());
 		}
@@ -164,16 +162,16 @@ public class AdminController {
 		int total = service.searchWidthTotal(keyword);
 		int totalMember = service.getTotal();
 		
-			mav.addObject("memberList",service.searchWithdrawal(nowPage, cri.getAmount(),keyword));
-			mav.addObject("pageMaker", new PageVO(cri, total));
-			
-			//전체 회원 수 
-			mav.addObject("total", totalMember);
-			//탈퇴한 회원 수 
-			mav.addObject("withdrawal",service.getWithdrawal());
-	
-			mav.addObject("keyword",keyword);
-			mav.setViewName("admin/adminWithdrawal");
+		mav.addObject("memberList",service.searchWithdrawal(nowPage, cri.getAmount(),keyword));
+		mav.addObject("pageMaker", new PageVO(cri, total));
+		
+		//전체 회원 수 
+		mav.addObject("total", totalMember);
+		//탈퇴한 회원 수 
+		mav.addObject("withdrawal",service.getWithdrawal());
+
+		mav.addObject("keyword",keyword);
+		mav.setViewName("admin/adminWithdrawal");
 
 		return mav;
 

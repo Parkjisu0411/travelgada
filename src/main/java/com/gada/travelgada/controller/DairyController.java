@@ -73,11 +73,12 @@ public class DairyController {
 		log.info("controller diary_write();");
 
 		String img_path = file.getOriginalFilename();
+		int seq = diaryService.getImg_seq();
+		seq++;
+		String img_seq = Integer.toString(seq);
 
-		diaryVO.setImg_path(img_path);
+		diaryVO.setImg_path(img_seq);
 		diaryService.writeDiary(diaryVO);
-
-		/* return diaryService.getDiaryOther(diaryVO.getPlanner_id()); */
 
 		mav.addObject("other", diaryVO);
 		mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
@@ -85,7 +86,7 @@ public class DairyController {
 		mav.setViewName("diary/diary");
 
 		if (!file.getOriginalFilename().isEmpty()) {
-			file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
+			file.transferTo(new File(FILE_SERVER_PATH, img_seq));
 			/* mav.addObject("msg", "File uploaded successfully."); */
 		} else {
 			/* mav.addObject("msg", "Please select a valid mediaFile.."); */
@@ -95,7 +96,6 @@ public class DairyController {
 
 	}// diary_write end
 
-   
 	// 다이어리 수정 페이지
 	@GetMapping("diary_modify_view/{diary_id}&{planner_id}")
 	public ModelAndView diary_modify_view(ModelAndView mav, DiaryVO diaryVO) {
@@ -108,8 +108,7 @@ public class DairyController {
 		return mav;
 
 	}// diary_modify_view end
-
-   
+  
 	// 다이어리 수정
 	@PostMapping("diary_modify")
 	public ModelAndView diary_modify(ModelAndView mav, DiaryVO diaryVO, @RequestParam("uploadfile") MultipartFile file,
@@ -119,20 +118,22 @@ public class DairyController {
 		log.info(currImg);
 
 		String img_path = file.getOriginalFilename();
+		int seq = diaryService.getImg_seq();
+		seq++;
+		String img_seq = Integer.toString(seq);
 
-		if (img_path == "") {
+		if (img_path.length() == 0) {
 			diaryVO.setImg_path(currImg);
 			diaryService.modifyDiary(diaryVO);
 
-			log.info("" + diaryVO.getPlanner_id());
+			log.info("플래너 아이디 : " + diaryVO.getPlanner_id());
 			mav.addObject("other", diaryVO);
 			mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
 			mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
 			mav.setViewName("diary/diary");
-			/* mav.setViewName("redirect:diary"); */
 
 		} else {
-			diaryVO.setImg_path(img_path);
+			diaryVO.setImg_path(img_seq);
 			diaryService.modifyDiary(diaryVO);
 
 			mav.addObject("other", diaryVO);
@@ -143,7 +144,7 @@ public class DairyController {
 		} // if end
 
 		if (!file.getOriginalFilename().isEmpty()) {
-			file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
+			file.transferTo(new File(FILE_SERVER_PATH, img_seq));
 			/* mav.addObject("msg", "File uploaded successfully."); */
 
 		} else {
@@ -154,8 +155,7 @@ public class DairyController {
 		return mav;
 
 	}// diary_modify end
-      
-   
+        
 	// 다이어리 삭제
 	@DeleteMapping("/diary/{diary_id}")
 	public ResponseEntity<String> diary_delete(DiaryVO DiaryVO, Model model) {
@@ -176,7 +176,6 @@ public class DairyController {
 
 	}// diary_delete end
       
-   
 	// 다른 다이어리로 이동 json
 	@GetMapping("diary_other/{planner_id}")
 	public List<DiaryVO> diary_another(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO) {

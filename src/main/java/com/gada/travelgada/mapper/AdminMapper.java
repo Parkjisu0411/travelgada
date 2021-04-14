@@ -32,16 +32,19 @@ public interface AdminMapper {
 	//검색된 양
 	public int searchTotal(String keyword);
 
+	//회원 배송지
 	public List<ShippingLocVO> selectShippingLoc(String member_id);
 
+	//회원 포인트
 	public List<PointVO> selectPoint(String member_id);
 
+	//회원 정보
 	public MemberVO selectMember(String member_id);
 
-	//
+	//탈퇴한 회원 검색
 	public List<MemberVO> searchWithdrawal(int nowPage, int amount, String keyword);
 
-	//
+	//탈퇴한 회원 수
 	public int searchWidthTotal(String keyword);
 
 }

@@ -8,8 +8,14 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-<title>관리자</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
+	<meta charset="UTF-8">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+  
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
@@ -19,20 +25,31 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
     	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
     	crossorigin="anonymous"></script>
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
-	
-	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+    	
+	<!-- simplebar CSS-->
+ 	<link href="/resources/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+	<!-- Bootstrap core CSS-->
+	<link href="/resources/assets/css/bootstrap.min.css" rel="stylesheet"/>
+	<!-- Icons CSS-->
+	<link href="/resources/assets/css/icons.css" rel="stylesheet" type="text/css"/>
+	<!-- Sidebar CSS-->
+	<link href="/resources/assets/css/sidebar-menu.css" rel="stylesheet"/>
+	<!-- Custom Style-->
+	<link href="/resources/assets/css/app-style.css" rel="stylesheet"/>
+  
+  	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- Bootstrap core JavaScript-->
+	<script src="/resources/assets/js/jquery.min.js"></script>
+	<script src="/resources/assets/js/popper.min.js"></script>
+	<script src="/resources/assets/js/bootstrap.min.js"></script>
 
+	<title>${member.member_id}</title>
+	
 <style>
+
 html, body {
 	width: 100%;
 	height: 100%;
@@ -60,57 +77,103 @@ html, body {
 }
 </style>
 
+<style>
+/* 탈퇴된 경우 */
+  	.selected {
+	  	text-decoration:line-through grey;
+	  	color: red;
+  	}
+/* 검색 창 */
+ 	#searchMember{
+		text-align: right;
+	}
+/* 모달 색깔 */
+	.bg-modal{
+		background-color : black;
+	}
+
+/* 검색 글자 색*/
+	#memberKeyword{
+		color : white;
+	}
+</style>
+
 </head>
 
-<body>
-
-	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+<body class="bg-theme bg-theme9">
 	
-	<br/><br/>	
-	
-	<!--Content -->
-	<div class="container">
-		<h2 class="headline" style="font-family: 'yg-jalnan'">마이페이지</h2>
-		<hr />
-		<p class="view-more-p">
-			
-		</p>
-		<div class="row">
-			<div class="col-md-4 member-profile member-profile">
-				<img class="rounded-circle member-img"
-					src="/resources/img/profile/${member.profile_img_path }"
-					onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-				<p>${member.member_name }</p>
+		<!-- Start wrapper-->
+ 	<div id="wrapper">
+		
+		<!--Start sidebar-wrapper-->
+		<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+			<div class="brand-logo">
+				<a href="/" style="font-family:yg-jalnan"><img src="/resources/img/main/logo.png" class="logo-icon" alt="logo icon">가다</a>
 			</div>
-			<div class="col-md-8 member-detail">
-				<table class="table">
-					<tr>
-						<th>포인트</th>
-						<td>${point }</td>
-						
-					</tr>
-					<tr>
-						<th>이메일</th>
-						<td>${member.email }</td>
-						<td></td>
-					</tr>
-					<tr>
-						<th>배송지 목록</th>
-						<td><c:forEach var="shipping_loc" items="${shippingList }">
-								<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
-							</c:forEach></td>
-						<td></td>
-					</tr>
-				</table>
+   				<ul class="sidebar-menu do-nicescrol">
+      				<li>
+        				<a href="/admin">
+          					<i class="zmdi zmdi-view-dashboard"></i> <span>회원 관리</span>
+        				</a>
+      				</li>
+					<li>
+						<a href="/visitor"> <i class="zmdi zmdi-invert-colors"></i>
+							<span>방문자 통계</span>
+						</a>
+					</li>
+					<li>
+						<a href="/statistic/sales">
+							<i class="zmdi zmdi-format-list-bulleted"></i> <span>매출 통계</span>
+						</a>
+					</li>
+					<li>
+						<a href="tables.html">
+							<i class="zmdi zmdi-grid"></i> <span>여행지 통계</span>
+						</a>
+					</li>
+				</ul>
+		</div>
+		<!--End sidebar-wrapper-->
+	
+		<div class="content-wrapper">
+			<div class="container-fluid">
+
+				<h4 class="headline" style="font-family: 'yg-jalnan'">${member.member_id }</h4>
+				<hr />
+				<p class="view-more-p"></p>
+				<div class="row">
+					<div class="col-md-4 member-profile member-profile">
+						<img class="rounded-circle member-img"
+							src="/resources/img/profile/${member.profile_img_path }"
+							onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+						<p><span style="color:white;">${member.member_name }</span></p>
+					</div>
+					<div class="col-md-8 member-detail">
+						<table class="table">
+							<tr>
+								<th>포인트</th>
+								<td>${point }</td>
+
+							</tr>
+							<tr>
+								<th>이메일</th>
+								<td>${member.email }</td>
+								<td></td>
+							</tr>
+							<tr>
+								<th>배송지 목록</th>
+								<td><c:forEach var="shipping_loc" items="${shippingList }">
+										<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
+									</c:forEach></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<hr />
 			</div>
 		</div>
-		<hr />
 	</div>
-	<!--Content end -->
-
-	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 </body>
 </html>

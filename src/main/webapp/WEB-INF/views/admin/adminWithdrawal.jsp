@@ -34,9 +34,7 @@
 	<!-- Custom Style-->
 	<link href="/resources/assets/css/app-style.css" rel="stylesheet"/>
   
-  	<%-- <link rel="stylesheet" href="${contextPath}/resources/css/font.css"> --%>
-  	<!-- 폰트 수정 필요 -->
-	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+  	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
@@ -44,7 +42,6 @@
 	<script src="/resources/assets/js/jquery.min.js"></script>
 	<script src="/resources/assets/js/popper.min.js"></script>
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
-	
 	
 	<title>탈퇴한 회원 관리</title>
 
@@ -121,16 +118,15 @@
 </head>
 
 <body class="bg-theme bg-theme9">
-
-	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	
 	<!-- Start wrapper-->
  	<div id="wrapper">
 	
 		<!--Start sidebar-wrapper-->
 		<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
-			<div class="brand-logo"></div>
+			<div class="brand-logo">
+				<a href="/" style="font-family:yg-jalnan"><img src="/resources/img/main/logo.png" class="logo-icon" alt="logo icon">가다</a>
+			</div>
    				<ul class="sidebar-menu do-nicescrol">
       				<li>
         				<a href="/admin">
@@ -179,7 +175,7 @@
 						<div class="card">
 							<div class="card-body">
               					<div class="table-responsive">
-									총 회원 수 : ${total} &nbsp;&nbsp; 탈퇴한 회원 수 : ${withdrawal} 
+									<span style="color:white;">총 회원 수 : ${total} &nbsp;&nbsp; 탈퇴한 회원 수 : ${withdrawal} </span>
 								<!-- member list -->
 								<table class="table">
 									<thead>
@@ -199,7 +195,7 @@
 									<c:forEach items="${memberList}" var="member" varStatus="status">
 										<tr id = "tr_${member.member_id}">
 											<td>${member.member_name }</td>
-											<td>${member.member_id }</td>
+											<td><a href="/memberDetailList/${member.member_id }">${member.member_id }</a></td>
 											<td>
 												<c:choose>
 				    								<c:when test="${member.sns_type eq null}">
@@ -288,24 +284,29 @@
 		        <!-- Modal body -->
 		        <div class="modal-body">
 		        <br/>
-		          <div><span style="color:green; font-size:22px; font-weight:border;">${member.member_id }</span> 님을 다시 회원으로 되돌리시겠습니까?</div>
-		          <br/>
-		         	 회원 탈퇴 사유 : 
-						<c:choose>
-							<c:when test="${member.withdrawal_code eq 1}">
-								부적절한 홍보 게시글
-							</c:when>
-							<c:when test="${member.withdrawal_code eq 2}">
-								음란성 또는 청소년에게 부적합한 내용
-							</c:when>
-							<c:when test="${member.withdrawal_code eq 3}">
-								명예훼손/사생활 침해 및 저작권 침해
-							</c:when>
-							<c:when test="${member.withdrawal_code eq 4}">
-								기타
-							</c:when>
-						</c:choose>
-        			</div>
+					<div>
+						<span style="color: green; font-size: 22px; font-weight: border;">${member.member_id }</span>
+						<span style="color: white;">님을 다시 회원으로 되돌리시겠습니까?</span>
+					</div>
+				<br/>
+				<span style="color:white;">
+				회원 탈퇴 사유 : 
+					<c:choose>
+						<c:when test="${member.withdrawal_code eq 1}">
+							부적절한 홍보 게시글
+						</c:when>
+						<c:when test="${member.withdrawal_code eq 2}">
+							음란성 또는 청소년에게 부적합한 내용
+						</c:when>
+						<c:when test="${member.withdrawal_code eq 3}">
+							명예훼손/사생활 침해 및 저작권 침해
+						</c:when>
+						<c:when test="${member.withdrawal_code eq 4}">
+							기타
+						</c:when>
+					</c:choose>
+				</span>
+        		</div>
         
 		        <!-- Modal footer -->
 		        <div class="modal-footer">

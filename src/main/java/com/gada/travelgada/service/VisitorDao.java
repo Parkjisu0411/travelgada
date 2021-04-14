@@ -24,7 +24,6 @@ public class VisitorDao {
 
 	public void setCount() {
 		log.info("VisitorService setCount()");
-		log.info("카운트가 들어가요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
 		Connection con = null;    
 		Statement stmt = null;
