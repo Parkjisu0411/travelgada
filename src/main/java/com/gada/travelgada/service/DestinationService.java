@@ -1,5 +1,6 @@
 package com.gada.travelgada.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,20 @@ public class DestinationService {
 		return destinationMapper.getTotalCount();
 	}
 
-	public List<DestinationVO> getMonthCount(int month) {
-		return destinationMapper.getMonthCount(month);
+	public List<Integer> getMonthlyCount(String year) {
+		List<Integer> monthlyCountList = new ArrayList<>();
+		for (int i = 1; i <= 12; i++) {
+			monthlyCountList.add(destinationMapper.getMonthlyCount(year, String.valueOf(i)));
+		}
+		
+		return monthlyCountList;
+	}
+	
+	public List<DestinationVO> getMonthlyCountDetail(String year, String month) {
+		List<DestinationVO> monthlyCountDetailList = new ArrayList<>();
+		
+		monthlyCountDetailList = destinationMapper.getMonthlyCountDetail(year, month);
+		
+		return monthlyCountDetailList;
 	}
 }

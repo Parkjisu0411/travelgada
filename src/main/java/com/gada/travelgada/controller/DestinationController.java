@@ -1,5 +1,7 @@
 package com.gada.travelgada.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,27 +23,36 @@ public class DestinationController {
 	private DestinationService destinationService;
 	
 	// JSON
-	@GetMapping("/destination/json/total")
-	public List<DestinationVO> getDestinationTotalToJson(ModelAndView modelAndView) {
+	@GetMapping("/destination/total")
+	public List<DestinationVO> getDestinationTotalCountToJson(ModelAndView modelAndView) {
 		return destinationService.getTotalCount();
 	}
 	
-	@GetMapping("/destination/json/{month}")
-	public List<DestinationVO> getDestinationMonthToJson(@PathVariable("month") int month, ModelAndView modelAndView) {
-		return destinationService.getMonthCount(month);
+	@GetMapping("/destination/{year}/{month}")
+	public List<DestinationVO> getDestinationMonthlyCountDetailToJson(@PathVariable("year") String year, @PathVariable("month") String month, ModelAndView modelAndView) {
+		return destinationService.getMonthlyCountDetail(year, month);
 	}
 	
 	// 뷰 페이지
-	@GetMapping("/destination/total")
+	@GetMapping("/destination")
 	public ModelAndView getDestinationTotal(ModelAndView modelAndView) {
-		modelAndView.setViewName("statistic/destination_total");
+		SimpleDateFormat simpleDateFormatYear = new SimpleDateFormat("yyyy");
+		SimpleDateFormat simpleDateFormatMonth = new SimpleDateFormat("MM");
+		SimpleDateFormat simpleDateFormatDay = new SimpleDateFormat("dd");
 		
-		return modelAndView;
-	}
-	
-	@GetMapping("/destination/month")
-	public ModelAndView getDestinationMonth(ModelAndView modelAndView) {
-		modelAndView.setViewName("statistic/destination_month");
+		Date time = new Date();
+		
+		String year = simpleDateFormatYear.format(time);
+		String month = simpleDateFormatMonth.format(time);
+		String day = simpleDateFormatDay.format(time);
+		
+		modelAndView.addObject("year", year);
+		modelAndView.addObject("month", month);
+		modelAndView.addObject("day", day);
+		
+		modelAndView.addObject("destinationMonthly", destinationService.getMonthlyCount(year));
+		
+		modelAndView.setViewName("statistic/destination");
 		
 		return modelAndView;
 	}

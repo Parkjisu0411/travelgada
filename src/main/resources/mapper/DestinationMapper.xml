@@ -10,10 +10,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]> 
 	</select> 
 
-	<select id="getMonthCount" resultType="com.gada.travelgada.domain.DestinationVO"> 
+	<select id="getMonthlyCount" resultType="int"> 
 		<![CDATA[ 
-			select concat(MONTH(schedule_date), '월') as month, count(*) as total, ifnull(schedule_content, 0) as city, latitude, longitude from schedule where schedule_type_id = 1 and MONTH(schedule_date) = #{month} group by schedule_content, latitude, longitude, schedule_date
+			select count(*) as total from schedule where schedule_type_id = 1 and YEAR(schedule_date) = #{year} and MONTH(schedule_date) = #{month}
 		]]> 
 	</select> 
-
+	
+	<select id="getMonthlyCountDetail" resultType="com.gada.travelgada.domain.DestinationVO">
+		<![CDATA[ 
+			select count(*) as total, ifnull(schedule_content, 0) as city, latitude, longitude from schedule where schedule_type_id = 1 and YEAR(schedule_date) = #{year} and MONTH(schedule_date) = #{month} group by schedule_content, latitude, longitude, schedule_date order by total desc
+		]]>
+	</select>
+	
 </mapper>

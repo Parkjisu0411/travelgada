@@ -62,7 +62,7 @@ html, body {
 }
 
 #email {
-	width: 345px;
+	width: 337px;
 	display: inline-block;
 }
 
