@@ -34,20 +34,61 @@ html, body {
 	min-heigth: 100%;
 }
 
-.login-icon {
-	width: 300px;
+#login-form-submit {
+	width: 466px;
 	height: 50px;
-	margin: 5px;
+	margin: 5px auto;
 	display: block;
-	margin: auto;
+	background-color: #ff7473;
+	color: white;
+	border-radius: 30px;
 }
 
-#login-form {
+#login-form-content {
 	margin: 0 auto;
 }
 
-#login-card {
+#login-form-head {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	text-align: center;
+}
+
+#login-form {
 	padding: 20px;
+	width: 540px;
+	margin: 0 auto;
+	border-radius: 10px;
+}
+
+.form-control {
+	border-radius: 30px;
+	height: 50px;
+}
+
+.login-form-link {
+	color: gray;
+}
+
+.login-form-link:hover {
+	text-decoration: none;
+}
+
+#login-form-sns {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.login-sns-icon {
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	margin: 5px;
+}
+
+#login-form-singUp {
+	text-align: center;
+	margin-top: 20px;
 }
 </style>
 <script type="text/javascript">
@@ -65,12 +106,12 @@ html, body {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	
 	<div class="container">
-		<div class="card" id="login-card">
-			<h2 class="headline" style="font-family: 'yg-jalnan'">
+		<div class="card" id="login-form">
+			<h2 id="login-form-head" style="font-family: 'yg-jalnan'">
 				<img class="nav-logo-img" src="${contextPath}/resources/img/main/logo.png">가다 로그인
 			</h2>
-			<div class="col-md-6" id="login-form">
-				<form action="/member/login" method="POST">
+			<div class="col-md-12" id="login-form-content">
+				<form action="/member/login" method="POST" id="login-form-form">
 					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" />
 					<div class="form-group">
 						<label for="id">아이디</label> <input type="text" class="form-control" placeholder="ID" id="id" name="username" />
@@ -78,18 +119,27 @@ html, body {
 					<div class="form-group">
 						<label for="pw">비밀번호</label> <input type="password" class="form-control" placeholder="Password" id="pw" name="password" />
 					</div>
+					<div class="form-group">
+						<input type="checkbox" id="remember-me" name="remember-me" />
+						<label class="form-check-label" for="remember-me">Remember me</label>
+						<a href="#" class="login-form-link" style="float:right">아이디/비밀번호 찾기</a>
+					</div>
+					
+					<br/>
+					<br/>
 					<div id="errorMsg"></div>
-					<input type="checkbox" id="remember-me" name="remember-me" class="form-check-input" />
-					<label class="form-check-label" for="remember-me">Remember me &nbsp;&nbsp;</label>
-					<a href="/member">회원가입</a>
-					<button type="submit" class="btn btn-primary login-icon" id="btnSubmit">로그인</button>
+					<button type="submit" class="btn" id="login-form-submit">로그인</button>
 				</form>
-				<div class="mb-auto">
-					<hr />
+				<hr />
+				<div id="login-form-sns">
+					<p>or Sign Up Using</p>
+					<a href="/oauth2/authorization/kakao"><img class="login-sns-icon" src="/resources/img/social/kakaolink_btn_medium.png"></a>
+					<a href="/oauth2/authorization/google "><img class="login-sns-icon" src="/resources/img/social/google_login.svg"></a>
+					<a href="/oauth2/authorization/naver "><img class="login-sns-icon" src="/resources/img/social/naver_login_icon_Green.PNG"></a>
 				</div>
-				<a href="/oauth2/authorization/kakao"><img class="login-icon" src="/resources/img/social/kakao_login_medium_wide.png"></a>
-				<a href="/oauth2/authorization/google "><img class="login-icon" src="/resources/img/social/btn_google_signin_light_normal_web@2x.png"></a>
-				<a href="/oauth2/authorization/naver "><img class="login-icon" src="/resources/img/social/naver_login_wide_white.PNG"></a>
+				<div id="login-form-singUp">
+					<a href="/member" class="login-form-link">회원가입</a>
+				</div>
 			</div>
 		</div>
 	</div>
