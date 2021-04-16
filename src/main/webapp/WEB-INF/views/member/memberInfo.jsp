@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
@@ -28,7 +29,7 @@ html, body {
 	height: 100%;
 	margins: 0;
 	padding: 0;
-	background-color: #f5f5f5; 
+	background-color: white; 
 }
 
 #wrap {
@@ -44,7 +45,7 @@ html, body {
 }
 
 #member-info-buyList {
-	margin-top: 20px;
+	margin-top: 30px;
 }
 
 .member-img {
@@ -56,10 +57,6 @@ html, body {
 	margin-bottom: 30px;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-.card {
-	border: none;
 }
 </style>
 <script type="text/javascript">
@@ -77,15 +74,15 @@ html, body {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="container">
-		<h2 class="headline" style="font-family: 'yg-jalnan'">마이페이지</h2>
+		<h2 class="gada-headline">MY PAGE</h2>
 		<hr />
 		<p class="view-more-p">
-			<button type="button" class="btn btn-secondary"
+			<button type="button" class="btn gada-btn"
 				onclick="location.href='/member/modify'">회원정보 수정</button>
 		</p>
 		<div class="row">
 			<div class="col-md-3" id="member-info-profile">
-				<div class="card">
+				<div class="card gada-card">
 					<img class="rounded-circle member-img" src="/resources/img/profile/${member.profile_img_path }" onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
 					<span>${member.member_id }</span>
 				</div>
@@ -99,7 +96,7 @@ html, body {
 				</div>
 			</div>
 			<div class="col-md-9" id="member-info-detail">
-				<div class="card">
+				<div class="card gada-card">
 					<table class="table">
 						<tr>
 							<th>포인트</th>
@@ -122,7 +119,7 @@ html, body {
 				</div>
 			</div>
 			<div class="col-md-12" id="member-info-buyList">
-				<div class="card">
+				<div class="card gada-card">
 					<table class="table-borderless">
 						<thead>
 							<tr>
