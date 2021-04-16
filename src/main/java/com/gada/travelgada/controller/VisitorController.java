@@ -24,16 +24,6 @@ public class VisitorController {
 	@Autowired
 	private VisitorService service;
 
-	@GetMapping("sta")
-	public ModelAndView diary_test(ModelAndView mav, HttpSession session) {
-		log.info("controller diary_test();");
-
-		mav.setViewName("statistic/index3");
-		//dd
-		return mav;
-
-	}// diary_test end
-	
 	@GetMapping("visitor")
 	public ModelAndView visitor(ModelAndView mav, HttpSession session) {
 		log.info("controller visitor();");
@@ -62,10 +52,8 @@ public class VisitorController {
 		mav.addObject("withdrawal",service.getWithdrawal());
 		
 		mav.addObject("monthCount",service.getMonthCount(year));
-		log.info("+++++++++월별나와요+++++++++++"+ service.getMonthCount(year));
 		
 		mav.addObject("dayCount",service.getDayCount(year,month));
-		log.info("+++++++++일별나와요+++++++++++"+ service.getDayCount(year,month));
 		
 		mav.setViewName("statistic/visitor");
 		

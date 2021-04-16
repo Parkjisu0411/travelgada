@@ -34,9 +34,7 @@
 	<!-- Custom Style-->
 	<link href="/resources/assets/css/app-style.css" rel="stylesheet"/>
   
-  	<%-- <link rel="stylesheet" href="${contextPath}/resources/css/font.css"> --%>
-  	<!-- 폰트 수정 필요 -->
-	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+  	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
@@ -207,15 +205,14 @@
 
 <body class="bg-theme bg-theme9">
 
-	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
-	
 	<!-- Start wrapper-->
  	<div id="wrapper">
 		
 		<!--Start sidebar-wrapper-->
 		<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
-			<div class="brand-logo"></div>
+			<div class="brand-logo">
+				<a href="/" style="font-family:yg-jalnan"><img src="/resources/img/main/logo.png" class="logo-icon" alt="logo icon">가다</a>
+			</div>
    				<ul class="sidebar-menu do-nicescrol">
       				<li>
         				<a href="/admin">
@@ -264,7 +261,7 @@
 						<div class="card">
 							<div class="card-body">
               					<div class="table-responsive">
-              						총 회원 수 : ${total} &nbsp;&nbsp; 탈퇴한 회원 수 : ${withdrawal} 
+              						<span style="color:white;">총 회원 수 : ${total} &nbsp;&nbsp; 탈퇴한 회원 수 : ${withdrawal} </span>
 								<!-- member list -->
 								<table class="table">
 									<thead>
@@ -353,7 +350,9 @@
         		<!-- Modal body -->
         		<div class="modal-body">
         			<br/>
-          			<div><span style="color:green; font-size:22px; font-weight:border;">${member.member_id}</span> 님을 정말 탈퇴시키겠습니까?</div>
+          			<div>
+          				<span style="color:green; font-size:22px; font-weight:border;">${member.member_id}</span> 
+          				<span style="color:white;">님을 정말 탈퇴시키겠습니까?</span></div>
           			<br/>
           		
           			<select name="withdrawal_code" id="select_${member.member_id}">
@@ -382,8 +381,12 @@
 				<!-- Modal body -->
         		<div class="modal-body">
         			<br/>
-          			<div><span style="color:green; font-size:22px; font-weight:border;">${member.member_id }</span> 님을 다시 회원으로 되돌리시겠습니까?</div>
+          			<div>
+          				<span style="color:green; font-size:22px; font-weight:border;">${member.member_id }</span> 
+          				<span style="color:white;">님을 다시 회원으로 되돌리시겠습니까?</span>
+          			</div>
           			<br/>
+          			<span style="color:white;">
           				회원 탈퇴 사유 : 
           					<c:choose>
     							<c:when test="${member.withdrawal_code eq 1}">
@@ -399,6 +402,7 @@
         							기타
     							</c:when>
 							</c:choose>
+					</span>
         		</div>
         		
         		<!-- Modal footer -->

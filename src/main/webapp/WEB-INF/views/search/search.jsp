@@ -263,7 +263,7 @@ span.star-prototype > * {
 	
 		<!-- 검색 바 -->
 		<form action="${pageContext.request.contextPath}/search" method="get">			
-			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
+			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="검색어를 입력하세요."/>
 			<button type="submit"><i class="fa fa-search"></i></button>
 		</form>	
 		<br/>

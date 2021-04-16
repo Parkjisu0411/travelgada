@@ -18,11 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 public class DiaryServiceImpl implements DiaryService {
 
 	private DiaryMapper mapper;
-	
-//	@Override
-//	public List<Integer> getDday() {
-//		return mapper.getDday();
-//	}
 
 	@Override
 	public List<DiaryVO> getDiary(String member_id) {
@@ -73,8 +68,5 @@ public class DiaryServiceImpl implements DiaryService {
 	  return mapper.getImg_seq();
 	  
 	  }
-	 
-	
-	
 
 }

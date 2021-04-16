@@ -4,20 +4,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.gada.travelgada.mapper.VisitorMapper"> 
 
+	<!-- 방문자 -->
 	<insert id="setCount" > 
 		<![CDATA[ 
 			insert into visitor (visitor_id, visit_date) values (get_seq('visitor_seq'),sysdate())
 		]]> 
 	</insert> 
 	
+	<!-- 일별 -->
 	<select id="getDayCount" resultType="int"> 
 		<![CDATA[ 
 			select count(*) from visitor 
 				where year(visit_date) = #{year} and month(visit_date) = #{month} and day(visit_date) = #{day}
-		
 		]]> 
 	</select> 
 	
+	<!-- 월별 -->
 	<select id="getMonthCount" resultType="int"> 
 		<![CDATA[ 
 			select count(*) from visitor 

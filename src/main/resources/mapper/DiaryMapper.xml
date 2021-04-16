@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getImg_seq" resultType="int"> 
 		<![CDATA[ 	
-			select id from seq where seq_name = 'diary_img_seq'
+			select id from seq where seq_name = 'diary_seq'
 		]]> 
 	</select> 
 

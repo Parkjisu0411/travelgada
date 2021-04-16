@@ -31,6 +31,7 @@ html, body {
 	height: 100%;
 	margins: 0;
 	padding: 0;
+	background-color: #f5f5f5; 
 }
 
 #wrap {
@@ -38,7 +39,49 @@ html, body {
 }
 
 #signup-form {
+	padding: 20px;
+	width: 540px;
 	margin: 0 auto;
+	border-radius: 10px;
+}
+
+#signup-form-head {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	text-align: center;
+}
+
+#signup-form-submit {
+	width: 466px;
+	height: 38px;
+	margin: 5px auto;
+	display: block;
+	background-color: #ff7473;
+	color: white;
+	border-radius: 30px;
+}
+
+#email {
+	width: 337px;
+	display: inline-block;
+}
+
+#emailSend-btn {
+	background-color: #ff7473;
+	color: white;
+	border-radius: 30px;
+	display: inline;
+}
+
+#auth-code {
+	margin: 5px;
+	float:right;
+	border: none;
+	border-bottom: 1px solid #ced4d9;
+}
+
+.form-control {
+	border-radius: 30px;
 }
 
 .error_next_box {
@@ -57,8 +100,10 @@ html, body {
 
 	function authEmail() {
 		var email = $("#email").val();
-		console.log(email);
 		if(checkEmail() && email != "") {
+			alert("인증번호가 발송됐습니다.");
+			$("#auth-code").css("display", "block");
+			$("#emailSend-btn").css("display", "none");
 			var data = {
 				email : email		
 			};
@@ -72,14 +117,12 @@ html, body {
 	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 				},
 				success : function(result) {
-					alert("인증번호가 발송됐습니다.");
+					
 					console.log(result);
-					$("#auth-code").css("display", "block");
 					$("#auth-code").keyup(function() {
 						if($("#auth-code").val() == result) {
 							$("#auth-code").css("display", "none");
 							showSuccessMsg($("#emailMsg"), "인증되었습니다.");
-							$("#emailSend-btn").css("display", "none");
 							emailFlag = true;
 						}
 					})
@@ -320,7 +363,7 @@ html, body {
 		});
 		$("#email").keyup(function() {
 			emailFlag = false;
-			$("#emailSend-btn").css("display", "block");
+			$("#emailSend-btn").css("display", "inline");
 			checkEmail();
 		});
 
@@ -377,57 +420,61 @@ html, body {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="divider-header-blank"></div>
-	<div id="wrap">
-		<div class="container">
-			<div class="col-md-6" id="signup-form">
+	<div class="container">
+		<div class="card" id="signup-form">
+			<div class="col-md-12" id="signup-form-head">
 				<h2 class="headline" style="font-family: 'yg-jalnan'">
 					<img class="nav-logo-img" src="${contextPath}/resources/img/main/logo.png">가다
 					회원가입
 				</h2>
+			</div>
+			<div class="col-md-12" id="signup-form-content">
 				<form id="join_form">
 					<div class="form-group">
-						<label for="id">아이디:</label> <input type="text"
+						<label for="id">아이디</label> <input type="text"
 							class="form-control" placeholder="ID" id="id" name="id"
 							maxlength="20" /> <span id="idMsg" style="display: none"
 							aria-live="assertive" class="error_next_box"></span>
 					</div>
 					<div class="form-group">
-						<label for="pw">비밀번호:</label> <input type="password"
+						<label for="pw">비밀번호</label> <input type="password"
 							class="form-control" placeholder="Password" id="pswd1"
 							maxlength="16" /> <span class="error_next_box" id="pswd1Msg"
 							style="display: none" aria-live="assertive">5~12자의 영문 소문자,
 							숫자와 특수기호(_)만 사용 가능합니다.</span>
 					</div>
 					<div class="form-group">
-						<label for="pw2">비밀번호 재확인:</label> <input type="password"
+						<label for="pw2">비밀번호 재확인</label> <input type="password"
 							class="form-control" placeholder="Password" id="pswd2"
 							maxlength="16" /> <span id="pswd2Blind" style="color: green;"></span>
 						<span class="error_next_box" id="pswd2Msg" style="display: none"
 							aria-live="assertive"></span>
 					</div>
 					<div class="form-group">
-						<label for="name">이름:</label> <input type="text"
+						<label for="name">이름</label> <input type="text"
 							class="form-control" placeholder="Name" id="name" maxlength="30" />
 						<span class="error_next_box" id="nameMsg" style="display: none"
 							aria-live="assertive"></span>
 					</div>
 					<div class="form-group">
-						<label for="email">이메일:</label> <input type="text"
+						<label for="email" style="display:block;">이메일</label> <input type="text"
 							class="form-control" placeholder="Email" id="email"
-							maxlength="40" /> <span class="error_next_box" id="emailMsg"
-							style="display: none" aria-live="assertive"></span>
-						<button type="button" class="btn btn-secondary" onclick="authEmail()" id="emailSend-btn">인증번호 전송</button>
-						<input type="text" class="form-control" style="display:none" id="auth-code" />
+							maxlength="40" />
+						<button type="button" class="btn" onclick="authEmail()" id="emailSend-btn">인증번호 전송</button>
+						<span class="error_next_box" id="emailMsg" style="display: none" aria-live="assertive"></span>
+						<input type="text" style="display:none" id="auth-code" placeholder="인증번호를 입력하세요"/>
 					</div>
 					<div class="form-group">
-						<label for="phone_num">휴대폰:</label> <input type="text"
+						<label for="phone_num">휴대폰</label> <input type="text"
 							class="form-control" placeholder="Phone Number" id="phone_num" />
 					</div>
-					<button type="submit" class="btn btn-primary" id="btnSubmit">회원가입</button>
+					<br />
+					<button type="submit" class="btn" id="signup-form-submit">회원가입</button>
 				</form>
 			</div>
 		</div>
 	</div>
+	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>

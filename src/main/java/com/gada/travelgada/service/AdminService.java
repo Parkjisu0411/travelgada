@@ -2,6 +2,7 @@ package com.gada.travelgada.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gada.travelgada.domain.MemberVO;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class AdminService {
 	
+	@Autowired
 	private AdminMapper mapper;
 
 	//member list
@@ -69,24 +71,28 @@ public class AdminService {
 		return mapper.searchTotal(keyword);
 	}
 
-	
+	//회원 배송지
 	public List<ShippingLocVO> getShippingLoc(String member_id) {
 		return mapper.selectShippingLoc(member_id);
 	}
 
+	//회원 포인트
 	public List<PointVO> getPoint(String member_id) {
 		return mapper.selectPoint(member_id);
 	}
 
+	//회원 정보
 	public MemberVO getMember(String member_id) {
 		return mapper.selectMember(member_id);
 	}
 
+	//탈퇴한 회원 수
 	public int searchWidthTotal(String keyword) {
 		log.info("searchWidthTotal searchTotal()");
 		return mapper.searchWidthTotal(keyword);
 	}
-
+	
+	//탈퇴한 회원 검색
 	public List<MemberVO> searchWithdrawal(int nowPage, int amount, String keyword) {
 		log.info("searchWithdrawal searchTotal()");
 		return mapper.searchWithdrawal(nowPage, amount, keyword);

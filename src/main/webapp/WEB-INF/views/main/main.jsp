@@ -95,6 +95,43 @@
     }
     
   </style>
+  <script type="text/javascript">
+  	$(document).ready(function(){
+		
+		var content; //내용
+		var splitedArray; //배열
+		var linkedContent; //주소
+		
+		//jstl
+	    
+	    <c:forEach items="${member}" var="member">
+		    <c:forEach items="${member.plannerVO}" var="pl">
+			    <c:forEach items="${pl.diaryVO}" var="di">
+		  		console.log("${di.hashtag}")
+		  	    content = "${di.hashtag}";
+		  	    splitedArray = content.split('#');//#으로 구분
+		  	    console.log(splitedArray);
+		  	    linkedContent = '';
+		  	    splitedArray.shift();//첫번째 지워주는 함수
+		
+		  	    for(var word in splitedArray){
+		  	      word = splitedArray[word];
+		  	       if(word.indexOf("") == 0)
+		  	       { var word2 = "#"+word;
+		  	          word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+		  	          console.log(word);
+		  	          console.log(word2);
+		  	       }
+		  	       linkedContent += word+' ';
+		  	    }
+		  	    
+		  	    $("#${di.diary_id}").append(linkedContent);
+			  	</c:forEach>
+		  	</c:forEach>
+	  	</c:forEach>
+  	
+	});
+  </script>
 </head>
 
 <body>
@@ -180,7 +217,7 @@
 		                    <a class="main-card-diary-profile-id" href="#">${member.member_id}</a>
 		                  </div>
 		                  <div class="main-card-diary-hashtag-area">
-		                    <a class="main-card-diary-hashtag" href="#">${di.hashtag}</a>
+		                    <span class="main-card-diary-hashtag" id="${di.diary_id }"></span>
 		                  </div>
 		                </div>
 		              </div>

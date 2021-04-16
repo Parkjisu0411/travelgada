@@ -10,9 +10,6 @@
 <meta name="description" content=""/>
 <meta name="author" content=""/>
 <title>매출 통계</title>
-<!-- loader-->
-<link href="/resources/assets/css/pace.min.css" rel="stylesheet"/>
-<script src="/resources/assets/js/pace.min.js"></script>
 <!--favicon-->
 <link rel="icon" href="/resources/assets/images/favicon.ico" type="image/x-icon">
 <!-- simplebar CSS-->
@@ -213,37 +210,37 @@
 		
 		//monthly sales
 		var monthlySalesOptions = {
-				annotations: {
-					position: 'back'
-				},
-				dataLabels: {
-					enabled:false
-				},
-				chart: {
-					type: 'bar',
-					height: 380,
-					events: {
-						click: function(series) {
-							var ele = series.toElement;
-							var month = parseInt($(ele).attr("j")) + parseInt(1);
-							getDailySales(month);
-							getProductSales(month);
-						}
+			annotations: {
+				position: 'back'
+			},
+			dataLabels: {
+				enabled:false
+			},
+			chart: {
+				type: 'bar',
+				height: 380,
+				events: {
+					click: function(series) {
+					var ele = series.toElement;
+					var month = parseInt($(ele).attr("j")) + parseInt(1);
+					getDailySales(month);
+						getProductSales(month);
 					}
-				},
-				fill: {
-					opacity:1
-				},
-				plotOptions: {
-				},
-				series: [{
-					name: '월 매출',
-					data: ${monthlySales}
-				}],
-				colors: '#ffffff',
-				xaxis: {
-					categories: ["1월","2월","3월","4월","5월","6월","7월", "8월","9월","10월","11월","12월"],
-				},
+				}
+			},
+			fill: {
+				opacity:1
+			},
+			plotOptions: {
+			},
+			series: [{
+				name: '월 매출',
+				data: ${monthlySales}
+			}],
+			colors: '#ffffff',
+			xaxis: {
+				categories: ["1월","2월","3월","4월","5월","6월","7월", "8월","9월","10월","11월","12월"],
+			},
 		}
 		
 		var monthlySalesChart = new ApexCharts(document.querySelector("#chart-monthly-sales"), monthlySalesOptions);
@@ -263,17 +260,12 @@
 
 <body class="bg-theme bg-theme9">
 
-	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
- 
 	<!-- Start wrapper-->
  	<div id="wrapper">
  		<!--Start sidebar-wrapper-->
 		<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
 			<div class="brand-logo">
-				<a href="index.html">
-					<img src="/resources/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-				</a>
+				<a href="/" style="font-family:yg-jalnan"><img src="/resources/img/main/logo.png" class="logo-icon" alt="logo icon">가다</a>
 			</div>
 			<ul class="sidebar-menu do-nicescrol">
 			<!-- <li class="sidebar-header">MAIN NAVIGATION</li> -->
