@@ -45,6 +45,16 @@
     <link href="resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
 
 <style>
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margins: 0;
+	padding: 0;
+	background-color: #f5f5f5;
+}
+
+
 /* 달력 생성 모달 */
 	/* 달력 아이콘 */
 	#calImg {
@@ -207,6 +217,16 @@ span.star-prototype > * {
 	}
 </style>
 
+<style>
+	.plBox:hover{
+		box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+	}
+	.plBox{
+		background-color: white;
+		border-radius : 15px;
+	}
+
+</style>
 
 	
 </head>
@@ -258,8 +278,8 @@ span.star-prototype > * {
 		
 		<!-- 반복 -->
 		<c:forEach items="${plMore}" var="pl"> 
-		<div class="row">
-			<div class="col-sm-5">일정사진</div>
+		<div class="row plBox">
+			<div class="col-sm-5"><a href="/search/${pl.member_id}/${pl.planner_id}">일정사진</a></div>
 			<div class="col-sm-7"><!-- 국가, 도시, 만족도 -->
 			
 			<div class="box">

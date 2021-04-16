@@ -65,10 +65,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 통합 검색 일정 부분 -->
 	<select id="searchPl" resultMap="plannerMap"> 
 		<![CDATA[ 
-			select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
-				where s.planner_id = p.planner_id 
-					and  planner_name like CONCAT('%', #{keyword}, '%') 
-						order by p.planner_id desc
+			select a.* from (select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+				where s.planner_id = p.planner_id) a
+					where a.planner_name like CONCAT('%', #{keyword}, '%') 
+						order by a.planner_id desc LIMIT 2
 		]]>
 	</select>
 	
@@ -78,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select a.* from (select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
 				where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
 					where a.text like CONCAT('%', #{keyword}, '%') or a.hashtag like CONCAT('%', #{keyword}, '%')
-		 	
+		 				LIMIT 8
 		]]>
 	</select>
 
@@ -87,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[ 
 			select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
 				where s.planner_id = p.planner_id 
-					and  planner_name like CONCAT('%', #{keyword}, '%')	
+					and p.planner_name like CONCAT('%', #{keyword}, '%')	
 						${order}
 					
 		]]>

@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 public class VisitorController {
 	
 	@Autowired
-	private VisitorService service;
+	private VisitorService visitorService;
 
-	@GetMapping("visitor")
+	@GetMapping("/visitor")
 	public ModelAndView visitor(ModelAndView mav, HttpSession session) {
 		log.info("controller visitor();");
 		
@@ -44,16 +44,16 @@ public class VisitorController {
 		mav.addObject("month",month);
 		mav.addObject("day",day);
 		
-		int total = service.getTotal();
+		int total = visitorService.getTotal();
 		
 		//전체 회원 수 
 		mav.addObject("total", total);
 		//탈퇴한 회원 수 
-		mav.addObject("withdrawal",service.getWithdrawal());
+		mav.addObject("withdrawal",visitorService.getWithdrawal());
 		
-		mav.addObject("monthCount",service.getMonthCount(year));
+		mav.addObject("monthCount",visitorService.getMonthCount(year));
 		
-		mav.addObject("dayCount",service.getDayCount(year,month));
+		mav.addObject("dayCount",visitorService.getDayCount(year,month));
 		
 		mav.setViewName("statistic/visitor");
 		

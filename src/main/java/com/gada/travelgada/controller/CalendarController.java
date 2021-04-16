@@ -30,7 +30,7 @@ public class CalendarController {
 	private CalendarService calendarService;
 	
 	//플래너 달력 페이지
-	@GetMapping("calendar")
+	@GetMapping("/calendar")
 	public ModelAndView calendar(ModelAndView mav,@AuthenticationPrincipal MemberDetails member) {
 		mav.setViewName("calendar/calendar");
 		mav.addObject("member",member.getUsername());
@@ -40,7 +40,7 @@ public class CalendarController {
 	}//calendar end
 	
 	//플래너 모달 달력 페이지
-	@GetMapping("calendar2")
+	@GetMapping("/calendar2")
 	public ModelAndView calendar2(ModelAndView mav,@AuthenticationPrincipal MemberDetails member) {
 		mav.setViewName("calendar/calendar2");
 		mav.addObject("member",member.getUsername());
@@ -50,7 +50,7 @@ public class CalendarController {
 	}//calendar end
 	
 	//플래너 생성
-	@PostMapping("planner_create")
+	@PostMapping("/planner_create")
 	public ModelAndView planner_create(ModelAndView mav, PlannerVO plannerVO,ScheduleVO scheduleVO){
 		
 		calendarService.planner_create(plannerVO);
