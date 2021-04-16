@@ -27,6 +27,12 @@ footer {
 .footer-company-info {
 	padding-top: 64px;
 	padding-bottom: 64px;
-	font-size: 12px;
-	color: #111111;
+	font-size: 14px;
+	color: #ffffff;
+	background-color: #111111;
+}
+
+footer {
+	background-color: #111111 !important;
+	width: 100%;
 }

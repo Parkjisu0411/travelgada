@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleVO {
-
+	private long total;
 	private int budget;
 	private int planner_id;
 	private Date schedule_date;

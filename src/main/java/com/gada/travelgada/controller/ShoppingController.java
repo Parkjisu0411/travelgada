@@ -31,7 +31,6 @@ import com.gada.travelgada.service.ShoppingServiceImpl;
 import com.gada.travelgada.utils.PointCalculator;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @AllArgsConstructor
@@ -105,24 +104,25 @@ public class ShoppingController {
 	@PostMapping("/shopping/order")
 	public ModelAndView sendOrderPage(@RequestParam("product_id") String productId,
 			@RequestParam("quantity") String quantity, @RequestParam("price") String price,
-			@RequestParam("product_name") String productName, ModelAndView modelAndView,
+			@RequestParam("product_name") String productName, @RequestParam("product_img_src") String productImgSrc, ModelAndView modelAndView,
 			@AuthenticationPrincipal MemberDetails memberDetails) {
 		String[] arrProduct_id = productId.split(",");
 		String[] arrQuantity = quantity.split(",");
 		String[] arrPrice = price.split(",");
 		String[] arrProduct_name = productName.split(",");
-
+		String[] arrProductImgSrc = productImgSrc.split(",");
+		
 		List<BuyDetailVO> buyList = new ArrayList<>();
-
 		for (int i = 0; i < arrProduct_id.length; i++) {
 			BuyDetailVO buy = new BuyDetailVO();
 			buy.setProduct_id(Integer.parseInt(arrProduct_id[i]));
 			buy.setQuantity(Integer.parseInt(arrQuantity[i]));
-			buy.setPrice(Integer.parseInt(arrPrice[i]));
+			buy.setPrice(Integer.parseInt(arrPrice[i]));																																																											
 			buy.setProduct_name(arrProduct_name[i]);
 			buyList.add(buy);
 		}
-
+		
+		modelAndView.addObject("imgSrc", arrProductImgSrc);
 		modelAndView.addObject("buyDetailList", buyList);
 		modelAndView.addObject("shippingList", memberService.getShippingLoc(memberDetails.getUsername()));
 		modelAndView.addObject("point", PointCalculator.getCurrentPoint(memberService.getPoint(memberDetails.getUsername())));

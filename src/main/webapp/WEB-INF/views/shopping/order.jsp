@@ -15,13 +15,47 @@
 	<title>결제</title>
 
 	<style>
+	
+		html, body {
+			background-color: #f5f5f5 !important; 
+		}
+		
+		.order-area {
+		  background-color: #ffffff;
+		  border-radius: 10px;
+		  padding-left: 30px;
+		}
+
 		/* Common */
 		.information-headline {
-			font-size: 22px;
+			font-size: 25px;
 			margin: 0px;
+			font-weight: 700;
 		}
 
 		/* Content */
+		.select-shipping-loc {
+		  text-decoration: underline !important;
+		}
+		
+		.other-button {
+		  height: 40px !important;
+		  background-color: #000000 !important;
+		  color: #ffffff !important;
+		  border-radius: 32px !important;
+		  font-size: 14px !important;
+		}
+		
+		.input-information {
+		    border-radius: 30px !important;
+		    height: 40px !important;
+		    width: 510px !important;
+		}
+		
+		.col-md-8.content {
+		  padding: 20px !important;
+		}
+		
 		.product-img {
 			width: 100%;
 			height: 127px;
@@ -31,14 +65,6 @@
 
 		.price {
 			text-align: right;
-		}
-
-		.nav-link {
-			color: #000000;
-		}
-
-		.nav-link:hover {
-			color: #000000;
 		}
 
 		.tab-content {
@@ -57,10 +83,6 @@
 			text-align: center;
 			width: 100%;
 			height: 100%;
-		}
-
-		.btn.btn-primary {
-			float: right;
 		}
 
 		/* Widget */
@@ -118,9 +140,15 @@
 		}
 
 		.product-name {
-			font-size: 14px;
+			font-size: 18px;
 		}
+		
 	</style>
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/footer.css">
 
 	<!-- Bootstrap -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -133,10 +161,12 @@
 </head>
 
 <body>
-	<div class="container">
+
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+
+	<div class="container order-area">
 		<div class="row">
 			<div class="col-md-8 content">
-				<hr>
 				<h2 class="information-headline">주문자 정보</h2>
 				<br>
 				<span>${member.member_name}</span><br>
@@ -147,9 +177,6 @@
 				<br>
 
 				<!-- 주소록 -->
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-					주소록
-				</button>
 				<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -176,7 +203,7 @@
 									<tbody>
 										<c:forEach var="shipping_loc" items="${shippingList}">
 											<tr>
-												<td><button class="select-shipping-loc">선택</button></td>
+												<td><button class="btn select-shipping-loc">선택</button></td>
 												<td>${shipping_loc.shipping_loc_name}</td>
 												<td>${shipping_loc.receiver}</td>
 												<td>${shipping_loc.zip_code}</td>
@@ -193,28 +220,37 @@
 
 				<!-- 배송 정보 입력 -->
 				<div class="shipping-loc-area">
-					<input type="text" id="address-name" maxlength="13" placeholder="배송지명"><br>
-					<input type="text" id="recipient" maxlength="13" placeholder="수령인"><br>
-					<input type="text" id="postcode" placeholder="우편번호" readonly="readonly">
-					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-					<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+				    <label for="address-name" style="display: block;">배송지명</label>
+					<input type="text" id="address-name" class="form-control input-information" maxlength="13" placeholder="배송지명" style="display: inline; width: 432px !important;">
+				    <button type="button" class="btn other-button" data-toggle="modal" data-target="#exampleModalCenter">
+					주소록
+				    </button>
+				    <div style="padding: 3px;"></div>
+					<label for="recipient" style="display: block;">수령인</label>
+					<input type="text" id="recipient" class="form-control input-information" maxlength="13" placeholder="수령인">
+					<div style="padding: 3px;"></div>
+					<label for="postcode" style="display: block;">주소</label>
+					<input type="text" id="postcode" class="form-control input-information" placeholder="우편번호" style="display: inline; width: 392px !important;" readonly="readonly">
+					<input type="button" onclick="execDaumPostcode()" class="btn other-button" value="우편번호 찾기">
+					<div id="wrap" style="display:none;border:1px solid;width:510px;height:300px;margin:5px 0;position:relative">
 						<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
 							style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
 							alt="접기 버튼">
 					</div>
-					<input type="text" id="address" placeholder="주소" readonly="readonly"><br>
-					<input type="text" id="detailAddress" maxlength="33" placeholder="상세주소"><br>
-					<input type="text" id="tel" maxlength="11" placeholder="연락처"
+					<input type="text" id="address" class="form-control input-information" placeholder="주소" style="display: inline;" readonly="readonly"><br>
+					<input type="text" id="detailAddress" class="form-control input-information" maxlength="33" placeholder="상세주소">
+					<div style="padding: 3px;"></div>
+					<label for="tel">연락처</label>
+					<input type="text" id="tel" class="form-control input-information" maxlength="11" placeholder="연락처"
 						onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" />
 					<p>-없이 입력해 주세요.</p>
 				</div>
 				<hr>
 				<h2 class="information-headline">포인트 사용</h2>
 				<br>
-				<input type="number" id="point" onchange='printPoint()' min="0" value="0"
-					onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" />
-				<input type="button" onclick='useAllPoint()' value="모두 사용" />&nbsp;보유 포인트 ${point}p<br>
-				<hr>
+				<input type="number" id="point" class="form-control input-information" onchange='printPoint()' min="0" value="0"
+					onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" style="display: inline; width: 420px !important;"/>
+				<input type="button" class="btn other-button" onclick='useAllPoint()' value="모두 사용" />&nbsp;보유 포인트 ${point}p<br>
 			</div>
 
 			<!-- 결제 정보 -->
@@ -222,13 +258,12 @@
 				<div class="product-area">
 					<form id="form" action="${pageContext.request.contextPath}/shopping/order/result" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						<c:forEach items="${buyDetailList}" var="productInformation">
+						<c:forEach items="${buyDetailList}" var="productInformation" varStatus="status">
 							<div class="row widget-product-information">
 								<div class="col-md-5">
-									<img src="#" class="product-img">
+									<img src="${pageContext.request.contextPath}<c:out value="${imgSrc[status.index]}"/>" class="product-img">
 								</div>
 								<div class="col-md-7">
-									<a href="#">물품 항목</a><br>
 									<span class="product-name">${productInformation.product_name}</span><br>
 									<span>₩${productInformation.price}&nbsp;/&nbsp;${productInformation.quantity}개</span>
 
@@ -243,6 +278,7 @@
 				</div>
 				<hr>
 				<h2 class="information-headline">결제 세부정보</h2>
+				<div style="padding: 3px;"></div>
 				<span class="total-price-title">총 상품 금액</span>
 				<c:set var="totalPrice" value="0" />
 				<c:forEach items="${buyDetailList}" var="productPrice">
@@ -268,6 +304,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>

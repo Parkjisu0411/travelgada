@@ -10,6 +10,8 @@
 </head>
 <body>
 
+  <div style="padding: 70px"></div>
+
   <footer>
   <div class="container">
     <div class="footer-company-info">
@@ -20,6 +22,8 @@
       대표자 : 홍길동<br>
       통신판매업 신고 : 2021-서울종로-1234<br>
       TEL : 1234-5678
+      <div style="padding: 5px"></div> 
+      <img src="${pageContext.request.contextPath}/resources/img/main/google.png">
     </div>
     </div>
   </footer>

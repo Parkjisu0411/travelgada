@@ -112,11 +112,12 @@ html, body {
 	//주문하기
 	function buy() {
 		console.log("buy");
-		
+
 		var product_id_arr = [];
 		var quantity_arr = [];
 		var price_arr = [];
 		var name_arr = [];
+		var product_img_src_arr = [];
 		
 		$("input:checkbox[name=select-product]").each(function() {
 			if($(this).is(":checked")) {
@@ -124,11 +125,13 @@ html, body {
 	            var quantity = $("#" + product_id + " .quantity").val();
 	            var price = $("#" + product_id + " .price").text();
 	            var product_name = $("#" + product_id + " .product_name").text();
+	            var product_img_src = $("#" + product_id + " .product-img").attr("src");
 	            
 	            product_id_arr.push(product_id);
 	            quantity_arr.push(quantity);
 	            price_arr.push(price);
 	            name_arr.push(product_name);
+	            product_img_src_arr.push(product_img_src);
 			};
 		});
 		if(!product_id_arr.length) {
@@ -158,6 +161,11 @@ html, body {
 		inputName.setAttribute("name", "product_name");
 		inputName.setAttribute("value", name_arr);
 		
+		var inputProductImgSrc = document.createElement("input");
+		inputProductImgSrc.setAttribute("type","hidden");
+		inputProductImgSrc.setAttribute("name", "product_img_src");
+		inputProductImgSrc.setAttribute("value", product_img_src_arr);
+		
 		var inputCsrfToken = document.createElement("input");
 		inputCsrfToken.setAttribute("type","hidden");
 		inputCsrfToken.setAttribute("name", "${_csrf.parameterName}");
@@ -167,6 +175,7 @@ html, body {
 		form.appendChild(inputQuantity);
 		form.appendChild(inputPrice);
 		form.appendChild(inputName);
+		form.appendChild(inputProductImgSrc);
 		form.appendChild(inputCsrfToken);
 		
 		document.body.appendChild(form);

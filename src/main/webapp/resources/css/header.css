@@ -1,7 +1,7 @@
 .navbar-expand-lg {
-	height: 80px;
+	height: 80px !important;
 	background-color: #111111;
-	box-shadow: 0 2px 2px 0 rgb(0 0 0 / 5%);
+	box-shadow: 0 2px 2px 0 rgb(0 0 0 / 5%) !important;
 }
 
 .nav-link {
@@ -14,43 +14,43 @@
 }
 
 .navbar-brand {
-	font-family: 'yg-jalnan';
-	font-size: 1.4em;
-	padding-right: 10px;
+	font-family: 'yg-jalnan' !important;
+	font-size: 1.4em !important;
+	padding-right: 10px !important;
 	color: #FFFFFF !important;
 }
 
 .nav-logo-img {
-	max-width: 30px;
-	max-height: 30px;
-	margin: 0px 4px 0px 0px;
-	padding: 0px 0px 3px;
+	max-width: 30px !important;
+	max-height: 30px !important;
+	margin: 0px 4px 0px 0px !important;
+	padding: 0px 0px 3px !important;
 }
 
 .nav-item {
-	padding: 0px 18px;
-	font-size: 15px;
-	font-weight: 400;
-	color: #FFFFFF;
+	padding: 0px 18px !important;
+	font-size: 15px !important;
+	font-weight: 400 !important;
+	color: #FFFFFF !important;
 }
 
 .nav-dropdown-toggle {
-	color: #ffffff;
+	color: #ffffff !important;
 }
 
 .nav-dropdown-item:active {
-	background-color: #FE5000;
+	background-color: #FE5000 !important;
 }
 
 .nav-profile-img {
-	border-radius: 70%;
-	width: 32px;
-	height: 32px;
-	object-fit: cover;
+	border-radius: 70% !important;
+	width: 32px !important;
+	height: 32px !important;
+	object-fit: cover !important;
 }
 
 .nav-profile-img:hover {
-	filter: brightness(85%);
+	filter: brightness(85%) !important;
 }
 
 .nav-dropdown-toggle-user {
@@ -58,11 +58,11 @@
 }
 
 .nav-dropdown-toggle-user::after {
-    display:none;
+    display:none !important;
 }
 
 .nav-dropdown-toggle::after {
-    display:none;
+    display:none !important;
 }
  
 /* 
@@ -83,8 +83,8 @@
 }
 
 .nav-btn {
-	border: 0px;
-	padding: 0px;
+	border: 0px !important;
+	padding: 0px !important;
 }
 
 .nav-form-control {
@@ -92,12 +92,12 @@
 }
 
 .container .dropdown .dropdown-menu a:hover {
-	color: #ffffff;
-	background-color: #FE5000;
+	color: #ffffff !important;
+	background-color: #FE5000 !important;
 }
 
 .nav-dropdown-toggle-user::after {
-    display:none;
+    display: none !important;
 }
 
 .nav-link {
@@ -107,4 +107,3 @@
 .navbar-nav {
   color: #FFFFFF !important;
 }
-
