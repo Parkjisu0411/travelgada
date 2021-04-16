@@ -49,7 +49,7 @@ public interface BoardMapper {
 	public List<BoardVO> getReply(BoardVO boardVO);
 
 	public void writeReply(BoardVO boardVO);
-	public List<BoardVO> getRecentReply(BoardVO boardVO);
+	public BoardVO getRecentReply(BoardVO boardVO);
 	public void deleteReply(AnswerVO answerVO);
 	public BoardVO boardAnswerView(BoardVO boardVO);
 	public void boardAnswer(BoardVO boardVO);

@@ -147,7 +147,7 @@
 	
 	<select id="getReply" resultMap="BoardMap">
 		<![CDATA[
-			select answer.answer_id, answer.text, answer.answer_date, answer.member_id from board, answer where #{board_id} = answer.board_id order by answer.answer_date desc
+			select answer.answer_id, answer.text, answer.answer_date, answer.member_id from board, answer where #{board_id} = answer.board_id order by answer.answer_id asc
 		]]>
 	</select>
 	

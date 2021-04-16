@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>REVIEW BOARD</title>
+
 <style>
 html, body {
 	width: 100%;
@@ -86,7 +87,7 @@ html, body {
 							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}">${boardReviewList.title }</a>			
 							<a href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}">[${boardReviewList.cnt }]</a>	
 						</td>
-						<td><<a href="#" onclick="delchk();">>${boardReviewList.member_id }</a></td>
+						<td><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>
 						<td><fmt:formatDate value="${boardReviewList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
 						<td>${boardReviewList.bhit }</td>
 					</tr>
@@ -104,7 +105,7 @@ html, body {
 			</sec:authorize>	
 			</div>
 
-			<ul class="pagination" style="padding:80px 350px;">	
+  			<ul class="pagination" style="padding:80px 350px;">	
 		  		<c:if test="${pageMaker.prev}">
 	       		  <li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
 	     		</c:if>
@@ -116,7 +117,9 @@ html, body {
 	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 	         		<li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
 	      		</c:if> <br /> 
-		 	</ul>
+		 	</ul>  
+		 	
+
 
 			<div style="padding:0 400px;">
 			<form class="form-inline">
@@ -132,9 +135,10 @@ html, body {
 			</form>
 			</div>
 			
-			
+		<!-- DIV 자리 -->	
 		</div>
-	</div>
+	</div>		
+	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>

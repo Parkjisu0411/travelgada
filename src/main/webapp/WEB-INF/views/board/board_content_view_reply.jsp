@@ -142,9 +142,9 @@
 	</script>
 	
     
-     <script>
+	 <script>
     	$(document).ready(function() {
-    		$("#cmcnt-btn").on('click', function(event) {
+    		$("#writeReply").on('submit', function(event) {
     			event.preventDefault();
     			console.log("writeReply submit");
 
@@ -163,48 +163,46 @@
     				location.href="${pageContext.request.contextPath}/member/login";
     				return;
     			}
-    			
-    			
     				
     			$.ajax({
-    				type : "PUT",
+    				type : "POST",
     				url : $(this).attr("action"),
     				cache : false,
-    				data: JSON.stringify(form),
+    				data : JSON.stringify(form),
     				contentType : 'application/json; charset=utf-8',
     	            beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
     	                 console.log("header 실행 "+header+token)
     	                 //console.log(sentence.toLowerCase());
     	                 xhr.setRequestHeader(header, token);
     	            },
-    				success : function(result){
-    					if(result == "SUCCESS"){
-    		        	console.log("성공?????");
-    		        	$("#writeReply").submit();
-    		        	show_reply();
-/*      		        	var a = '';
+    				success : function(data){
+    		            
+    					console.log(data);
+    					var answer_date = data.answer_date;
+    					var answer_id = data.answer_id;
+    					var board_id = data.board_id;
+    					var member_id = data.member_id;
+    					var text = data.text;
+    					var top_answer_id = data.top_answer_id;
+    					var username = "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}";
+		   		          		
+   		          		var a = '';
 
-    		           	a += '<table class="table"><c:forEach items="${bRecentReply }" var="bRecentReply">';
-    		            a += '<c:forEach items="${bRecentReply.answerList }" var="answerList">';
 						a+='<tr class="answerList">';
-						a+='<td>${answerList.answer_id }</td>';
-						a+='<td>${answerList.member_id }</td>';
-						a+='<td>${answerList.answer_date }</td>';
-						a+='<td><c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answerList.member_id }">';
-						a+='<button type="button" class="btn-default text-primary" onclick="window.location.href=\'${pageContext.request.contextPath }/board/modify/${bContentView.board_id}/${bContentView.member_id }\'">수정</button>';
+						a+='<td>' + data.answer_id + '</td>';
+						a+='<td>' + data.member_id + '</td>';
+						a+='<td>' + data.answer_date + '</td>';
+						a+='<td>' + data.text + '</td>';
+						a+='<td><input type="button" class="makeForm btn-primary" name="'+ answer_id +'" value="답글" />';
+						a+='<button type="button" class="btn-default text-primary" onclick="window.location.href=\'${pageContext.request.contextPath }/board/modify/'+ board_id + '/'+ member_id + '\'">수정</button>';
 						a+='<button type="button" class="delete btn-default text-primary">삭제</button>';
-						a+='</c:if></td>';
-						a+='<td>${answerList.text }</td></tr></c:forEach></c:forEach></table>';
-			             
-						
-						$(".commentList").prepend(a);
-						
-		                 var list = document.getElementsByClassName(".answerList");
-		                 for(let i=0 ; i<list.length; i++) {
-		                	 list[i].value = i;
-		                 } */
-
-    					}  
+						a+='</td>';
+						a+='</tr>';
+    		    
+    		            
+    		            $("#add").prepend(a);
+		
+    					
     					
     				},
     				error : function(e){
@@ -214,33 +212,7 @@
     			}); // ajax end
     		}) // submit end
     	});
-    </script> 
-    
-    <script>
-	function show_reply(){
-     	var a = '';
-
-       	a += '<table class="table"><c:forEach items="${bRecentReply }" var="bRecentReply">';
-        a += '<c:forEach items="${bRecentReply.answerList }" var="answerList">';
-		a+='<tr class="answerList">';
-		a+='<td>${answerList.answer_id }</td>';
-		a+='<td>${answerList.member_id }</td>';
-		a+='<td>${answerList.answer_date }</td>';
-		a+='<td><c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answerList.member_id }">';
-		a+='<button type="button" class="btn-default text-primary" onclick="window.location.href=\'${pageContext.request.contextPath }/board/modify/${bContentView.board_id}/${bContentView.member_id }\'">수정</button>';
-		a+='<button type="button" class="delete btn-default text-primary">삭제</button>';
-		a+='</c:if></td>';
-		a+='<td>${answerList.text }</td></tr></c:forEach></c:forEach></table>';
-         
-		
-		$(".commentList").prepend(a);
-		
-         var list = document.getElementsByClassName(".answerList");
-         for(let i=0 ; i<list.length; i++) {
-        	 list[i].value = i;
-         }
-	}
-	</script>  
+    </script>
 	
 	<script>
 	function show_content(){
@@ -260,13 +232,13 @@
    						
    				var htmls="";
    				
-   				htmls +='<tr><td style="width:100%;">'
+   				htmls +='<tr><td colspan="4">'
    			    htmls +='<form id="reply" method="POST" action="${pageContext.request.contextPath}/board/reply?${_csrf.parameterName}=${_csrf.token}">'
    			    htmls +='<input type="hidden" id="answer_id" name="answer_id" value="' + answer_id + '">'
    			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
    			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
-   			    htmls +='<textarea id="text" class="form-control col-sm-11" name="text" placeholder="댓글을 입력해주세요."></textarea>'
-   			    htmls +='<button onclick="function addReply();">완료</button></form></td></tr>'
+   			    htmls +='<textarea id="text" class="form-control col-sm-11" name="text" placeholder="댓글을 입력해주세요."></textarea></td></form>'
+   			    htmls +='<td><button onclick="function addReply();">완료</button></td></tr>'
 
    			    $(tr).after(htmls);
     		});
@@ -410,14 +382,14 @@
           			 <input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
 					 <input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>	
 						<textarea id="text" class="form-control col-sm-11" name="text" placeholder="댓글을 입력해주세요."></textarea>
-              			<!-- <input type="submit" id="cmcnt-btn" name="cmcnt-btn" class="btn-default text-primary" value="완료"  /> -->
-        				 <button type="button" id="cmcnt-btn" class="btn-default text-primary" >완료</button> 
+              			 <input type="submit" id="cmcnt-btn" name="cmcnt-btn" class="btn-default text-primary" value="완료"  /> 
+        				 <!-- <button type="button" id="cmcnt-btn" class="btn-default text-primary" >완료</button>  -->
         			</form>	
     			</div><br />
 				
 			    <div class="container">
         			<div class="commentList"></div>
-        			 <table class="table">
+        			 <table class="table" id="add">
         			<c:forEach items="${bReply }" var="bReply">
         				<c:forEach items="${bReply.answerList }" var="answer">
         				<input type="hidden" class="answer_id" name="answer_id" value="${answer.answer_id }"/>

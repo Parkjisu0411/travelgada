@@ -114,7 +114,7 @@ public class BoardServiceImpl implements BoardService {
    }
 
    @Override
-   public List<BoardVO> getRecentReply(BoardVO boardVO) {
+   public BoardVO getRecentReply(BoardVO boardVO) {
       return boardMapper.getRecentReply(boardVO);
    }
 

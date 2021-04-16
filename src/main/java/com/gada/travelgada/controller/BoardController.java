@@ -5,7 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,10 +33,12 @@ import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.MemberVO;
 import com.gada.travelgada.domain.PageVO;
+import com.gada.travelgada.domain.ScheduleVO;
 import com.gada.travelgada.service.BoardService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 
 @Slf4j
 @RestController
@@ -70,40 +74,6 @@ public class BoardController {
 		return modelAndView;
 	}
 	
-//	@GetMapping("/board/{board_type_id}")
-//	public ModelAndView qnaBoard(ModelAndView modelAndView, CriteriaVO cri) {
-//		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-//		
-//		log.info("qnaBoard");
-//		modelAndView.setViewName("/board/Q&A");
-//		modelAndView.addObject("boardQnAList", boardService.getQnABoard(nowPage, cri.getAmount()));
-//		modelAndView.addObject("boardNoticeList", boardService.getNotice());
-//		modelAndView.addObject("getBoardTypeId", 2);
-//		
-//		int total = boardService.getTotalQnABoard(cri);
-//		log.info("total" + total);
-//		modelAndView.addObject("pageMaker", new PageVO(cri, total));
-//		
-//		return modelAndView;
-//	}
-//	
-//	@GetMapping("/board/3")
-//	public ModelAndView accompanyBoard(ModelAndView modelAndView, CriteriaVO cri) {
-//		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-//		
-//		log.info("accompanyBoard");
-//		modelAndView.setViewName("/board/accompany");
-//		modelAndView.addObject("boardAccompanyList", boardService.getAccompanyBoard(nowPage, cri.getAmount()));
-//		modelAndView.addObject("boardNoticeList", boardService.getNotice());
-//		modelAndView.addObject("getBoardTypeId", 3);
-//		
-//		int total = boardService.getTotalAccompanyBoard(cri);
-//		log.info("total" + total);
-//		modelAndView.addObject("pageMaker", new PageVO(cri, total));
-//		
-//		return modelAndView;
-//	}
-	
 	
 	@GetMapping("/board/{board_id}/{member_id}")
 	public ModelAndView boardContentView(ModelAndView modelAndView, MemberVO memberVO, BoardVO boardVO) {
@@ -113,15 +83,12 @@ public class BoardController {
 		
 	
 		modelAndView.setViewName("/board/board_content_view");
-		//modelAndView.addObject("bContentView", boardService.boardContentView(boardVO.getBoard_id(), memberVO.getMember_id()));
-		//modelAndView.addObject("bContentView", boardService.boardContentView(memberVO));
+
 		modelAndView.addObject("bContentView", boardService.boardContentView(boardVO));
 		modelAndView.addObject("bImgPath", boardService.boardImgPath(memberVO));
-		
-		//boardService.writeReply(boardVO);
+
 		modelAndView.addObject("bReply", boardService.getReply(boardVO));
-		modelAndView.addObject("bRecentReply", boardService.getRecentReply(boardVO));
-		
+		//modelAndView.addObject("bRecentReply", boardService.getRecentReply(boardVO));
 		
 		return modelAndView;
 	}
@@ -134,12 +101,10 @@ public class BoardController {
 		
 	
 		modelAndView.setViewName("/board/board_content_view_reply");
-		//modelAndView.addObject("bContentView", boardService.boardContentView(boardVO.getBoard_id(), memberVO.getMember_id()));
-		//modelAndView.addObject("bContentView", boardService.boardContentView(memberVO));
+
 		modelAndView.addObject("bContentView", boardService.boardContentView(boardVO));
 		modelAndView.addObject("bImgPath", boardService.boardImgPath(memberVO));
 		
-		//boardService.writeReply(boardVO);
 		modelAndView.addObject("bReply", boardService.getReply(boardVO));
 		modelAndView.addObject("bRecentReply", boardService.getRecentReply(boardVO));
 		
@@ -237,23 +202,29 @@ public class BoardController {
       return entity;
    }
    
-   @PutMapping("/board/reply")
-   public ResponseEntity<String> writeReply(@RequestBody BoardVO boardVO) {
-      ResponseEntity<String> entity = null;
-      
-      log.info("writeReply");
-      
-      
-      try {
-         boardService.writeReply(boardVO);
-         entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-      }catch(Exception e){
-         e.printStackTrace();
-         entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-      }
    
-      return entity;
-   }
+	@PostMapping("/board/reply")
+	public ResponseEntity<Map<String,String>> writeReply(@RequestBody BoardVO boardVO) {
+		ResponseEntity<Map<String,String>> entity = null;
+		Map<String, String> data = new HashMap<>();
+		try {
+			boardService.writeReply(boardVO);
+			BoardVO reply = boardService.getRecentReply(boardVO);
+			data.put("answer_date",String.valueOf(reply.getAnswerList().get(0).getAnswer_date()));
+			data.put("answer_id", String.valueOf(reply.getAnswerList().get(0).getAnswer_id()));
+			data.put("board_id", String.valueOf(reply.getAnswerList().get(0).getBoard_id()));
+			data.put("member_id", String.valueOf(reply.getAnswerList().get(0).getMember_id()));
+			data.put("text", reply.getAnswerList().get(0).getText());
+			data.put("top_answer_id", String.valueOf(reply.getAnswerList().get(0).getTop_answer_id()));
+			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.OK);
+		} catch(Exception e) {
+			data.put("error", e.getMessage());
+			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.BAD_REQUEST);
+			log.info("ERROR Message : " + e.getMessage());
+		}
+		return entity;
+	}
+   
    
    @DeleteMapping("/board/reply/{answer_id}")
    public ResponseEntity<String> deleteReply(AnswerVO answerVO){
