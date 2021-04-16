@@ -38,6 +38,7 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 	<!-- 달력 부분 -->
@@ -45,6 +46,15 @@
     <link href="resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
 
 <style>
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margins: 0;
+	padding: 0;
+	background-color: #f5f5f5;
+}
+
 /* 달력 생성 모달 */
 	/* 달력 아이콘 */
 	#calImg {
@@ -104,14 +114,14 @@
 
 <style>
 /* 다이어리 이미지 */
-.diary_img {
-	width: 240px;
-	height: 240px;
-	object-fit: cover;
-	display: block;
-	margin: 0px auto;
-	padding-bottom: 20px;
-}
+	.diary_img {
+		width: 240px;
+		height: 240px;
+		object-fit: cover;
+		display: block;
+		margin: 0px auto;
+		padding-bottom: 20px;
+	}
 </style>
 
 <style>
@@ -171,31 +181,37 @@
 
 <script>
 
-$(document).ready(function(){
-	// 숫자 평점을 별로 변환하도록 호출하는 함수
-	$.fn.generateStars = function() {
-    	return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
-    	
-};
-	$('.star-prototype').generateStars();
-	        
-});
+	$(document).ready(function(){
+		// 숫자 평점을 별로 변환하도록 호출하는 함수
+		$.fn.generateStars = function() {
+	    	return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
+	    	
+	};
+		$('.star-prototype').generateStars();
+		        
+	});
  
 </script>
 
 <style>
-span.star-prototype, span.star-prototype > * {
-    height: 17px; 
-    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
-    width: 80px;
-    display: inline-block;
-}
- 
-span.star-prototype > * {
-    background-position: 0 0;
-    max-width:80px; 
-}
+	span.star-prototype, span.star-prototype > * {
+	    height: 17px; 
+	    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+	    width: 80px;
+	    display: inline-block;
+	}
+	 
+	span.star-prototype > * {
+	    background-position: 0 0;
+	    max-width:80px; 
+	}
 
+</style>
+
+<style>
+.diHover:hover{
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+}
 </style>
 
 <script>
@@ -289,20 +305,29 @@ span.star-prototype > * {
 			<div class="row">
 				<c:forEach items="${member}" var="member">
 				<c:forEach items="${member.plannerVO}" var="pl">
-				<c:forEach items="${pl.diaryVO}" var="di"> 
-					<div class="col-sm-3">
-						<img class="diary_img" src='resources/diary/${di.img_path}' data-toggle="modal" data-target="#myModal${di.diary_id}"/>
-						<div>
-							<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-									${member.member_id}	
+				<c:forEach items="${pl.diaryVO}" var="di">
+
+					<div class="col-md-3 ">
+						<div class="main-card-diary-area diHover">
+							<img src="resources/diary/${di.img_path}"
+								class="main-card-diary-img" loading="lazy" data-toggle="modal"
+								data-target="#myModal${di.diary_id}">
+							<div class="main-card-diary-content">
+								<div class="main-card-diary-profile">
+									<img class="nav-profile-img"
+										src='/resources/img/profile/${member.profile_img_path }'
+										onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+									<a class="main-card-diary-profile-id" href="#">${member.member_id}</a>
+								</div>
+								<div class="main-card-diary-hashtag-area">
+									<span class="main-card-diary-hashtag" id="${di.diary_id }"></span>
+								</div>
+							</div>
 						</div>
-						<span id= "${di.diary_id}"></span>
-						
-						<br/>
-						<br/>
-					</div><!-- 다이어리 끝 -->
-					
-				<!-- Modal -->
+					</div>
+					<!-- 다이어리 끝 -->
+
+						<!-- Modal -->
 				<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
 					<!-- <div class="mySlides"> -->
 					<div class="modal-dialog modal-lg">

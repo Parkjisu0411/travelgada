@@ -27,12 +27,33 @@ html, body {
 	height: 100%;
 	margins: 0;
 	padding: 0;
+	background-color: #f5f5f5;
 }
 
 #wrap {
 	min-heigth: 100%;
 }
-.card {
+
+.text_box{
+	padding:15px;
+}
+
+.cal{
+	margin-bottom:30px;
+}
+
+.card-pl-area{
+	border-radius: 10px;
+	margin: 0px 0px 30px 0px;
+	height: 460;
+	background-color: #ffffff;
+}
+
+.card-pl-img {
+	width: 100%;
+	height: 350px;
+	border-radius: 10px 10px 0px 0px;
+	object-fit: cover;
 }
 </style>
 <script>
@@ -58,19 +79,29 @@ html, body {
 	<!--Content -->
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'">MY PLANNER</h2>
-			<%@ include file="/WEB-INF/views/calendar/calendar.jsp"%>
-			<br><br><br>
-			<div class="divider-header-blank"></div>
+			<h2 class="headline"
+				style="font-family: 'yg-jalnan'; color: #083d77;">MY PLANNER</h2>
+			<br>
+			<div class="cal">
+				<%@ include file="/WEB-INF/views/calendar/calendar3.jsp"%>
+			</div>
+			<br><br><br><br>
+			
 			<div class="row">
 				<c:forEach var="planner" items="${plannerList }">
-					<div class="col-lg-4 card" id="${planner_planner_id }" onclick="selectPlanner(${planner.planner_id})">
-						<img class="card-img-top rounded" src="/resources/img/profile/gada">
-						<div class="card-body">
-							<strong>${planner.planner_name }</strong>&nbsp;
-								<span class="badge badge-secondary">D - <c:out value="${DDayMap[planner.planner_id] }" /></span>
-							<p>${planner.start_date } ~ ${planner.end_date }</p>
-							<p>${planner.member_id }</p>
+					<div class="col-md-4" id="${planner_planner_id }"
+						onclick="selectPlanner(${planner.planner_id})">
+						<div class="card-pl-area">
+							<img class="card-pl-img"
+								src="/resources/img/profile/gada">
+							<div class="text_box">
+								<strong>${planner.planner_name }</strong>&nbsp; 
+								<span class="badge" style="background-color:#fcd581">
+									D  <c:out value="${DDayMap[planner.planner_id] }" />
+								</span>
+								<p>${planner.start_date }~ ${planner.end_date }</p>
+								<%-- <p>${planner.member_id }</p> --%>
+							</div>
 						</div>
 					</div>
 				</c:forEach>

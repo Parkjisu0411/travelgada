@@ -27,7 +27,7 @@ html, body {
 	height: 100%;
 	margins: 0;
 	padding: 0;
-	background-color: #f5f5f5; 
+	background-color: #FAFBF4;
 }
 
 #wrap {

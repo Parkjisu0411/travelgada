@@ -23,6 +23,7 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 
 <style>
 /* 모달 스타일 */
@@ -38,15 +39,12 @@
 	    float: left;
 	}
 	
-</style>
-
-<style>
-.diary_img {
+	.diary_img {
 	width: 240px;
 	height: 240px;
 	object-fit: cover;
 	display: block;
-	margin: 0px auto;
+	border-radius:10px;
 }
 
 .popup_img {
@@ -54,7 +52,7 @@
 	height: 300px;
 	object-fit: cover;
 }
-
+	
 </style>
  
 <!-- csrf 토큰 -->
@@ -132,7 +130,7 @@
 						xhr.setRequestHeader(header, token);
 					}, 
 					success: function(result) {
-					//console.log(result);
+						console.log(result);
 						$('#diaryDiv').children().remove();
 		        	
 						var htmls="";
@@ -145,34 +143,27 @@
 
 		        		$(result).each(function(){	
 		        		
-		 		       	//다이어리
- 		  		      	htmls +='<div class="col-sm-3">';
-		   		     	htmls +='<div class="dropdown">';
-		   		     	htmls +='<img src="resources/diary/dot3.png" class="btn dropdown-toggle" data-toggle="dropdown" style="height: 20px;float: right;"/>';    
-		   		     	htmls +='<div class="dropdown-menu">';
-		 	 	      	htmls +='<a class="dropdown-item" onclick="window.open(\'${pageContext.request.contextPath}/diary_modify_view/'+this.diary_id+'&'+this.planner_id+'\',\'popwin2\',\'width=1250,height=800,left=300, top=120\')">수정</a>';
-		 	 	      	htmls +='<a class="delete dropdown-item" href="diary/'+ this.diary_id +'">삭제</a>';
-		       		 	htmls +='</div></div>';
-		     		   	htmls +='<table class="table table-borderless">';
-		      		  	htmls +='<tr class="table-light">';
-		      		  	htmls +='<td><div>';
-		      		  	htmls +='<img class="diary_img" src="resources/diary/'+ this.img_path +'" data-toggle="modal" data-target="#myModal'+ this.diary_id +'"/>';
-		    	    	htmls +='</div></td></tr>';
-		       		 	htmls +='<tr class="table-light"><td>'+ this.diary_date +'</td></tr>';
-		     		   	htmls +='<tr class="table-light"><td><span id="'+ this.diary_id +'"></span></td></tr></table></div>';
-		        	
-		        		//modal
-		      		  	htmls +='<div class="modal fade" id="myModal'+ this.diary_id +'" role="dialog">';
-		     		   	htmls +='<div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header">';
-		        		htmls +='<h3 class="modal-title" style="font-family: \'yg-jalnan\'">diary</h3>';
-		      		  	htmls +='<button type="button" class="close" data-dismiss="modal">&times;</button></div>';
-		      		  	htmls +='<div class="modal-body"><div id="mainImg">';
-		      		  	htmls +='<img class="popup_img" src="resources/diary/'+this.img_path+'" style="position:relative; width: 400px; height: 400px;"/></div>';
-		        		htmls +='<div class="dialog"><h4 style="font-family: \'yg-jalnan\'">'+this.diary_date+'</h4></div>';
-		       		 	htmls +='<div class="dialog"><span id="modal'+ this.diary_id +'"></span></div><div class="dialog">'+this.text+'</div></div>';
-		      		  	htmls +='<div class="modal-footer">';
-		      		  	htmls +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
-		      		  	htmls +='</div></div></div></div></div>';  
+			 		       	//다이어리
+	 		  		      	htmls +='<div class="grid">';
+			   		     	htmls +='<img src="resources/diary/'+this.img_path+'" data-toggle="modal" data-target="#myModal'+this.diary_id+'"/>';
+			   		     	htmls +='<div class="grid__body">';    
+			   		     	htmls +='<div class="mt-auto" >';
+			 	 	      	htmls +='<span id= "'+this.diary_id+'"></span>';
+			 	 	      	htmls +='</div></div></div>';
+			       		 	
+			   	
+			        		//modal
+			      		  	htmls +='<div class="modal fade" id="myModal'+ this.diary_id +'" role="dialog">';
+			     		   	htmls +='<div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header">';
+			        		htmls +='<h3 class="modal-title" style="font-family: \'yg-jalnan\'">diary</h3>';
+			      		  	htmls +='<button type="button" class="close" data-dismiss="modal">&times;</button></div>';
+			      		  	htmls +='<div class="modal-body"><div id="mainImg">';
+			      		  	htmls +='<img class="popup_img" src="resources/diary/'+this.img_path+'" style="position:relative; width: 400px; height: 400px;"/></div>';
+			        		htmls +='<div class="dialog"><h4 style="font-family: \'yg-jalnan\'">'+this.diary_date+'</h4></div>';
+			       		 	htmls +='<div class="dialog"><span id="modal'+ this.diary_id +'"></span></div><div class="dialog">'+this.text+'</div></div>';
+			      		  	htmls +='<div class="modal-footer">';
+			      		  	htmls +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+			      		  	htmls +='</div></div></div></div></div>';  
 		      		  	
 		      		  $("#diaryDiv").append(htmls);
 		      		  	
@@ -253,7 +244,7 @@
 				word = splitedArray[word];
 				if(word.indexOf("") == 0){ 
 					var word2 = "#"+word;
-					word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+					word = '<span class="grid__tag" ><a style="color:black;" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a></span>&nbsp;'
 					console.log(word);
     	          	console.log(word2);
 				}//if end
@@ -270,103 +261,169 @@
 /* 해시태그 & 링크 끝 */
 </script>
 
+<script>
+
+function d(){
+	console.log("dddddd");
+}
+
+
+</script>
+
+<style>
+
+/* 사진 */
+.masonry {
+  columns: 4;
+  column-gap: 16px;
+}
+@media (max-width: 1200px) {
+  .masonry {
+    columns: 3;
+  }
+}
+@media (max-width: 992px) {
+  .masonry {
+    columns: 2;
+  }
+}
+.masonry .grid {
+  display: inline-block;
+  margin-bottom: 16px;
+  position: relative;
+}
+.masonry .grid:before {
+  border-radius: 5px;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.masonry .grid img {
+  width: 100%;
+  border-radius: 5px;
+}
+.masonry .grid__title {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0px 0px 10px 0px;
+}
+.masonry .grid__author {
+  font-size: 14px;
+  font-weight: 300;
+}
+.masonry .grid__link {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.masonry .grid__body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 30px 30px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.masonry .grid__tag {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #333;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-bottom: 5px;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.gallery{
+
+padding-left:10px;
+padding-right:10px;
+
+}
+
+</style>
+
 </head>
 <body>
 
-<!-- 해더 -->
-<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+	<!-- 해더 -->
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+	
+	<!-- 플래너 셀렉트, 다이어리 작성 -->
 
-<!-- 플래너 셀렉트, 다이어리 작성 -->
-<div class="container">
-<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
-	<div class="row">
-		<div class="col-sm-10"> 
-			<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'yg-jalnan'">
-				<c:forEach var="id" items="${planner}">
-					<option value='${id.planner_id}' style="font-family: 'yg-jalnan'">
-				  	${id.planner_name}&nbsp;&nbsp; ${id.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${id.end_date}
-					</option>
+	<div class = "gallery">
+
+		<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
+			<div class="row">
+				<div class="col-sm-10"> 
+					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'yg-jalnan'">
+						<c:forEach var="id" items="${planner}">
+							<option value='${id.planner_id}' style="font-family: 'yg-jalnan'">
+						  		${id.planner_name}&nbsp;&nbsp; ${id.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${id.end_date}
+							</option>
+						</c:forEach>
+					</select>		
+				</div>
+				<div class="col-sm-2">
+					<input class="form-control" value="다이어리 작성" style="font-family: 'yg-jalnan'" type="button" class="btn btn-outline-warning bg-warning text-white" onclick="openwin();"/>
+					<br/>    
+		    	</div>
+		     </div>
+		</form><!-- 다이어리 작성을 위한 form -->
+
+		<div class="masonry">
+			<div id="diaryDiv">
+	
+				<c:forEach items="${diary}" var="di">
+	
+				  <div class="grid">
+				    <img src='resources/diary/${di.img_path}' />
+				    <div class="grid__body" data-toggle="modal" data-target="#myModal${di.diary_id}" >
+				      <div class="mt-auto" >
+				        <span id= "${di.diary_id}"></span>
+				      </div>
+				    </div>
+				  </div>
+	  
+				  <div class="modal fade" id="myModal${di.diary_id}" role="dialog">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 class="modal-title" style="font-family: 'yg-jalnan'">diary</h3>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>  
+								</div>
+								<div class="modal-body" >
+									<div class="mainImg">
+									<img class="popup_img" src='resources/diary/${di.img_path}' style='position:relative; width: 400px; height: 400px;'/>
+								</div>		
+									<div class="dialog"><h4 style="font-family: 'yg-jalnan'">${di.diary_date}</h4></div>
+				        			<div class="dialog"><span id= "modal${di.diary_id}"></span></div>
+				       				<div class="dialog">${di.text}</div>
+				      			</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+				      	  	</div>
+						</div>
+					</div>
 				</c:forEach>
-			</select>		
-		 
-		</div>
-		<div class="col-sm-2">
-			<input class="form-control" value="다이어리 작성" style="font-family: 'yg-jalnan'" type="button" class="btn btn-outline-warning bg-warning text-white" onclick="openwin();"/>
-			<br/>    
-    	</div>
-     </div>
-</form><!-- 다이어리 작성을 위한 form -->
-
-
-	<!-- 다이어리  -->
-	<div class="row"  id="diaryDiv">
-		<!-- 다이어리 반복문 -->
-		<c:forEach items="${diary}" var="di">
-			<!-- ajax 써야 하는 부분 -->
-			<div class="col-sm-3"> 
-				<!-- 다이어리 수정, 삭제 -->
-   				<div class="dropdown" >
-    				<img src="resources/diary/dot3.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>
-    				<div class="dropdown-menu" >
-      					<a class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}&${di.planner_id}',
-      					'popwin2','width=1250,height=800,left=300, top=120')">수정</a>
-      					<a class="delete dropdown-item" href="diary/${di.diary_id}">삭제</a>
-    				</div>
-  				</div>
-  				<!-- 다이어리 테이블 -->
-  				<table class="table table-borderless">
-					<tr class="table-light">
-      					<td>
-      						<div >
-      							<!-- 다이어리 이미지 -->
-      							<img class='diary_img' src='resources/diary/${di.img_path}' data-toggle="modal" data-target="#myModal${di.diary_id}"/>
-							</div>
-						</td>
-					</tr> 
-					<tr class="table-light">
-      					<td>${di.diary_date}</td>
-					</tr>
-					<tr class="table-light">
-      					<td><span id= "${di.diary_id}"></span></td>
-					</tr>
-				</table>
-			</div> 
-					
-	<!-- Modal -->
-	<!-- 	<div class="row justify-content-center"> -->
-
-	<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
-		<!-- <div class="mySlides"> -->
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h3 class="modal-title" style="font-family: 'yg-jalnan'">diary</h3>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>  
-				</div>
-				<div class="modal-body" >
-					<div class="mainImg">
-					<img class="popup_img" src='resources/diary/${di.img_path}' style='position:relative; width: 400px; height: 400px;'/>
-				</div>		
-					<div class="dialog"><h4 style="font-family: 'yg-jalnan'">${di.diary_date}</h4></div>
-        			<div class="dialog"><span id= "modal${di.diary_id}"></span></div>
-       				<div class="dialog">${di.text}</div>
-      			</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-      	  </div>
+			</div>
 		</div>
 	</div>
 
-<!-- <a class="prev" onclick="plusSlides(-1)">❮</a>
-<a class="next" onclick="plusSlides(1)">❯</a> -->
-		
-		</c:forEach><!-- 다이어리,모달 반복문 끝 -->
-	</div>
-</div><!-- container 끝 -->
-
-<!-- footer -->
-<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	<!-- footer -->
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 </body>
 </html>

@@ -34,13 +34,12 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class DairyController {
 
-	@Autowired
 	private DiaryService diaryService;
 
 	private static final String FILE_SERVER_PATH = "C:\\Users\\김보람\\git\\travelgada\\src\\main\\webapp\\resources\\diary";
 
 	// 다이어리
-	@GetMapping("diary")
+	@GetMapping("/diary")
 	public ModelAndView diary(ModelAndView mav, @AuthenticationPrincipal MemberDetails member) {
 		log.info("controller diary();");
 		
@@ -54,7 +53,7 @@ public class DairyController {
 	}// diary end
 
 	// 다이어리 작성 페이지
-	@GetMapping("diary_write_view")
+	@GetMapping("/diary_write_view")
 	public ModelAndView diary_write_view(ModelAndView mav, DiaryVO diaryVO) {
 		log.info("controller diary_write_view();");
 
@@ -67,7 +66,7 @@ public class DairyController {
 
    
 	// 다이어리 작성
-	@PostMapping("diary_write")
+	@PostMapping("/diary_write")
 	public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO,
 			@AuthenticationPrincipal MemberDetails member) throws IllegalStateException, IOException {
 		log.info("controller diary_write();");
@@ -97,7 +96,7 @@ public class DairyController {
 	}// diary_write end
 
 	// 다이어리 수정 페이지
-	@GetMapping("diary_modify_view/{diary_id}&{planner_id}")
+	@GetMapping("/diary_modify_view/{diary_id}&{planner_id}")
 	public ModelAndView diary_modify_view(ModelAndView mav, DiaryVO diaryVO) {
 		log.info("controller diary_write_view();");
 
@@ -110,7 +109,7 @@ public class DairyController {
 	}// diary_modify_view end
   
 	// 다이어리 수정
-	@PostMapping("diary_modify")
+	@PostMapping("/diary_modify")
 	public ModelAndView diary_modify(ModelAndView mav, DiaryVO diaryVO, @RequestParam("uploadfile") MultipartFile file,
 			@RequestParam("currImg") String currImg, @AuthenticationPrincipal MemberDetails member)
 			throws IllegalStateException, IOException {
@@ -177,12 +176,25 @@ public class DairyController {
 	}// diary_delete end
       
 	// 다른 다이어리로 이동 json
-	@GetMapping("diary_other/{planner_id}")
+	@GetMapping("/diary_other/{planner_id}")
 	public List<DiaryVO> diary_another(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO) {
 		log.info("controller diary_test();");
-
+		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!1"+diaryVO.getPlanner_id());
+		log.info("나와야 한다.!!!!!!!!!!!!!!!!!!!!!!!!"+diaryService.getDiaryOther(diaryVO.getPlanner_id()));
 		return diaryService.getDiaryOther(diaryVO.getPlanner_id());
 
-	}// diary_test end
+	}// end
+	
+	// 다이어리
+	@GetMapping("/sta")
+	public ModelAndView test(ModelAndView mav, @AuthenticationPrincipal MemberDetails member) {
+		log.info("controller diary();");
+
+		mav.setViewName("diary/test");
+
+		return mav;
+
+	}// diary end
+	
 
 }// Controller end
