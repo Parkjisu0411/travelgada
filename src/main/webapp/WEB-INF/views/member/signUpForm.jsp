@@ -31,7 +31,7 @@ html, body {
 	height: 100%;
 	margins: 0;
 	padding: 0;
-	background-color: #f5f5f5; 
+	background-color: #fff8e8; 
 }
 
 #wrap {
@@ -90,6 +90,10 @@ html, body {
 
 .green {
 	color: green;
+}
+
+.card {
+	border: none;
 }
 </style>
 <script type="text/javascript">
