@@ -140,7 +140,8 @@
 		}
 
 		.product-name {
-			font-size: 18px;
+			font-size: 16px;
+			font-weight: 600;
 		}
 		
 	</style>
@@ -294,9 +295,9 @@
 				<hr>
 				<fmt:parseNumber var="accumulatePoint" value="${totalPrice * 0.05}" integerOnly="true" />
 				<strong class="payment-amount-title">총 결제 금액</strong>
-				<strong class="krw">₩</strong><strong id="payment-amount" class="payment-amount">${totalPrice}</strong><br>
+				<strong id="payment-amount" class="payment-amount">₩ ${totalPrice}</strong><br>
 				<span>적립 포인트</span>
-				<c:out value="${accumulatePoint}" />
+				<span style="float: right;"><c:out value="${accumulatePoint}" /></span>
 				<hr>
 				<input type="checkbox" id="accept">
 				<span>(필수) 상품 및 결제 정보를 확인하였으며, 이에 동의합니다.</span>
@@ -417,23 +418,18 @@
 				buyer_postcode: buyerPostCode
 			}, function (rsp) {
 				if (rsp.success) {
-					var msg = '결제가 완료되었습니다.\n';
-					msg += '결제 금액 : ' + rsp.paid_amount + '\n';
-					msg += '카드 승인번호 : ' + rsp.apply_num + '\n';
-					msg += '고유 ID: ' + rsp.imp_uid;
-
+					var cardApplyNum = rsp.apply_num;
+					var paidAmount = rsp.paid_amount;
 					var impUid = rsp.imp_uid;
-					sendPaymentInformation(impUid);
+					sendPaymentInformation(impUid, paidAmount, cardApplyNum);
 				} else {
-					var msg = '결제에 실패하였습니다.\n';
-					msg += rsp.error_msg;
+					console.log("결제 실패: " + rsp.error_msg);
 				}
-				alert(msg);
 			});
 		}
 
 		// 결제 페이지로 결제 정보 전송
-		function sendPaymentInformation(impUid) {
+		function sendPaymentInformation(impUid, paidAmount, cardApplyNum) {
 			var shippingLocName = document.getElementById("address-name").value;
 			var totalPrice = ${ totalPrice };
 			var usedPoint = document.getElementById('point').value;
@@ -468,6 +464,18 @@
 			sendAccumulatePoint.setAttribute("name", "accumulate_point");
 			sendAccumulatePoint.setAttribute("value", accumulatePoint);
 			document.getElementById("form").append(sendAccumulatePoint);
+			
+			var sendPaidAmount = document.createElement("input");
+			sendPaidAmount.setAttribute("type", "hidden");
+			sendPaidAmount.setAttribute("name", "paid_amount");
+			sendPaidAmount.setAttribute("value", paidAmount);
+			document.getElementById("form").append(sendPaidAmount);
+			
+			var sendCardApplyNum = document.createElement("input");
+			sendCardApplyNum.setAttribute("type", "hidden");
+			sendCardApplyNum.setAttribute("name", "card_apply_num");
+			sendCardApplyNum.setAttribute("value", cardApplyNum);
+			document.getElementById("form").append(sendCardApplyNum);
 
 			document.getElementById("form").submit();
 		}

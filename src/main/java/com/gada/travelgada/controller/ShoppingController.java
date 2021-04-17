@@ -100,7 +100,7 @@ public class ShoppingController {
       return entity;
    }
    
-   // 결제 페이지
+    // 결제 페이지
 	@PostMapping("/shopping/order")
 	public ModelAndView sendOrderPage(@RequestParam("product_id") String productId,
 			@RequestParam("quantity") String quantity, @RequestParam("price") String price,
@@ -140,11 +140,13 @@ public class ShoppingController {
 		// buy 테이블에 결제 내역 저장
 		String buyId = request.getParameter("buy_id");
 		String shippingLocName = request.getParameter("shipping_loc_name");
+		String paidAmount = request.getParameter("paid_amount");
 
 		BuyVO paymentResult = new BuyVO();
 		paymentResult.setBuy_id(buyId);
 		paymentResult.setMember_id(memberDetails.getUsername());
 		paymentResult.setShipping_loc_name(shippingLocName);
+		paymentResult.setPaid_amount(Integer.parseInt(paidAmount));
 
 		shoppingService.insertPaymentResult(paymentResult);
 
@@ -190,21 +192,17 @@ public class ShoppingController {
 			 * 포인트 사용 란의 텍스트 박스가 공란일 경우 ""(빈 문자열) 값이 들어오므로 Integer.parseInt로 변환 시 NumberFormatException이 발생한다.
 			 * => 포인트 사용 란의 텍스트 박스가 공란일 경우라도 결제 완료 페이지를 정상적으로 출력하기 위해 해당 예외를 처리한다. */
 		}
-
-		modelAndView.setViewName("redirect:/shopping/order/" + buyId);
+		
+		// 결제 결과 페이지 출력에 필요한 정보들을 전달
+		String cardApplyNum = request.getParameter("card_apply_num");
+		
+		modelAndView.addObject("buyId", buyId);
+		modelAndView.addObject("cardApplyNum", cardApplyNum);
+		
+		modelAndView.setViewName("/shopping/order_result");
 
 		return modelAndView;
 	}
-   
-   // 결제 완료 페이지
-   @GetMapping("/shopping/order/{buy_id}")
-   public ModelAndView getOrderResultPage(@PathVariable("buy_id") String buyId, ModelAndView modelAndView) {
-      modelAndView.addObject("payResultInformation", shoppingService.getPaymentResult(buyId));
-      
-      modelAndView.setViewName("shopping/order_result");
-      
-      return modelAndView;
-   }
    
    @GetMapping("/shopping/buy_list")
    public ModelAndView buyList(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {

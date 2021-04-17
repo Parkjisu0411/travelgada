@@ -47,16 +47,9 @@ iframe {
 		$(".product-price").each(function() {
 			totalProduct += parseInt($(this).text().substr(2, $(this).text().length));
 		})
+		totalDiscount = (totalProduct - ${buy.paid_amount});
+		totalPayment = ${buy.paid_amount};
 		
-		$(".point-amount").each(function() {
-			if($(this).text()) {
-				totalDiscount += parseInt($(this).text());				
-			}
-		})
-		
-		$(".payment-price").each(function() {
-			totalPayment += parseInt($(this).text());
-		})
 		$(".total-product").html(totalProduct);
 		$(".total-discount").html("- " + totalDiscount);
 		$(".total-payment").html(totalPayment);
@@ -86,7 +79,6 @@ iframe {
 							<tr>
 								<th>상품정보</th>
 								<th>적립금</th>
-								<th>포인트 사용</th>
 								<th>주문금액</th>
 								<th>주문상태</th>
 							</tr>
@@ -102,7 +94,6 @@ iframe {
 										</div>
 									</td>
 									<td>${buyDetail.price / 20 }</td>
-									<td class="point-amount"></td>
 									<td class="payment-price">${buyDetail.price }</td>
 									<td>
 										<p>구매 확정</p>
@@ -150,7 +141,7 @@ iframe {
 							<td class="total-product"></td>
 						</tr>
 						<tr>
-							<th>할인 합계</th>
+							<th>포인트 사용</th>
 							<td class="total-discount"></td>
 						</tr>
 						<tr>

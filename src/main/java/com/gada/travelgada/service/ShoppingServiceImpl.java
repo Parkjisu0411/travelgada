@@ -118,8 +118,4 @@ public class ShoppingServiceImpl {
 	public void updateDeductionPoint(PointVO pointVO) {
 		shoppingMapper.updateDeductionPoint(pointVO);
 	}
-	
-	public List<BuyDetailVO> getPaymentResult(String buy_id) {
-		return shoppingMapper.getPaymentResult(buy_id);
-	}
 }
