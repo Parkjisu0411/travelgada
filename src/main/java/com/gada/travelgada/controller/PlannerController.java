@@ -52,6 +52,7 @@ public class PlannerController {
 	public ModelAndView write(PlannerVO plannerVO, CountryVO countryVO, @AuthenticationPrincipal MemberDetails memberDetails, ModelAndView modelAndView) {
 		log.info("create planner ======= 플래너 이름 : " + plannerVO.getPlanner_name() + " 나라 : " + countryVO.getCountry_name() + " start_date : " + plannerVO.getStart_date().toString() + " end_date : " + plannerVO.getEnd_date().toString());
 		plannerVO.setMember_id(memberDetails.getUsername());
+		plannerVO.setPlanner_img_path(countryVO.getCountry_name());
 		plannerService.writePlanner(plannerVO);
 		plannerService.setCountry(plannerService.getPlanner_id(memberDetails.getUsername()), plannerVO.getStart_date(), plannerVO.getEnd_date(), countryVO.getCountry_name());
 		

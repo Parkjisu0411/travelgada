@@ -162,7 +162,7 @@ html, body {
 				<c:forEach var="planner" items="${plannerList }">
 					<div class="col-md-4" id="${planner.planner_id }">
 						<div class="card-pl-area" >
-							<img class="card-pl-img" src="/resources/img/profile/gada"  onclick="selectPlanner(${planner.planner_id})">
+							<img class="card-pl-img" src="/resources/img/planner/${ planner.planner_img_path}"  onclick="selectPlanner(${planner.planner_id})" onerror="this.src='/resources/img/profile/gada'">
 							<div class="text_box">
 								<strong>${planner.planner_name }</strong>&nbsp; 
 								<span class="badge dday">

@@ -18,7 +18,7 @@
 	
 	<insert id="insertPlanner">
 		<![CDATA[
-			insert into planner(planner_id, start_date, end_date, planner_name, member_id) values(get_seq('planner_seq'), #{start_date}, #{end_date}, #{planner_name}, #{member_id}) 
+			insert into planner(planner_id, start_date, end_date, planner_name, member_id, planner_img_path) values(get_seq('planner_seq'), #{start_date}, #{end_date}, #{planner_name}, #{member_id}, #{planner_img_path}) 
 		]]>
 	</insert>
 	
