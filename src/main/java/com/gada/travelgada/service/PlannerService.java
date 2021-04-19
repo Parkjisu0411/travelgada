@@ -1,19 +1,22 @@
 package com.gada.travelgada.service;
 
 
-import java.text.ParseException;
 import java.sql.Date;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gada.travelgada.domain.CountryVO;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.domain.ScheduleVO;
+import com.gada.travelgada.mapper.DiaryMapper;
 import com.gada.travelgada.mapper.PlannerMapper;
 import com.gada.travelgada.mapper.ScheduleMapper;
+import com.gada.travelgada.mapper.TodoMapper;
 import com.gada.travelgada.utils.DateCalculator;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +29,8 @@ public class PlannerService {
 
 	private PlannerMapper plannerMapper;
 	private ScheduleMapper scheduleMapper;
+	private DiaryMapper diaryMapper;
+	private TodoMapper todoMapper;
 	
 	public List<PlannerVO> getMainPlanner(String member_id) {
 		return plannerMapper.selectPlannerForMain(member_id);
@@ -92,5 +97,14 @@ public class PlannerService {
 	public int getPlanner_id(String member_id) {
 		
 		return plannerMapper.selectCreatedPlannerId(member_id); 
+	}
+	
+	@Transactional
+	public void deletePlanner(int planner_id) {
+		scheduleMapper.deleteScheduleByPlannerId(planner_id);
+		diaryMapper.deleteDiaryByPlannerId(planner_id);
+		todoMapper.deleteTodoByPlannerId(planner_id);
+		todoMapper.deleteTodoTypeByPlannerId(planner_id);
+		plannerMapper.deletePlanner(planner_id);
 	}
 }

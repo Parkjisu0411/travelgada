@@ -36,4 +36,6 @@ public interface ScheduleMapper {
 
 	public List<ScheduleVO> getAllMap(int planner_id);
 	
+	public void deleteScheduleByPlannerId(int planner_id);
+	
 }

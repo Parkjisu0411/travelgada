@@ -25,4 +25,6 @@ public interface PlannerMapper {
 	CountryVO selectCountryByName(String country_name);
 	
 	int selectCreatedPlannerId(String member_id);
+	
+	void deletePlanner(int planner_id);
 }

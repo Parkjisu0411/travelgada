@@ -23,5 +23,6 @@ public interface DiaryMapper {
 	public DiaryVO view_Diary(int diary_id);
 	public List<DiaryVO> getDiaryOther(int planner_id);
 	public int getImg_seq();
+	public void deleteDiaryByPlannerId(int planner_id);
 	
 }

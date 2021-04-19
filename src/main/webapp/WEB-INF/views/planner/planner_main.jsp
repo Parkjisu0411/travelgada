@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
@@ -76,6 +77,10 @@ html, body {
 	object-fit: cover;
 }
 
+.card-pl-img:hover {
+	cursor: pointer;
+}
+
 /* 디데이 */
 .dday{
 	background-color:#fcd581; 
@@ -88,6 +93,10 @@ html, body {
 	color: #1dcad3; 
 	font-size:40px; 
 	font-weight:bold;
+}
+
+.gada-btn-group {
+	text-align: right;
 }
 
 </style>
@@ -107,6 +116,32 @@ html, body {
 			}
 		});
 	} 
+	
+	function deletePlanner(planner_id) {
+		if(confirm("주의!\n플래너의 모든 데이터가 삭제됩니다.")) {
+			var data = {
+				planner_id : planner_id		
+			};
+			$.ajax({
+				type : "DELETE",
+				url : "/planner/" + planner_id,
+				cahce : false,
+				data : JSON.stringify(data),
+				contentType : "application/json",
+				beforeSend : function(xhr){
+	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				success : function(result) {
+					console.log(result);
+					$("#" + planner_id).remove();
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			})
+		}
+	}
+	
 </script>
 
 </head>
@@ -125,10 +160,9 @@ html, body {
 			
 			<div class="row">
 				<c:forEach var="planner" items="${plannerList }">
-					<div class="col-md-4" id="${planner_planner_id }"
-						onclick="selectPlanner(${planner.planner_id})">
-						<div class="card-pl-area">
-							<img class="card-pl-img" src="/resources/img/profile/gada">
+					<div class="col-md-4" id="${planner.planner_id }">
+						<div class="card-pl-area" >
+							<img class="card-pl-img" src="/resources/img/profile/gada"  onclick="selectPlanner(${planner.planner_id})">
 							<div class="text_box">
 								<strong>${planner.planner_name }</strong>&nbsp; 
 								<span class="badge dday">
@@ -136,7 +170,10 @@ html, body {
 								</span>
 								<br><br>
 								<p>${planner.start_date } ~ ${planner.end_date }</p>
-								<%-- <p>${planner.member_id }</p> --%>
+								<div class="gada-btn-group">
+									<button type="button" class="btn gada-btn-reverse">수정</button>
+									<button type="button" class="btn gada-btn" onclick="deletePlanner(${planner.planner_id})">삭제</button>
+								</div>
 							</div>
 						</div>
 					</div>

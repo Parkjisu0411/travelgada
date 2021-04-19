@@ -133,5 +133,17 @@
 			select * from todo_type where todo_type_id = (select MAX(todo_type_id) from todo_type)
 		]]>
 	 </select> -->
+	 
+	<delete id="deleteTodoByPlannerId">
+		<![CDATA[
+			delete from todo where todo_type_id in (select todo_type_id from todo_type where planner_id = #{planner_id});
+		]]>
+	</delete>
+	
+	<delete id="deleteTodoTypeByPlannerId">
+		<![CDATA[
+			delete from todo_type where planner_id = #{planner_id};
+		]]>
+	</delete>
 
 </mapper>

@@ -51,4 +51,10 @@
 			select planner_id from planner where member_id = #{member_id} order by planner_id desc limit 1
 		]]>
 	</select>
+	
+	<delete id="deletePlanner">
+		<![CDATA[	
+			delete from planner where planner_id = #{planner_id};
+		]]>
+	</delete>
 </mapper>

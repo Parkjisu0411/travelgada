@@ -4,8 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -56,6 +58,19 @@ public class PlannerController {
 		modelAndView.setViewName("redirect:planner/schedule");
 		
 		return modelAndView;
+	}
+	
+	@DeleteMapping("/planner/{planner_id}")
+	public ResponseEntity<String> deletePlanner(@RequestBody PlannerVO plannerVO) {
+		ResponseEntity<String> entity = null;
+		try {
+			plannerService.deletePlanner(plannerVO.getPlanner_id());
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 	
 }
