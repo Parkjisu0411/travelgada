@@ -80,7 +80,7 @@
 	}
 	
 	.Cthead td{
-		border-top:2px solid #303E57;;
+		border-top:2px solid #303E57;
 		border-bottom:1px solid #303E57;
 	}
 
