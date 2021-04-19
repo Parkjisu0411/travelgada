@@ -21,25 +21,13 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
-html, body {
-	width: 100%;
-	height: 100%;
-	margins: 0;
-	padding: 0;
-}
-
-#wrap {
-	min-heigth: 100%;
-}
-
-.member-img {
-	margin: 30px;
-	height:100px;
-	display: block;
-}
+	hr {
+		background-color: #1DCAD3;
+	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -53,9 +41,11 @@ html, body {
 	<!--Content -->
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'">포인트 내역</h2>
+			<h2 class="gada-headline">POINT LIST</h2>
+			<hr />
 			<div class="row">
 				<div class="col-md-12 member-detail">
+					<div class="gada-card">
 					<table class="table">
 						<thead>
 							<tr>
@@ -88,6 +78,7 @@ html, body {
 						</tbody>
 					</table>
 					<button type="button" class="btn btn-secondary" onclick="window.history.back();">돌아가기</button>
+				</div>
 				</div>
 			</div>
 		</div>

@@ -5,54 +5,72 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
+<!-- GADA CSS -->
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Shipping List</title>
 <style>
-html, body {
-	width: 100%;
-	height: 100%;
-	margins: 0;
-	padding: 0;
-}
+	body {
+		font-family: 'IBMPlexSansKR-Light';
+	}
 
-#wrap {
-	min-heigth: 100%;
-}
-
-.member-img {
-	margin: 30px;
-	height: 100px;
-	display: block;
-}
-
-.btn {
-	width : 10%;
-}
+	hr {
+		background-color: #1DCAD3;
+	}
+	
+	.more-view {
+		float: right;
+		cursor: pointer;
+	}
+	
+	thead {
+		text-align: center;
+	}
+	
+	thead tr {
+		font-size: 20px;
+		height: 60px;
+	}
+	
+	table {
+		width: 100%;
+	}
+	
+	tbody tr:hover {
+		color: #1DCAD3;
+		cursor: pointer;
+	}
+	
+	.row {
+		min-height: 800px;
+	}
+	
 </style>
 <script type="text/javascript">
 
 	//팝업
 	function enroll() {
-		var pop = window.open("/shipping/enroll", 'pop', "width=570,height=520, scrollbars=yes, resizable=yes");
+		var pop = window.open("/shipping/enroll", 'pop', "width=630,height=500, scrollbars=yes, resizable=yes");
 	}
 	//
-	
+	//배송지 수정 팝업
+	function modify(obj) {
+		var name = $(obj).children().children("form").children(".name").val();
+		enroll();
+		document.forms[name].submit();
+	}
+	//
 	$(document).ready(function() {
 		
 		//배송지 삭제	
@@ -86,15 +104,6 @@ html, body {
 			}
 		});
 		//
-		//배송지 수정
-		$(".modify").click(function(e) {
-			e.preventDefault();
-			var trObj = $(this).parent().parent().parent();
-			var name = trObj.children().children("form").children(".name").val();
-			enroll();
-			document.forms[name].submit();
-		})
-		//
 	});
 </script>
 </head>
@@ -102,32 +111,38 @@ html, body {
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
-	<div class="divider-header-blank"></div>
 	<p id="id" style="display: none"><sec:authentication property="principal.username"/></p>
-	<div id="wrap">
-		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'">배송지 목록</h2>
-			<p class="view-more-p">
-				<button type="button" class="btn btn-secondary" onclick="enroll();">배송지 등록</button>
-			</p>
-			<div class="row">
-				<div class="col-md-12 member-detail">
-					<table class="table">
+	<div class="container">
+		<a class="more-view" onclick="enroll()">배송지 등록</a>
+		<h2 class="gada-headline">SHIPPING LIST</h2>
+		<hr />
+		<div class="row">
+			<div class="col-md-12">
+				<div class="gada-card">
+					<table class="table-borderless">
+						<colgroup>
+							<col width=15%>
+							<col width=15%>
+							<col width=50%>
+							<col width=15%>
+							<col width=5%>
+						</colgroup>
 						<thead>
 							<tr>
-								<th>배송</th>
+								<th>배송지</th>
+								<th>수령인</th>
 								<th>주소</th>
 								<th>연락처</th>
-								<th>수정 삭제</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="shipping_loc" items="${shippingList }">
-								<tr>
+								<tr onclick="modify(this)">
 									<td>
 										<strong class="shipping_name" id="shipping_name">${shipping_loc.shipping_loc_name }</strong>
-										<p id="receiver">${shipping_loc.receiver }</p>
 									</td>
+									<td id="receiver">${shipping_loc.receiver }</td>
 									<td>
 										<span id="zipcode">${shipping_loc.zip_code}</span>
 										<span id="address">${shipping_loc.address }</span>
@@ -137,8 +152,7 @@ html, body {
 									<td id="phone">${shipping_loc.receiver_phone_num }</td>
 									<td>
 										<div class="btn-aroup">
-											<button type="button" class="btn btn-light modify">수정</button>
-											<button type="button" class="btn btn-light delete" onclick="delete();">삭제</button>
+											<button type="button" class="btn btn-light delete" onclick="delete();"><i class="fas fa-times"></i></button>
 										</div>
 										<form name="${shipping_loc.shipping_loc_name }" action="/shipping/enroll" method="post" target="pop">
 											<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
@@ -154,12 +168,12 @@ html, body {
 							</c:forEach>
 						</tbody>
 					</table>
-					<button type="button" class="btn btn-secondary"
-						onclick="window.history.back();">돌아가기</button>
 				</div>
 			</div>
+			<!-- <button type="button" class="btn gada-btn" onclick="window.history.back();">돌아가기</button> -->
 		</div>
 	</div>
+	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 </body>
