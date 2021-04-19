@@ -1,12 +1,12 @@
 .gada-btn {
-	background-color: #1DCAD3;
-	color: white;
-	border-radius: 50px;
-	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #1DCAD3 !important;
+	color: white !important;
+	border-radius: 50px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
 }
 
 .gada-btn:hover {
-	color: #CFD2D3;
+	background-color: #189fa6 !important;
 }
 
 .gada-headline {

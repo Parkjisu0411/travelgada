@@ -34,7 +34,7 @@ public class DestinationController {
 	}
 	
 	// 뷰 페이지
-	@GetMapping("/destination")
+	@GetMapping("statistic/destination")
 	public ModelAndView getDestinationTotal(ModelAndView modelAndView) {
 		SimpleDateFormat simpleDateFormatYear = new SimpleDateFormat("yyyy");
 		SimpleDateFormat simpleDateFormatMonth = new SimpleDateFormat("MM");

@@ -279,7 +279,7 @@
 					<a href="/statistic/sales"><i class="zmdi zmdi-format-list-bulleted"></i> <span>매출 통계</span></a>
 				</li>
 				<li>
-					<a href="tables.html"><i class="zmdi zmdi-grid"></i> <span>여행지 통계</span></a>
+					<a href="/statistic/destination"><i class="zmdi zmdi-grid"></i> <span>여행지 통계</span></a>
 				</li>
 			</ul>
 		</div>
