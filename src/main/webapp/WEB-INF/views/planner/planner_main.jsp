@@ -10,10 +10,10 @@
 <!-- bootstrap -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 <!-- font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet"><!-- 큰 영어 -->
 <!-- GADA CSS -->
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
@@ -22,40 +22,76 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
+/* 디데이 글씨 */
+@font-face {
+    font-family: 'GongGothicLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 내용 글씨 */
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html, body {
 	width: 100%;
 	height: 100%;
 	margins: 0;
 	padding: 0;
-	background-color: #f5f5f5;
+	background-color: white;
 }
 
 #wrap {
 	min-heigth: 100%;
 }
 
+/* 플래너 text */
 .text_box{
 	padding:15px;
+	font-family: 'IBMPlexSansKR-Light';
 }
 
 .cal{
 	margin-bottom:30px;
 }
 
+/* 플래너 */
 .card-pl-area{
 	border-radius: 10px;
 	margin: 0px 0px 30px 0px;
 	height: 460;
-	background-color: #ffffff;
+	background-color: #f5f5f5;
 }
 
+/* 플래너 이미지 */
 .card-pl-img {
 	width: 100%;
 	height: 350px;
 	border-radius: 10px 10px 0px 0px;
 	object-fit: cover;
 }
+
+/* 디데이 */
+.dday{
+	background-color:#fcd581; 
+	font-family: 'GongGothicLight';
+}
+
+/* 해드라인 */
+.headline{
+	font-family: 'Montserrat', sans-serif;  
+	color: #1dcad3; 
+	font-size:40px; 
+	font-weight:bold;
+}
+
 </style>
+
 <script>
 	function selectPlanner(planner_id) {
 		$.ajax({
@@ -72,6 +108,7 @@ html, body {
 		});
 	} 
 </script>
+
 </head>
 <body>
 	<!-- Header -->
@@ -79,8 +116,7 @@ html, body {
 	<!--Content -->
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline"
-				style="font-family: 'yg-jalnan'; color: #083d77;">MY PLANNER</h2>
+			<h2 class="headline">MY PLANNER</h2>
 			<br>
 			<div class="cal">
 				<%@ include file="/WEB-INF/views/calendar/calendar3.jsp"%>
@@ -92,14 +128,14 @@ html, body {
 					<div class="col-md-4" id="${planner_planner_id }"
 						onclick="selectPlanner(${planner.planner_id})">
 						<div class="card-pl-area">
-							<img class="card-pl-img"
-								src="/resources/img/profile/gada">
+							<img class="card-pl-img" src="/resources/img/profile/gada">
 							<div class="text_box">
 								<strong>${planner.planner_name }</strong>&nbsp; 
-								<span class="badge" style="background-color:#fcd581">
-									D  <c:out value="${DDayMap[planner.planner_id] }" />
+								<span class="badge dday">
+									D - <c:out value="${DDayMap[planner.planner_id] }" />
 								</span>
-								<p>${planner.start_date }~ ${planner.end_date }</p>
+								<br><br>
+								<p>${planner.start_date } ~ ${planner.end_date }</p>
 								<%-- <p>${planner.member_id }</p> --%>
 							</div>
 						</div>

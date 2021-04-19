@@ -8,43 +8,65 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
-		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
-		crossorigin="anonymous" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
-    	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
-    	crossorigin="anonymous"></script>
-	
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- <script
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
+	integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
+	crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
+	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
+	crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- <script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- -->	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link
-		href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
-		rel="stylesheet">
-	
+ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
+	rel="stylesheet">
 
-	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	<!-- 달력 부분 -->
-	<link href="/resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-    <link href="/resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
+<!-- 달력 부분 -->
+<link href="/resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+<link href="/resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
 
-	<title>검색</title>
+<!-- 폰트 -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap"
+	rel="stylesheet">
+
+
+<title>검색</title>
 
 <style>
+
+@font-face {
+    font-family: 'GongGothicMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GongGothicLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 내용 글씨 */
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 html, body {
 	width: 100%;
@@ -56,58 +78,61 @@ html, body {
 
 /* 달력 생성 모달 */
 	/* 달력 아이콘 */
-	#calImg {
-		position: fixed;
-		right: 20px;
-		width: 25px;
-		height: 30px;
-	}
+#calImg {
+	position: fixed;
+	right: 20px;
+	width: 25px;
+	height: 30px;
+}
 
-	/* 모달 스타일 */
-	.modalInput{
-        margin-left: 20px;
-    }
+/* 모달 스타일 */
+.modalInput{
+       margin-left: 20px;
+   }
 
-	.modal_input-style{
-		border: none;
-		font-size: 15px;
-		background-color: rgb(238, 237, 237);
-		outline: none;
-		height: 40px;
-		width: 270px;
-		border-radius: 15px;
-		padding-left: 20px;
-	}
+.modal_input-style{
+	border: none;
+	font-size: 15px;
+	background-color: rgb(238, 237, 237);
+	outline: none;
+	height: 40px;
+	width: 270px;
+	border-radius: 15px;
+	padding-left: 20px;
+}
 
-	.modal-submit{
-		border: none;
-		height: 40px;
-		width: 270px;
-		border-radius: 15px;
-		background-color: rgb(211, 211, 211);
-	}
+.modal-submit{
+	border: none;
+	height: 40px;
+	width: 270px;
+	border-radius: 15px;
+	background-color: rgb(211, 211, 211);
+}
 
-	.modalLabel{
-		margin:15px 10px 10px 10px;			
-		font-size: 12px;
-		color: black;
-		display: block;
-		height: 10px;
-		font-weight: bold;
-	}
-            
-	/* 모달 배경 투명 */
-	.modal-backdrop {
-		background-color: rgba(0,0,0,.0001) !important;
-	}
+.modalLabel{
+	margin:15px 10px 10px 10px;			
+	font-size: 12px;
+	color: black;
+	display: block;
+	height: 10px;
+	font-weight: bold;
+}
+           
+/* 모달 배경 투명 */
+.modal-backdrop {
+	background-color: rgba(0,0,0,.0001) !important;
+}
+
+.modal-dialog2{
+	position: fixed;
+	top:60px;
+	right: 60px;
+	width:310px;
+}
+
+
+
 	
-	.modal-dialog2{
-		position: fixed;
-		top:60px;
-		right: 60px;
-		width:310px;
-	}
-
 /* 모달 스타일 end */
 </style>
 
@@ -123,21 +148,7 @@ html, body {
 } 
 </style>
 
-<style>
-/* 모달 스타일 */
-	.dialogDi{
-    	width : 300px;
-   	 	height : 50px;
-    	float: left;
-    	margin-left: 30px;
-    	margin-botton: 10px;
-	}
 
-	.mainImg{
-	    float: left;
-	}
-	
-</style>
 
 <script>
 /* 플래너 생성 경고 */
@@ -248,7 +259,7 @@ span.star-prototype > * {
     	      word = splitedArray[word];
     	       if(word.indexOf("") == 0)
     	       { var word2 = "#"+word;
-    	          word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+    	          word = '<a class="hash_color" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
     	          console.log(word);
     	          console.log(word2);
     	       }
@@ -266,23 +277,156 @@ span.star-prototype > * {
 </script>
 
 <style>
-	.plBox{
-		background-color: white;
-		border-radius : 15px;
-	}
+
+.plBox {
+	background-color: white;
+	border-radius: 15px;
+}
+
+.searchBtn {
+	border-radius: 15px;
+	font-weight: bold;
+	width: 100px;
+}
+
+
+
+#keyword_search{
+	height: 45px;
+/* 	width: 50%; */
+/* 	min-width: 100%; */
+	line-height: 70px;
+	background-color: transparent;
+	color: black;
+	font-size: 20px;
+	border-radius: 50px;
+	border: 2px solid #303E57;
+	font-family: 'GongGothicMedium';
+	outline:none;
+}
+
+.search_icon{
+	background-color: #303E57;
+	border-radius: 50px;
+	border: none;
+ 	outline:none; 
+	padding-top: 10px;
+	padding-bottom: 9px;
+	text-align: center; 
+	width: 45px;
+	height: 45px;
+	margin-left:10px;
+	font-family: 'GongGothicMedium';  
+	font-size:20px; 
+	color:white;
 	
-	.searchDiBtn, .searchPlBtn{
-		border-radius : 15px;
-		font-weight: bold;
-		width: 100px;
-		
-		
-		
-	}
+}
+
+
+
+.wrap_search{
+	font-family: 'IBMPlexSansKR-Light';
+}
+
+.search_menu{
+	font-family: 'GongGothicMedium';
+	color:#303E57;
+	font-size:20px;
+}
+
+.font_h{
+	font-family: 'GongGothicMedium';
+	color:#1dcad3;
+	font-size:30px;
+}
+
+.memu{
+	border: solid 1px;
+	border-radius: 15px 15px 0 0;
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size:20px;
+	background-color: #1dcad3;
+	width:100px;
+	margin-left:-13px;
+}
+
+.hr_search{
+	border: 0.5px solid #1dcad3;
+}
+
+.line{
+	border: none;
+	outline: none;
+	border-bottom: 2px solid #1dcad3;
 	
-	.div_btn{
-		 text-align: center;
-	}
+
+}
+
+.more{
+	float:right;
+	color:#1dcad3;
+	font-size:15px;
+	font-family: 'GongGothicMedium';
+}
+
+.search_keyword{
+	color:#303E57;
+	font-size:15px;
+	font-family: 'GongGothicMedium';
+	text-align:center;
+
+}
+
+.hash_color{
+	color:#303E57;
+}
+/* 여기 */
+/* 모달 스타일 */
+.dialogDi{
+   
+  	height : 40px;
+
+}
+
+.mainImg{
+    float: left;
+}
+
+.Mcontent{
+	padding:0px;
+	width:100%
+}
+
+.dialogtext{
+	width : 350px;
+  	height : 240px;
+  	font-weight: bold;
+  	
+  	
+  
+}
+.dialog-date, .dialog-hashtag{
+	text-align:right;
+}
+
+
+.popup_img{
+	position: relative; 
+	width: 400px; 
+	height: 400px;
+}
+
+.dialog-profile{
+	font-family: 'GongGothicMedium';
+}
+
+.dialog-wrap{
+	width : 350px;
+	margin: 20px 0 20px 20px;
+   	float: left;
+}
+
 </style>
 
 </head>
@@ -295,25 +439,31 @@ span.star-prototype > * {
 	<img id="calImg" src="/resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
 
 	<!--Content -->
-	<div class="container">
+	<div class="container wrap_search">
 	
 		<!-- 검색 바 -->
 		<form action="${pageContext.request.contextPath}/search" method="get">			
-			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="검색어를 입력하세요."/>
-			<button type="submit"><i class="fa fa-search"></i></button>
+			<input id="keyword_search" class="col-sm-11" type="text" name="keyword" placeholder="검색어를 입력하세요."/>
+			<button class="search_icon" type="submit"><i class="fa fa-search search-icon-in"></i></button>
 		</form>	
 		<br/>
-		<h6>" ${keyword} " 에 관한 검색입니다.</h6>
-		<hr/>
+		<div class="search_keyword"><span style="font-size:22px">" ${keyword} "</span> 에 관한 검색입니다.</div>
+		<br/>
 		
-		<!-- 검색 메뉴 -->	
-		<a style="font-family: 'yg-jalnan'" href="${pageContext.request.contextPath}/search?keyword=${keyword}">통합</a>&nbsp;&nbsp;		
-		<a style="font-family: 'yg-jalnan'"  href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic">일정</a>&nbsp;&nbsp;
-		<a style="font-family: 'yg-jalnan'" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">다이어리</a>
-		<hr/>
-				
+		<!-- 검색 메뉴 -->
+	  	<div class=" line col-12">
+		<button type="button" class="memu btn" onclick="window.location.href='${pageContext.request.contextPath}/search?keyword=${keyword}'">통합</button>
+		<button type="button" class="memu btn " onclick="window.location.href='${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic'">일정</button>
+		<button type="button" class="memu btn " onclick="window.location.href='${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic'">다이어리</button>
+		</div>
+		
+		<br/><br/>
 		<!-- 일정 searchPl --> 
-		<h5 style="font-family: 'yg-jalnan'">일정</h5>
+		<span class="font_h">일정</span>
+		
+		
+		<br/>
+		<a class = "more" href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}"> 더보기 </a>
 		<br/>
 		
 		<!-- 반복 2개까지만 -->
@@ -323,6 +473,7 @@ span.star-prototype > * {
 			<div class="col-sm-7"><!-- 국가, 도시, 만족도 -->
 			
 			<div class="box">
+			<br>
 			국가 : &nbsp;
 				<c:forEach items="${pl.scheduleVO}" var="sc">
 					<c:if test="${sc.schedule_type_id eq 5}">
@@ -356,13 +507,18 @@ span.star-prototype > * {
 		<!-- 반복 끝 -->
 		<!-- 일정 더보기 버튼 -->
 		<br/>
-		<div class="div_btn">
-			<button type="button" style ="background-color:#f5df4d" class=" searchPlBtn btn btn-sm " onclick = "location.href = '${pageContext.request.contextPath}/searchPl?keyword=${keyword}' ">더보기</button>
-		</div>
-		<hr/>
-		
+		<%-- <div class="btn_more">
+			<button type="button" style ="background-color:#f5df4d" class=" searchBtn btn btn-sm " onclick = "location.href = '${pageContext.request.contextPath}/searchPl?keyword=${keyword}' ">더보기</button>
+		</div> --%>
+	
+		<br/><br/>
 		<!-- 다이어리 searchDi -->
-		<h5 style="font-family: 'yg-jalnan'">다이어리</h5>
+		<hr class="hr_search">
+		<br/><br/>
+		<h5 class="font_h">다이어리</h5>
+		
+		<br/>
+		<a class = "more" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}"> 더보기 </a>
 		<br/>
 		
 		<!-- 다이어리 반복 -->
@@ -392,34 +548,34 @@ span.star-prototype > * {
 				</div>
 				<!-- 다이어리 끝 -->
 
-				<!-- Modal -->
+				<!-- Modal --><!-- 여기  -->
 				<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
 					<!-- <div class="mySlides"> -->
-					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h3 class="modal-title" style="font-family: 'yg-jalnan'">diary</h3>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<div class="modal-body">
+					<div class="modal-dialog modal-lg modal-dialog-centered">
+						 <div class="modal-content MDI">
+	<!-- 						<div class="modal-header">
+							</div> -->
+							<div class="modal-body Mcontent">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<div class="mainImg">
-									<img class="popup_img" src='resources/diary/${di.img_path}'
-										style='position: relative; width: 400px; height: 400px;' />
+									<img class="popup_img" src='resources/diary/${di.img_path}'/>
 								</div>
-								<div class="dialogDi">
+								<div class="dialog-wrap">
+								<div class="dialogDi dialog-profile">
 									<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
 									${member.member_id}								
 								</div>
-								<div class="dialogDi">
-									<h4 style="font-family: 'yg-jalnan'">${di.diary_date}</h4>
+								<div class="dialogDi dialog-date">
+									${di.diary_date}
 								</div>
-								<div class="dialogDi">${di.text}</div>
-								<div class="dialogDi"><span id= "modal${di.diary_id}"></span></div>
+								<div class="dialogtext">${di.text}</div>
+								<div class="dialogDi dialog-hashtag"><span id= "modal${di.diary_id}"></span></div>
+								</div>
 							</div>
-							<div class="modal-footer">
+							<!-- <div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">Close</button>
-							</div>
+							</div> -->
 						</div><!-- modal-content end -->
 					</div>
 				</div>
@@ -431,10 +587,10 @@ span.star-prototype > * {
 		
 		<br/>
 		
-		<div class="div_btn">
+		<%-- <div class="btn_more">
 			<!-- 다이어리 더보기 버튼 -->
-			<button type="button" style ="background-color:#f5df4d" class="searchDiBtn btn btn-sm" onclick = "location.href = '${pageContext.request.contextPath}/searchDi?keyword=${keyword}' ">더보기</button>
-		</div>
+			<button type="button" style ="background-color:#f5df4d" class="searchBtn btn btn-sm" onclick = "location.href = '${pageContext.request.contextPath}/searchDi?keyword=${keyword}' ">더보기</button>
+		</div> --%>
 		
 	<!-- 달력 모달 -->
 	<!-- Modal -->

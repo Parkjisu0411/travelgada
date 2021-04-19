@@ -1,202 +1,142 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en" class="">
 <head>
+
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
- 
-<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
-<meta name="apple-mobile-web-app-title" content="CodePen">
-
-<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
-
-<link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+<title>CodePen Demo</title>
 
 
-  <title>CodePen - pagination</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&amp;display=swap" rel="stylesheet">
-  
-  
+<link rel="shortcut icon" type="image/x-icon"
+	href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+<link rel="mask-icon" type=""
+	href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg"
+	color="#111">
+<link rel="canonical" href="https://codepen.io/petrgazarov/pen/JyXvzB">
 
-<style>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto+Slab">
 
-
-:root {
-  --primary: #23adad;
-  --greyLight: #23adade1;
-  --greyLight-2: #cbe0dd;
-  --greyDark: #2d4848;
-}
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
-}
-
-html {
-  box-sizing: border-box;
-  font-size: 62.5%;
-  overflow-y: scroll;
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 0.6px;
-  line-height: 1.4;
-  -webkit-user-select: none;
-  backface-visibility: hidden;
-  -webkit-font-smoothing: subpixel-antialiased;
+<script
+	src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeConsoleRunner-d8236034cc3508e70b0763f2575a8bb5850f9aea541206ce56704c013047d712.js"></script>
+<script
+	src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRefreshCSS-4793b73c6332f7f14a9b6bba5d5e62748e9d1bd0b5c52d7af6376f3d1c625d7e.js"></script>
+<script
+	src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRuntimeErrors-4f205f2c14e769b448bcf477de2938c681660d5038bc464e3700256713ebe261.js"></script>
+<style type="text/css">
+.input-wrapper {
+	position: relative;
+	width: 500px;
+	margin: 50px auto;
 }
 
-.container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: var(--greyLight-2);
-  color: var(--greyDark);
+.input-highlight {
+	font-size: 30px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	line-height: 70px;
+	border-top: 3px solid white;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	max-width: 100%;
+	height: 0;
+	color: transparent;
+	font-family: Roboto Slab, sans-serif;
+	overflow: hidden;
 }
 
-ul {
-  list-style-type: none;
+input:focus + .input-highlight {
+	border-top: 3px solid #1dcad3;
 }
 
-.items-list {
-  max-width: 90vw;
-  margin: 2rem;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 3rem;
-  justify-content: center;
-  align-content: center;
-}
-@media only screen and (max-width: 600px) {
-  .items-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+input{
+	height: 60px;
+	width: 100%;
+	min-width: 100%;
+	padding: 0;
+	border-radius: 0;
+	line-height: 70px;
+	background-color: transparent;
+	color: black;
+	font-size: 30px;
+	border: none;
+	outline: none;
+	border-bottom: 3px solid #333333;
+	font-family: Roboto Slab, sans-serif;
 
-.item {
-  width: 10rem;
-  height: 10rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: var(--greyDark);
-  cursor: pointer;
 }
-.item span {
-  background: #ffffff;
-  box-shadow: 0 0.8rem 2rem rgba(90, 97, 129, 0.05);
-  border-radius: 0.6rem;
-  padding: 2rem;
-  font-size: 3rem;
-  transition: all 0.3s ease;
-}
-.item:hover span {
-  transform: scale(1.2);
-  color: var(--primary);
-}
-.item p {
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  color: var(--greyLight);
-}
-
-.page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 5rem;
-  margin: 3rem;
-  border-radius: 0.6rem;
-  background: #ffffff;
-  box-shadow: 0 0.8rem 2rem rgba(90, 97, 129, 0.05);
-}
-.page__numbers, .page__btn, .page__dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0.8rem;
-  font-size: 1.4rem;
-  cursor: pointer;
-}
-.page__dots {
-  width: 2.6rem;
-  height: 2.6rem;
-  color: var(--greyLight);
-  cursor: initial;
-}
-.page__numbers {
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 0.4rem;
-}
-.page__numbers:hover {
-  color: var(--primary);
-}
-.page__numbers.active {
-  color: #ffffff;
-  background: var(--primary);
-  font-weight: 600;
-  border: 1px solid var(--primary);
-}
-.page__btn {
-  color: var(--greyLight);
-  pointer-events: none;
-}
-.page__btn.active {
-  color: var(--greyDark);
-  pointer-events: initial;
-}
-.page__btn.active:hover {
-  color: var(--primary);
-}
-
-
 
 </style>
 
-<script>
-  window.console = window.console || function(t) {};
-</script>
-
-<script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
-</script>
-
 </head>
-<body>
 
 
-<div id="app" class="container">  
-<ul class="page">
-    <li class="page__btn"><span class="material-icons">chevron_left</span></li>
-    <li class="page__numbers"> 1</li>
-    <li class="page__numbers active">2</li>
-    <li class="page__numbers">3</li>
-    <li class="page__numbers">4</li>
-    <li class="page__numbers">5</li>
-    <li class="page__numbers">6</li>
-    <li class="page__dots">...</li>
-    <li class="page__numbers"> 10</li>
-    <li class="page__btn"><span class="material-icons">chevron_right</span></li>
-  </ul>
-</div>
+<body translate="no">
+
+	<div id="root">
+		<div data-reactroot="" class="input-wrapper">
+			<input class="search_bar_style" placeholder="Search..." value=""
+				spellcheck="false"> 
+			<span class="input-highlight"> </span>
+		</div>
+	</div>
+	<script
+		src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.0/react.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.0/react-dom.js"></script>
+
+	<script id="rendered-js">
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      inputValue: '' };
 
 
+    this.onInputChange = this.onInputChange.bind(this);
+  }
+
+  onInputChange(e) {
+    const { value } = e.target;
+
+    this.setState({
+      inputValue: value });
+
+  }
+
+  render() {
+    const { inputValue } = this.state;
+
+    return /*#__PURE__*/(
+      React.createElement("div", { className: "input-wrapper" }, /*#__PURE__*/
+      React.createElement("input", {
+        onChange: this.onInputChange,
+        placeholder: "Search...",
+        value: inputValue,
+        spellCheck: false }), /*#__PURE__*/
+
+      React.createElement("span", { className: "input-highlight" },
+      inputValue.replace(/ /g, "\u00a0"))));
+
+
+
+  }}
+
+
+ReactDOM.render( /*#__PURE__*/
+React.createElement(App, null),
+document.getElementById('root'));
+//# sourceURL=pen.js
+
+</script>
 
 </body>
-
-
-
-
-
 </html>
