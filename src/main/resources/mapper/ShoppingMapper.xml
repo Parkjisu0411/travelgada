@@ -30,7 +30,7 @@
 	
 	<select id="selectBuyById" resultType="com.gada.travelgada.domain.BuyVO">
 		<![CDATA[
-			select * from buy where member_id = #{member_id}
+			select * from buy where member_id = #{member_id} order by buy_date desc
 		]]>
 	</select>
 	
@@ -40,7 +40,7 @@
 		]]>
 	</select>
 	
-		<select id="selectBuy" resultType="com.gada.travelgada.domain.BuyVO">
+	<select id="selectBuy" resultType="com.gada.travelgada.domain.BuyVO">
 		<![CDATA[
 			select * from buy where buy_id = #{buy_id}
 		]]>
