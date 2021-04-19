@@ -177,7 +177,7 @@
 				</div>
 			</div>
 		</div>
-			<a href="shopping/buy_list" class="more-view">주문 더보기</a>
+			<a href="/shopping/buy_list" class="more-view">주문 더보기</a>
 			<h2 class="gada-headline" style="">SHOPPING LIST</h2>
 			<hr />
 		<div class="row">
