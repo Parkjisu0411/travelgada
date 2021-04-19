@@ -22,6 +22,30 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- 영어 폰트(헤드라인) -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap');
+</style>
+<!-- 한글 폰트(헤드라인) -->
+<style>
+@font-face {
+    font-family: 'GongGothicMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
+<!-- 한글 폰트(기본) -->
+<style>
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
+
 <title>REVIEW BOARD</title>
 
 <style>
@@ -31,6 +55,106 @@ html, body {
 	margins: 0;
 	padding: 0;
 }
+
+.table td{
+	border:1px solid #1DCAD3;
+	border-left:none;
+	border-right:none;
+}
+
+.thead td{
+	border-left:none;
+	border-right:none;
+	background-color:#1DCAD3;
+	color:white;
+}
+
+.headline{
+	font-family: 'Montserrat', sans-serif;
+	color:#1DCAD3;
+	font-size:28pt;
+}
+
+.introduction{
+	font-family: 'GongGothicMedium';
+	color: #CFD2D3;
+}
+
+.bar{
+	color: #b4b5b4;
+	font-size:14pt;
+	font-weight:bold;
+}
+
+.con{
+	font-family: 'IBMPlexSansKR-Light';
+    text-align:center;
+}
+
+.content{
+	color:#3d464b;
+	margin:0 30px;
+	text-align:left;
+	width:40%;
+}
+
+.content2{
+	margin:0 30px;
+}
+
+.noticeContent2 {
+	color:#ff7473 !important;
+}
+
+.notice, thead{
+	font-family: 'IBMPlexSansKR-Light';
+    text-align:center;
+    font-weight:bold;
+    color:#303E57;
+}
+
+.notice td{
+	border:2px solid #1DCAD3;
+	border-left:none;
+	border-right:none;
+} 
+
+.content2 a{
+	/* color:black; */
+	color:#3d464b;
+}
+
+a{
+	text-decoration:none !important 
+}
+
+.Rcnt{
+	font-weight:bold;
+	font-size:11pt;
+}
+
+.pin{
+	width:18px;
+	height:18px;
+}
+
+.writeButton{
+	border-radius:1em;
+	border:none; 
+	float:right;
+	font-family: 'GongGothicMedium';
+	color: white;
+	background:#1DCAD3;
+	width:70px;
+	height:30px;
+	margin:10px 0;
+}
+
+	button:focus{
+		border:0;
+		outline:none;
+	}
+
 </style>
 
 	<script>
@@ -54,24 +178,25 @@ html, body {
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'">REVIEW</h2>
+			<h2 class="headline">REVIEW</h2>
+			<span class="bar">|</span><span class="introduction"> 소중한 추억을 가다 회원들과 공유해보세요!</span><br /><br />
 			<table class="table">
 				<thead>
-					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>날짜</th>
-						<th>조회수</th>
+					<tr class="thead">
+						<td>번호</td>
+						<td>제목</td>
+						<td>작성자</td>
+						<td>날짜</td>
+						<td>조회수</td>
 					</tr>
 				</thead>
 
 				<tbody>
 					<c:forEach items="${boardNoticeList }" var="boardNoticeList">
-						<tr>
+						<tr class="notice">
 							<td>${boardNoticeList.board_id }</td>
-							<td>
-								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}/${boardNoticeList.member_id}" style="color:red;">${boardNoticeList.title }</a>
+							<td class="content">
+								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}/${boardNoticeList.member_id}/${boardNoticeList.board_type_id}" class="noticeContent2" ><img class="pin" src="/resources/board/push-pin.png">&nbsp;&nbsp;&nbsp;${boardNoticeList.title }</a>
 							</td>
 							<td>${boardNoticeList.member_id }</td>
 							<td><fmt:formatDate value="${boardNoticeList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
@@ -80,14 +205,16 @@ html, body {
 					</c:forEach>
 				
 					<c:forEach items="${boardReviewList }" var="boardReviewList">
-					<tr>
+					<tr class="con">
 						<td>${boardReviewList.board_id }</td>
-						<td>
+						<td class="content">
+							<div class="content2">
 							<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
-							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}">${boardReviewList.title }</a>			
-							<a href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}">[${boardReviewList.cnt }]</a>	
+							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">${boardReviewList.title }</a>			
+							<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>	
+							</div>
 						</td>
-						<td><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>
+						<td class="content2"><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>
 						<td><fmt:formatDate value="${boardReviewList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
 						<td>${boardReviewList.bhit }</td>
 					</tr>
@@ -97,11 +224,11 @@ html, body {
 
 			<div>	
 			<sec:authorize access="isAnonymous()">
-  				<button type="button" class="btn-default text-primary" onclick="check_id()" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+  				<button class="writeButton" type="button" onclick="check_id()">쓰기</button>
 			</sec:authorize>
 
 			<sec:authorize access="isAuthenticated()">
-  				 <button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+  				 <button class="writeButton" type="button"  onclick="window.location.href='${pageContext.request.contextPath }/board/'" >쓰기</button>
 			</sec:authorize>	
 			</div>
 

@@ -59,9 +59,11 @@ public class BoardController {
 			modelAndView.setViewName("/board/review");
 		}else if(BT == 2) {
 			modelAndView.setViewName("/board/Q&A");
-		}else {
+		}else if(BT == 3){
 			modelAndView.setViewName("/board/accompany");
-		} 
+		}else {
+			modelAndView.setViewName("/board/notice");
+		}
 
 		modelAndView.addObject("boardReviewList", boardService.getReviewBoard(nowPage, cri.getAmount(), boardVO.getBoard_type_id() ));
 		modelAndView.addObject("boardNoticeList", boardService.getNotice());
@@ -75,11 +77,11 @@ public class BoardController {
 	}
 	
 	
-	@GetMapping("/board/{board_id}/{member_id}")
-	public ModelAndView boardContentView(ModelAndView modelAndView, MemberVO memberVO, BoardVO boardVO) {
+	@GetMapping("/board/{board_id}/{member_id}/{board_type_id}")
+	public ModelAndView boardContentView(ModelAndView modelAndView, CriteriaVO cri, MemberVO memberVO, BoardVO boardVO) {
 
 		log.info("boardContentView");
-		log.info("확인!!!!!!" + memberVO.getProfile_img_path());
+		log.info("getProfile_img_path : " + memberVO.getProfile_img_path());
 		
 	
 		modelAndView.setViewName("/board/board_content_view");
@@ -90,8 +92,35 @@ public class BoardController {
 		modelAndView.addObject("bReply", boardService.getReply(boardVO));
 		//modelAndView.addObject("bRecentReply", boardService.getRecentReply(boardVO));
 		
+		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
+		
+		modelAndView.addObject("boardReviewList", boardService.getReviewBoard(nowPage, cri.getAmount(), boardVO.getBoard_type_id() ));
+		modelAndView.addObject("getBoardTypeId", boardVO.getBoard_type_id());
+		
+		int total = boardService.getTotalReviewBoard(boardVO.getBoard_type_id());
+		log.info("total" + total);
+		modelAndView.addObject("pageMaker", new PageVO(cri, total));
+		
 		return modelAndView;
 	}
+	
+//	@GetMapping("/board/{board_id}/{member_id}")
+//	public ModelAndView boardContentView(ModelAndView modelAndView, MemberVO memberVO, BoardVO boardVO) {
+//
+//		log.info("boardContentView");
+//		log.info("getProfile_img_path : " + memberVO.getProfile_img_path());
+//		
+//	
+//		modelAndView.setViewName("/board/board_content_view");
+//
+//		modelAndView.addObject("bContentView", boardService.boardContentView(boardVO));
+//		modelAndView.addObject("bImgPath", boardService.boardImgPath(memberVO));
+//
+//		modelAndView.addObject("bReply", boardService.getReply(boardVO));
+//		//modelAndView.addObject("bRecentReply", boardService.getRecentReply(boardVO));
+//		
+//		return modelAndView;
+//	}
 	
 	@GetMapping("/board/replyContent/{board_id}/{member_id}")
 	public ModelAndView boardReplyContentView(ModelAndView modelAndView, MemberVO memberVO, BoardVO boardVO) {

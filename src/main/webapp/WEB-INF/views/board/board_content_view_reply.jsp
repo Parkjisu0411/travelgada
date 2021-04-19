@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -298,32 +299,90 @@
 	</script> 
     
 
-<!--   	<script>
-	function write_reply(){
-   		var board_id=$("#board_id").val();
-   		//var text=document.getElementById("#text").value;
-   		//var text=$("#text").val();
-    	//var member_id=$("#member_id").val();
-    	var member_id = $("#member_id").val();
-    	var text=$("#text").val();
-    	
-		if(member_id.length == 0){
-			alert("로그인이 필요한 서비스입니다.");
-			location.href="${pageContext.request.contextPath}/member/login";
-			return;
-		}
-		
-   	 	//폼 데이터를 받을 주소
-    	//$("#write").action="${pageContext.request.contextPath}/board/write?${_csrf.parameterName}=${_csrf.token}";
-    	//폼 데이터를 서버에 전송
-    	//document.write.submit();
-     	$("#writeReply").submit();
-     	if(result == "SUCCESS"){
-     		show_reply();
-     	}
-     	
-	}
-	</script>   -->
+		<script>
+			function refreshDate(){
+			    $("#commLastTime").text(transferTime( $("#commLastTime").attr("class") ) );
+			};
+			 
+			$(function(){    
+			    //마지막으로 작성된 댓글시간 출력을 함수 바로 실행
+			    refreshDate();
+			    //그리고 10초 뒤 또 실행하도록 설정
+			    setInterval(function(){refreshDate()}, 10000);
+			});
+		</script>
+
+		<script>
+			function transferTime(time){    
+			     var now = new Date();
+			     var sYear = time.substring(0,4);
+			     var sMonth = time.substring(5,7)-1;
+			     var sDate = time.substring(8,10);
+			     var sHour = time.substring(11,13);
+			     var sMin = time.substring(14,16);
+			     //var sSecond = time.substring(12,14);
+			     var sc = 1000;
+			 
+			     var today = new Date(sYear,sMonth,sDate,sHour,sMin);
+			     //지나간 초
+			     var pastSecond = parseInt((now-today)/sc,10);
+			 
+			     var date;
+			     var hour;
+			     var min;
+			     var str = "";
+			 
+			     var restSecond = 0;
+			     if(pastSecond > 86400){  // 24시간이 지났을 때
+			      date = parseInt(pastSecond / 86400,10);
+			      restSecond = pastSecond % 86400;
+			      str = date + "일 전";
+/* 			      if(restSecond > 3600){
+			       hour = parseInt(restSecond / 3600,10);
+			       restSecond = restSecond % 3600;
+			       str = str + hour + "시간 ";
+			       if(restSecond > 60){
+			        min = parseInt(restSecond / 60,10);
+			        restSecond = restSecond % 60;
+			        str = str + min + "분 " + restSecond + "초 전";
+			       }else{
+			        str = str + restSecond + "초 전";
+			       }
+			      }else if(restSecond > 60){
+			       min = parseInt(restSecond / 60,10);
+			       restSecond = restSecond % 60;
+			       str = str + min + "분 " + restSecond + "초 전";
+			      }else{
+			       str = str + restSecond + "초 전";
+			      } */
+			     }else if(pastSecond > 3600){		// 1시간이 지났을 때
+			      hour = parseInt(pastSecond / 3600,10);
+			      restSecond = pastSecond % 3600;
+			      str = str + hour + "시간 ";
+			      if(restSecond > 60){
+			       min = parseInt(restSecond / 60,10);
+			       restSecond = restSecond % 60;
+			       //str = str + min + "분 " + restSecond + "초 전";
+			       str = str + min + "분 전";
+			      }else{
+			       str = str + restSecond + "초 전";
+			      }
+			     }else if(pastSecond > 60){			// 60초가 지났을 때
+			      min = parseInt(pastSecond / 60,10);
+			      restSecond = pastSecond % 60;
+			      str = str + min + "분 전";
+			     }else{
+			      str = pastSecond + "초 전";
+			     }
+			 
+			     if(str=="0초 전"){
+			         str = "방금 전";
+			     }
+			     
+			     return str;
+			}
+
+		</script>
 
 
 
@@ -343,7 +402,8 @@
 								<h3  style="font-family: 'yg-jalnan'; font_weight:lighter;">${bContentView.title }</h3><br/>
 								<img class="nav-profile-img" src='/resources/img/profile/${bImgPath.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">&nbsp;
 								${bContentView.member_id }&nbsp;&nbsp;&nbsp;
-								${bContentView.board_date }
+								<fmt:formatDate value="${bContentView.board_date }" pattern="yyyy/MM/dd hh:mm"/>
+								<span id="commLastTime" class="${bContentView.board_date}"></span>
 							</th>
 						</tr>						
 					</thead>
@@ -382,29 +442,26 @@
           			 <input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
 					 <input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>	
 						<textarea id="text" class="form-control col-sm-11" name="text" placeholder="댓글을 입력해주세요."></textarea>
-              			 <input type="submit" id="cmcnt-btn" name="cmcnt-btn" class="btn-default text-primary" value="완료"  /> 
+              			 <input type="submit" id="cmcnt-btn" name="cmcnt-btn" class="btn-default text-primary" value="완료" onclick="check_id()" /> 
         				 <!-- <button type="button" id="cmcnt-btn" class="btn-default text-primary" >완료</button>  -->
         			</form>	
     			</div><br />
 				
 			    <div class="container">
-        			<div class="commentList"></div>
-        			 <table class="table" id="add">
+        			<table class="table" id="add">
         			<c:forEach items="${bReply }" var="bReply">
         				<c:forEach items="${bReply.answerList }" var="answer">
         				<input type="hidden" class="answer_id" name="answer_id" value="${answer.answer_id }"/>
-						<tr class="answerList">
-							<td>${answer.answer_id }</td>
-							<td>${answer.member_id }</td>
-							<td>${answer.answer_date }</td>
+						<tr class="answerList" >
+							<%-- <td>${answer.answer_id }</td> --%>
+							<td><img class="nav-profile-img" src='/resources/img/profile/${bImgPath.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">&nbsp; ${answer.member_id } &nbsp;&nbsp;<fmt:formatDate value="${answer.answer_date }" pattern="yyyy/MM/dd hh:mm"/></td>
 							<td>${answer.text }</td>
 							<td>
 									<input type="button" class="makeForm btn-primary" name="${answer.answer_id }" value="답글" />
 								<c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answer.member_id }">
-									<button type="button" class="btn-default text-primary" onclick="">수정</button>
+									<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/modify/${bContentView.board_id}&${bContentView.member_id }'">수정</button>
 									<button type="button" class="deleteAnswer btn-default text-primary">삭제</button>
 								</c:if>
-	
 							</td>
 						</tr>
 						</c:forEach>
