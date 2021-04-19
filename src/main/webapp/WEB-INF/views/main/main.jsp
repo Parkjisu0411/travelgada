@@ -135,6 +135,14 @@
 			  	</c:forEach>
 		  	</c:forEach>
 	  	</c:forEach>
+	  	
+/* 	  	$("#country-list");
+	  	<c:forEach items="${countryList}" var="country">
+	  		var data = "";
+	  		data += "<option value='${country.country_name}' />";
+	  		$("#country-list").append(data);
+	  		console.log(data);
+	  	</c:forEach> */
 	});
   	
 	function getCountry(clickedCountry) {
@@ -262,22 +270,12 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
+      	<c:forEach var="product" items="${recommendProduct }">
+      		<div class="col-md-3">
+      			<img src="/resources/img/product/${product.img_path }" class="main-product-img">
+      			<p>${product.product_name }</p>
+      		</div>
+      	</c:forEach>
       </div>
     </div>
 

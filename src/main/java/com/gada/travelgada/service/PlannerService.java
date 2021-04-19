@@ -1,14 +1,19 @@
 package com.gada.travelgada.service;
 
-import java.util.Date;
+
+import java.text.ParseException;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.gada.travelgada.domain.CountryVO;
 import com.gada.travelgada.domain.PlannerVO;
+import com.gada.travelgada.domain.ScheduleVO;
 import com.gada.travelgada.mapper.PlannerMapper;
+import com.gada.travelgada.mapper.ScheduleMapper;
 import com.gada.travelgada.utils.DateCalculator;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PlannerService {
 
 	private PlannerMapper plannerMapper;
+	private ScheduleMapper scheduleMapper;
 	
 	public List<PlannerVO> getMainPlanner(String member_id) {
 		return plannerMapper.selectPlannerForMain(member_id);
@@ -59,5 +65,32 @@ public class PlannerService {
 		
 		return DDayMap;
 	}
-
+	
+	public void setCountry(int planner_id, Date start_date, Date end_date, String country_name) {
+		Date date = start_date;
+		CountryVO country = plannerMapper.selectCountryByName(country_name);
+		for(int i = 0; i < DateCalculator.getDifference(start_date, end_date); i++) {
+			ScheduleVO schedule = new ScheduleVO();
+			schedule.setPlanner_id(planner_id);
+			schedule.setSchedule_type_id(5);
+			schedule.setSchedule_date(date);
+			schedule.setSchedule_content(country_name);
+			schedule.setLongitude(country.getLongitude());
+			schedule.setLatitude(country.getLatitude());
+			
+			scheduleMapper.insertSchedule(schedule);
+			
+			try {
+				date = new java.sql.Date(DateCalculator.getNextDate(date).getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+	}
+	
+	public int getPlanner_id(String member_id) {
+		
+		return plannerMapper.selectCreatedPlannerId(member_id); 
+	}
 }

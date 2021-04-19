@@ -34,9 +34,21 @@
 		]]>
 	</select>
 	
-		<select id="selectPlannerById" resultType="com.gada.travelgada.domain.PlannerVO">
+	<select id="selectPlannerById" resultType="com.gada.travelgada.domain.PlannerVO">
 		<![CDATA[
 			select * from planner where planner_id = #{planner_id}
+		]]>
+	</select>
+	
+	<select id="selectCountryByName" resultType="com.gada.travelgada.domain.CountryVO">
+		<![CDATA[
+			select * from country where country_name = #{country_name}
+		]]>
+	</select>
+	
+	<select id="selectCreatedPlannerId" resultType="int">
+		<![CDATA[
+			select planner_id from planner where member_id = #{member_id} order by planner_id desc limit 1
 		]]>
 	</select>
 </mapper>
