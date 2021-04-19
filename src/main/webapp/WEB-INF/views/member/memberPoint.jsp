@@ -28,10 +28,31 @@
 	hr {
 		background-color: #1DCAD3;
 	}
+	
+	.gada-btn-group {
+		text-align: center;
+	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
-		console.log($("tbody tr").length);
+		var count = $("tbody tr").length;
+		for(var i = count; i >= 0; i--) {
+			var tr = $("tbody tr:nth-child(" + i + ")");
+			var point = tr.children(".point").text();
+			var flag = tr.children(".flag").text();
+			console.log(flag);
+			if(flag == "사용") {
+				point = point * -1;
+			}
+			var amount = tr.children(".amount");
+			if(i == (count)) {
+				amount.text(point);
+			} else {
+				point = parseInt($("tbody tr:nth-child(" + (i + 1) + ")").children(".amount").text()) + parseInt(point);
+				amount.text(point);
+				console.log(point);
+			}
+		};
 	})
 </script>
 </head>
@@ -58,17 +79,15 @@
 						<tbody>
 							<c:forEach var="point" items="${pointList }">
 								<tr id="${point.point_id }">
-									<td class="flag">
-										<c:choose>
-											<c:when test="${point.save_flag eq 0 }">
-												적립
-											</c:when>
-											<c:otherwise>
-												사용
-											</c:otherwise>
-										</c:choose>
-									</td>
-									<td class="date"><fmt:formatDate value="${point.save_date }" pattern="yyyy.MM.dd"/></td>
+									<c:choose>
+										<c:when test="${point.save_flag eq 0 }">
+											<td class="flag" style="color:#1DCAD3;">적립</td>
+										</c:when>
+										<c:otherwise>
+											<td class="flag" style="color:#ff7473;">사용</td>
+										</c:otherwise>
+									</c:choose>
+									<td class="date"><fmt:formatDate value="${point.save_date }" pattern="yyyy.MM.dd hh:mm:ss"/></td>
 									<td class="point">${point.amount }</td>
 									<td class="amount">
 										
@@ -77,7 +96,9 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<button type="button" class="btn btn-secondary" onclick="window.history.back();">돌아가기</button>
+					<div class="gada-btn-group">
+						<button type="button" class="btn gada-btn-reverse" onclick="window.history.back();">돌아가기</button>
+					</div>
 				</div>
 				</div>
 			</div>

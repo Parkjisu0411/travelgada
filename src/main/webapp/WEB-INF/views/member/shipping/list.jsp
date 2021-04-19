@@ -56,6 +56,10 @@
 		min-height: 800px;
 	}
 	
+	.gada-btn-group {
+		text-align: center;
+	}
+	
 </style>
 <script type="text/javascript">
 
@@ -168,9 +172,11 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<div class="gada-btn-group">
+						<button type="button" class="btn gada-btn-reverse" onclick="window.history.back();">돌아가기</button>
+					</div>
 				</div>
 			</div>
-			<!-- <button type="button" class="btn gada-btn" onclick="window.history.back();">돌아가기</button> -->
 		</div>
 	</div>
 	
