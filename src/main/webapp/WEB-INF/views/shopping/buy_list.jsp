@@ -21,20 +21,33 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
-.product-img {
-	height: 100px;
-	width: 100px;
-	display: inline-block;
-	vertical-align: middle;
-	margin-right: auto;
-}
+	body {
+		font-family: 'IBMPlexSansKR-Light';
+	}
+	
+	hr {
+		background-color: #1DCAD3;
+	}
+	
+	.gada-btn-group {
+		text-align: right;
+	}
 
-.product-info {
-	display: inline-block;
-}
+	.product-img {
+		height: 100px;
+		width: 100px;
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: auto;
+	}
+	
+	.product-info {
+		display: inline-block;
+	}
 </style>
 <script type="text/javascript">
 	
@@ -47,46 +60,49 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="buy-header-area">
-					<h3 style="font-family:'yg-jalnan'">주문내역 조회</h3>
-				</div>
-				<div class="buy-list-area">
-					<div class="buy-search-area">
-						<div class="btn-group">
-							<button class="btn btn-secondary">1주일</button>
-							<button class="btn btn-secondary">1개월</button>
-							<button class="btn btn-secondary">3개월</button>
-							<button class="btn btn-secondary">전체</button>
-						</div>
+				<h3 class="gada-headline">SHOPPING LIST</h3>
+				<hr>
+				<div class="gada-card">
+					<div class="buy-header-area">
 					</div>
-					<table class="table">
-						<thead>
-							<tr>
-								<th>상품정보</th>
-								<th>주문일자</th>
-								<th>주문번호</th>
-								<th>주문금액</th>
-								<th>주문상태</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="buyDetail" items="${buyDetailList }">
+					<div class="buy-list-area">
+						<div class="buy-search-area">
+							<div class="gada-btn-group">
+								<button class="btn gada-btn">1주일</button>
+								<button class="btn gada-btn">1개월</button>
+								<button class="btn gada-btn">3개월</button>
+								<button class="btn gada-btn">전체</button>
+							</div>
+						</div>
+						<table class="table">
+							<thead>
 								<tr>
-									<td>
-										<img class="product-img rounded" src="/resources/img/product/${productMap[buyDetail.buy_detail_id].img_path }" />
-										<div class="product-info">
-											<strong>${buyDetail.product_name }</strong>
-											<p>₩ ${productMap[buyDetail.buy_detail_id].price }</p>
-										</div>
-									</td>
-									<td><fmt:formatDate value="${buyMap[buyDetail.buy_detail_id].buy_date }" pattern="yyyy.MM.dd"/></td>
-									<td><a href="/shopping/buy_list/${buyMap[buyDetail.buy_detail_id].buy_id }">${buyMap[buyDetail.buy_detail_id].buy_id }</a></td>
-									<td>${buyDetail.price }</td>
-									<td>구매확정</td>
+									<th>상품정보</th>
+									<th>주문일자</th>
+									<th>주문번호</th>
+									<th>주문금액</th>
+									<th>주문상태</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach var="buyDetail" items="${buyDetailList }">
+									<tr>
+										<td>
+											<img class="product-img rounded" src="/resources/img/product/${productMap[buyDetail.buy_detail_id].img_path }" />
+											<div class="product-info">
+												<strong>${buyDetail.product_name }</strong>
+												<p>₩ ${productMap[buyDetail.buy_detail_id].price }</p>
+											</div>
+										</td>
+										<td><fmt:formatDate value="${buyMap[buyDetail.buy_detail_id].buy_date }" pattern="yyyy.MM.dd"/></td>
+										<td><a href="/shopping/buy_list/${buyMap[buyDetail.buy_detail_id].buy_id }">${buyMap[buyDetail.buy_detail_id].buy_id }</a></td>
+										<td>${buyDetail.price }</td>
+										<td>구매확정</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

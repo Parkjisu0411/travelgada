@@ -23,81 +23,81 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
-/* 디데이 글씨 */
-@font-face {
-    font-family: 'GongGothicLight';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* 내용 글씨 */
-@font-face {
-    font-family: 'IBMPlexSansKR-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-html, body {
-	width: 100%;
-	height: 100%;
-	margins: 0;
-	padding: 0;
-	background-color: white;
-}
-
-#wrap {
-	min-heigth: 100%;
-}
-
-/* 플래너 text */
-.text_box{
-	padding:15px;
-	font-family: 'IBMPlexSansKR-Light';
-}
-
-.cal{
-	margin-bottom:30px;
-}
-
-/* 플래너 */
-.card-pl-area{
-	border-radius: 10px;
-	margin: 0px 0px 30px 0px;
-	height: 460;
-	background-color: #f5f5f5;
-}
-
-/* 플래너 이미지 */
-.card-pl-img {
-	width: 100%;
-	height: 350px;
-	border-radius: 10px 10px 0px 0px;
-	object-fit: cover;
-}
-
-.card-pl-img:hover {
-	cursor: pointer;
-}
-
-/* 디데이 */
-.dday{
-	background-color:#fcd581; 
-	font-family: 'GongGothicLight';
-}
-
-/* 해드라인 */
-.headline{
-	font-family: 'Montserrat', sans-serif;  
-	color: #1dcad3; 
-	font-size:40px; 
-	font-weight:bold;
-}
-
-.gada-btn-group {
-	text-align: right;
-}
+	/* 디데이 글씨 */
+	@font-face {
+	    font-family: 'GongGothicLight';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
+	/* 내용 글씨 */
+	@font-face {
+	    font-family: 'IBMPlexSansKR-Light';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
+	html, body {
+		width: 100%;
+		height: 100%;
+		margins: 0;
+		padding: 0;
+		background-color: white;
+	}
+	
+	#wrap {
+		min-heigth: 100%;
+	}
+	
+	/* 플래너 text */
+	.text_box{
+		padding:15px;
+		font-family: 'IBMPlexSansKR-Light';
+	}
+	
+	.cal{
+		margin-bottom:30px;
+	}
+	
+	/* 플래너 */
+	.card-pl-area{
+		border-radius: 10px;
+		margin: 0px 0px 30px 0px;
+		height: 460;
+		background-color: #f5f5f5;
+	}
+	
+	/* 플래너 이미지 */
+	.card-pl-img {
+		width: 100%;
+		height: 350px;
+		border-radius: 10px 10px 0px 0px;
+		object-fit: cover;
+	}
+	
+	.card-pl-img:hover {
+		cursor: pointer;
+	}
+	
+	/* 디데이 */
+	.dday{
+		background-color:#fcd581; 
+		font-family: 'GongGothicLight';
+	}
+	
+	/* 해드라인 */
+	.headline{
+		font-family: 'Montserrat', sans-serif;  
+		color: #1dcad3; 
+		font-size:40px; 
+		font-weight:bold;
+	}
+	
+	.gada-btn-group {
+		text-align: right;
+	}
 
 </style>
 
