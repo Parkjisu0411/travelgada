@@ -1,0 +1,21 @@
+.gada-btn {
+	background-color: #1DCAD3;
+	color: white;
+	border-radius: 50px;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.gada-btn:hover {
+	color: #CFD2D3;
+}
+
+.gada-headline {
+	color: #1DCAD3;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.gada-card {
+	border-radius: 10px;
+	background-color: #f5f5f5;
+	border: none;
+}

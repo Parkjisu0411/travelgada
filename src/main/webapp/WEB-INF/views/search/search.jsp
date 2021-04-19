@@ -8,9 +8,6 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-<title>달력</title>
-
-	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
@@ -38,13 +35,25 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 	<!-- 달력 부분 -->
-	<link href="resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-    <link href="resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
+	<link href="/resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+    <link href="/resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
+
+	<title>검색</title>
 
 <style>
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margins: 0;
+	padding: 0;
+	background-color: #f5f5f5;
+}
+
 /* 달력 생성 모달 */
 	/* 달력 아이콘 */
 	#calImg {
@@ -104,14 +113,14 @@
 
 <style>
 /* 다이어리 이미지 */
-.diary_img {
+ .diary_img {
 	width: 240px;
 	height: 240px;
 	object-fit: cover;
 	display: block;
 	margin: 0px auto;
 	padding-bottom: 20px;
-}
+} 
 </style>
 
 <style>
@@ -184,6 +193,7 @@ $(document).ready(function(){
 </script>
 
 <style>
+/* 별 */
 span.star-prototype, span.star-prototype > * {
     height: 17px; 
     background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
@@ -206,6 +216,12 @@ span.star-prototype > * {
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+</style>
+
+<style>
+.diHover:hover, .plBox:hover{
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+}
 </style>
 
 <script>
@@ -249,6 +265,26 @@ span.star-prototype > * {
 /* 해시태그 & 링크 끝 */
 </script>
 
+<style>
+	.plBox{
+		background-color: white;
+		border-radius : 15px;
+	}
+	
+	.searchDiBtn, .searchPlBtn{
+		border-radius : 15px;
+		font-weight: bold;
+		width: 100px;
+		
+		
+		
+	}
+	
+	.div_btn{
+		 text-align: center;
+	}
+</style>
+
 </head>
 <body>
 
@@ -256,7 +292,7 @@ span.star-prototype > * {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
 	<!-- 달력 이미지 - container 안에 있으면 안됨 -->
-	<img id="calImg" src="resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
+	<img id="calImg" src="/resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
 
 	<!--Content -->
 	<div class="container">
@@ -281,9 +317,9 @@ span.star-prototype > * {
 		<br/>
 		
 		<!-- 반복 2개까지만 -->
-		<c:forEach items="${searchPl}" var="pl" begin="1" end="2"> 
-		<div class="row">
-			<div class="col-sm-5">일정사진</div>
+		<c:forEach items="${searchPl}" var="pl" > 
+		<div class="row plBox">
+			<div class="col-sm-5"><a href="/search/${pl.member_id}/${pl.planner_id}">일정사진</a></div>
 			<div class="col-sm-7"><!-- 국가, 도시, 만족도 -->
 			
 			<div class="box">
@@ -320,7 +356,9 @@ span.star-prototype > * {
 		<!-- 반복 끝 -->
 		<!-- 일정 더보기 버튼 -->
 		<br/>
-		<button type="button" class="btn btn-outline-light text-dark btn-sm btn-block" onclick = "location.href = '${pageContext.request.contextPath}/searchPl?keyword=${keyword}' ">더보기</button>
+		<div class="div_btn">
+			<button type="button" style ="background-color:#f5df4d" class=" searchPlBtn btn btn-sm " onclick = "location.href = '${pageContext.request.contextPath}/searchPl?keyword=${keyword}' ">더보기</button>
+		</div>
 		<hr/>
 		
 		<!-- 다이어리 searchDi -->
@@ -332,19 +370,28 @@ span.star-prototype > * {
 			<div class="row">
 			<c:forEach items="${member}" var="member">
 			<c:forEach items="${member.plannerVO}" var="pl">
-			<c:forEach items="${pl.diaryVO}" var="di"> 
-					<div class="col-sm-3">
-						<img class="diary_img" src='resources/diary/${di.img_path}' data-toggle="modal" data-target="#myModal${di.diary_id}"/>
-						<div>
-							<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-									${member.member_id}	
-						</div>	
-						<span id= "${di.diary_id}"></span>
-						
-						<br/>
-						<br/>
+			<c:forEach items="${pl.diaryVO}" var="di">
+
+				<div class="col-md-3 ">
+					<div class="main-card-diary-area diHover">
+						<img src="resources/diary/${di.img_path}"
+							class="main-card-diary-img" loading="lazy" data-toggle="modal"
+							data-target="#myModal${di.diary_id}">
+						<div class="main-card-diary-content">
+							<div class="main-card-diary-profile">
+								<img class="nav-profile-img"
+									src='/resources/img/profile/${member.profile_img_path }'
+									onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+								<a class="main-card-diary-profile-id" href="#">${member.member_id}</a>
+							</div>
+							<div class="main-card-diary-hashtag-area">
+								<span class="main-card-diary-hashtag" id="${di.diary_id }"></span>
+							</div>
+						</div>
 					</div>
-					<!-- 다이어리 끝 -->
+				</div>
+				<!-- 다이어리 끝 -->
+
 				<!-- Modal -->
 				<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
 					<!-- <div class="mySlides"> -->
@@ -380,15 +427,14 @@ span.star-prototype > * {
 				<!-- Modal end -->
 				</c:forEach><!-- 다이어리 반복 끝 -->
 				</c:forEach>
-			
-		
 			</div><!-- 다이어리 row end -->
 		
 		<br/>
 		
-		<!-- 다이어리 더보기 버튼 -->
-		<button type="button" class="searchDiBtn btn btn-outline-light text-dark btn-sm btn-block" onclick = "location.href = '${pageContext.request.contextPath}/searchDi?keyword=${keyword}' ">더보기</button>
-		
+		<div class="div_btn">
+			<!-- 다이어리 더보기 버튼 -->
+			<button type="button" style ="background-color:#f5df4d" class="searchDiBtn btn btn-sm" onclick = "location.href = '${pageContext.request.contextPath}/searchDi?keyword=${keyword}' ">더보기</button>
+		</div>
 		
 	<!-- 달력 모달 -->
 	<!-- Modal -->

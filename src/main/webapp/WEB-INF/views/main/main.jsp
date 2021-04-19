@@ -25,11 +25,6 @@
   <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 
   <style>
-    footer {
-      background-color: #F5F5F5;
-      width: 100%;
-    }
-    
     .main-main-headline {
       padding-top: 230px;
       font-size: 100px;
@@ -73,23 +68,20 @@
     }
 
     .main-product-img {
-      width: 250px;
-      height: 300px;
+      width: 100%;
+      height: 320px;
       object-fit: cover;
       border-radius: 8px;
     }
 
-    .main-recommendation-area {
-      overflow-x: scroll;
-      white-space: nowrap;
-    }
-
-    .col-md-3 {
-      display: inline-block;
-      width: auto;
+    .main-advice-planner-inner-area {
+      padding: 25px;
+      width: 100%;
+      height: 100%;
     }
     
-    .main-advice-planner-inner-area {
+    .main-advice-store-inner-area {
+      padding: 25px;
       width: 100%;
       height: 100%;
     }
@@ -107,10 +99,8 @@
 	    <c:forEach items="${member}" var="member">
 		    <c:forEach items="${member.plannerVO}" var="pl">
 			    <c:forEach items="${pl.diaryVO}" var="di">
-		  		console.log("${di.hashtag}")
 		  	    content = "${di.hashtag}";
 		  	    splitedArray = content.split('#');//#으로 구분
-		  	    console.log(splitedArray);
 		  	    linkedContent = '';
 		  	    splitedArray.shift();//첫번째 지워주는 함수
 		
@@ -119,8 +109,6 @@
 		  	       if(word.indexOf("") == 0)
 		  	       { var word2 = "#"+word;
 		  	          word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
-		  	          console.log(word);
-		  	          console.log(word2);
 		  	       }
 		  	       linkedContent += word+' ';
 		  	    }
@@ -142,8 +130,9 @@
 
     <header class="main-main-img">
     <div class="container">
-    <br><br>
-    <%@ include file="/WEB-INF/views/calendar/calendar.jsp"%>
+    <div style="padding: 30px"></div>
+    <%@ include file="/WEB-INF/views/calendar/calendar3.jsp"%>
+    <div style="padding: 50px"></div>
     <h1 class="main-main-headline">나만의<br>여행 플래너</h1>
     </div>
     </header>
@@ -177,31 +166,24 @@
     <div class="container">
       <h2 class="main-section-headline">가다가 추천하는 여행지</h2>
     </div>
-    <div class="container main-recommendation-area">
-      <div class="row flex-nowrap">
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
+    <div class="container">
+      <div class="row">
+      <c:forEach items="${recommendation}" var="recommendation">
+        <div class="col-md-3" style="padding-bottom: 30px;">
+        <div class="main-product-img" style="background-image: url(/resources/img/main/country/${recommendation.schedule_content}); background-size: cover;">
+        <div style="padding: 115px"></div>
+        <div style="text-align: center; background-color: #ffffff; margin: 0 auto; width: 110px; height: 44px; line-height: 45px; border-radius: 64px; font-weight: 700; font-size: 12px;">${recommendation.schedule_content}</div>
         </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
         </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-        </div>
-                <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-        </div>
+      </c:forEach>
       </div>
     </div>
 
-    <div class="main-divider-section-blank"></div>
+    <div class="main-divider-section-blank" style="padding: 10px !important"></div>
 
     <section class="main-card-diary-section">
       <div class="container">
-        <h2 class="main-section-headline">가다에서 추억을 공유해 보세요</h2>
+        <h2 class="main-section-headline" style="padding-top: 25px">가다에서 추억을 공유해 보세요<span class="main-diary-more-view" onclick="location.href='/diary'">더&nbsp;보기</span></h2>
       </div>
       <div class="container">
         <div class="row">
@@ -237,11 +219,13 @@
           <img src="${pageContext.request.contextPath}/resources/img/main/product.jpg" class="main-advice-img">
         </div>
         <div class="col-md-4 advice-content-area">
+        <div class="main-advice-store-inner-area">
           <h2 class="main-advice-title">가다에서 여행에 필요한 물품을 구매해 보세요</h2>
           <p class="main-advice-content">스토어를 이용하여 여행에 필요한 물품을 구매할 수 있습니다</p>
           <br>
-          <span class="main-advice-button" onclick="location.href='http://localhost:8282/planner/schedule'">물품
+          <span class="main-advice-button" onclick="location.href='/shopping?product_type_id=3'">물품
             구매하기</span>
+            </div>
         </div>
       </div>
     </div>
@@ -251,12 +235,8 @@
     <div class="container">
       <h2 class="main-section-headline">가다가 추천하는 아이템</h2>
     </div>
-    <div class="container main-recommendation-area">
-      <div class="row flex-nowrap">
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
+    <div class="container">
+      <div class="row">
         <div class="col-md-3">
           <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
           <p>캐리어</p>
@@ -277,8 +257,6 @@
     </div>
 
     <%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
-    
-    <div style="padding: 70px"></div>
     
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 

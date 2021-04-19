@@ -1,11 +1,8 @@
 package com.gada.travelgada.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import org.apache.ibatis.exceptions.IbatisException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +29,9 @@ import com.gada.travelgada.utils.PointCalculator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
 @Slf4j
 @AllArgsConstructor
+@RestController
 public class MemberController {
 	
 
@@ -42,6 +39,7 @@ public class MemberController {
 	private JavaMailSender javaMailSender;
 	@Autowired
 	private MemberServiceImpl memberService;
+	@Autowired
 	private MemberValidator memberValidator;
 	
 	
@@ -59,7 +57,6 @@ public class MemberController {
 		
 		memberValidator.validate(memberVO, result);
 		if(result.hasErrors()) {
-			System.out.println("===========유효성 검사 오류===============");
 			List<ObjectError> errors = result.getAllErrors();
 			for(ObjectError error : errors) {
 				log.info(error.toString());
@@ -103,7 +100,7 @@ public class MemberController {
 		List<ShippingLocVO> shippingList = null;
 		try {
 			shippingList = memberService.getShippingLoc(memberDetails.getUsername());
-		} catch(IbatisException e) {
+		} catch(Exception e) {
 			log.info(memberDetails.getUsername() + "의 배송지 목록이 없습니다.");
 			shippingList.add(new ShippingLocVO());
 		}

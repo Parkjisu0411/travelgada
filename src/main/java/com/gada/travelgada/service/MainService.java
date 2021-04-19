@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gada.travelgada.domain.MemberVO;
+import com.gada.travelgada.domain.ScheduleVO;
 import com.gada.travelgada.mapper.MainMapper;
 
 import lombok.AllArgsConstructor;
@@ -19,5 +20,9 @@ public class MainService {
 	
 	public List<MemberVO> getDiary() {
 		return mainMapper.getDiary();
+	}
+	
+	public List<ScheduleVO> getRecommendationCountry() {
+		return mainMapper.getRecommendationCountry();
 	}
 }

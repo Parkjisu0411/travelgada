@@ -35,5 +35,4 @@ public interface ShoppingMapper {
 	
 	public void updateDeductionPoint(PointVO pointVO);
 	
-	public List<BuyDetailVO> getPaymentResult(String buy_id);
 }

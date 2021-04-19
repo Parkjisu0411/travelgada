@@ -21,6 +21,7 @@ public class BuyVO {
 	private String waybill_num;
 	private String member_id;
 	private String shipping_loc_name;
+	private int paid_amount;
 	private List<BuyDetailVO> details;
 	
 }

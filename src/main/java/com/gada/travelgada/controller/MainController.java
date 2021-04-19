@@ -28,6 +28,9 @@ public class MainController {
 		modelAndView.addObject("member", mainService.getDiary());
 		if (memberDetails != null)
 			modelAndView.addObject("plannerList", plannerService.getMainPlanner(memberDetails.getUsername()));
+
+		modelAndView.addObject("recommendation", mainService.getRecommendationCountry());
+		
 		modelAndView.setViewName("main/main");
 
 		return modelAndView;

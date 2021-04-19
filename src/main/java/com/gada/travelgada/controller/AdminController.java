@@ -30,22 +30,22 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class AdminController {
 	
-	private AdminService service;
+	private AdminService adiminService;
 
 	//회원
-	@GetMapping("admin")
+	@GetMapping("/admin")
 	public ModelAndView admin(ModelAndView mav, CriteriaVO cri) {
 		log.info("controller admin();");
 		
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-		int total = service.getTotal();
+		int total = adiminService.getTotal();
 
-		mav.addObject("memberList",service.getMemberList(nowPage, cri.getAmount()));
+		mav.addObject("memberList",adiminService.getMemberList(nowPage, cri.getAmount()));
 		mav.addObject("pageMaker", new PageVO(cri, total));
 		//전체 회원 수 
 		mav.addObject("total", total);
 		//탈퇴한 회원 수 
-		mav.addObject("withdrawal",service.getWithdrawal());
+		mav.addObject("withdrawal",adiminService.getWithdrawal());
 		
 		mav.setViewName("admin/admin");
 		
@@ -54,21 +54,21 @@ public class AdminController {
 	}// admin end
 	
 	//탈퇴한 회원
-	@GetMapping("admin/withdrawal")
+	@GetMapping("/admin/withdrawal")
 	public ModelAndView withdrawalList(ModelAndView mav, CriteriaVO cri) {
 		log.info("controller withdrawal();");
 		
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-		int total = service.getWithdrawal();
-		int totalMember = service.getTotal();
+		int total = adiminService.getWithdrawal();
+		int totalMember = adiminService.getTotal();
 
-		mav.addObject("memberList",service.getWithdrawalList(nowPage, cri.getAmount()));
+		mav.addObject("memberList",adiminService.getWithdrawalList(nowPage, cri.getAmount()));
 		mav.addObject("pageMaker", new PageVO(cri, total));
 		
 		//전체 회원 수 
 		mav.addObject("total", totalMember);
 		//탈퇴한 회원 수 
-		mav.addObject("withdrawal",service.getWithdrawal());
+		mav.addObject("withdrawal",adiminService.getWithdrawal());
 		
 		mav.setViewName("admin/adminWithdrawal");
 		
@@ -77,7 +77,7 @@ public class AdminController {
 	}// withdrawal end
 	
 	//회원 탈퇴 시키기
-	@PutMapping("withdrawalMember")
+	@PutMapping("/withdrawalMember")
 	public ResponseEntity<String> withdrawal(@RequestBody MemberVO memberVO, Model model) {
 		ResponseEntity<String> entity = null;
 		log.info("controller diary_delete()");
@@ -90,12 +90,12 @@ public class AdminController {
 		try {
 			if(withdrawal_code == 0){
 				
-				service.withdrawal(0 ,member_id, withdrawal_code);
+				adiminService.withdrawal(0 ,member_id, withdrawal_code);
 				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 				
 			}else {
 				
-				service.withdrawal(1, member_id, withdrawal_code);
+				adiminService.withdrawal(1, member_id, withdrawal_code);
 				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 			
 			}
@@ -112,15 +112,15 @@ public class AdminController {
 	
 	
 	//검색
-	@GetMapping("search/member")
+	@GetMapping("/search/member")
 	public ModelAndView search(ModelAndView mav, @RequestParam("keyword") String keyword, CriteriaVO cri) {
 		log.info("controller search();");
 		log.info(keyword);
 		
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-		int total = service.searchTotal(keyword);
+		int total = adiminService.searchTotal(keyword);
 		
-		mav.addObject("memberList",service.search(nowPage, cri.getAmount(),keyword));
+		mav.addObject("memberList",adiminService.search(nowPage, cri.getAmount(),keyword));
 		mav.addObject("pageMaker", new PageVO(cri, total));
 
 		mav.addObject("keyword",keyword);
@@ -131,7 +131,7 @@ public class AdminController {
 	}// search end
 	
 	//회원 상세 정보
-	@GetMapping("memberDetailList/{member_id}")
+	@GetMapping("/memberDetailList/{member_id}")
 	public ModelAndView memberDetailList(ModelAndView mav, MemberVO memberVO) {
 		log.info("controller memberDetailList();");
 		
@@ -140,35 +140,35 @@ public class AdminController {
 		//배송지 목록 조회
 		List<ShippingLocVO> shippingList = null;
 		try {
-			shippingList = service.getShippingLoc(memberVO.getMember_id());
+			shippingList = adiminService.getShippingLoc(memberVO.getMember_id());
 		}catch(IbatisException e) {
 			log.info(memberVO.getMember_id() + "의 배송지 목록이 없습니다.");
 			shippingList.add(new ShippingLocVO());
 		}
-		mav.addObject("point", PointCalculator.getCurrentPoint(service.getPoint(memberVO.getMember_id())));
-		mav.addObject("member", service.getMember(memberVO.getMember_id()));
+		mav.addObject("point", PointCalculator.getCurrentPoint(adiminService.getPoint(memberVO.getMember_id())));
+		mav.addObject("member", adiminService.getMember(memberVO.getMember_id()));
 		mav.addObject("shippingList", shippingList);
 		return mav;
 
 	}// memberDetailList end
 	
 	//탈퇴한 회원 검색
-	@GetMapping("search/memberWithdrawal")
+	@GetMapping("/search/memberWithdrawal")
 	public ModelAndView memberWithdrawal(ModelAndView mav, @RequestParam("keyword") String keyword, CriteriaVO cri) {
 		log.info("controller search();");
 		log.info(keyword);
 		
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-		int total = service.searchWidthTotal(keyword);
-		int totalMember = service.getTotal();
+		int total = adiminService.searchWidthTotal(keyword);
+		int totalMember = adiminService.getTotal();
 		
-		mav.addObject("memberList",service.searchWithdrawal(nowPage, cri.getAmount(),keyword));
+		mav.addObject("memberList",adiminService.searchWithdrawal(nowPage, cri.getAmount(),keyword));
 		mav.addObject("pageMaker", new PageVO(cri, total));
 		
 		//전체 회원 수 
 		mav.addObject("total", totalMember);
 		//탈퇴한 회원 수 
-		mav.addObject("withdrawal",service.getWithdrawal());
+		mav.addObject("withdrawal",adiminService.getWithdrawal());
 
 		mav.addObject("keyword",keyword);
 		mav.setViewName("admin/adminWithdrawal");

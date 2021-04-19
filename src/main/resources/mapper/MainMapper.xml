@@ -51,5 +51,11 @@
 			select m.member_id, m.profile_img_path, d.* from member m, planner p, diary d where p.member_id = m.member_id and d.planner_id = p.planner_id order by diary_date desc limit 6
 		]]>
 	</select>
-
+	
+	<select id="getRecommendationCountry" resultType="com.gada.travelgada.domain.ScheduleVO">
+		<![CDATA[
+			select count(*) as total, schedule_content from schedule where schedule_type_id = 5 group by schedule_content order by total desc limit 4
+		]]>
+	</select>
+	
 </mapper>

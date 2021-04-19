@@ -16,8 +16,6 @@
   color: #000000 !important;
 }
 
-/* navbar navbar-expand-lg navbar-light fixed-top py-3 */
-
 </style>
 <meta charset="UTF-8">
 <title>Header</title>
@@ -31,6 +29,8 @@
 <!-- Font Awesome -->
 <link rel="stylesheet"
    href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -81,15 +81,24 @@
                <a
                   class="nav-link dropdown-toggle nav-dropdown-toggle" href="#" id="navbarDropdown"
                   role="button" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">숙소&nbsp;예약</a>
+                  aria-expanded="false" onclick="window.open('https://www.google.com/travel/hotels')">호텔&nbsp;예약</a>
+               </li>
+              <li class="nav-item dropdown">
+               <a
+                  class="nav-link dropdown-toggle nav-dropdown-toggle" href="#" id="navbarDropdown"
+                  role="button" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false" onclick="window.open('https://www.google.com/travel/flights')">항공편&nbsp;예약</a>
                </li>
             </ul>
             <form class="form-inline" action="${pageContext.request.contextPath}/search" method="get">
-               <i class="fas fa-search"></i>
-               <input id="keyword" class="form-control mr-sm-2 nav-form-control" type="text" aria-label="Search" name="keyword">
-               <button class="btn btn-outline-white btn-sm my-0 nav-btn" type="submit">
+               <input id="keyword" style="margin: 5px !important;" class="form-control mr-sm-2 nav-form-control" type="text" aria-label="Search" name="keyword">
+               <button class="btn btn-outline-white btn-sm my-0 nav-btn" style="margin-left: -33px !important; type="submit">
+               <i class="fas fa-search fa-lg"></i>
                </button>
             </form>
+            <button class="btn btn-outline-white btn-sm my-0 nav-btn">
+            <i class="fas fa-shopping-cart fa-lg header-cart-icon" onclick="location.href='/shopping/cart'" style="color: #ffffff; padding-left: 3px;"></i>
+            </button>
             <div class="nav-item dropdown">
                <sec:authorize access="isAuthenticated()">
                   <a class="nav-link dropdown-toggle nav-dropdown-toggle" href="#" id="navbarDropdown"
@@ -101,7 +110,6 @@
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                      <a class="dropdown-item nav-dropdown-item" href="/member/mypage">회원정보</a>
                      <a class="dropdown-item nav-dropdown-item" href="/shopping/buy_list">주문내역</a>
-                     <a class="dropdown-item nav-dropdown-item" href="/shopping/cart">장바구니</a>
                      <div class="dropdown-divider"></div>
                      <form id="logout" action="/member/logout" method="POST">
                         <input name="${_csrf.parameterName}" type="hidden"

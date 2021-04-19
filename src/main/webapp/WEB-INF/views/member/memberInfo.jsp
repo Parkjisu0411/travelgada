@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
@@ -28,14 +29,23 @@ html, body {
 	height: 100%;
 	margins: 0;
 	padding: 0;
+	background-color: white; 
 }
 
 #wrap {
 	min-heigth: 100%;
 }
 
-.member-profile {
+#member-info-profile {
 	text-align: center;
+}
+
+#member-info-detail {
+	text-align: center;
+}
+
+#member-info-buyList {
+	margin-top: 30px;
 }
 
 .member-img {
@@ -64,39 +74,63 @@ html, body {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="container">
-		<h2 class="headline" style="font-family: 'yg-jalnan'">마이페이지</h2>
+		<h2 class="gada-headline">MY PAGE</h2>
 		<hr />
 		<p class="view-more-p">
-			<button type="button" class="btn btn-secondary"
+			<button type="button" class="btn gada-btn"
 				onclick="location.href='/member/modify'">회원정보 수정</button>
 		</p>
 		<div class="row">
-			<div class="col-md-4 member-profile member-profile">
-				<img class="rounded-circle member-img"
-					src="/resources/img/profile/${member.profile_img_path }"
-					onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-				<p>${member.member_name }</p>
+			<div class="col-md-3" id="member-info-profile">
+				<div class="card gada-card">
+					<img class="rounded-circle member-img" src="/resources/img/profile/${member.profile_img_path }" onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+					<span>${member.member_id }</span>
+				</div>
+				<div class="card">
+					<table class="table-borderless" id="member-info-table">
+						<tr>
+							<th>이름</th>
+							<td>${member.member_name }</td>
+						</tr>
+					</table>
+				</div>
 			</div>
-			<div class="col-md-8 member-detail">
-				<table class="table">
-					<tr>
-						<th>포인트</th>
-						<td>${point }</td>
-						<td><a href="/member/mypage/point">내역조회</a></td>
-					</tr>
-					<tr>
-						<th>이메일</th>
-						<td>${member.email }</td>
-						<td></td>
-					</tr>
-					<tr>
-						<th>배송지 목록</th>
-						<td><c:forEach var="shipping_loc" items="${shippingList }">
-								<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
-							</c:forEach></td>
-						<td><a href="/member/shipping">관리</a></td>
-					</tr>
-				</table>
+			<div class="col-md-9" id="member-info-detail">
+				<div class="card gada-card">
+					<table class="table">
+						<tr>
+							<th>포인트</th>
+							<td>${point }</td>
+							<td><a href="/member/mypage/point">내역조회</a></td>
+						</tr>
+						<tr>
+							<th>이메일</th>
+							<td>${member.email }</td>
+							<td></td>
+						</tr>
+						<tr>
+							<th>배송지 목록</th>
+							<td><c:forEach var="shipping_loc" items="${shippingList }">
+									<p>${shipping_loc.shipping_loc_name }(${shipping_loc.address })</p>
+								</c:forEach></td>
+							<td><a href="/member/shipping">관리</a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="col-md-12" id="member-info-buyList">
+				<div class="card gada-card">
+					<table class="table-borderless">
+						<thead>
+							<tr>
+								<th>상품 정보</th>
+								<th>수량</th>
+								<th>결제 금액</th>
+								<th>운송장 번호</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
 			</div>
 		</div>
 		<hr />
