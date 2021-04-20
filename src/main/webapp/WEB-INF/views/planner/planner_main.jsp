@@ -32,33 +32,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
-	/* 디데이 글씨 */
-	@font-face {
-	    font-family: 'GongGothicLight';
-	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-	}
-	
-	/* 내용 글씨 */
-	@font-face {
-	    font-family: 'IBMPlexSansKR-Light';
-	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-	}
-	
-	html, body {
-		width: 100%;
-		height: 100%;
-		margins: 0;
-		padding: 0;
-		background-color: white;
-	}
-	
-	#wrap {
-		min-heigth: 100%;
-	}
 	
 	/* 플래너 text */
 	.planner-text-area{
@@ -77,12 +50,25 @@
 		font-weight: bold;
 	}
 	
+	.planner-modify-input-name:focus {
+		outline: none;
+		background-color: #f5f5f5;
+		border-bottom: 1px solid #1DCAD3;
+	}
+	
 	.planner-modify-input-cal {
 		border: none;
 		background-color: #f5f5f5;
 		display: inline;
 		width: 95px;
 	}
+	
+	.planner-modify-input-cal:focus {
+		outline: none;
+		background-color: #f5f5f5;
+		border-bottom: 1px solid #1DCAD3;
+	}
+	
 	
 	/* 플래너 */
 	.planner-area{
@@ -175,6 +161,7 @@
 		$("#" + planner_id + " input[name=planner_name]").val($("#" + planner_id + " .planner_name").text());
 		$("#" + planner_id + " .input-start").val($("#" + planner_id + " .start_date").text());
 		$("#" + planner_id + " .input-end").val($("#" + planner_id + " .end_date").text());
+		$("#" + planner_id + " input[name=planner_name]").focus();
 	}
 	
 	function cancelModify(planner_id) {
