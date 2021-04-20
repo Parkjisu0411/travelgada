@@ -87,6 +87,7 @@ html, body {
 
 .con{
 	font-family: 'IBMPlexSansKR-Light';
+	font-weight:bold;
     text-align:center;
 }
 
@@ -128,7 +129,7 @@ a{
 }
 
 .Rcnt{
-	font-weight:bold;
+	color:#ff7473 !important;
 	font-size:11pt;
 }
 
@@ -153,7 +154,18 @@ a{
 		border:0;
 		outline:none;
 	}
-
+	
+	.con a:hover{
+		color:#1DCAD3;
+	}
+	
+	.Rcnt:hover{
+		font-size:1em;
+	}
+	
+	.headline:hover{
+		color: #CFD2D3;
+	}
 </style>
 
 	<script>
@@ -170,7 +182,7 @@ a{
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline">ACCOMPANY</h2>
+			<a class="headline" href="${pageContext.request.contextPath }/board/3">ACCOMPANY</a><br />
 			<span class="bar">|</span><span class="introduction"> 여행을 함께 할 친구를 찾아보세요!</span><br /><br />
 					<table class="table">
 					<thead>
@@ -203,10 +215,10 @@ a{
 								<div class="content2">
 								<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
 								<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">${boardReviewList.title }</a>
-								<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>
+								<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>
 								</div>
 							</td>
-							<td>${boardReviewList.member_id }</td>
+							<td class="content2"><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>
 							<td><fmt:formatDate value="${boardReviewList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
 							<td>${boardReviewList.bhit }</td>
 						</tr>
@@ -216,11 +228,11 @@ a{
 
 			<div>	
 			<sec:authorize access="isAnonymous()">
-  				<button type="button" class="btn-default text-primary" onclick="check_id()" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+  				<button class="writeButton" type="button" onclick="check_id()">쓰기</button>
 			</sec:authorize>
 
 			<sec:authorize access="isAuthenticated()">
-  				 <button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board'" style="border-radius:0.2em; border:none; float:right;">쓰기</button>
+  				 <button class="writeButton" type="button"  onclick="window.location.href='${pageContext.request.contextPath }/board/'" >쓰기</button>
 			</sec:authorize>	
 			</div>
 			

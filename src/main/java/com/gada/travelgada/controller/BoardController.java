@@ -122,8 +122,8 @@ public class BoardController {
 //		return modelAndView;
 //	}
 	
-	@GetMapping("/board/replyContent/{board_id}/{member_id}")
-	public ModelAndView boardReplyContentView(ModelAndView modelAndView, MemberVO memberVO, BoardVO boardVO) {
+	@GetMapping("/board/replyContent/{board_id}/{member_id}/{board_type_id}")
+	public ModelAndView boardReplyContentView(ModelAndView modelAndView, CriteriaVO cri, MemberVO memberVO, BoardVO boardVO) {
 
 		log.info("boardContentView");
 		log.info("확인!!!!!!" + memberVO.getProfile_img_path());
@@ -136,6 +136,16 @@ public class BoardController {
 		
 		modelAndView.addObject("bReply", boardService.getReply(boardVO));
 		modelAndView.addObject("bRecentReply", boardService.getRecentReply(boardVO));
+		
+		
+		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
+		
+		modelAndView.addObject("boardReviewList", boardService.getReviewBoard(nowPage, cri.getAmount(), boardVO.getBoard_type_id() ));
+		modelAndView.addObject("getBoardTypeId", boardVO.getBoard_type_id());
+		
+		int total = boardService.getTotalReviewBoard(boardVO.getBoard_type_id());
+		log.info("total" + total);
+		modelAndView.addObject("pageMaker", new PageVO(cri, total));
 		
 		
 		return modelAndView;

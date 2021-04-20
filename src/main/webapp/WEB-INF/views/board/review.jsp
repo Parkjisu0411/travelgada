@@ -88,6 +88,7 @@ html, body {
 
 .con{
 	font-family: 'IBMPlexSansKR-Light';
+	font-weight:bold;
     text-align:center;
 }
 
@@ -129,7 +130,7 @@ a{
 }
 
 .Rcnt{
-	font-weight:bold;
+	color:#ff7473 !important;
 	font-size:11pt;
 }
 
@@ -154,7 +155,18 @@ a{
 		border:0;
 		outline:none;
 	}
+	
+	.con a:hover{
+		color:#1DCAD3;
+	}
 
+	.Rcnt:hover{
+		font-size:1em;
+	}
+	
+	.headline:hover{
+		color: #CFD2D3;
+	}	
 </style>
 
 	<script>
@@ -178,7 +190,7 @@ a{
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline">REVIEW</h2>
+			<a class="headline" href="${pageContext.request.contextPath }/board/1">REVIEW</a><br />
 			<span class="bar">|</span><span class="introduction"> 소중한 추억을 가다 회원들과 공유해보세요!</span><br /><br />
 			<table class="table">
 				<thead>
@@ -211,7 +223,7 @@ a{
 							<div class="content2">
 							<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
 							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">${boardReviewList.title }</a>			
-							<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>	
+							<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>	
 							</div>
 						</td>
 						<td class="content2"><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>

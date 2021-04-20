@@ -223,7 +223,58 @@
 	}
 	
 
+/* 페이징 */
+.flex {
+     -webkit-box-flex: 1;
+     -ms-flex: 1 1 auto;
+     flex: 1 1 auto
+ }
 
+ @media (max-width:991.98px) {
+     .padding {
+         padding: 1.5rem
+     }
+ }
+
+ @media (max-width:767.98px) {
+     .padding {
+         padding: 1rem
+     }
+ }
+
+ .padding {
+     padding: 5rem
+ }
+
+ .pagination,
+ .jsgrid .jsgrid-pager {
+     display: flex;
+     padding-left: 0;
+     list-style: none;
+     border-radius: 0.25rem
+ }
+
+ .page-link {
+     color: black
+ }
+
+ .pagination.pagination-rounded-flat .page-item {
+     margin: 0 .25rem
+ }
+
+ .pagination-rounded-flat {}
+
+ .pagination-success .page-item.active .page-link,
+ .page-link a {
+     background: #00c689;
+     border-color: #00c689
+ }
+
+ .pagination.pagination-rounded-flat .page-item .page-link,
+ .page-link a {
+     border: none;
+     border-radius: 50px;
+ }
 
 
 </style>
@@ -495,10 +546,10 @@
 	$(document).on("click",".showContent",function(){
 	      if( $(this).parent().find("#contents").css("display")=="none"){
 	    	document.all.contents.style.display="";
-	        $(this).text("목록 닫기");
+	        $(this).text("목록 열기");
 	      }else{
 	    	  document.all.contents.style.display="none";
-	        $(this).text("목록 열기");
+	        $(this).text("목록 닫기");
 	      }
 	});
 
@@ -526,10 +577,6 @@
 			<c:if test="${bContentView.board_type_id eq 4}">
 				<span class="headline">NOTICE</span>
 			</c:if>
-			
-			
-			
-
 			
 			
 				<br /><br /><br />
@@ -613,8 +660,8 @@
     			
     			
     		<div class="divider-header-blank"></div>
-			<button type="button" class="showContent" >목록 열기</button>
-			<div id="contents" style="display:none;">
+			<button type="button" class="showContent" >목록 닫기</button>
+			<div id="contents" style="display:'';">
 			<table class="table">
 				<thead>
 					<tr class="thead">
@@ -626,7 +673,6 @@
 				</thead>
 
 				<tbody>
-
 					<c:forEach items="${boardReviewList }" var="boardReviewList">
 					<tr class="con">
 						<td>${boardReviewList.board_id }</td>
@@ -644,13 +690,16 @@
 				</tbody>
 			</table>
 
-  			<ul class="pagination" style="padding:80px 350px;">	
+
+			
+			<ul class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success">
+  			<!-- <ul class="pagination" style="padding:80px 350px;">	 -->
 		  		<c:if test="${pageMaker.prev}">
 	       		  <li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
 	     		</c:if>
 
 	      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-	         		<li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(idx)}">${idx}</a></li>
+	         		<li class="page-item active"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(idx)}">${idx}</a></li>
 	      		</c:forEach>
 	      
 	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
@@ -658,6 +707,10 @@
 	      		</c:if>  
 		 	</ul> 
 			</div><br /><br /><br />
+
+
+
+
 
 			
 				<div style="padding:0 400px;">
@@ -673,6 +726,10 @@
 					</button>
 				</form>
 				</div>
+
+
+
+
 		</div>
 	</div>
 	<!-- Footer -->
