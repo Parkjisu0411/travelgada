@@ -26,32 +26,75 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 
 <style>
+
+@font-face {
+    font-family: 'GongGothicMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GongGothicLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 내용 글씨 */
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* 모달 스타일 */
-	.dialog{
-    	width : 300px;
-   	 	height : 50px;
-    	float: left;
-    	margin-left: 30px;
-    	margin-botton: 10px;
-	}
+.dialogDi{
+  
+ 	height : 40px;
 
-	.mainImg{
-	    float: left;
-	}
-	
-	.diary_img {
-	width: 240px;
-	height: 240px;
-	object-fit: cover;
-	display: block;
-	border-radius:10px;
 }
 
-.popup_img {
-	width: 300px;
-	height: 300px;
-	object-fit: cover;
+.mainImg{
+    float: left;
 }
+
+.Mcontent{
+	padding:0px;
+	width:100%
+}
+
+.dialogtext{
+	width : 350px;
+  	height : 260px;
+  	font-weight: bold;
+  	
+  	
+  
+}
+.dialog-date, .dialog-hashtag{
+	margin-top:10px;
+	text-align:right;
+}
+
+
+.popup_img{
+	position: relative; 
+	width: 400px; 
+	height: 400px;
+}
+
+.dialog-profile{
+	font-family: 'GongGothicMedium';
+}
+
+.dialog-wrap{
+	width : 350px;
+	margin: 20px 0 20px 20px;
+   	float: left;
+}
+
 	
 </style>
  
@@ -77,7 +120,7 @@
 				var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
 
-				var tr = $(this).parent().parent().parent();
+				var tr = $(this).parent().parent().parent().parent();
 
 				$.ajax({
 					type : "DELETE",
@@ -201,7 +244,7 @@
 /* 작성 팝업 */
 	function openwin() {
 		window.open('about:blank','popwin',
-		  'width=1250,height=800,toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, left=300, top=120');
+		  'width=1000,height=650,toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, left=450, top=220');
   	document.formDate.submit();
 	}//function end
 </script>
@@ -261,15 +304,6 @@
 /* 해시태그 & 링크 끝 */
 </script>
 
-<script>
-
-function d(){
-	console.log("dddddd");
-}
-
-
-</script>
-
 <style>
 
 /* 사진 */
@@ -308,8 +342,9 @@ function d(){
 }
 .masonry .grid__title {
   font-size: 28px;
-  font-weight: bold;
-  margin: 0px 0px 10px 0px;
+ /*  font-weight: bold; */
+  margin: -30px 0px 0px 0px;
+	float:right;
 }
 .masonry .grid__author {
   font-size: 14px;
@@ -332,6 +367,7 @@ function d(){
   color: #fff;
   display: flex;
   flex-direction: column;
+/*   margin-top: 30px; */
 }
 .masonry .grid__tag {
   background-color: rgba(255, 255, 255, 0.6);
@@ -351,6 +387,28 @@ padding-left:10px;
 padding-right:10px;
 
 }
+.writeBtn{
+	border: solid 1px;
+	/* border-radius: 15px 15px 0 0; */
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size:18px;
+	background-color: #1dcad3;
+	/* width:100px; */
+	border-radius: 15px;
+}
+
+#selectDiary{
+	line-height: 60px;
+	background-color: transparent;
+	color: black;
+	font-size: 18px;
+	border-radius: 15px;
+	border: 2px solid #1dcad3;
+	font-family: 'GongGothicMedium';
+	outline:none;
+
+}
 
 </style>
 
@@ -367,16 +425,16 @@ padding-right:10px;
 		<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
 			<div class="row">
 				<div class="col-sm-10"> 
-					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'yg-jalnan'">
+					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'">
 						<c:forEach var="id" items="${planner}">
-							<option value='${id.planner_id}' style="font-family: 'yg-jalnan'">
+							<option value='${id.planner_id}' style="font-family: 'GongGothicMedium'">
 						  		${id.planner_name}&nbsp;&nbsp; ${id.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${id.end_date}
 							</option>
 						</c:forEach>
 					</select>		
 				</div>
 				<div class="col-sm-2">
-					<input class="form-control" value="다이어리 작성" style="font-family: 'yg-jalnan'" type="button" class="btn btn-outline-warning bg-warning text-white" onclick="openwin();"/>
+					<input class="writeBtn form-control" value="다이어리 작성" style="font-family: 'GongGothicMedium'" type="button" class="btn btn-outline-warning bg-warning text-white" onclick="openwin();"/>
 					<br/>    
 		    	</div>
 		     </div>
@@ -384,37 +442,63 @@ padding-right:10px;
 
 		<div class="masonry">
 			<div id="diaryDiv">
-	
 				<c:forEach items="${diary}" var="di">
-	
-				  <div class="grid">
-				    <img src='resources/diary/${di.img_path}' />
-				    <div class="grid__body" data-toggle="modal" data-target="#myModal${di.diary_id}" >
-				      <div class="mt-auto" >
-				        <span id= "${di.diary_id}"></span>
-				      </div>
-				    </div>
-				  </div>
-	  
-				  <div class="modal fade" id="myModal${di.diary_id}" role="dialog">
-						<div class="modal-dialog modal-lg">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h3 class="modal-title" style="font-family: 'yg-jalnan'">diary</h3>
-									<button type="button" class="close" data-dismiss="modal">&times;</button>  
+					<div class="grid">
+						<img src='resources/diary/${di.img_path}' />
+						<!-- 사진 -->
+						<div class="grid__body" data-toggle="modal" data-target="#myModal${di.diary_id}">
+							<!-- <div class="relative"> -->
+								<!--  <a class="grid__link" target="_blank" href="/" ></a> -->
+								<!--    <p class="grid__author"></p> -->
+								<div class="dropdown">
+									<div class="grid__title"
+										class="grid__title btn dropdown-toggle" data-toggle="dropdown">...</div>
+									<!-- <img src="resources/diary/dot3.png" /> -->
+									<div class="dropdown-menu">
+										<a class="dropdown-item"
+											onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}&${di.planner_id}',
+      					'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
+										<a class="delete dropdown-item" href="diary/${di.diary_id}">삭제</a>
+									</div>
 								</div>
-								<div class="modal-body" >
+							<!-- </div> -->
+							<div class="mt-auto">
+								<span id="${di.diary_id}"></span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Modal -->
+					<!-- 여기  -->
+					<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
+						<!-- <div class="mySlides"> -->
+						<div class="modal-dialog modal-lg modal-dialog-centered">
+							<div class="modal-content MDI">
+								<!-- 						<div class="modal-header">
+							</div> -->
+								<div class="modal-body Mcontent">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
 									<div class="mainImg">
-									<img class="popup_img" src='resources/diary/${di.img_path}' style='position:relative; width: 400px; height: 400px;'/>
-								</div>		
-									<div class="dialog"><h4 style="font-family: 'yg-jalnan'">${di.diary_date}</h4></div>
-				        			<div class="dialog"><span id= "modal${di.diary_id}"></span></div>
-				       				<div class="dialog">${di.text}</div>
-				      			</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<img class="popup_img" src='resources/diary/${di.img_path}' />
+									</div>
+									<div class="dialog-wrap">
+										<%-- 			<div class="dialogDi dialog-profile">
+									<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+									${member.member_id}								
+								</div> --%>
+										<div class="dialogDi dialog-date">${di.diary_date}</div>
+										<div class="dialogtext">${di.text}</div>
+										<div class="dialogDi dialog-hashtag">
+											<span id="modal${di.diary_id}"></span>
+										</div>
+									</div>
 								</div>
-				      	  	</div>
+								<!-- <div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+							</div> -->
+							</div>
+							<!-- modal-content end -->
 						</div>
 					</div>
 				</c:forEach>

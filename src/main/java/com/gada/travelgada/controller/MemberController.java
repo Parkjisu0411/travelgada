@@ -1,6 +1,8 @@
 package com.gada.travelgada.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gada.travelgada.domain.BuyDetailVO;
+import com.gada.travelgada.domain.BuyVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.MemberVO;
+import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.domain.ShippingLocVO;
 import com.gada.travelgada.service.MemberServiceImpl;
+import com.gada.travelgada.service.ShoppingServiceImpl;
 import com.gada.travelgada.utils.MemberValidator;
 import com.gada.travelgada.utils.PointCalculator;
 
@@ -41,7 +47,8 @@ public class MemberController {
 	private MemberServiceImpl memberService;
 	@Autowired
 	private MemberValidator memberValidator;
-	
+	@Autowired
+	private ShoppingServiceImpl shoppingService;
 	
 	@GetMapping("/member")
 	public ModelAndView signUpForm(ModelAndView mv) {
@@ -92,10 +99,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/mypage")
-	public ModelAndView memberInfo(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
-		log.info("MyPage=================");
-		mv.setViewName("member/memberInfo");
-		
+	public ModelAndView memberInfo(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
 		//배송지 목록 조회
 		List<ShippingLocVO> shippingList = null;
 		try {
@@ -104,10 +108,41 @@ public class MemberController {
 			log.info(memberDetails.getUsername() + "의 배송지 목록이 없습니다.");
 			shippingList.add(new ShippingLocVO());
 		}
-		mv.addObject("point", PointCalculator.getCurrentPoint(memberService.getPoint(memberDetails.getUsername())));
-		mv.addObject("member", memberService.getMember(memberDetails.getUsername()));
-		mv.addObject("shippingList", shippingList);
-		return mv;
+		//주문 목록 조회
+		List<BuyVO> buyList = shoppingService.getBuyList(memberDetails.getUsername());;
+		List<BuyDetailVO> buyDetailList = null;
+	    for(BuyVO vo : buyList) {
+	    	if(buyDetailList == null) {
+	    		buyDetailList = shoppingService.getBuyDetailList(vo.getBuy_id());            
+	    	} else {
+	    		for(BuyDetailVO detailVO : shoppingService.getBuyDetailList(vo.getBuy_id())) {
+	    			buyDetailList.add(detailVO);
+	    		}
+	    	}
+	    	if(buyDetailList.size() > 4) {
+	    		for(int i = 4; i < buyDetailList.size(); i++) {
+	    			buyDetailList.remove(i);
+	    		}
+	    		break;
+	    	}
+	    }
+	    Map<Integer, BuyVO> buyMap = new HashMap<>();
+	    Map<Integer, ProductVO> productMap = new HashMap<>();
+	      
+	    for(BuyDetailVO vo : buyDetailList) {
+	    	buyMap.put(vo.getBuy_detail_id(), shoppingService.getBuyByDetail(vo));
+	    	productMap.put(vo.getBuy_detail_id(), shoppingService.getProductByDetail(vo));
+	    }
+	      
+	    modelAndView.addObject("point", PointCalculator.getCurrentPoint(memberService.getPoint(memberDetails.getUsername())));
+		modelAndView.addObject("member", memberService.getMember(memberDetails.getUsername()));
+		modelAndView.addObject("shippingList", shippingList);
+		modelAndView.addObject("buyDetailList", buyDetailList);
+		modelAndView.addObject("buyMap", buyMap);
+		modelAndView.addObject("productMap", productMap);
+		
+		modelAndView.setViewName("member/memberInfo");
+		return modelAndView;
 	}
 	
 	@GetMapping("/member/login")

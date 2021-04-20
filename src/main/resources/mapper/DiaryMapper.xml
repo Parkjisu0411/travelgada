@@ -57,5 +57,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select id from seq where seq_name = 'diary_seq'
 		]]> 
 	</select> 
+	
+	<delete id="deleteDiaryByPlannerId">
+		<![CDATA[	
+			delete from diary where planner_id = #{planner_id};
+		]]>
+	</delete>
 
 </mapper>

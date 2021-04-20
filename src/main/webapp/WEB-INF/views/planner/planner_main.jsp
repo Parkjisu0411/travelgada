@@ -10,52 +10,97 @@
 <!-- bootstrap -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 <!-- font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet"><!-- 큰 영어 -->
 <!-- GADA CSS -->
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
-html, body {
-	width: 100%;
-	height: 100%;
-	margins: 0;
-	padding: 0;
-	background-color: #f5f5f5;
-}
+	/* 디데이 글씨 */
+	@font-face {
+	    font-family: 'GongGothicLight';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
+	/* 내용 글씨 */
+	@font-face {
+	    font-family: 'IBMPlexSansKR-Light';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
+	html, body {
+		width: 100%;
+		height: 100%;
+		margins: 0;
+		padding: 0;
+		background-color: white;
+	}
+	
+	#wrap {
+		min-heigth: 100%;
+	}
+	
+	/* 플래너 text */
+	.text_box{
+		padding:15px;
+		font-family: 'IBMPlexSansKR-Light';
+	}
+	
+	.cal{
+		margin-bottom:30px;
+	}
+	
+	/* 플래너 */
+	.card-pl-area{
+		border-radius: 10px;
+		margin: 0px 0px 30px 0px;
+		height: 460;
+		background-color: #f5f5f5;
+	}
+	
+	/* 플래너 이미지 */
+	.card-pl-img {
+		width: 100%;
+		height: 350px;
+		border-radius: 10px 10px 0px 0px;
+		object-fit: cover;
+	}
+	
+	.card-pl-img:hover {
+		cursor: pointer;
+	}
+	
+	/* 디데이 */
+	.dday{
+		background-color:#fcd581; 
+		font-family: 'GongGothicLight';
+	}
+	
+	/* 해드라인 */
+	.headline{
+		font-family: 'Montserrat', sans-serif;  
+		color: #1dcad3; 
+		font-size:40px; 
+		font-weight:bold;
+	}
+	
+	.gada-btn-group {
+		text-align: right;
+	}
 
-#wrap {
-	min-heigth: 100%;
-}
-
-.text_box{
-	padding:15px;
-}
-
-.cal{
-	margin-bottom:30px;
-}
-
-.card-pl-area{
-	border-radius: 10px;
-	margin: 0px 0px 30px 0px;
-	height: 460;
-	background-color: #ffffff;
-}
-
-.card-pl-img {
-	width: 100%;
-	height: 350px;
-	border-radius: 10px 10px 0px 0px;
-	object-fit: cover;
-}
 </style>
+
 <script>
 	function selectPlanner(planner_id) {
 		$.ajax({
@@ -71,7 +116,34 @@ html, body {
 			}
 		});
 	} 
+	
+	function deletePlanner(planner_id) {
+		if(confirm("주의!\n플래너의 모든 데이터가 삭제됩니다.")) {
+			var data = {
+				planner_id : planner_id		
+			};
+			$.ajax({
+				type : "DELETE",
+				url : "/planner/" + planner_id,
+				cahce : false,
+				data : JSON.stringify(data),
+				contentType : "application/json",
+				beforeSend : function(xhr){
+	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				success : function(result) {
+					console.log(result);
+					$("#" + planner_id).remove();
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			})
+		}
+	}
+	
 </script>
+
 </head>
 <body>
 	<!-- Header -->
@@ -79,8 +151,7 @@ html, body {
 	<!--Content -->
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline"
-				style="font-family: 'yg-jalnan'; color: #083d77;">MY PLANNER</h2>
+			<h2 class="headline">MY PLANNER</h2>
 			<br>
 			<div class="cal">
 				<%@ include file="/WEB-INF/views/calendar/calendar3.jsp"%>
@@ -89,18 +160,20 @@ html, body {
 			
 			<div class="row">
 				<c:forEach var="planner" items="${plannerList }">
-					<div class="col-md-4" id="${planner_planner_id }"
-						onclick="selectPlanner(${planner.planner_id})">
-						<div class="card-pl-area">
-							<img class="card-pl-img"
-								src="/resources/img/profile/gada">
+					<div class="col-md-4" id="${planner.planner_id }">
+						<div class="card-pl-area" >
+							<img class="card-pl-img" src="/resources/img/planner/${ planner.planner_img_path}"  onclick="selectPlanner(${planner.planner_id})" onerror="this.src='/resources/img/profile/gada'">
 							<div class="text_box">
 								<strong>${planner.planner_name }</strong>&nbsp; 
-								<span class="badge" style="background-color:#fcd581">
-									D  <c:out value="${DDayMap[planner.planner_id] }" />
+								<span class="badge dday">
+									D - <c:out value="${DDayMap[planner.planner_id] }" />
 								</span>
-								<p>${planner.start_date }~ ${planner.end_date }</p>
-								<%-- <p>${planner.member_id }</p> --%>
+								<br><br>
+								<p>${planner.start_date } ~ ${planner.end_date }</p>
+								<div class="gada-btn-group">
+									<button type="button" class="btn gada-btn-reverse">수정</button>
+									<button type="button" class="btn gada-btn" onclick="deletePlanner(${planner.planner_id})">삭제</button>
+								</div>
 							</div>
 						</div>
 					</div>

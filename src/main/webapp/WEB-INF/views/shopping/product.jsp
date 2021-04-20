@@ -19,42 +19,98 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta charset="UTF-8">
 <title>Product</title>
 <style>
-.product-img-area > img {
-	object-fit: cover;
-	width: 100%;
-}
 
-.product-img-area {
-	border: 1px solid black;
-	padding-left: 30px;
-	padding-right: 30px;
-	margin-right: 30px;
-}
-
-.product-info-area {
-	border: 1px solid black;
-}
-
-.quantity {
-	width: 50px;
-}
-
-.go-top{
-  width: 60px;
-  height: 60px;
-  position: fixed;
-  bottom:calc(10% - 35px);
-  right: calc((100% - 1200px)/ 2 - 80px);
-  display: inline-block;
-  border: none;
-  display: none;
-}
-
+	body {
+		font-family: 'IBMPlexSansKR-Light';
+	}
+	
+	hr {
+		background-color: #1DCAD3;
+	}
+	
+	.product-img-area > img {
+		object-fit: cover;
+		width: 100%;
+	}
+	
+	.product-info-name {
+		font-size: 24px;
+		font-weight: bold;
+	}
+	
+	.product-info-price {
+		font-size: 30px;
+	}
+	
+	.product-info-option {
+		margin: 20px;
+	}
+	
+	.product-info-option a {
+		color: #1DCAD3;
+	}
+	
+	.product-info-option-btn {
+	}
+	
+	.product-info-total {
+		float: right;
+	}
+	
+	.quantity {
+		width: 50px;
+		text-align: center;
+	}
+	
+	.gada-btn-group {
+		text-align: right;
+	}
+	
+	.btn {
+		width: 150px;
+		height: 80px;
+		font-family: 'Montserrat', sans-serif;
+		font-weight: bold;
+		font-size: 20px;
+	}
+	
+	.go-top{
+	  width: 60px;
+	  height: 60px;
+	  position: fixed;
+	  bottom:calc(10% - 35px);
+	  right: calc((100% - 1200px)/ 2 - 80px);
+	  display: inline-block;
+	  border: none;
+	  display: none;
+	  background-color: #1DCAD3;
+	  border-radius: 10px;
+	  color: white;
+	}
+	
+	.gada-card {
+		min-height: 540px;
+	}
+	
 </style>
 <script>
+
+	function countUp() {
+		$("#quantity").val(parseInt($("#quantity").val()) + parseInt(1));
+		getTotal();
+	}
+	
+	function countDown() {
+		if(parseInt($("#quantity").val()) > 1) {			
+			$("#quantity").val(parseInt($("#quantity").val()) - parseInt(1));
+			getTotal();
+		}
+	}
+	
 	function insertIntoCart() {
 		var product_id = $("input:hidden[name=product_id]").val();
 		var quantity = $(".quantity").val();
@@ -87,7 +143,11 @@
 	}
 
 	function getTotal() {
-		var quantity = $(".quantity").val();
+		var quantity = $("#quantity").val();
+		if(parseInt(quantity) < 1) {
+			quantity = 1;
+			$("#quantity").val(quantity);
+		}
 		var price = $("input:hidden[name=price]").val();
 		total = parseInt(quantity) * parseInt(price);
 		$("#total-price").html(total);
@@ -128,32 +188,50 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
-				<div class="product-img-area">
-					<img class="rounded" src="/resources/img/product/${product.img_path }">
+				<div class="gada-card">
+					<div class="product-img-area">
+						<img class="rounded" src="/resources/img/product/${product.img_path }">
+					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<form action="#" method="POST">
-					<input type="hidden" name="product_name" value="${product.product_name }" />
-					<input type="hidden" name="product_id" value="${product.product_id }" />
-					<input type="hidden" name="price" value="${product.price }" />
-					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-					<div class="product-info-area">
-						<p class="product-info-name">${product.product_name }</p>
-						<p class="product-info-price">₩ ${product.price }</p>
-						<label for="quantity">수량</label>
-						<input class="quantity" type="number" name="quantity" value="1"/>
-						<div class="product-info-total">
-							<span>TOTAL ₩</span>
-							<span id="total-price"></span>
+				<div class="gada-card">
+					<form action="#" method="POST">
+						<input type="hidden" name="product_name" value="${product.product_name }" />
+						<input type="hidden" name="product_id" value="${product.product_id }" />
+						<input type="hidden" name="price" value="${product.price }" />
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+						<div class="product-info-area">
+							<br>
+							<p class="product-info-name">${product.product_name }</p>
+							<br><br>
+							<p class="product-info-price">₩ ${product.price } 원</p>
+							<br><br><br><br><br>
+							<div class="product-info-option">
+								<label for="quantity">수량</label><br>
+								<div class="product-info-option-btn">
+									<a href="javascript:;"  onclick="countDown()">
+										<i class="fas fa-minus"></i>
+									</a>
+									<input id="quantity" class="quantity" type="text" name="quantity" value="1" autocomplete="off"/>
+									<a href="javascript:;"  onclick="countUp()">
+										<i class="fas fa-plus"></i>
+									</a>
+									<div class="product-info-total">
+										<span>TOTAL ₩</span>
+										<span id="total-price"></span>
+									</div>
+								</div>
+								<br>
+							</div>
+						</div>					
+						<div class="gada-btn-group">
+							<button type="button" class="btn gada-btn-reverse" onclick="insertIntoCart()">CART</button>
+							<button type="submit" class="btn gada-btn">BUY NOW</button>
 						</div>
-					</div>					
-					<div class="product-btn">
-						<button type="button" class="btn btn-primary" onclick="insertIntoCart()">장바구니</button>
-						<input type="submit" class="btn btn-primary" value="구매하기"/>
-					</div>
-				</form>
-			</div>
+					</form>
+				</div>
+				</div>
 		</div>
 		<hr />
 		<div class="row">

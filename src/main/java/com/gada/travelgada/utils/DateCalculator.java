@@ -1,5 +1,6 @@
 package com.gada.travelgada.utils;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class DateCalculator {
 	public static Date getNextDate(Date date) throws ParseException {
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, 1);
-		return calendar.getTime();
+		return (Date) calendar.getTime();
 	}
 	
 	public static String getToday(Date date) {
@@ -39,6 +40,7 @@ public class DateCalculator {
 		for(int i = 1 ; i < getDifference(startDate, endDate); i++) {
 			date = getNextDate(date);
 			dateList.add(getToday(date));
+			System.out.println(date + "================================");
 		}
 		
 		return dateList;

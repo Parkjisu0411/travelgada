@@ -86,6 +86,24 @@
       height: 100%;
     }
     
+    .main-country-select {
+      text-align: center;
+      background-color: #ffffff;
+      margin: 0 auto;
+      width: 110px;
+      height: 44px;
+      line-height: 44px;
+      border-radius: 64px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    
+    .main-country-select:hover {
+      background-color: #111111;
+      color: #ffffff;
+      cursor: pointer;
+    }
+    
   </style>
   <script type="text/javascript">
   	$(document).ready(function(){
@@ -117,8 +135,23 @@
 			  	</c:forEach>
 		  	</c:forEach>
 	  	</c:forEach>
-  	
+	  	
+/* 	  	$("#country-list");
+	  	<c:forEach items="${countryList}" var="country">
+	  		var data = "";
+	  		data += "<option value='${country.country_name}' />";
+	  		$("#country-list").append(data);
+	  		console.log(data);
+	  	</c:forEach> */
 	});
+  	
+	function getCountry(clickedCountry) {
+		var country = $(clickedCountry).text();
+		
+		$('#schedule_content').val(country);
+		$('#schedule_content').focus();
+	}	
+  	
   </script>
 </head>
 
@@ -172,7 +205,7 @@
         <div class="col-md-3" style="padding-bottom: 30px;">
         <div class="main-product-img" style="background-image: url(/resources/img/main/country/${recommendation.schedule_content}); background-size: cover;">
         <div style="padding: 115px"></div>
-        <div style="text-align: center; background-color: #ffffff; margin: 0 auto; width: 110px; height: 44px; line-height: 45px; border-radius: 64px; font-weight: 700; font-size: 12px;">${recommendation.schedule_content}</div>
+        <div class="main-country-select" onclick='getCountry(this);'>${recommendation.schedule_content}</div>
         </div>
         </div>
       </c:forEach>
@@ -237,22 +270,12 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
+      	<c:forEach var="product" items="${recommendProduct }">
+      		<div class="col-md-3">
+      			<img src="/resources/img/product/${product.img_path }" class="main-product-img">
+      			<p>${product.product_name }</p>
+      		</div>
+      	</c:forEach>
       </div>
     </div>
 

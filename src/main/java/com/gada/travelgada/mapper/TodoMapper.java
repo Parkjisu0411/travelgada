@@ -40,6 +40,10 @@ public interface TodoMapper {
 	public void todo_name_modify(TodoVO todoVO);
 
 	public TodoVO todo_view(int todo_id);
+	
+	public void deleteTodoByPlannerId(int planner_id);
+	
+	public void deleteTodoTypeByPlannerId(int planner_id);
 
 	
 	//public void addToDo(String todo_name, int getRecentTodoTypeId);

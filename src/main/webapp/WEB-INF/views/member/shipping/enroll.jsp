@@ -21,29 +21,45 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>EnrollForm</title>
 <style>
-html, body {
-	width: 100%;
-	height: 100%;
-	margins: 0;
-	padding: 0;
-}
-
-#wrap {
-	min-heigth: 100%;
-}
-
-.member-img {
-	margin: 30px;
-	height: 100px;
-	display: block;
-}
-
-.btn {
-	width: 10%;
-}
+	hr {
+		background-color: #1DCAD3;
+	}
+	
+	body {
+		font-family: 'IBMPlexSansKR-Light';
+		background-color: #f5f5f5;
+	}
+	
+	input {
+		width: 100% !important;
+		margin-bottom: 10px;
+		border-radius: 30px !important;
+	}
+	
+	th {
+		padding-left: 20px;
+	}
+	
+	#postcode {
+		width: 50% !important;
+		display: inline !important;
+	}
+	
+	#postcode-btn {
+		width: 40%;
+	}
+	
+	table {
+		margin: auto;
+	}
+	
+	.gada-btn-group {
+		text-align: center;
+	}
 </style>
 <script>
 	$(document).ready(function() {
@@ -110,11 +126,14 @@ html, body {
 <body>
 	<div class="container">
 		<p id="id" style="display: none"><sec:authentication property="principal.username"/></p>
-		<h2 class="headline" style="font-family: 'yg-jalnan'">배송지 등록/수정</h2>
+		<h2 class="gada-headline">SHIPPING LIST</h2>
+		<h3 class="gada-headline">(enroll / modify)</h3>
+		<hr />
 		<form id="shipping-form">
-			<table class="table">
+			<table class="table-borderless">
 				<colgroup>
-					<col width="150px" />
+					<col width="100px" />
+					<col width="350px" />
 				</colgroup>
 				<thead>
 					<tr><th colspan="2">배송지 정보 상세</th></tr>
@@ -122,33 +141,31 @@ html, body {
 				<tbody>
 					<tr>
 						<th>배송지명</th>
-						<td><input type="text" id="name" placeholder="배송지명" maxlength="20"/></td>
+						<td><input type="text" class="form-control" id="name" placeholder="배송지명" maxlength="20"/></td>
 					</tr>
 					<tr>
 						<th>수령인</th>
-						<td><input type="text" id="receiver" placeholder="수령인" maxlength="20"></td>
+						<td><input type="text" class="form-control" id="receiver" placeholder="수령인" maxlength="20"></td>
 					</tr>
 					<tr>
 						<th>주소</th>
 						<td>
-							<input type="text" id="postcode" placeholder="우편번호" />
-							<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-							<input type="text" id="address" placeholder="주소"><br>
-							<input type="text" id="address_detail" placeholder="상세주소" />
+							<input type="text" class="form-control" id="postcode" placeholder="우편번호" readonly="readonly" />
+							<button type="button" class="btn gada-btn-reverse"  onclick="execDaumPostcode()" id="postcode-btn" >우편번호 찾기</button>
+							<input type="text" class="form-control" id="address" placeholder="주소" readonly="readonly">
+							<input type="text" class="form-control" id="address_detail" placeholder="상세주소" />
 						</td>
 					</tr>
 					<tr>
 						<th>연락처</th>
-						<td><input type="text" id="phone" placeholder="연락처" maxlength="11" /></td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<button class="btn btn-danger" id="enroll-cancel-btn">취소</button>
-							<button class="btn btn-secondary" id="enroll-submit-btn">저장</button>
-						</td>
+						<td><input type="text" class="form-control" id="phone" placeholder="연락처" maxlength="11" /></td>
 					</tr>
 				</tbody>
 			</table>
+			<div class="gada-btn-group">
+				<button class="btn gada-btn" id="enroll-submit-btn">저장</button>
+				<button class="btn gada-btn-reverse" id="enroll-cancel-btn">취소</button>
+			</div>
 		</form>
 	</div>
 	
@@ -211,7 +228,7 @@ html, body {
 	                document.getElementById('postcode').value = data.zonecode;
 	                document.getElementById("address").value = addr;
 	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("detailAddress").focus();
+	                document.getElementById("address_detail").focus();
 	
 	                // iframe을 넣은 element를 안보이게 한다.
 	                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)

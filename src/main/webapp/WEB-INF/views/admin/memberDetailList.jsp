@@ -127,7 +127,7 @@ html, body {
 						</a>
 					</li>
 					<li>
-						<a href="tables.html">
+						<a href="/statistic/destination">
 							<i class="zmdi zmdi-grid"></i> <span>여행지 통계</span>
 						</a>
 					</li>

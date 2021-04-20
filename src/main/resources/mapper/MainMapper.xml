@@ -58,4 +58,16 @@
 		]]>
 	</select>
 	
+	<select id="selectCountry" resultType="com.gada.travelgada.domain.CountryVO">
+		<![CDATA[
+			select * from country order by country_name asc
+		]]>
+	</select>
+	
+	<select id="getRecommendationProduct" resultType="com.gada.travelgada.domain.ProductVO">
+		<![CDATA[
+			select * from product P, (select product_id from buy_detail group by product_id order by count(*) desc) D where P.product_id = D.product_id limit 4
+		]]>
+	</select>
+	
 </mapper>

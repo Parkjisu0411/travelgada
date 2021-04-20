@@ -8,7 +8,7 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-<title>달력</title>
+<title>검색</title>
 
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -44,7 +44,33 @@
 	<link href="resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
     <link href="resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
 
+<!-- 폰트 -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap"
+	rel="stylesheet">
+
 <style>
+
+@font-face {
+    font-family: 'GongGothicMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GongGothicLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 내용 글씨 */
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 html, body {
 	width: 100%;
@@ -228,6 +254,106 @@ span.star-prototype > * {
 
 </style>
 
+<style>
+#keyword_search{
+	height: 45px;
+/* 	width: 50%; */
+/* 	min-width: 100%; */
+	line-height: 70px;
+	background-color: transparent;
+	color: black;
+	font-size: 20px;
+	border-radius: 50px;
+	border: 2px solid #303E57;
+	font-family: 'GongGothicMedium';
+}
+
+.search_icon{
+	background-color: #303E57;
+	border-radius: 50px;
+ 	border: none;
+	padding-top: 10px;
+	padding-bottom: 9px;
+	text-align: center; 
+	width: 45px;
+	height: 45px;
+	margin-left:10px;
+	font-family: 'GongGothicMedium';  
+	font-size:20px; 
+	color:white
+}
+
+.wrap_search{
+	font-family: 'IBMPlexSansKR-Light';
+}
+
+.search_menu{
+	font-family: 'GongGothicMedium';
+	color:#303E57;
+	font-size:20px;
+}
+
+.font_h{
+	font-family: 'GongGothicMedium';
+	color:#1dcad3;
+	font-size:30px;
+}
+
+.memu{
+	border: solid 1px;
+	border-radius: 15px 15px 0 0;
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size:20px;
+	background-color: #1dcad3;
+	width:100px;
+	margin-left:-13px;
+}
+
+.hr_search{
+	border: 0.5px solid #1dcad3;
+}
+
+.line{
+	border: none;
+	outline: none;
+	border-bottom: 2px solid #1dcad3;
+	
+
+}
+
+.more{
+	float:right;
+	color:#1dcad3;
+	font-size:15px;
+	font-family: 'GongGothicMedium';
+}
+
+.search_keyword{
+	color:#303E57;
+	font-size:15px;
+	font-family: 'GongGothicMedium';
+	text-align:center;
+
+}
+
+.hash_color{
+	color:#303E57;
+}
+
+.dropdown-toggle{
+	color:#303E57;
+	font-family: 'GongGothicMedium';
+}
+
+.drop{
+/* 		border: 2px solid #303E57;
+		background-color: transparent;
+		border-radius: 10px; */
+		border:none;
+		float: right;
+}
+</style>
 	
 </head>
 <body>
@@ -239,34 +365,36 @@ span.star-prototype > * {
 	<img id="calImg" src="resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
 
 	<!--Content -->
-	<div class="container">
+	<div class="container wrap_search">
 	
-		<!-- 검색 바 -->
+					<!-- 검색 바 -->
 		<form action="${pageContext.request.contextPath}/search" method="get">			
-			<input id="keyword" class="col-sm-11" type="text" name="keyword" placeholder="Search.."/>
-			<button type="submit"><i class="fa fa-search"></i></button>
+			<input id="keyword_search" class="col-sm-11" type="text" name="keyword" placeholder="검색어를 입력하세요."/>
+			<button class="search_icon" type="submit"><i class="fa fa-search"></i></button>
 		</form>	
 		<br/>
-		<h6>" ${keyword} " 에 관한 검색입니다.</h6>
-		<hr/>	
+		<div class="search_keyword"><span style="font-size:22px">" ${keyword} "</span> 에 관한 검색입니다.</div>
+		<br/>
 		
-		<!-- 검색 메뉴 -->	
-		<a style="font-family: 'yg-jalnan'" href="${pageContext.request.contextPath}/search?keyword=${keyword}">통합</a>&nbsp;&nbsp;		
-		<a style="font-family: 'yg-jalnan'"  href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic">일정</a>&nbsp;&nbsp;
-		<a style="font-family: 'yg-jalnan'" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">다이어리</a>
-		<hr/>
+		<!-- 검색 메뉴 -->
+	  	<div class=" line col-12">
+		<button type="button" class="memu btn" onclick="window.location.href='${pageContext.request.contextPath}/search?keyword=${keyword}'">통합</button>
+		<button type="button" class="memu btn " onclick="window.location.href='${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic'">일정</button>
+		<button type="button" class="memu btn " onclick="window.location.href='${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic'">다이어리</button>
+		</div>
 		
+		<br/><br/>
 		<!-- 일정 searchPl --> 
-		<span style="font-family: 'yg-jalnan'; font-size:20px;">일정</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span class="font_h">일정&nbsp;&nbsp;&nbsp;</span>
 		<span class="dropdown">
-			<span class="dropdown-toggle" data-toggle="dropdown">정렬 ↓ </span>
+			<button class="dropdown-toggle drop" data-toggle="dropdown">정렬</button>
 				<span class="dropdown-menu">
     	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=startDate">최신순</a>
     			</span>		
 		</span>
 		 &nbsp;
 		<span class="dropdown">
-			<span class="dropdown-toggle" data-toggle="dropdown">기간 ↓ </span>
+			<button class="dropdown-toggle drop" data-toggle="dropdown">기간</button>
 				<span class="dropdown-menu">
      		 		<a class="dropdown-item" href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=day">1일</a>
     	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=week">1주</a>
@@ -283,6 +411,7 @@ span.star-prototype > * {
 			<div class="col-sm-7"><!-- 국가, 도시, 만족도 -->
 			
 			<div class="box">
+			<br>
 			국가 : &nbsp;
 			<c:forEach items="${pl.scheduleVO}" var="sc" begin="1" end="100">
 				<c:if test="${sc.schedule_type_id eq 5}">

@@ -20,20 +20,10 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
-html, body {
-	width: 100%;
-	height: 100%;
-	margins: 0;
-	padding: 0;
-}
-
-#wrap {
-	min-heigth: 100%;
-}
-
 .member-img {
 	margin: 30px;
 	height: 100px;
@@ -558,153 +548,137 @@ html, body {
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
-	<div id="wrap">
-		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'">회원 정보</h2>
-			<div class="col-md-8" style="margin: auto;">
-				<table class="table">
-					<tr id="img-area">
-						<th>사진</th>
-						<td>
-							<img id="img" class="rounded-circle member-img" src="/resources/img/profile/${member.profile_img_path }" onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-						</td>
-						<td>
-							<button type="button" class="btn btn-secondary" id="change-img-btn">사진 변경</button>
-						</td>
-					</tr>
-					<tr id="change-img-area" style="display: none;">
-						<th>사진</th>
-						<td>
-							<div class="img-preview">
-								<div id='view_area'>
-									<img class="rounded-circle member-img" id="prev_view_area" width='100' src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'"/>
-								</div>							</div>
-							<form id="fileForm" enctype="multipart/form-data" method="post">
-								<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'view_area')">
-							</form>
-						</td>
-						<td>
+	<div class="container">
+		<h2 class="gada-headline">Member INFO</h2>
+		<div class="col-md-8 gada-card" style="margin: auto;">
+			<table class="table">
+				<tr id="img-area">
+					<th>사진</th>
+					<td>
+						<img id="img" class="rounded-circle member-img" src="/resources/img/profile/${member.profile_img_path }" onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
+					</td>
+					<td>
+						<button type="button" class="btn gada-btn" id="change-img-btn">사진 변경</button>
+					</td>
+				</tr>
+				<tr id="change-img-area" style="display: none;">
+					<th>사진</th>
+					<td>
+						<div class="img-preview">
+							<div id='view_area'>
+								<img class="rounded-circle member-img" id="prev_view_area" width='100' src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'"/>
+							</div>							</div>
+						<form id="fileForm" enctype="multipart/form-data" method="post">
+							<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'view_area')">
+						</form>
+					</td>
+					<td>
+						<div class="btn-group">
+							<button type="button" class="n-btn btn-sm-btn-lighter" id="change-img-cancle-btn">취소</button>
+							<button type="button" class="n-btn btn-sm-btn-accent" id="change-img-finish-btn">완료</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>아이디</th>
+					<td colspan="2" id="id">${member.member_id }</td>
+				</tr>
+				<tr id="password-area">
+					<th>비밀번호</th>
+					<td><strong>********</strong></td>
+					<td>
+						<button type="button" class="btn gada-btn" id="change-password-btn">비밀번호 변경</button>
+					</td>
+				</tr>
+				<tr id="change-password-area" style="display: none;">
+					<th>비밀번호</th>
+					<td colspan="2">
+						<div class="password-change">
+							<div class="input">
+								<label for="change-password-input">현재 비밀번호</label> <input type="password"
+									class="now-input" id="change-password-input" />
+								<span class="error_next_box" id="pswdMsg" style="display: none" aria-live="assertive"></span>
+							</div>
+							<div class="input">
+								<label for="change-newPassword-input">신규 비밀번호</label> <input type="password"
+									class="now-input" id="change-newPassword-input" />
+								<span class="error_next_box" id="npswdMsg" style="display: none" aria-live="assertive"></span>
+							</div>
+							<div class="input">
+								<label for="change-confirmPassword-input">신규 비밀번호 재 입력</label> <input
+									type="password" class="now-input" id="change-confirmPassword-input" />
+								<span class="error_next_box" id="cpswdMsg" style="display: none" aria-live="assertive"></span>
+							</div>
 							<div class="btn-group">
-								<button type="button" class="n-btn btn-sm-btn-lighter" id="change-img-cancle-btn">취소</button>
-								<button type="button" class="n-btn btn-sm-btn-accent" id="change-img-finish-btn">완료</button>
+								<button type="button" class="n-btn btn-sm-btn-lighter" id="change-password-cancle-btn">취소</button>
+								<button type="button" class="n-btn btn-sm-btn-accent disabled" id="change-password-finish-btn" disabled>완료</button>
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<th>아이디</th>
-						<td colspan="2" id="id">${member.member_id }</td>
-					</tr>
-					<tr id="password-area">
-						<th>비밀번호</th>
-						<td><strong>********</strong></td>
-						<td>
-							<button type="button" class="btn btn-secondary" id="change-password-btn">비밀번호 변경</button>
-						</td>
-					</tr>
-					<tr id="change-password-area" style="display: none;">
-						<th>비밀번호</th>
-						<td colspan="2">
-							<div class="password-change">
-								<div class="input">
-									<label for="change-password-input">현재 비밀번호</label> <input type="password"
-										class="now-input" id="change-password-input" />
-									<span class="error_next_box" id="pswdMsg" style="display: none" aria-live="assertive"></span>
-								</div>
-								<div class="input">
-									<label for="change-newPassword-input">신규 비밀번호</label> <input type="password"
-										class="now-input" id="change-newPassword-input" />
-									<span class="error_next_box" id="npswdMsg" style="display: none" aria-live="assertive"></span>
-								</div>
-								<div class="input">
-									<label for="change-confirmPassword-input">신규 비밀번호 재 입력</label> <input
-										type="password" class="now-input" id="change-confirmPassword-input" />
-									<span class="error_next_box" id="cpswdMsg" style="display: none" aria-live="assertive"></span>
-								</div>
-								<div class="btn-group">
-									<button type="button" class="n-btn btn-sm-btn-lighter" id="change-password-cancle-btn">취소</button>
-									<button type="button" class="n-btn btn-sm-btn-accent disabled" id="change-password-finish-btn" disabled>완료</button>
-								</div>
+						</div>
+					</td>
+				</tr>
+				<tr id="name-area">
+					<th>이름</th>
+					<td id="name">${member.member_name }</td>
+					<td><button type="button" class="btn gada-btn" id="change-name-btn">이름 변경</button></td>
+				</tr>
+				<tr id="change-name-area" style="display: none;">
+					<th>이름</th>
+					<td colspan="2">
+						<div class="name-change">
+							<div class="input">
+								<label for="name">변경할 이름</label> <input type="text" class="name-input" id="change-name-input" />
+								<span class="error_next_box" id="nameMsg" style="display: none" aria-live="assertive"></span>
 							</div>
-						</td>
-					</tr>
-					<tr id="name-area">
-						<th>이름</th>
-						<td id="name">${member.member_name }</td>
-						<td><button type="button" class="btn btn-secondary"
-								id="change-name-btn">이름 변경</button></td>
-					</tr>
-					<tr id="change-name-area" style="display: none;">
-						<th>이름</th>
-						<td colspan="2">
-							<div class="name-change">
-								<div class="input">
-									<label for="name">변경할 이름</label> <input type="text"
-										class="name-input" id="change-name-input" />
-									<span class="error_next_box" id="nameMsg" style="display: none" aria-live="assertive"></span>
-								</div>
-								<div class="btn-group">
-									<button type="button" class="n-btn btn-sm-btn-lighter"
-										id="change-name-cancle-btn">취소</button>
-									<button type="button" class="n-btn btn-sm-btn-accent disabled"
-										id="change-name-finish-btn" disabled="disabled">완료</button>
-								</div>
+							<div class="btn-group">
+								<button type="button" class="n-btn btn-sm-btn-lighter" id="change-name-cancle-btn">취소</button>
+								<button type="button" class="n-btn btn-sm-btn-accent disabled" id="change-name-finish-btn" disabled="disabled">완료</button>
 							</div>
-						</td>
-					</tr>
-					<tr id="email-area">
-						<th>이메일</th>
-						<td id="email">${member.email }</td>
-						<td><button type="button" class="btn btn-secondary"
-								id="change-email-btn">이메일 변경</button></td>
-					</tr>
-					<tr id="change-email-area" style="display: none;">
-						<th>이메일</th>
-						<td colspan="2">
-							<div class="email-change">
-								<div class="input">
-									<label for="email">변경할 이메일</label> <input type="text"
-										class="email-input" id="change-email-input" />
-									<span class="error_next_box" id="emailMsg" style="display: none" aria-live="assertive"></span>
-								</div>
-								<div class="btn-group">
-									<button type="button" class="n-btn btn-sm-btn-lighter"
-										id="change-email-cancle-btn">취소</button>
-									<button type="button" class="n-btn btn-sm-btn-accent disabled"
-										id="change-email-finish-btn" disabled="disabled">완료</button>
-								</div>
+						</div>
+					</td>
+				</tr>
+				<tr id="email-area">
+					<th>이메일</th>
+					<td id="email">${member.email }</td>
+					<td><button type="button" class="btn gada-btn" id="change-email-btn">이메일 변경</button></td>
+				</tr>
+				<tr id="change-email-area" style="display: none;">
+					<th>이메일</th>
+					<td colspan="2">
+						<div class="email-change">
+							<div class="input">
+								<label for="email">변경할 이메일</label> <input type="text" class="email-input" id="change-email-input" />
+								<span class="error_next_box" id="emailMsg" style="display: none" aria-live="assertive"></span>
 							</div>
-						</td>
-					</tr>
-					<tr id="phone-area">
-						<th>휴대전화</th>
-						<td id="phone">${member.phone_num }</td>
-						<td><button type="button" class="btn btn-secondary"
-								id="change-phone-btn">휴대전화 변경</button></td>
-					</tr>
-					<tr id="change-phone-area" style="display: none;">
-						<th>휴대전화</th>
-						<td colspan="2">
-							<div class="phone-change">
-								<div class="input">
-									<label for="phone">변경할 휴대전화</label> <input type="text"
-										class="phone-input" id="change-phone-input" />
-									<span class="error_next_box" id="phoneMsg" style="display: none" aria-live="assertive"></span>
-								</div>
-								<div class="btn-group">
-									<button type="button" class="n-btn btn-sm-btn-lighter"
-										id="change-phone-cancle-btn">취소</button>
-									<button type="button" class="n-btn btn-sm-btn-accent disabled"
-										id="change-phone-finish-btn" disabled>완료</button>
-								</div>
+							<div class="btn-group">
+								<button type="button" class="n-btn btn-sm-btn-lighter" id="change-email-cancle-btn">취소</button>
+								<button type="button" class="n-btn btn-sm-btn-accent disabled" id="change-email-finish-btn" disabled="disabled">완료</button>
 							</div>
-						</td>
-					</tr>
-				</table>
-				<button type="button" class="btn btn-secondary"
-					onclick="window.history.back();">돌아가기</button>
-				<button type="button" class="btn btn-danger"
-					onclick="#" id="withdrawal-member-btn">회원탈퇴</button>
-			</div>
+						</div>
+					</td>
+				</tr>
+				<tr id="phone-area">
+					<th>휴대전화</th>
+					<td id="phone">${member.phone_num }</td>
+					<td><button type="button" class="btn gada-btn" id="change-phone-btn">휴대전화 변경</button></td>
+				</tr>
+				<tr id="change-phone-area" style="display: none;">
+					<th>휴대전화</th>
+					<td colspan="2">
+						<div class="phone-change">
+							<div class="input">
+								<label for="phone">변경할 휴대전화</label> <input type="text" class="phone-input" id="change-phone-input" />
+								<span class="error_next_box" id="phoneMsg" style="display: none" aria-live="assertive"></span>
+							</div>
+							<div class="btn-group">
+								<button type="button" class="n-btn btn-sm-btn-lighter" id="change-phone-cancle-btn">취소</button>
+								<button type="button" class="n-btn btn-sm-btn-accent disabled" id="change-phone-finish-btn" disabled>완료</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<button type="button" class="btn gada-btn" onclick="window.history.back();">돌아가기</button>
+			<button type="button" class="btn gada-btn" onclick="#" id="withdrawal-member-btn">회원탈퇴</button>
 		</div>
 	</div>
 	<!-- Footer -->

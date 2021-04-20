@@ -10,10 +10,11 @@
 <!-- bootstrap -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 <!-- font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap"
+	rel="stylesheet">
 <!-- GADA CSS -->
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
@@ -30,10 +31,6 @@
 <meta charset="UTF-8">
 <title>Schedule</title>
 <style>
-.slick-arrow {
-	background-color: grey;;
-}
-
 .budget {
 	color: grey;
 	font-size: 15px;
@@ -49,6 +46,14 @@
 .date-btn {
 	height: 50px !important;
 	margin: 10px;
+	border: solid 1px;
+	/* border-radius: 15px 15px 0 0; */
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size: 18px;
+	background-color: #1dcad3;
+	/* width:100px; */
+	border-radius: 15px;
 }
 
 .delete-btn {
@@ -70,17 +75,17 @@
 }
 
 #map {
-  width: 300px;
-  height: 300px;
-  display: none;
-  overflow: hidden;
-  float: right;
+	width: 300px;
+	height: 300px;
+	display: none;
+	overflow: hidden;
+	float: right;
 }
 
-.ui-state-highlight{
-  width:200px;
-  height: 2px;
-  background-color:grey;
+.ui-state-highlight {
+	width: 200px;
+	height: 2px;
+	background-color: grey;
 }
 
 .insert-btn {
@@ -92,7 +97,43 @@
 thead {
 	text-align: center;
 }
+
+.headline {
+	font-size: 30px;
+	color: #1dcad3;
+	font-family: 'GongGothicMedium';
+}
+
+.table thead {
+	border-top: 2px solid #1dcad3;
+	border-bottom: 2px solid #1dcad3;
+}
+
+.table {
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight: bold;
+	text-align: center;
+}
+
+.table-schedule-hr {
+	font-family: 'GongGothicLight';
+	font-size: 20px;
+}
+
+.date-area {
+	font-family: 'GongGothicMedium';
+}
+
+.schedule-area {
+	text-align: left;
+}
+
+.budget-area {
+	text-align: right;
+}
+
 </style>
+
 <script type="text/javascript">
 	function sleep(ms) {
 	  return new Promise(resolve=>setTimeout(resolve, ms));
@@ -435,10 +476,12 @@ thead {
 		//slick
 		$('.date-group').slick({
 			slide: 'button',
-			arrows: true,
+			arrow:true,
 			infinite: false,
 			slidesToShow: 4,
 			slidesToScroll: 4,
+			prevArrow : "<img src='/resources/prev2.png' class='slick-prev'/>",      // 이전 화살표 모양 설정
+            nextArrow : "<img src='/resources/next2.png' class='slick-next'/>",      // 다음 화살표 모양 설정
 			responsive: [ // 반응형 웹 구현 옵션
 				{  
 					breakpoint: 960, //화면 사이즈 960px
@@ -640,6 +683,7 @@ thead {
 </script>
 <!-- google Map API -->
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDK3h87HvHsFJIOBZ7Vuo-9V6lqognoY2M&callback=initMap"></script>
+
 </head>
 <body>
 
@@ -649,7 +693,7 @@ thead {
 	<div class="container">
 	
 		<!-- headline -->
-		<h3 class="headline" style="font-family: 'yg-jalnan'">${member_id}님의 일정입니다.</h3>
+		<p class="headline"><span style="color: #303E57">" ${member_id} "</span> 님의 일정입니다.</p>
 		<br/>
 		<!-- planner option -->
 		<%-- <form>
@@ -674,7 +718,7 @@ thead {
 		<div class="col-md-12">
 			<div class="date-group">
 				<c:forEach var="date" items="${dateList }">
-					<button class="btn btn-secondary btn-lg date-btn" onclick="moveTo('${date}')">
+					<button class="btn btn-lg date-btn" onclick="moveTo('${date}')">
 						${date}
 					</button>
 				</c:forEach>
@@ -692,21 +736,21 @@ thead {
 					<col width="15%" />
 					<col width="15%" />
 				</colgroup>
-				<thead style="font-family:yg-jalnan;">
-					<tr>
-						<th>날짜</th>
-						<th>국가</th>
-						<th>도시</th>
-						<th>교통</th>
-						<th>일정</th>
-						<th>숙소</th>
-						<th>비용</th>
+				<thead>
+					<tr class="table-schedule-hr">
+						<td>날짜</td>
+						<td>국가</td>
+						<td>도시</td>
+						<td>교통</td>
+						<td>일정</td>
+						<td>숙소</td>
+						<td>비용</td>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="date" items="${dateList}">
 						<tr id="${date }">
-							<td style="font-family: yg-jalnan;" class="date-area">${date}</td>
+							<td class="date-area">${date}</td>
 							<td class="country-area">
 								<c:forEach var="country" items="${countryList }">
 									<c:if test="${country.schedule_date eq date}">

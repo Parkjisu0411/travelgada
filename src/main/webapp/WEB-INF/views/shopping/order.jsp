@@ -38,14 +38,6 @@
 		  text-decoration: underline !important;
 		}
 		
-		.other-button {
-		  height: 40px !important;
-		  background-color: #000000 !important;
-		  color: #ffffff !important;
-		  border-radius: 32px !important;
-		  font-size: 14px !important;
-		}
-		
 		.input-information {
 		    border-radius: 30px !important;
 		    height: 40px !important;
@@ -124,15 +116,29 @@
 		}
 
 		.pay-button {
-			background-color: #FE5000;
-			color: #FFFFFF;
 			font-size: 20px;
 			width: 100%;
 			height: 50px;
 			margin-top: 10px;
-			border-radius: 32px;
 			border: none;
 			outline: none;
+			background-color: #1DCAD3 !important;
+			color: white !important;
+			border-radius: 50px !important;
+			font-family: 'Noto Sans KR', sans-serif !important;
+		}
+		
+		.pay-button:hover {
+		  	background-color: #189fa6 !important;
+		}
+		
+		.gada-btn-white {
+		  border: 1px solid #1DCAD3 !important;
+		  color: #1DCAD3 !important;
+		  background-color: #ffffff;
+		  border-radius: 50px !important;
+		  font-family: 'Noto Sans KR', sans-serif !important;
+		  font-size: 15px !important;
 		}
 
 		.col-md-5 {
@@ -150,6 +156,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/footer.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/utils.css">
 
 	<!-- Bootstrap -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -223,7 +230,7 @@
 				<div class="shipping-loc-area">
 				    <label for="address-name" style="display: block;">배송지명</label>
 					<input type="text" id="address-name" class="form-control input-information" maxlength="13" placeholder="배송지명" style="display: inline; width: 432px !important;">
-				    <button type="button" class="btn other-button" data-toggle="modal" data-target="#exampleModalCenter">
+				    <button type="button" class="btn gada-btn-white" data-toggle="modal" data-target="#exampleModalCenter">
 					주소록
 				    </button>
 				    <div style="padding: 3px;"></div>
@@ -231,8 +238,8 @@
 					<input type="text" id="recipient" class="form-control input-information" maxlength="13" placeholder="수령인">
 					<div style="padding: 3px;"></div>
 					<label for="postcode" style="display: block;">주소</label>
-					<input type="text" id="postcode" class="form-control input-information" placeholder="우편번호" style="display: inline; width: 392px !important;" readonly="readonly">
-					<input type="button" onclick="execDaumPostcode()" class="btn other-button" value="우편번호 찾기">
+					<input type="text" id="postcode" class="form-control input-information" placeholder="우편번호" style="display: inline; width: 390px !important;" readonly="readonly">
+					<input type="button" onclick="execDaumPostcode()" class="btn gada-btn-white" value="우편번호 찾기">
 					<div id="wrap" style="display:none;border:1px solid;width:510px;height:300px;margin:5px 0;position:relative">
 						<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
 							style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
@@ -251,7 +258,7 @@
 				<br>
 				<input type="number" id="point" class="form-control input-information" onchange='printPoint()' min="0" value="0"
 					onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" style="display: inline; width: 420px !important;"/>
-				<input type="button" class="btn other-button" onclick='useAllPoint()' value="모두 사용" />&nbsp;보유 포인트 ${point}p<br>
+				<input type="button" class="btn gada-btn-white" onclick='useAllPoint()' value="모두 사용" style="width: 80px;"/>&nbsp;보유 포인트 ${point}p<br>
 			</div>
 
 			<!-- 결제 정보 -->

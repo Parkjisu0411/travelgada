@@ -42,7 +42,7 @@
 	
 	<select id="selectPoint" resultType="com.gada.travelgada.domain.PointVO">
 		<![CDATA[
-			select * from point where member_id = #{member_id}
+			select * from point where member_id = #{member_id} order by save_date desc
 		]]>
 	</select>
 	

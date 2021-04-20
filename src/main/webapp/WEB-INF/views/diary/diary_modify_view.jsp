@@ -16,6 +16,9 @@
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
  	
  	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+ 	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet"><!-- 큰 영어 -->
+  
 	
 	<script type="text/javascript">
 	/* 미리보기 */
@@ -111,8 +114,66 @@ $(document).ready(function(){
     border: 1px solid #bcbcbc;
   } */ 
   table {
-    margin-left:60px;
+    margin-left:30px;
+    font-family: 'IBMPlexSansKR-Light';
   }
+  
+  @font-face {
+    font-family: 'GongGothicMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GongGothicLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 내용 글씨 */
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.modifyBtn{
+	text-align:right;
+}
+.diaryHr{
+	color: #1dcad3;
+	font-size:40px;
+	font-family: 'Montserrat', sans-serif;  
+}
+.fileStyle{
+	border: solid 1px;
+	/* border-radius: 15px 15px 0 0; */
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size:18px;
+	background-color: #1dcad3;
+	/* width:100px; */
+	border-radius: 5px; 
+
+}
+#submitBtn{
+	border: solid 1px;
+	/* border-radius: 15px 15px 0 0; */
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size:18px;
+	background-color: #1dcad3;
+	/* width:100px; */
+	 border-radius: 5px; 
+
+}
+#View_area, #prev_View_area{
+border-radius: 10px; 
+
+}
 </style>
 	
 </head>
@@ -125,10 +186,10 @@ $(document).ready(function(){
 
 <div class="container">
 <br>
-  <h1 class="text-warning" style="font-family: 'yg-jalnan'">Diary</h1>
+  <div class="diaryHr">Diary</div>
   <div class="row">
 
-   <div class="col-sm-3"> 
+<!--    <div class="col-sm-3">  -->
  <table class="table table-borderless">
 			<tr>
       			<td rowspan='5'>
@@ -136,41 +197,43 @@ $(document).ready(function(){
       				
 				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '>
 				<br>
-				<img id="prev_View_area" width='100' src='/resources/diary/${diary_view.img_path}' style='position:relative; width: 400px; height: 400px;'/>
+				<img id="prev_View_area"  src='/resources/diary/${diary_view.img_path}' style='position:relative; width: 400px; height: 400px;'/>
 				</div>
 					</td>
 				<td>
 <!--      <div class="form-group"> -->
       
-     	<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+     	<input type="file" class="form-control-file border fileStyle" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
 	
 <!--     </div>  -->
 				</td>
 			</tr> 
 			<tr>
 				<td>
-      				<textarea rows= "10" cols="50" name="text">${diary_view.text}</textarea>
+      				<textarea rows= "10" cols="55" name="text">${diary_view.text}</textarea>
 				</td>
 			</tr>
 			<tr>
       			<td>
-      				<h4 style="font-family: 'yg-jalnan'">Tag</h4>
+      				<span style="font-family: 'GongGothicMedium'">Tag</span>
 				</td>
 			</tr>
 			<tr>
 			<td>
-      		<textarea rows= "2" cols="50" name="hashtag">${diary_view.hashtag}</textarea>
+      		<textarea rows= "2" cols="55" name="hashtag">${diary_view.hashtag}</textarea>
 			</td>
 			</tr>
 			<tr>
-			<td>
-					<input type="button" style="font-family: 'yg-jalnan'" id="submitBtn" value="작성">
+			<td class="modifyBtn">
+			<!-- <div > -->
+					<input type="button"  id="submitBtn" value="작성">
+		<!-- 	</div> -->
 			</td>
 			</tr>
 			</table>
 			</div> 
 	</div>
-	</div>
+<!-- 	</div> -->
 </form>
 	
 </body>

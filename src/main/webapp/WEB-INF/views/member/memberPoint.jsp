@@ -21,29 +21,38 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
-html, body {
-	width: 100%;
-	height: 100%;
-	margins: 0;
-	padding: 0;
-}
-
-#wrap {
-	min-heigth: 100%;
-}
-
-.member-img {
-	margin: 30px;
-	height:100px;
-	display: block;
-}
+	hr {
+		background-color: #1DCAD3;
+	}
+	
+	.gada-btn-group {
+		text-align: center;
+	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
-		console.log($("tbody tr").length);
+		var count = $("tbody tr").length;
+		for(var i = count; i >= 0; i--) {
+			var tr = $("tbody tr:nth-child(" + i + ")");
+			var point = tr.children(".point").text();
+			var flag = tr.children(".flag").text();
+			console.log(flag);
+			if(flag == "사용") {
+				point = point * -1;
+			}
+			var amount = tr.children(".amount");
+			if(i == (count)) {
+				amount.text(point);
+			} else {
+				point = parseInt($("tbody tr:nth-child(" + (i + 1) + ")").children(".amount").text()) + parseInt(point);
+				amount.text(point);
+				console.log(point);
+			}
+		};
 	})
 </script>
 </head>
@@ -53,9 +62,11 @@ html, body {
 	<!--Content -->
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline" style="font-family: 'yg-jalnan'">포인트 내역</h2>
+			<h2 class="gada-headline">POINT LIST</h2>
+			<hr />
 			<div class="row">
 				<div class="col-md-12 member-detail">
+					<div class="gada-card">
 					<table class="table">
 						<thead>
 							<tr>
@@ -68,17 +79,15 @@ html, body {
 						<tbody>
 							<c:forEach var="point" items="${pointList }">
 								<tr id="${point.point_id }">
-									<td class="flag">
-										<c:choose>
-											<c:when test="${point.save_flag eq 0 }">
-												적립
-											</c:when>
-											<c:otherwise>
-												사용
-											</c:otherwise>
-										</c:choose>
-									</td>
-									<td class="date"><fmt:formatDate value="${point.save_date }" pattern="yyyy.MM.dd"/></td>
+									<c:choose>
+										<c:when test="${point.save_flag eq 0 }">
+											<td class="flag" style="color:#1DCAD3;">적립</td>
+										</c:when>
+										<c:otherwise>
+											<td class="flag" style="color:#ff7473;">사용</td>
+										</c:otherwise>
+									</c:choose>
+									<td class="date"><fmt:formatDate value="${point.save_date }" pattern="yyyy.MM.dd hh:mm:ss"/></td>
 									<td class="point">${point.amount }</td>
 									<td class="amount">
 										
@@ -87,7 +96,10 @@ html, body {
 							</c:forEach>
 						</tbody>
 					</table>
-					<button type="button" class="btn btn-secondary" onclick="window.history.back();">돌아가기</button>
+					<div class="gada-btn-group">
+						<button type="button" class="btn gada-btn-reverse" onclick="window.history.back();">돌아가기</button>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>

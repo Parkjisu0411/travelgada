@@ -12,6 +12,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet"><!-- 큰 영어 -->
   
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	
@@ -115,8 +116,66 @@ $(document).ready(function(){
     border: 1px solid #bcbcbc;
   } */ 
   table {
-    margin-left:60px;
+    margin-left:30px;
+    font-family: 'IBMPlexSansKR-Light';
   }
+  
+  @font-face {
+    font-family: 'GongGothicMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GongGothicLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 내용 글씨 */
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.modifyBtn{
+	text-align:right;
+}
+.diaryHr{
+	color: #1dcad3;
+	font-size:40px;
+	font-family: 'Montserrat', sans-serif;  
+}
+.fileStyle{
+	border: solid 1px;
+	/* border-radius: 15px 15px 0 0; */
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size:18px;
+	background-color: #1dcad3;
+	/* width:100px; */
+	border-radius: 5px; 
+
+}
+#fileCheck{
+	border: solid 1px;
+	/* border-radius: 15px 15px 0 0; */
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size:18px;
+	background-color: #1dcad3;
+	/* width:100px; */
+	 border-radius: 5px; 
+
+}
+#View_area, #prev_View_area{
+border-radius: 10px; 
+
+}
 </style>
 
 
@@ -131,51 +190,51 @@ $(document).ready(function(){
 
 <div class="container">
 <br>
-  <h1 class="text-warning" style="font-family: 'yg-jalnan'">Diary</h1>
+  <div class="diaryHr">Diary</div>
   <div class="row">
 
-<div class="col-sm-3">
+<!-- <div class="col-sm-3"> -->
  <table class="table table-borderless">
 			<tr>
       			<td rowspan='5'>
 				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '>
 				<br>
-				<img id="prev_View_area" width='100' src='/resources/diary/camera2.png' style='position:relative; width: 400px; height: 400px;'/>
+				<img id="prev_View_area"  src='/resources/diary/camera2.png' style='position:relative; width: 400px; height: 400px;'/>
 				</div>
 					</td>
 				<td>
 <!--      <div class="form-group"> -->
       
-     	<input type="file" style="font-family: 'yg-jalnan'" class="form-control-file border" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+     	<input type="file" class="form-control-file border fileStyle" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
 		<!-- <input type="button" id='uploadBtn' value="업로드"/> -->
 <!--     </div>  -->
 				</td>
 			</tr> 
 			<tr>
 				<td>
-      				<textarea rows= "10" cols="50" name="text"/></textarea>
+      				<textarea rows= "10" cols="55" name="text"/></textarea>
 				</td>
 			</tr>
 			<tr>
       			<td>
-      				<h4 style="font-family: 'yg-jalnan'">Tag</h4>
+      				<span style="font-family: 'GongGothicMedium'">Tag</span>
 				</td>
 			</tr>
 			<tr>
 			<td>
-      		<textarea rows= "2" cols="50" name="hashtag"/></textarea>
+      		<textarea rows= "2" cols="55" name="hashtag"/></textarea>
 			</td>
 			</tr>
 			<tr>
-			<td>
+			<td class="modifyBtn">
 			<!-- <input type="button" value="작성" style="display:none;" > -->
-			<button type="button" id="fileCheck" style="font-family: 'yg-jalnan'">작성</button>
+			<button type="button" id="fileCheck">작성</button>
 			</td>
 			</tr>
 			</table>
 			</div> 
 	</div>
-	</div>
+<!-- 	</div> -->
 </form>
 	
 </body>

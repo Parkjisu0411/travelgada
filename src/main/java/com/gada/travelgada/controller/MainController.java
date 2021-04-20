@@ -30,7 +30,8 @@ public class MainController {
 			modelAndView.addObject("plannerList", plannerService.getMainPlanner(memberDetails.getUsername()));
 
 		modelAndView.addObject("recommendation", mainService.getRecommendationCountry());
-		
+		modelAndView.addObject("countryList", mainService.getCountry());
+		modelAndView.addObject("recommendProduct", mainService.getRecommendationProduct());
 		modelAndView.setViewName("main/main");
 
 		return modelAndView;
