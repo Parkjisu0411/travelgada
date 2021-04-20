@@ -71,11 +71,12 @@
     }
     
     #sidePanel {
-      width: 16%;
+      width: 18%;
       height: 100%;
       overflow: scroll;
       float: right;
       background-color: #ffffff;
+      overflow-x: hidden;
     }
     
     .schedule-area {
@@ -109,8 +110,7 @@
       font-weight: 700;
     }
     
-    /*  */
-    
+    /* 페이지 로딩 화면 */
     #preloder {
 	   position: fixed;
 	   width: 100%;
@@ -138,19 +138,19 @@
 	   0% {
 	      -webkit-transform: rotate(0deg);
 	      transform: rotate(0deg);
-	      border: 4px solid #f44336;
+	      border: 4px solid #ffffff;
 	      border-left-color: transparent;
 	   }
 	   50% {
 	      -webkit-transform: rotate(180deg);
 	      transform: rotate(180deg);
-	      border: 4px solid #673ab7;
+	      border: 4px solid #ffffff;
 	      border-left-color: transparent;
 	   }
 	   100% {
 	      -webkit-transform: rotate(360deg);
 	      transform: rotate(360deg);
-	      border: 4px solid #f44336;
+	      border: 4px solid #ffffff;
 	      border-left-color: transparent;
 	   }
 	}
@@ -158,17 +158,17 @@
 	@-webkit-keyframes loader {
 	   0% {
 	      -webkit-transform: rotate(0deg);
-	      border: 4px solid #f44336;
+	      border: 4px solid #ffffff;
 	      border-left-color: transparent;
 	   }
 	   50% {
 	      -webkit-transform: rotate(180deg);
-	      border: 4px solid #673ab7;
+	      border: 4px solid #ffffff;
 	      border-left-color: transparent;
 	   }
 	   100% {
 	      -webkit-transform: rotate(360deg);
-	      border: 4px solid #f44336;
+	      border: 4px solid #ffffff;
 	      border-left-color: transparent;
 	   }
 	}
@@ -208,7 +208,6 @@
         });
         /* map.setOptions({draggable: false}); */
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerControlDiv);
-        map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(sidePanel);
         var bounds = new google.maps.LatLngBounds();
 
         for (var index = 0; index < paths.length; index++) {
@@ -310,7 +309,7 @@
     
     $(window).on('load', function () {
         $(".loader").fadeOut();
-        $("#preloder").delay(200).fadeOut("slow");
+        $("#preloder").delay(150).fadeOut("slow");
     });
     
 	getWeather();
