@@ -27,7 +27,7 @@
     #map {
       height: 100%;
     }
-
+    
     html,
     body {
       height: 100%;
@@ -70,7 +70,7 @@
       font-weight: 600;
     }
     
-    #map-side-panel {
+    #sidePanel {
       width: 16%;
       height: 100%;
       overflow: scroll;
@@ -94,25 +94,95 @@
     }
     
     .d-day {
-      font-size: 27px;
+      font-size: 33px;
+      font-weight: 500;
     }
     
     .date {
       float: right;
-      font-size: 17px;
+      font-size: 18px;
+      font-weight: 400;
     }
     
     .city {
       font-size: 17px;
       font-weight: 700;
     }
+    
+    /*  */
+    
+    #preloder {
+	   position: fixed;
+	   width: 100%;
+	   height: 100%;
+	   top: 0;
+	   left: 0;
+	   z-index: 999999;
+	   background: #000;
+	}
+	
+	.loader {
+	   width: 40px;
+	   height: 40px;
+	   position: absolute;
+	   top: 50%;
+	   left: 50%;
+	   margin-top: -13px;
+	   margin-left: -13px;
+	   border-radius: 60px;
+	   animation: loader 0.8s linear infinite;
+	   -webkit-animation: loader 0.8s linear infinite;
+	}
+	
+	@keyframes loader {
+	   0% {
+	      -webkit-transform: rotate(0deg);
+	      transform: rotate(0deg);
+	      border: 4px solid #f44336;
+	      border-left-color: transparent;
+	   }
+	   50% {
+	      -webkit-transform: rotate(180deg);
+	      transform: rotate(180deg);
+	      border: 4px solid #673ab7;
+	      border-left-color: transparent;
+	   }
+	   100% {
+	      -webkit-transform: rotate(360deg);
+	      transform: rotate(360deg);
+	      border: 4px solid #f44336;
+	      border-left-color: transparent;
+	   }
+	}
+	
+	@-webkit-keyframes loader {
+	   0% {
+	      -webkit-transform: rotate(0deg);
+	      border: 4px solid #f44336;
+	      border-left-color: transparent;
+	   }
+	   50% {
+	      -webkit-transform: rotate(180deg);
+	      border: 4px solid #673ab7;
+	      border-left-color: transparent;
+	   }
+	   100% {
+	      -webkit-transform: rotate(360deg);
+	      border: 4px solid #f44336;
+	      border-left-color: transparent;
+	   }
+	}
   </style>
 </head>
 
 <body>
 
+   <div id="preloder">
+      <div class="loader"></div>
+   </div>
+
   <div id="centerControlDiv"></div>
-  <div id="map-side-panel">
+  <div id="sidePanel">
       <c:forEach var="date" items="${dateList}">
       <c:set var="dayIndex" value="${dayIndex + 1}" />
       <div class="schedule-area" onclick="location.href='http://localhost:8282/map/${planner_id}?schedule_date=${date}';"><span class="d-day">DAY&nbsp;<c:out value="${dayIndex}" /></span><span class="date">${date}</span></div>
@@ -138,6 +208,7 @@
         });
         /* map.setOptions({draggable: false}); */
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerControlDiv);
+        map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(sidePanel);
         var bounds = new google.maps.LatLngBounds();
 
         for (var index = 0; index < paths.length; index++) {
@@ -203,7 +274,7 @@
 	        	var icon = result.weather[0].icon;
 	        	var iconUrl = 'http://openweathermap.org/img/wn/' + icon + "@2x.png";
 	        	
-	        	$("#centerControlDiv").prepend('<div class="city">' + result.name + ', ' + result.sys.country + '</div>' + '<img src=' + iconUrl + '><br>' + weatherEnglishToKorean(weatherId) + '<br><br>' + '최저 기온: ' + result.main.temp_min + '&#8451;' + '<br>' + '최고 기온: ' + result.main.temp_max + '&#8451;' + '<br>' + '체감 기온: ' + result.main.feels_like + '&#8451;' + '</span>');
+	        	$("#centerControlDiv").prepend('<div class="city">' + result.name + ', ' + result.sys.country + '</div>' + '<img src=' + iconUrl + '><br>' + weatherEnglishToKorean(weatherId) + '<br><br>' + '<span style="font-size: 15px !important; font-weight: 500;">최저 기온: ' + result.main.temp_min + '&#8451;' + '<br>' + '최고 기온: ' + result.main.temp_max + '&#8451;' + '<br>' + '체감 기온: ' + result.main.feels_like + '&#8451;' + '</span></span>');
 			}
 		})
     }
@@ -236,6 +307,11 @@
 	    }
     	return "날씨 정보 없음";
     }
+    
+    $(window).on('load', function () {
+        $(".loader").fadeOut();
+        $("#preloder").delay(200).fadeOut("slow");
+    });
     
 	getWeather();
     
