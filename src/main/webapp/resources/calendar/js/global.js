@@ -7,7 +7,7 @@
     
     try {
     
-        $('#input-start').daterangepicker({
+        $('.input-start').daterangepicker({
             ranges: true,
             autoApply: true,
             applyButtonClasses: false,
@@ -17,8 +17,8 @@
             var startDay = start.format('YYYY-MM-DD');
             var endDay = end.format('YYYY-MM-DD');
     
-            $('#input-start').val(startDay.replace(/\//g, ' '));
-            $('#input-end').val(endDay.replace(/\//g, ' '));
+            $('.input-start').val(startDay.replace(/\//g, ' '));
+            $('.input-end').val(endDay.replace(/\//g, ' '));
         });
     
         $('#input-start-2').daterangepicker({

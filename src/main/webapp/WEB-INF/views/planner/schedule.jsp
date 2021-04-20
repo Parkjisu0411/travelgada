@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <!-- slick -->
 <link rel="stylesheet" type="text/css" href="/resources/slick/slick.css"/>
 <link rel="stylesheet" type="text/css" href="/resources/slick/slick-theme.css"/>
@@ -30,65 +31,97 @@
 <meta charset="UTF-8">
 <title>Schedule</title>
 <style>
-.slick-arrow {
-	background-color: grey;;
-}
-
-.budget {
-	color: grey;
-	font-size: 15px;
-}
-
-.order-control {
-	display: inline-block;
-	float: right;
-	color: #A2A2A2;
-}
-
-.date-btn {
-	height: 50px !important;
-	margin: 10px;
-}
-
-.delete-btn {
-	display: inline-block;
-	float: right;
-	color: #A2A2A2;
-}
-
-.input-budget-after {
-	color: #A2A2A2;
-	display: none;
-}
-
-.input-budget-area {
-	width: 70px;
-	border: none;
-	border-bottom: 2px solid gray;
-}
-
-#map {
-  width: 300px;
-  height: 300px;
-  display: none;
-  overflow: hidden;
-  float: right;
-}
-
-.ui-state-highlight{
-  width:200px;
-  height: 2px;
-  background-color:grey;
-}
-
-.insert-btn {
-	text-align: center;
-	color: #A2A2A2;
-}
-
-thead {
-	text-align: center;
-}
+	
+	.budget {
+		color: grey;
+		font-size: 15px;
+	}
+	
+	.order-control {
+		display: inline-block;
+		float: right;
+		color: #A2A2A2;
+	}
+	
+	.date-btn {
+		height: 50px !important;
+		margin: 10px;
+		border: solid 1px;
+		font-family: 'GongGothicMedium';
+		color: white;
+		font-size: 18px;
+		background-color: #1dcad3;
+		border-radius: 15px;
+	}
+	
+	.date-btn:hover {
+		background-color: #189fa6;
+		border: none;
+	}
+	
+	.delete-btn {
+		display: inline-block;
+		float: right;
+		color: #A2A2A2;
+	}
+	
+	.input-budget-after {
+		color: #A2A2A2;
+		display: none;
+	}
+	
+	.input-budget-area {
+		width: 70px;
+		border: none;
+		border-bottom: 2px solid gray;
+	}
+	
+	#map {
+	  width: 300px;
+	  height: 300px;
+	  display: none;
+	  overflow: hidden;
+	  float: right;
+	}
+	
+	.ui-state-highlight{
+	  width:200px;
+	  height: 2px;
+	  background-color:grey;
+	}
+	
+	.insert-btn {
+		text-align: center;
+		color: #A2A2A2;
+	}
+	
+	.table thead th {
+		border-top: 2px solid #1dcad3 !important;
+		border-bottom: 2px solid #1dcad3 !important;
+	}
+	
+	.table {
+		font-family: 'IBMPlexSansKR-Light';
+		font-weight: bold;
+		text-align: center;
+	}
+	
+	.table-schedule-hr {
+		font-family: 'GongGothicLight';
+		font-size: 20px;
+	}
+	
+	.date-area {
+		font-family: 'GongGothicMedium';
+	}
+	
+	.schedule-area {
+		text-align: left;
+	}
+	
+	.budget-area {
+		text-align: right;
+	}
 </style>
 <script type="text/javascript">
 	function sleep(ms) {
@@ -436,6 +469,8 @@ thead {
 			infinite: false,
 			slidesToShow: 4,
 			slidesToScroll: 4,
+			prevArrow : "<img src='/resources/prev2.png' class='slick-prev'/>",      // 이전 화살표 모양 설정
+            nextArrow : "<img src='/resources/next2.png' class='slick-next'/>",      // 다음 화살표 모양 설정
 			responsive: [ // 반응형 웹 구현 옵션
 				{  
 					breakpoint: 960, //화면 사이즈 960px
@@ -646,11 +681,11 @@ thead {
 	<div class="container">
 	
 		<!-- headline -->
-		<h2 class="headline" style="font-family: 'yg-jalnan'">Schedule</h2>
+		<h2 class="gada-headline">Schedule</h2>
 		<!-- planner option -->
 		<form>
 				<div class="col-md-12"> 
-					<select class="form-control" name="planner_id" id="select-planner" style="font-family: 'yg-jalnan'">
+					<select class="form-control" name="planner_id" id="select-planner">
 						<c:forEach var="planner" items="${plannerList}">
 							<c:if test="${planner.planner_id eq planner_id}">
 								<option value='${planner.planner_id}' style="font-family: 'yg-jalnan'" selected>
@@ -678,110 +713,112 @@ thead {
 		</div>
 		<!-- schedule table -->
 		<div class="col-md-12">
-			<table class="table" id="table-schedule">
-				<colgroup>
-					<col width="15%" />
-					<col width="10%" />
-					<col width="10%" />
-					<col width="10%" />
-					<col width="25%" />
-					<col width="15%" />
-					<col width="15%" />
-				</colgroup>
-				<thead style="font-family:yg-jalnan;">
-					<tr>
-						<th>날짜</th>
-						<th>국가</th>
-						<th>도시</th>
-						<th>교통</th>
-						<th>일정</th>
-						<th>숙소</th>
-						<th>비용</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="date" items="${dateList}">
-						<tr id="${date }">
-							<td style="font-family: yg-jalnan;" class="date-area">${date}</td>
-							<td class="country-area">
-								<c:forEach var="country" items="${countryList }">
-									<c:if test="${country.schedule_date eq date}">
-										<div class="content-box">
-											<span class="content">${country.schedule_content }</span>
-											<span class='latitude' style='display:none'>${country.latitude }</span>
-											<span class='longitude' style='display:none'>${country.longitude }</span>
-											<span class='this_planner_id' style='display:none'>${country.planner_id }</span>
-											<span class="delete-btn" id="${country.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="city-area">
-								<c:forEach var="city" items="${cityList }">
-									<c:if test="${city.schedule_date eq date }">
-										<div class="content-box">
-											<span class="content">${city.schedule_content }</span>
-											<span class="delete-btn" id="${city.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="vehicle-area">
-								<c:forEach var="vehicle" items="${vehicleList }">
-									<c:if test="${vehicle.schedule_date eq date }">
-										<div class="content-box">
-											<span class="content">${vehicle.schedule_content }</span>
-											<c:if test="${vehicle.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${vehicle.budget }₩)</span></c:if>
-											<c:if test="${vehicle.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
-											<span class="delete-btn" id="${vehicle.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="schedule-area">
-								<c:forEach var="schedule" items="${scheduleList }">
-									<c:if test="${schedule.schedule_date eq date }">
-										<div class="sortable-order content-box">
-											<span class="order">${schedule.schedule_order}. </span><span class="content">${schedule.schedule_content }</span>
-											<c:if test="${schedule.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${schedule.budget }₩)</span></c:if>
-											<c:if test="${schedule.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
-											<span class='order-control'>&nbsp;&nbsp;<i class="fas fa-bars"></i></span>
-											<span class="delete-btn" id="${schedule.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn ui-state-disabled"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="hotel-area">
-								<c:forEach var="hotel" items="${hotelList }">
-									<c:if test="${hotel.schedule_date eq date }">
-										<div class="content-box">
-											<span class="content">${hotel.schedule_content }</span>
-											<br />
-											<c:if test="${hotel.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${hotel.budget }₩)</span></c:if>
-											<c:if test="${hotel.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
-											<span class="delete-btn" id="${hotel.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="budget-area">
-								<span class="budget-total"><c:out value="${dayBudget[date] }"></c:out></span>
-								<span>₩</span>
+			<div class="gada-card">
+				<table class="table" id="table-schedule">
+					<colgroup>
+						<col width="15%" />
+						<col width="10%" />
+						<col width="10%" />
+						<col width="10%" />
+						<col width="25%" />
+						<col width="15%" />
+						<col width="15%" />
+					</colgroup>
+					<thead>
+						<tr class="table-schedule-hr">
+							<th>날짜</th>
+							<th>국가</th>
+							<th>도시</th>
+							<th>교통</th>
+							<th>일정</th>
+							<th>숙소</th>
+							<th>비용</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="date" items="${dateList}">
+							<tr id="${date }">
+								<td class="date-area">${date}</td>
+								<td class="country-area">
+									<c:forEach var="country" items="${countryList }">
+										<c:if test="${country.schedule_date eq date}">
+											<div class="content-box">
+												<span class="content">${country.schedule_content }</span>
+												<span class='latitude' style='display:none'>${country.latitude }</span>
+												<span class='longitude' style='display:none'>${country.longitude }</span>
+												<span class='this_planner_id' style='display:none'>${country.planner_id }</span>
+												<span class="delete-btn" id="${country.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
+											</div>
+										</c:if>
+									</c:forEach>
+									<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
+								</td>
+								<td class="city-area">
+									<c:forEach var="city" items="${cityList }">
+										<c:if test="${city.schedule_date eq date }">
+											<div class="content-box">
+												<span class="content">${city.schedule_content }</span>
+												<span class="delete-btn" id="${city.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
+											</div>
+										</c:if>
+									</c:forEach>
+									<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
+								</td>
+								<td class="vehicle-area">
+									<c:forEach var="vehicle" items="${vehicleList }">
+										<c:if test="${vehicle.schedule_date eq date }">
+											<div class="content-box">
+												<span class="content">${vehicle.schedule_content }</span>
+												<c:if test="${vehicle.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${vehicle.budget }₩)</span></c:if>
+												<c:if test="${vehicle.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
+												<span class="delete-btn" id="${vehicle.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
+											</div>
+										</c:if>
+									</c:forEach>
+									<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
+								</td>
+								<td class="schedule-area">
+									<c:forEach var="schedule" items="${scheduleList }">
+										<c:if test="${schedule.schedule_date eq date }">
+											<div class="sortable-order content-box">
+												<span class="order">${schedule.schedule_order}. </span><span class="content">${schedule.schedule_content }</span>
+												<c:if test="${schedule.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${schedule.budget }₩)</span></c:if>
+												<c:if test="${schedule.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
+												<span class='order-control'>&nbsp;&nbsp;<i class="fas fa-bars"></i></span>
+												<span class="delete-btn" id="${schedule.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
+											</div>
+										</c:if>
+									</c:forEach>
+									<div class="insert-btn ui-state-disabled"><i class="fas fa-plus-circle"></i></div>
+								</td>
+								<td class="hotel-area">
+									<c:forEach var="hotel" items="${hotelList }">
+										<c:if test="${hotel.schedule_date eq date }">
+											<div class="content-box">
+												<span class="content">${hotel.schedule_content }</span>
+												<br />
+												<c:if test="${hotel.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${hotel.budget }₩)</span></c:if>
+												<c:if test="${hotel.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
+												<span class="delete-btn" id="${hotel.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
+											</div>
+										</c:if>
+									</c:forEach>
+									<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
+								</td>
+								<td class="budget-area">
+									<span class="budget-total"><c:out value="${dayBudget[date] }"></c:out></span>
+									<span>₩</span>
+								</td>
+							</tr>
+						</c:forEach>
+						<tr class="insert-date-area">
+							<td colspan="7">
+								<a onclick="" class="btn gada-btn-reverse">날짜 추가하기</a>
 							</td>
 						</tr>
-					</c:forEach>
-					<tr class="insert-date-area">
-						<td colspan="7">
-							<a onclick="">날짜 추가하기</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	

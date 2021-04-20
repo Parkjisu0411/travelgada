@@ -27,4 +27,6 @@ public interface PlannerMapper {
 	int selectCreatedPlannerId(String member_id);
 	
 	void deletePlanner(int planner_id);
+	
+	void updatePlanner(PlannerVO plannerVO);
 }
