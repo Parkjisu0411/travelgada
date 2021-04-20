@@ -86,4 +86,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</delete>
 	
+	<delete id="deleteBeyondSchedule">
+		<![CDATA[	
+			delete from schedule where planner_id = #{planner_id} and date(schedule_date) not between #{start_date} and #{end_date}
+		]]>
+	</delete>
+	
 </mapper>

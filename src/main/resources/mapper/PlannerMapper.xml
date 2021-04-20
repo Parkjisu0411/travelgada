@@ -57,4 +57,10 @@
 			delete from planner where planner_id = #{planner_id};
 		]]>
 	</delete>
+	
+	<update id="updatePlanner">
+		<![CDATA[	
+			update planner set planner_name = #{planner_name}, start_date = #{start_date}, end_date = #{end_date} where planner_id = #{planner_id} 
+		]]>
+	</update>
 </mapper>

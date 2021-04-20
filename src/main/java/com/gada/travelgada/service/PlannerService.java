@@ -107,4 +107,10 @@ public class PlannerService {
 		todoMapper.deleteTodoTypeByPlannerId(planner_id);
 		plannerMapper.deletePlanner(planner_id);
 	}
+	
+	@Transactional
+	public void modifyPlanner(PlannerVO plannerVO) {
+		plannerMapper.updatePlanner(plannerVO);
+		scheduleMapper.deleteBeyondSchedule(plannerVO.getPlanner_id(), plannerVO.getStart_date(), plannerVO.getEnd_date());
+	}
 }
