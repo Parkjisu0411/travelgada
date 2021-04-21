@@ -196,7 +196,8 @@
 			</div>
 			<div class="col-md-6">
 				<div class="gada-card">
-					<form action="#" method="POST">
+					<form id="buy-now" action="/shopping/order-single" method="POST">
+						<input type="hidden" name="product_img_src" value="${product.img_path}">
 						<input type="hidden" name="product_name" value="${product.product_name }" />
 						<input type="hidden" name="product_id" value="${product.product_id }" />
 						<input type="hidden" name="price" value="${product.price }" />

@@ -104,7 +104,7 @@ public class ShoppingController {
    }
    
     // 장바구니 => 결제 페이지
-	@PostMapping("/shopping/order")
+	@PostMapping("/shopping/order-cart")
 	public ModelAndView sendOrderPage(@RequestParam("product_id") String productId,
 			@RequestParam("quantity") String quantity, @RequestParam("price") String price,
 			@RequestParam("product_name") String productName, @RequestParam("product_img_src") String productImgSrc, ModelAndView modelAndView,
