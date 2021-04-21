@@ -101,7 +101,7 @@
 		font-weight:bold;
 	}
 	
-	.AnswerButton, .ListButton, .showContent{
+	.AnswerButton, .ListButton, .showContent, .modifyContent, .deleteContent{
 		border-radius:1em;
 		border:none; 
 		float:right;
@@ -133,25 +133,40 @@
 		color:white;
 	}
 	
-	.ListButton{
+	.ListButton, .modifyContent, .deleteContent{
 		width:70px;
 	}
 	
-	.makeForm{
+	.makeForm, .modifyAnswer, .deleteAnswer{
 		border:none;
-		background:white;
+		background:none;
 		font-family: 'IBMPlexSansKR-Light';
 		color: #1DCAD3;
 		width:40px;
 		height:30px;
 		font-size:10pt;
 		font-weight:bold;
+		margin:13px 0px;
 	}
 	
 	.commentImg{
 		width:18px;
 		height:17px;
-		margin: -4px;
+		margin: 20px -7px;
+	}
+	
+	.deleteImg{
+		width:20px;
+		height:20px;
+		padding:2px;
+		margin: 0 -6px 0 5px;
+	}
+	
+	.modifyImg{
+		width:20px;
+		height:20px;
+		padding:2px;
+		margin: 0 -6px 0 5px;
 	}
 	
 	.commentImg2{
@@ -179,7 +194,7 @@
 	}
 
 		
-	#mainContents .table {
+	#contents .ListTable {
 		width:1100px;
 		height:100px;
 		
@@ -187,10 +202,6 @@
 	
 	.tbody td{
 		border-bottom:1px solid #303E57;
-	}
-	
-	#mainContents{
-		min-height:300px;
 	}
 	
 	.reply{
@@ -243,8 +254,115 @@
 		width:25px;
 		height:25px;
 		margin: -6px 15px 6px 0px;
-	}    
+	}
 
+ 	/* 게시판 목록 */
+ 	.ListTable td{
+	border:1px solid #1DCAD3;
+	border-left:none;
+	border-right:none;
+	}
+	
+	.ListTable {
+		border-top:2px solid #1DCAD3;
+		border-bottom:2px solid #1DCAD3;
+	}
+
+.con{
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight:bold;
+    text-align:center;
+}
+
+.content{
+	color:#3d464b;
+	margin:0 30px;
+	text-align:left;
+	width:40%;
+}
+
+.content2{
+	margin:0 30px;
+}
+
+.content2 a{
+	/* color:black; */
+	color:#3d464b;
+}
+
+a{
+	text-decoration:none !important 
+}
+
+.Rcnt{
+	color:#ff7473 !important;
+	font-size:11pt;
+}
+
+.pin{
+	width:18px;
+	height:18px;
+}
+	
+	.con a:hover{
+		color:#1DCAD3;
+	}
+
+	.Rcnt:hover{
+		font-size:1em;
+	}
+		
+	
+	/* 검색 */
+	#board_keyword_search{
+		height: 30px;
+ 	 	width: 300px; 
+	 	/* min-width: 100%;  */ 
+		line-height: 70px;
+		background-color: transparent;
+		color: black;
+		font-size: 15px;
+		/* border-radius: 50px; */
+		border:none;
+		border-bottom: 2px solid #303E57;
+		font-family: 'GongGothicMedium';
+		outline:none;
+	}
+	.search_icon{
+		background-color: #303E57;
+		border-radius: 50px;
+		border: none;
+	 	outline:none; 
+		padding-top: 6px;
+		padding-bottom: 9px;
+		text-align: center; 
+		width: 28px;
+		height: 28px;
+		margin-left:1px;
+		margin-top:1px;
+		font-family: 'GongGothicMedium';  
+		font-size:13px; 
+		color:white;
+	}
+	
+	#select{
+		height: 30px;
+ 	 	width: 120px;
+	 	/* min-width: 100%;  */ 
+		line-height: 70px;
+		background-color: transparent;
+		color: black;
+		font-size: 15px;
+		border-radius: 50px;
+		border: 2px solid #303E57;
+		font-family: 'GongGothicMedium';
+		outline:none;
+	}
+	
+	.search_board{
+		width:50%;
+		margin:0 auto;
+	}
 
 </style>
 
@@ -327,6 +445,43 @@
 		}); // ready end
 	</script>
 	
+	<!-- 게시글 삭제 -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".deleteContent").on('click', function(event){		
+				if (confirm("삭제하시겠습니까?")) {
+				event.preventDefault();
+				console.log("deleteAnswer click");
+				
+				var board_id = $(".board_id").val();
+				
+				$.ajax({
+					type : "DELETE",
+					url : "${pageContext.request.contextPath }/board/" + board_id,
+					cache : false,
+					beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+   	                 console.log("header 실행 "+header+token)
+   	                 //console.log(sentence.toLowerCase());
+   	                 xhr.setRequestHeader(header, token);
+					},
+					success : function(result){
+						console.log("result : " + result );
+						if(result == "SUCCESS"){
+							window.history.back();
+						}
+					},
+					error : function(e){
+						alert("오류가 발생했습니다.");
+						console.log(e);
+					}
+				}); // ajax end
+			}else{
+				return false;
+			}
+			}); // event end
+		}); // ready end
+	</script>
+	
     
 	 <script>
     	$(document).ready(function() {
@@ -344,7 +499,7 @@
     					text : text
     			};
     			
-    			if(member_id.length == 0){
+    			if(member_id.length = 0){
     				alert("로그인이 필요한 서비스입니다.");
     				location.href="${pageContext.request.contextPath}/member/login";
     				return;
@@ -632,9 +787,10 @@
 
 				<button type="button" class="ListButton" onclick="window.location.href='${pageContext.request.contextPath }/board/${bContentView.board_type_id}'" >목록</button>
 
-				 <c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq bContentView.member_id}">
-					<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/modify/${bContentView.board_id}/${bContentView.member_id }'">수정</button>
-			   		<button type="button" class="delete btn-default text-primary">삭제</button>
+				<c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq bContentView.member_id}">
+				 	<button type="button" class="deleteContent">삭제</button>
+				 	<input type="hidden" class="board_id" name="board_id" value="${bContentView.board_id }"/>
+					<button type="button" class="modifyContent" onclick="window.location.href='${pageContext.request.contextPath }/board/modify/${bContentView.board_id}/${bContentView.member_id }/${bContentView.board_type_id }'">수정</button>
 			    </c:if> 
 			    
 			    <sec:authorize access="isAnonymous()">
@@ -656,18 +812,20 @@
 							<td><span class="reply"><img class="nav-profile-img" src='/resources/img/profile/${bImgPath.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">&nbsp;&nbsp; ${answer.member_id }</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="fmt"><span><fmt:formatDate value="${answer.answer_date }" pattern="yyyy/MM/dd hh:mm"/></span></span><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${answer.text }</div></td>
 							
 							<td>
+								<c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answer.member_id }">
+									<span class="rpl"><img class="deleteImg" src="/resources/board/garbage.png"><button type="button" class="deleteAnswer">삭제</button></span>
+									<span class="rpl"><img class="modifyImg" src="/resources/board/pencil.png"><button type="button" class="modifyAnswer">수정</button></span>
+								</c:if>
 									<span class="rpl"><img class="commentImg" src="/resources/board/comment1.png">
 									<input type="button" class="makeForm" name="${answer.answer_id }" value="답글" /></span>
-								<c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answer.member_id }">
-									<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/modify/${bContentView.board_id}&${bContentView.member_id }'">수정</button>
-									<button type="button" class="deleteAnswer btn-default text-primary">삭제</button>
-								</c:if>
+
 							</td>
 						</tr>
 						</c:forEach>
 					</c:forEach>
 					</table>
     			</div>
+    			
     			<br /><br />
     			
 			
@@ -687,32 +845,22 @@
     		<div class="divider-header-blank"></div>
 			<button type="button" class="showContent" >목록 닫기</button>
 			<div id="contents" style="display:'';">
-			<table class="table">
-				<thead>
-					<tr class="thead">
-						<td>번호</td>
-						<td>제목</td>
-						<td>작성자</td>
-						<td>날짜</td>
-					</tr>
-				</thead>
-
-				<tbody>
+			<table class="ListTable">
+					<!-- 게시글 -->
 					<c:forEach items="${boardReviewList }" var="boardReviewList">
 					<tr class="con">
 						<td>${boardReviewList.board_id }</td>
 						<td class="content">
 							<div class="content2">
 							<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
-							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}">${boardReviewList.title }</a>			
-							<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>	
+							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">${boardReviewList.title }</a>			
+							<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>	
 							</div>
 						</td>
 						<td class="content2"><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>
 						<td><fmt:formatDate value="${boardReviewList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
 					</tr>
 					</c:forEach>
-				</tbody>
 			</table>
 
 
@@ -734,23 +882,19 @@
 			</div><br /><br /><br />
 
 
-
-
-
-			
-				<div style="padding:0 400px;">
-				<form class="form-inline">
-					<select style="border-radius:0.2em; border:2px solid black;">
-						<option>제목</option>
-						<option>제목+내용</option>
-						<option>내용</option>
-					</select>&nbsp;&nbsp;
-					<input class="form-control mr-sm-2" type="text" aria-label="Search" style="width:50%;">
-					<button class="btn btn-outline-white btn-sm my-0" type="submit">
-						<i class="fas fa-search"></i>
-					</button>
-				</form>
-				</div>
+			<!-- 게시판 검색 bar -->
+			<div class="search_board">
+			<form action="${pageContext.request.contextPath}/searchBoard" method="get">	
+				<select id="select" class="col-sm-3" name="searchType">
+					<option value="title">제목</option>
+					<option value="2">제목+내용</option>
+					<option value="3">내용</option>
+				</select>&nbsp;&nbsp;
+				
+				<!-- 검색 키워드 입력 -->
+				<input id="board_keyword_search" class="col-sm-7" type="text" name="keyword" placeholder="검색어를 입력하세요."/>
+				<button class="search_icon" type="submit"><i class="fa fa-search search-icon-in"></i></button>
+			</form>
 
 
 <%-- 			    <div class="container">

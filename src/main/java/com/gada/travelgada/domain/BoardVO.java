@@ -1,6 +1,6 @@
 package com.gada.travelgada.domain;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
 

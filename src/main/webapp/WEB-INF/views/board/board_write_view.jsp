@@ -263,11 +263,9 @@ img{
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<img src="/resources/board/write1.png"><a class="headline" href="${pageContext.request.contextPath }/board">새 글 작성하기</a><br />
+			<a class="headline" href="${pageContext.request.contextPath }/board"><img src="/resources/board/write1.png">새 글 작성하기</a><br />
 
 			<form id="write" method="post" action="${pageContext.request.contextPath}/board?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
-				<%-- <input type="hidden" id="member_id" name="member_id" value="${bWriteView.member_id }"/>
-				<input type="hidden" id="board_type_id" name="board_type_id" value="${bWriteView.board_type_id }"/> --%>
 				<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}" />
 				<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}" /> 
 				<input type="hidden" id="username" name="username" value="<sec:authentication property="principal.username"/>" />
@@ -303,8 +301,8 @@ img{
  						CKEDITOR.replace('text', ckeditor_config 
 						);
 					</script>
-				<button type="button" class="ListButton" onclick="window.location.href='${pageContext.request.contextPath }/board/$('select[name=board_type_id]').val()'" >목록</button>
-				<!-- <button id="submitBtn" class="btn-default text-primary">완료</button> -->
+					
+				<button type="button" class="ListButton" onclick="window.location.href='${pageContext.request.contextPath }/board/${btID}'" >목록</button>
 				<input type="submit" id="submitBtn" value="완료"  />
 			</form>
 

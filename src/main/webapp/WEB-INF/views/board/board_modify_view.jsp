@@ -35,51 +35,112 @@
 	 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 	 
 <style>
-	html, body {
-		width: 100%;
-		height: 100%;
-		margins: 0;
-		padding: 0;
-	}
+html, body {
+	width: 100%;
+	height: 100%;
+	margins: 0;
+	padding: 0;
+}
 
-    #title {
-        width: 900px;
-        margin: 3px 0;
-        outline: none;
-        text-align: left;
-        border-radius:0.2em;
-    	border:2px solid lightgrey;
-    }
-    
-    .headline{
-    	font-family: 'yg-jalnan';
-    	/* border-bottom: 1px solid lightgrey;
-    	padding-bottom:5px;
-    	width:130px;
-    	border-width:2px; */
-    }
-    
-    .btn-default{
-    	border-radius:0.2em;
-    	border:none;
-    	float:right;
-    }
-    
-    #bcategory{
-    	 border-radius:0.3em;
-    	 border:2px solid lightgrey;
-    	 width:195px;
-    	 height:38px;
-    	 margin:4px 0;
-    }
-    
-	#btitle{
+#title {
+	width: 975px; 
+	margin: 3px 0;
+	outline: none;
+	text-align: left;
+	border-radius: 0.2em;
+	border: 2px solid lightgrey;
+	font-family: 'GongGothicMedium';
+	font-size:13pt;
+	height: 38px; 
+	margin: 4px 0;
+}
+
+	.headline{
+		font-family: 'GongGothicMedium';
+		color:#1DCAD3;
+		font-size:28pt;
+		/* line */
+		display: flex;
+		flex-basis: 100%;
+		align-items: center;
+		margin: 8px 0px;
+	}
+	
+/* line */	
+.headline::after {
+	content: "";
+	flex-grow: 1;
+	background: #1DCAD3;
+	height: 1px;
+	font-size: 0px;
+	line-height: 0px;
+	margin: 0px 16px;
+}
+	
+a:hover{
+	text-decoration:none !important;
+	color:#CFD2D3;
+	
+}
+
+.btn-default {
+	border-radius: 0.2em;
+	border: none;
+	float: right;
+}
+
+#bcategory {
+	border-radius: 0.3em;
+	border: 2px solid lightgrey;
+	width: 130px; 
+	height: 38px;
+	margin: 4px 0;
+}
+
+#bcategory, option{
+	font-family: 'GongGothicMedium';
+	color:#303E57;
+}
+
+#btitle {
+	float: right;
+	font-size: 19px;
+}
+
+/* 미완성  */
+select option:hover{
+	color:#1DCAD3;
+}
+
+select, button{
+	border:0;
+	outline:none;
+}
+
+img{
+	width:50px;
+	height:50px;
+	float:left;
+	margin:-2px 1px;
+}
+
+	.ListButton, #submitBtn{
+		width:70px;
+		border-radius:1em;
+		border:none; 
 		float:right;
-		font-family: 'yg-jalnan';
-		font-size:19px;
-
+		font-family: 'IBMPlexSansKR-Light';
+		color: white;
+		background:#1DCAD3;
+		height:30px;
+		margin:10px 1px;
+		font-weight:bold;
 	}
-
+	
+	#submitBtn:focus, button:focus{
+		border:0;
+		outline:none;
+	}
 </style>
 
 	<script type="text/javascript">
@@ -152,9 +213,9 @@
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline">글 수정</h2>
+			<a class="headline" href="${pageContext.request.contextPath }/board"><img src="/resources/board/write1.png">글 수정</a><br />
 			
-				<form id="modify" action="${pageContext.request.contextPath}/board/${bContentView.board_id}" enctype="multipart/form-data">
+			<form id="modify" action="${pageContext.request.contextPath}/board/${bContentView.board_id}" enctype="multipart/form-data">
 				<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
 				<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
 				<input type="hidden" id="board_id" value="${bContentView.board_id }">
@@ -162,11 +223,14 @@
 						<option value="1">review</option>
 						<option value="2">Q&A</option>
 						<option value="3">동행</option>
+						<c:if test="${checkAuthority == 'true'}">
+							<option value="4">공지사항</option>
+						</c:if>
 					</select></span>
 					
 					<span id="btitle"><input type="text" id="title" name="title" value="${bContentView.title }" placeholder="제목을 입력하세요" style="height:37px; margin:4px 0;"/></span>
 					<br /><br />
-					<textarea rows="5" cols="60" id="text" name="text">${bContentView.text }</textarea>
+					<textarea id="text" name="text">${bContentView.text }</textarea>
 					
 					<!-- CKeditor -->
 					<script type="text/javascript">
@@ -174,14 +238,17 @@
 							   resize_enaleb : false,
 							   enterMode : CKEDITOR.ENTER_BR,
 							   shiftEnterMode : CKEDITOR.ENTER_P,
+							   height: 500,
+							   
 							   filebrowserUploadUrl :  '<c:url value="${pageContext.request.contextPath}/admin/goods/ckUpload" />?${_csrf.parameterName}=${_csrf.token}'
-							 }; 
+						 }; 
  						CKEDITOR.replace('text', ckeditor_config);
 					</script>
 				
-				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/review'">목록</button>
-				<input type="submit" id="submitBtn" class="btn-default text-primary" value="완료"  />
-				</form>
+				<%-- <button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/review'">목록</button> --%>
+				<button type="button" class="ListButton" onclick="window.location.href='${pageContext.request.contextPath }/board/${btID}'" >목록</button>
+				<input type="submit" id="submitBtn" value="완료"  />
+			</form>
 			
 		</div>
 	</div>
