@@ -103,6 +103,23 @@
       color: #ffffff;
       cursor: pointer;
     }
+	
+	.product-area {
+		border-radius: 10px;
+		margin: 0px 0px 30px 0px;
+		height: 430px;
+		background-color: #f5f5f5;
+	}
+	
+	.product-text {
+		padding:15px;
+		font-family: 'IBMPlexSansKR-Light';
+	}
+	
+	.gada-link:hover {
+		color: #1DCAD3;
+		cursor: pointer;
+	}
     
   </style>
   <script type="text/javascript">
@@ -151,6 +168,10 @@
 		$('#schedule_content').val(country);
 		$('#schedule_content').focus();
 	}	
+	
+	function viewDetail(product_id) {
+		location.href = "/shopping/" + product_id;
+	}
   	
   </script>
 </head>
@@ -272,8 +293,15 @@
       <div class="row">
       	<c:forEach var="product" items="${recommendProduct }">
       		<div class="col-md-3">
-      			<img src="/resources/img/product/${product.img_path }" class="main-product-img">
-      			<p>${product.product_name }</p>
+	      		<div class="product-area">
+	      			<div class="product-img">
+		      			<img src="/resources/img/product/${product.img_path }" class="main-product-img">
+	      			</div>
+	      			<div class="product-text">
+		      			<p class="gada-link" onclick="viewDetail(${product.product_id})">${product.product_name }</p>
+		      			<p>₩ ${product.price }</p>
+	      			</div>
+	      		</div>
       		</div>
       	</c:forEach>
       </div>

@@ -4,6 +4,36 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gada.travelgada.mapper.ShoppingMapper">
 
+	<resultMap id="buyMap" type="com.gada.travelgada.domain.BuyVO">
+		<result property="buy_id" column="buy_id" />
+		<result property="buy_date" column="buy_date" />
+		<result property="waybill_num" column="waybill_num" />
+		<result property="member_id" column="member_id" />
+		<result property="shipping_loc_name" column="shipping_loc_name" />
+		<result property="paid_amount" column="paid_amount" />
+	</resultMap>
+	
+	<resultMap id="productMap" type="com.gada.travelgada.domain.ProductVO">
+		<result property="product_id" column="product_id" />
+		<result property="product_name" column="product_name" />
+		<result property="price" column="price" />
+		<result property="added_date" column="added_date" />
+		<result property="img_path" column="img_path" />
+		<result property="amount" column="amount" />
+		<result property="product_type_id" column="product_type_id" />
+	</resultMap>
+	
+	<resultMap id="buyDetailMap" type="com.gada.travelgada.domain.BuyListVO">
+		<result property="buy_detail_id" column="buy_detail_id" />
+		<result property="product_name" column="product_name" />
+		<result property="price" column="price" />
+		<result property="quantity" column="quantity" />
+		
+		<collection property="buy" resultMap="buyMap"></collection>
+		<collection property="product" resultMap="productMap"></collection>
+	</resultMap>
+
+
 	<select id="selectProductList" resultType="com.gada.travelgada.domain.ProductVO">
 		<![CDATA[
 			select * from product
@@ -31,6 +61,24 @@
 	<select id="selectBuyById" resultType="com.gada.travelgada.domain.BuyVO">
 		<![CDATA[
 			select * from buy where member_id = #{member_id} order by buy_date desc
+		]]>
+	</select>
+	
+	<select id="selectBuyListById" resultMap="buyDetailMap">
+		<![CDATA[
+			select * from buy B, buy_detail D, product P where member_id = #{member_id} and D.buy_id = B.buy_id and D.product_id = P.product_id order by B.buy_date desc
+		]]>
+	</select>
+	
+	<select id="selectBuyListTotal" resultType="int">
+		<![CDATA[
+			select count(*) from buy B, buy_detail D where B.buy_id = D.buy_id and member_id = #{member_id}
+		]]>
+	</select>
+	
+	<select id="selectBuyListByIdWithPage" resultMap="buyDetailMap">
+		<![CDATA[
+			select * from buy B, buy_detail D, product P where member_id = #{member_id} and D.buy_id = B.buy_id and D.product_id = P.product_id order by B.buy_date desc limit #{pageNum}, #{amount}
 		]]>
 	</select>
 	

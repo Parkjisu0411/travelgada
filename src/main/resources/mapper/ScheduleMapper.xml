@@ -74,15 +74,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 	
-	<select id="getAllMap" resultType="com.gada.travelgada.domain.ScheduleVO">
-		<![CDATA[	
-			select schedule_type_id, schedule_content, latitude, longitude from schedule where schedule_type_id in (2, 4) and planner_id = #{planner_id}
-		]]>
-	</select>
-	
 	<delete id="deleteScheduleByPlannerId">
 		<![CDATA[	
 			delete from schedule where planner_id = #{planner_id};
+		]]>
+	</delete>
+	
+	<delete id="deleteBeyondSchedule">
+		<![CDATA[	
+			delete from schedule where planner_id = #{planner_id} and date(schedule_date) not between #{start_date} and #{end_date}
 		]]>
 	</delete>
 	

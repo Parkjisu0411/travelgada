@@ -72,6 +72,12 @@
 	table thead {
 		text-align: center;
 	}
+	
+	.gada-link:hover {
+		color: #1DCAD3;
+		cursor: pointer;
+	}
+	
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -89,6 +95,10 @@
 		$(".total-discount").html("- " + totalDiscount);
 		$(".total-payment").html(totalPayment);
 	})
+	
+	function viewDetail(product_id) {
+		location.href = "/shopping/" + product_id;
+	}
 </script>
 </head>
 <body>
@@ -122,7 +132,7 @@
 									<td>
 										<img class="product-img rounded" src="/resources/img/product/${productMap[buyDetail.buy_detail_id].img_path }" />
 										<div class="product-info">
-											<strong>${buyDetail.product_name }</strong>
+											<strong class="gada-link" onclick="viewDetail(${productMap[buyDetail.buy_detail_id].product_id})">${buyDetail.product_name }</strong>
 											<p class="product-price">₩ ${productMap[buyDetail.buy_detail_id].price }</p>
 										</div>
 									</td>

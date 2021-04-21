@@ -148,8 +148,8 @@
 <script>
 /* 엔드 날짜 클릭시 시작 날짜로 포거스가게 하기 */
 	$(document).ready(function(){
-		$("#input-end").click(function(){
-			$("#input-start").focus();
+		$("#input-end-2").click(function(){
+			$("#input-start-2").focus();
 		});//click function end
 	});//ready function end
 /* 날짜 동시에 띄우기 end */
@@ -174,11 +174,11 @@
 				</div>
 				<div class="dateGroup">
 					<label class="calLabel">여행시작</label>
-					<input name="start_date" class="input-style" type="text"  placeholder="YYYY/MM/DD" id="input-start">
+					<input name="start_date" class="input-style " type="text"  placeholder="YYYY/MM/DD" id="input-start-2" autocomplete="off">
 				</div>
 				<div class="dateGroup">
 					<label class="calLabel" >여행종료</label>
-					<input name="end_date" class="input-style" type="text"  placeholder="YYYY/MM/DD" id="input-end">
+					<input name="end_date" class="input-style " type="text"  placeholder="YYYY/MM/DD" id="input-end-2" autocomplete="off">
 				</div>
 				<div class="inputGroup">
 					<label class="calLabel" >나라</label>
