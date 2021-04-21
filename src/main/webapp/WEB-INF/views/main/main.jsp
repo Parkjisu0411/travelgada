@@ -120,6 +120,10 @@
 		color: #1DCAD3;
 		cursor: pointer;
 	}
+	
+	.product-area:hover {
+		/*  */
+	}
     
   </style>
   <script type="text/javascript">

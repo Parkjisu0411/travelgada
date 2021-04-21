@@ -85,6 +85,7 @@
 		height: 350px;
 		border-radius: 10px 10px 0px 0px;
 		object-fit: cover;
+		position: relative;
 	}
 	
 	.card-pl-img:hover {
@@ -242,6 +243,7 @@
 								<br><br>
 								<span class="start_date">${planner.start_date }</span> ~ <span class="end_date">${planner.end_date }</span>
 								<div class="gada-btn-group">
+									<button type="button" class="btn gada-btn" onclick="location.href='http://localhost:8282/map/${planner.planner_id}?schedule_date=${planner.start_date}'" style="position: absolute; top: 3%; right: 8%;"><i class="fas fa-map-marked-alt"></i></button>
 									<button type="button" class="btn gada-btn-reverse" onclick="modifyPlanner(${planner.planner_id})">수정</button>
 									<button type="button" class="btn gada-btn" onclick="deletePlanner(${planner.planner_id})">삭제</button>
 								</div>
