@@ -103,7 +103,7 @@ public class ShoppingController {
       return entity;
    }
    
-    // 결제 페이지
+    // 장바구니 => 결제 페이지
 	@PostMapping("/shopping/order")
 	public ModelAndView sendOrderPage(@RequestParam("product_id") String productId,
 			@RequestParam("quantity") String quantity, @RequestParam("price") String price,
@@ -132,6 +132,27 @@ public class ShoppingController {
 		modelAndView.addObject("member", memberService.getMember(memberDetails.getUsername()));
 
 		modelAndView.setViewName("/shopping/order");
+
+		return modelAndView;
+	}
+	
+	// 바로 구매 => 결제 페이지
+	@PostMapping("/shopping/order-single")
+	public ModelAndView sendImmediateOrderPage(@RequestParam("product_id") String productId, @RequestParam("product_img_src") String productImgSrc, @RequestParam("product_name") String productName, @RequestParam("price") String price, @RequestParam("quantity") String quantity, ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
+		BuyDetailVO buy = new BuyDetailVO();
+		
+		buy.setPrice(Integer.parseInt(price));
+		buy.setProduct_name(productName);
+		buy.setQuantity(Integer.parseInt(quantity));
+		buy.setProduct_id(Integer.parseInt(productId));
+		
+		modelAndView.addObject("product", buy);
+		modelAndView.addObject("productImg", productImgSrc);
+		modelAndView.addObject("point", PointCalculator.getCurrentPoint(memberService.getPoint(memberDetails.getUsername())));
+		modelAndView.addObject("member", memberService.getMember(memberDetails.getUsername()));
+		modelAndView.addObject("shippingList", memberService.getShippingLoc(memberDetails.getUsername()));
+		
+		modelAndView.setViewName("/shopping/order_single");
 
 		return modelAndView;
 	}
