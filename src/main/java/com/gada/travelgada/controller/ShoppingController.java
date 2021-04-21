@@ -136,7 +136,8 @@ public class ShoppingController {
 		return modelAndView;
 	}
    
-   // 결제 정보, 포인트 사용-적립 내역을 테이블에 저장
+    // 결제 정보, 포인트 사용-적립 내역을 테이블에 저장
+	@Transactional
 	@PostMapping("/shopping/order/result")
 	public ModelAndView insertOrderResult(HttpServletRequest request, ModelAndView modelAndView,
 			@AuthenticationPrincipal MemberDetails memberDetails) {
