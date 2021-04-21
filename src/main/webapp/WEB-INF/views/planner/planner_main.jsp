@@ -65,8 +65,9 @@
 	
 	.planner-modify-input-cal:focus {
 		outline: none;
-		background-color: #f5f5f5;
-		border-bottom: 1px solid #1DCAD3;
+		background-color: white;
+		border: 2px solid #1DCAD3;
+		border-radius: 30px;
 	}
 	
 	

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gada.travelgada.domain.BuyDetailVO;
+import com.gada.travelgada.domain.BuyListVO;
 import com.gada.travelgada.domain.BuyVO;
 import com.gada.travelgada.domain.PointVO;
 import com.gada.travelgada.domain.ProductVO;
@@ -85,6 +86,19 @@ public class ShoppingServiceImpl {
 	
 	public List<BuyVO> getBuyList(String member_id) {
 		return shoppingMapper.selectBuyById(member_id);
+	}
+	
+	public List<BuyListVO> getBuyListById(String member_id) {
+		return shoppingMapper.selectBuyListById(member_id);
+	}
+	
+	public int getBuyListTotal(String member_id) {
+		return shoppingMapper.selectBuyListTotal(member_id);
+	}
+	
+	public List<BuyListVO> getBuyListByIdWithPage(String member_id, int pageNum, int amount) {
+		pageNum = (pageNum - 1) * amount;
+		return shoppingMapper.selectBuyListByIdWithPage(member_id, pageNum, amount);
 	}
 	
 	public List<BuyDetailVO> getBuyDetailList(String buy_id) {
