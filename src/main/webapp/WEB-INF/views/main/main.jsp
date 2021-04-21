@@ -71,7 +71,7 @@
       width: 100%;
       height: 320px;
       object-fit: cover;
-      border-radius: 8px, 8px, 0, 0;
+      border-radius: 8px;
     }
 
     .main-advice-planner-inner-area {

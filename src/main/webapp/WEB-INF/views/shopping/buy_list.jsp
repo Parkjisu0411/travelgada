@@ -50,7 +50,38 @@
 	}
 </style>
 <script type="text/javascript">
-	
+	function movePage(pageNum, amount) {
+		var query = '?nowPage=' + pageNum + "&amount=" + amount;
+		$.ajax({
+			type : "GET",
+			url : "/shopping/buy_list_page" + query,
+			cache : false,
+			success : function(buyListMap) {
+				console.log(buyListMap);
+				content = "";
+				for(var i = 0; i < buyListMap.buyList.length; i++) {
+					content += "<tr>";
+					content += "	<td>";
+					content += "		<img class='product-img rounded' src='/resources/img/product/" + buyListMap.buyList[i].product.img_path + "' />";
+					content += "		<div class='product-info'>";
+					content += "			<strong>" + buyListMap.buyList[i].product_name + "</strong>";
+					content += "			<p>₩ " + buyListMap.buyList[i].price + "</p>";
+					content += "		</div>";
+					content += "	</td>";
+					content += "	<td><fmt:formatDate value='' pattern='yyyy.MM.dd'/></td>";
+					content += "	<td><a href='/shopping/buy_list/" + buyListMap.buyList[i].buy.buy_id + "'>" + buyListMap.buyList[i].buy.buy_id + "</a></td>";
+					content += "	<td>" + buyListMap.buyList[i].price + "</td>";
+					content += "	<td>구매확정</td>";
+					content += "</tr>";
+				}
+				$("tbody").html(content);
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -63,8 +94,6 @@
 				<h3 class="gada-headline">SHOPPING LIST</h3>
 				<hr>
 				<div class="gada-card">
-					<div class="buy-header-area">
-					</div>
 					<div class="buy-list-area">
 						<div class="buy-search-area">
 							<div class="gada-btn-group">
@@ -85,23 +114,40 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="buyDetail" items="${buyDetailList }">
+								<c:forEach var="buyDetail" items="${buyListMap['buyList'] }">
 									<tr>
 										<td>
-											<img class="product-img rounded" src="/resources/img/product/${productMap[buyDetail.buy_detail_id].img_path }" />
+											<img class="product-img rounded" src="/resources/img/product/${buyDetail.product.img_path}" />
 											<div class="product-info">
 												<strong>${buyDetail.product_name }</strong>
-												<p>₩ ${productMap[buyDetail.buy_detail_id].price }</p>
+												<p>₩ ${buyDetail.product.price}</p>
 											</div>
 										</td>
-										<td><fmt:formatDate value="${buyMap[buyDetail.buy_detail_id].buy_date }" pattern="yyyy.MM.dd"/></td>
-										<td><a href="/shopping/buy_list/${buyMap[buyDetail.buy_detail_id].buy_id }">${buyMap[buyDetail.buy_detail_id].buy_id }</a></td>
+										<td><fmt:formatDate value="${buyDetail.buy.buy_date}" pattern="yyyy.MM.dd"/></td>
+										<td><a href="/shopping/buy_list/${buyDetail.buy.buy_id}">${buyDetail.buy.buy_id}</a></td>
 										<td>${buyDetail.price }</td>
 										<td>구매확정</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
+					</div>
+					<div class="page-area">
+						<c:forEach var="pageMaker" items="${buyListMap['pageMaker'] }">
+							<ul class="pagination" style="padding:80px 350px;">	
+						  		<c:if test="${pageMaker.prev}">
+					       			<li class="page-item"><a class="page-link" onclick="movePage(${pageMaker.startPage - 1}, 10)">prev</a></li>
+					     		</c:if>
+				
+					      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+					         		<li class="page-item"><a class="page-link" onclick="movePage(${idx}, 10)">${idx}</a></li>
+					      		</c:forEach>
+					      
+					      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					         		<li class="page-item"><a class="page-link" onclick="movePage(${pageMaker.endPage + 1}, 10)">next</a></li>
+					      		</c:if>
+						 	</ul>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
