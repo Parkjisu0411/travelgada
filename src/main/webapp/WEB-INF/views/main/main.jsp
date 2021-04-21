@@ -165,8 +165,8 @@
 	function getCountry(clickedCountry) {
 		var country = $(clickedCountry).text();
 		
-		$('#schedule_content').val(country);
-		$('#schedule_content').focus();
+		$('#country_name').val(country);
+		$('#country_name').focus();
 	}	
 	
 	function viewDetail(product_id) {

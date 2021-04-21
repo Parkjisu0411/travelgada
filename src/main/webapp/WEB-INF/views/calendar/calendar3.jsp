@@ -58,9 +58,9 @@
 	font-size: 20px;
 	background-color: transparent;
 	outline: none;
-	height: 80px;
+	height: 55px;
 	padding-left:30px;
-	padding-bottom:20px;
+	margin-bottom:20px;
 }
 	
 /* label */
