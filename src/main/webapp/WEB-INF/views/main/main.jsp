@@ -208,7 +208,7 @@
           <h2 class="main-advice-title">가다에서 일정을 계획해 보세요</h2>
           <p class="main-advice-content">플래너를 이용하여 여행 계획을 세우고 챙겨야 할 준비물을 확인할 수 있습니다</p>
           <br>
-          <span class="main-advice-button" onclick="location.href='http://localhost:8282/planner/schedule'">일정
+          <span class="main-advice-button" onclick="location.href='http://localhost:8282/planner'">일정
             생성하기</span>
             </div>
         </div>

@@ -54,8 +54,8 @@
                   role="button" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false"> 플래너 </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                     <a class="dropdown-item nav-dropdown-item" href="/planner/schedule">일정</a> <a
-                        class="dropdown-item nav-dropdown-item" href="#">지도</a> <a class="dropdown-item nav-dropdown-item"
+                     <a class="dropdown-item nav-dropdown-item" href="/planner/schedule">일정</a>
+                     <a class="dropdown-item nav-dropdown-item"
                         href="/todo">준비물</a> <a class="dropdown-item nav-dropdown-item"
                         href="/diary">다이어리</a>
                   </div></li>
