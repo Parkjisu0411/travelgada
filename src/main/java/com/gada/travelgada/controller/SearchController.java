@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.MemberDetails;
+import com.gada.travelgada.domain.PageVO;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.service.PlannerService;
 import com.gada.travelgada.service.ScheduleService;
@@ -25,13 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class SearchController {
 
-	@Autowired
+	
 	private SearchService searchService;
 	
-	@Autowired
 	private ScheduleService scheduleService;
 	
-	@Autowired
 	private PlannerService plannerService;
 
 	//통합 검색 페이지
@@ -55,13 +55,19 @@ public class SearchController {
 	//일정 더보기 
 	@GetMapping("/searchPl")
 	public ModelAndView searchPl(ModelAndView mav, @RequestParam("keyword") String keyword,
-			@RequestParam(value="sorter", required=false, defaultValue="basic") String sorter) {
+			@RequestParam(value="sorter", required=false, defaultValue="basic") String sorter, CriteriaVO cri) {
 		log.info("controller searchPl();");
+		int amount = 4;
+		int nowPage = (cri.getNowPage() - 1) * amount;
+		int total = searchService.getPlTotal(keyword, sorter);
+		
+		cri.setAmount(amount);
 		
 		//일정 더보기 getSearchPl
-		mav.addObject("plMore",searchService.searchPlMore(keyword, sorter));
-		
+		mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, nowPage, amount));
+		mav.addObject("pageMaker", new PageVO(cri, total));
 		mav.addObject("keyword",keyword);
+		mav.addObject("sorter",sorter);
 		
 		mav.setViewName("search/searchPl");
 
@@ -72,13 +78,21 @@ public class SearchController {
 	//다이어리 더보기
 	@GetMapping("/searchDi")
 	public ModelAndView searchDi(ModelAndView mav, @RequestParam("keyword") String keyword,
-			@RequestParam(value="sorter", required=false, defaultValue="basic") String sorter) {
+			@RequestParam(value="sorter", required=false, defaultValue="basic") String sorter, CriteriaVO cri) {
 		log.info("controller searchDi();");
 
+		int amount = 12;
+		int nowPage = (cri.getNowPage() - 1) * amount;
+		int total = searchService.getDiTotal(keyword, sorter);
+		
+		cri.setAmount(amount);
+		
 		//다이어리 더보기
-		mav.addObject("member",searchService.searchDiMore(keyword, sorter));
+		mav.addObject("member",searchService.searchDiMore(keyword, sorter, nowPage, amount));
+		mav.addObject("pageMaker", new PageVO(cri, total));
 		
 		mav.addObject("keyword",keyword);
+		mav.addObject("sorter",sorter);
 		
 		mav.setViewName("search/searchDi");
 

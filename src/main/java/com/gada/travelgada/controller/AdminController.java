@@ -141,7 +141,7 @@ public class AdminController {
 		List<ShippingLocVO> shippingList = null;
 		try {
 			shippingList = adiminService.getShippingLoc(memberVO.getMember_id());
-		}catch(IbatisException e) {
+		}catch(Exception e) {
 			log.info(memberVO.getMember_id() + "의 배송지 목록이 없습니다.");
 			shippingList.add(new ShippingLocVO());
 		}

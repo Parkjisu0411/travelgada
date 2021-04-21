@@ -23,101 +23,101 @@
    <link href="resources/calendar/css/datepicker.css" rel="stylesheet" media="all">
    
 <style type="text/css">
-   /* 플래너 생성 스타일*/
-   /* 작성 버튼 부분 */
-   .calRow{
-      width: 100%;
-   }
+/* 플래너 생성 스타일*/
+/* 작성 버튼 부분 */
+.calRow {
+	width: 100%;
+}
 
-   /* 작성 버튼 */
-   .btn-submit {
-        background-color: rgb(240, 240, 240);
-        border-radius: 50px;
-        border: none;
-      padding-top: 10px;
-      padding-bottom: 9px;
-      text-align: center; 
-      width: 50px;
-      float: left;
-   }
+/* 작성 버튼 */
+.btn-submit {
+	background-color: rgb(240, 240, 240);
+	border-radius: 50px;
+	border: none;
+	padding-top: 10px;
+	padding-bottom: 9px;
+	text-align: center;
+	width: 50px;
+	float: left;
+}
 
-   /* input */
-   .input-style{
-      border: none;
-      font-size: 15px;
-      background-color: transparent;
-        outline: none;
-   }
-      
-   /* label */
-   .calLabel {
-      font-size: 12px;
-      color: black;
-      display: block;
-      height: 10px;
-      font-weight: bold;
-   }
- 
-   /* input 전체적으로 감싸는 부분 */
-   .inputGroup{
-      background: rgb(240, 240, 240); 
-      border-radius: 50px;
-      float: left; 
-      width: 220px;
-      padding-left: 30px;
-    }
-    
-    /* 날짜 전체적으로 감싸는 부분 */
-   .dateGroup{
-      background: rgb(240, 240, 240); 
-      border-radius: 50px;
-       float: left; 
-      width: 180px;
-      padding-left: 30px;
-    }
+/* input */
+.input-style {
+	border: none;
+	font-size: 15px;
+	background-color: transparent;
+	outline: none;
+}
 
-   /* 선택 되었을 때 색깔 */    
-   .inputGroup:hover, .dateGroup:hover,.btn-submit:hover{
-      background: white;
-   }
- 
-   #rowGroup{
-      background: rgb(240, 240, 240);
-      border-radius: 50px;
-      float: left;
-      margin-left: 100px;
-   }
+/* label */
+.calLabel {
+	font-size: 12px;
+	color: black;
+	display: block;
+	height: 10px;
+	font-weight: bold;
+}
+
+/* input 전체적으로 감싸는 부분 */
+.inputGroup {
+	background: rgb(240, 240, 240);
+	border-radius: 50px;
+	float: left;
+	width: 220px;
+	padding-left: 30px;
+}
+
+/* 날짜 전체적으로 감싸는 부분 */
+.dateGroup {
+	background: rgb(240, 240, 240);
+	border-radius: 50px;
+	float: left;
+	width: 180px;
+	padding-left: 30px;
+}
+
+/* 선택 되었을 때 색깔 */
+.inputGroup:hover, .dateGroup:hover, .btn-submit:hover {
+	background: white;
+}
+
+#rowGroup {
+	background: rgb(240, 240, 240);
+	border-radius: 50px;
+	float: left;
+	margin-left: 100px;
+}
 
 /* 플래너 생성 스타일 end */
 </style>
 
 <script>
-/* 플래너 생성 경고 */
-   $(document).ready(function(){
-      $(".btn-submit").click(function(){
-         if($("#planner_name").val().length==0){
-            alert("플래너 이름을 입력하세요!");
-            $("#planner_name").focus();
-            return false;
-         }//if end
-         if($("#input-start").val().length==0){
-            alert("여행 기간을 선택해주세요!");
-            $("#input-start").focus();
-            return false;
-         }//if end
-         if($("#input-end").val().length==0){
-            alert("여행 기간을 선택해주세요!");
-            $("#input-start").focus();
-            return false;
-         }//if end
-         if($("#schedule_content").val().length==0){
-            alert("나라를 입력하세요!");
-            $("#schedule_content").focus();
-            return false;
-         }//if end
-      });//click function end
-   });//ready function end
-/* 플래너 생성 경고 end */
+	/* 플래너 생성 경고 */
+	$(document).ready(function() {
+		$(".btn-submit").click(function() {
+			if ($("#planner_name").val().length == 0) {
+				alert("플래너 이름을 입력하세요!");
+				$("#planner_name").focus();
+				return false;
+			}//if end
+			if ($("#input-start").val().length == 0) {
+				alert("여행 기간을 선택해주세요!");
+				$("#input-start").focus();
+				return false;
+			}//if end
+			if ($("#input-end").val().length == 0) {
+				alert("여행 기간을 선택해주세요!");
+				$("#input-start").focus();
+				return false;
+			}//if end
+			if ($("#schedule_content").val().length == 0) {
+				alert("나라를 입력하세요!");
+				$("#schedule_content").focus();
+				return false;
+			}//if end
+		});//click function end
+	});//ready function end
+	/* 플래너 생성 경고 end */
 </script>
 
 <script>

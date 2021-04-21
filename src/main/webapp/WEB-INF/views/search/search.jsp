@@ -24,8 +24,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
@@ -38,46 +37,21 @@
 <link href="/resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
 
 <!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap"
-	rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 
 <title>검색</title>
 
 <style>
-
-@font-face {
-    font-family: 'GongGothicMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'GongGothicLight';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* 내용 글씨 */
-@font-face {
-    font-family: 'IBMPlexSansKR-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 html, body {
 	width: 100%;
 	height: 100%;
 	margins: 0;
 	padding: 0;
-	background-color: #f5f5f5;
+	/* background-color: #f5f5f5; */
 }
 
 /* 달력 생성 모달 */
-	/* 달력 아이콘 */
+/* 달력 아이콘 */
 #calImg {
 	position: fixed;
 	right: 20px;
@@ -86,11 +60,11 @@ html, body {
 }
 
 /* 모달 스타일 */
-.modalInput{
-       margin-left: 20px;
-   }
+.modalInput {
+	margin-left: 20px;
+}
 
-.modal_input-style{
+.modal_input-style {
 	border: none;
 	font-size: 15px;
 	background-color: rgb(238, 237, 237);
@@ -101,7 +75,7 @@ html, body {
 	padding-left: 20px;
 }
 
-.modal-submit{
+.modal-submit {
 	border: none;
 	height: 40px;
 	width: 270px;
@@ -109,46 +83,224 @@ html, body {
 	background-color: rgb(211, 211, 211);
 }
 
-.modalLabel{
-	margin:15px 10px 10px 10px;			
+.modalLabel {
+	margin: 15px 10px 10px 10px;
 	font-size: 12px;
 	color: black;
 	display: block;
 	height: 10px;
 	font-weight: bold;
 }
-           
+
 /* 모달 배경 투명 */
 .modal-backdrop {
-	background-color: rgba(0,0,0,.0001) !important;
+	background-color: rgba(0, 0, 0, .0001) !important;
 }
 
-.modal-dialog2{
+.modal-dialog2 {
 	position: fixed;
-	top:60px;
+	top: 60px;
 	right: 60px;
-	width:310px;
+	width: 310px;
 }
 
+/* 도시, 국가 ... */
+.box {
+	width: 310px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 
+.plBox {
+	background-color: #f5f5f5;
+}
 
-	
-/* 모달 스타일 end */
-</style>
+.diHover {
+	background-color: #f5f5f5;
+}
 
-<style>
+.diHover:hover, .plBox:hover {
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+}
+
 /* 다이어리 이미지 */
- .diary_img {
+.diary_img {
 	width: 240px;
 	height: 240px;
 	object-fit: cover;
 	display: block;
 	margin: 0px auto;
 	padding-bottom: 20px;
-} 
+}
 </style>
 
+<style>
+/* 별 */
+span.star-prototype, span.star-prototype > * {
+    height: 17px; 
+    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+    width: 80px;
+    display: inline-block;
+}
+ 
+span.star-prototype > * {
+    background-position: 0 0;
+    max-width:80px; 
+}
 
+</style>
+
+<style>
+.plBox {
+	border-radius: 15px;
+}
+
+.searchBtn {
+	border-radius: 15px;
+	font-weight: bold;
+	width: 100px;
+}
+
+#keyword_search {
+	height: 45px;
+	/* 	width: 50%; */
+	/* 	min-width: 100%; */
+	line-height: 70px;
+	background-color: transparent;
+	color: black;
+	font-size: 20px;
+	border-radius: 50px;
+	border: 2px solid #303E57;
+	font-family: 'GongGothicMedium';
+	outline: none;
+}
+
+.search_icon {
+	background-color: #303E57;
+	border-radius: 50px;
+	border: none;
+	outline: none;
+	padding-top: 10px;
+	padding-bottom: 9px;
+	text-align: center;
+	width: 45px;
+	height: 45px;
+	margin-left: 10px;
+	font-family: 'GongGothicMedium';
+	font-size: 20px;
+	color: white;
+}
+.search_icon:hover{
+	border: none !important;
+	outline: none !important;
+	color: #1dcad3;
+	text-decoration: none;
+}
+
+.wrap_search {
+	font-family: 'IBMPlexSansKR-Light';
+}
+
+.search_menu {
+	font-family: 'GongGothicMedium';
+	color: #303E57;
+	font-size: 20px;
+}
+
+.font_h {
+	font-family: 'GongGothicMedium';
+	color: #1dcad3;
+	font-size: 30px;
+}
+
+.memu {
+	border: solid 1px;
+	border-radius: 15px 15px 0 0;
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size: 20px;
+	background-color: #1dcad3;
+	width: 100px;
+	margin-left: -13px;
+}
+
+.memu:hover {
+	border: none !important;
+	outline: none !important;
+	color: #CFD2D3;
+	text-decoration: none;
+}
+
+.hr_search {
+	border: 0.5px solid #1dcad3;
+}
+
+.line {
+	border: none;
+	outline: none;
+	border-bottom: 2px solid #1dcad3;
+}
+
+.more {
+	float: right;
+	color: #1dcad3;
+	font-size: 15px;
+	font-family: 'GongGothicMedium';
+}
+
+.search_keyword {
+	color: #303E57;
+	font-size: 15px;
+	font-family: 'GongGothicMedium';
+	text-align: center;
+}
+
+.hash_color {
+	color: #303E57;
+}
+/* 여기 */
+/* 모달 스타일 */
+.dialogDi {
+	height: 40px;
+}
+
+.mainImg {
+	float: left;
+}
+
+.Mcontent {
+	padding: 0px;
+	width: 100%
+}
+
+.dialogtext {
+	width: 350px;
+	height: 240px;
+	font-weight: bold;
+}
+
+.dialog-date, .dialog-hashtag {
+	text-align: right;
+}
+
+.popup_img {
+	position: relative;
+	width: 400px;
+	height: 400px;
+	object-fit: cover;
+}
+
+.dialog-profile {
+	font-family: 'GongGothicMedium';
+}
+
+.dialog-wrap {
+	width: 350px;
+	margin: 20px 0 20px 20px;
+	float: left;
+}
+</style>
 
 <script>
 /* 플래너 생성 경고 */
@@ -203,38 +355,6 @@ $(document).ready(function(){
 
 </script>
 
-<style>
-/* 별 */
-span.star-prototype, span.star-prototype > * {
-    height: 17px; 
-    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
-    width: 80px;
-    display: inline-block;
-}
- 
-span.star-prototype > * {
-    background-position: 0 0;
-    max-width:80px; 
-}
-
-</style>
-
-<style>
-/* 도시, 국가 ... */
-	.box{
-		width:310px;	
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-</style>
-
-<style>
-.diHover:hover, .plBox:hover{
-	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
-}
-</style>
-
 <script>
 /* 해시태그 & 링크 */
 	$(document).ready(function(){
@@ -244,7 +364,6 @@ span.star-prototype > * {
 		var linkedContent; //주소
 		
 		//jstl
-	    
 	    <c:forEach items="${member}" var="member">
 	    <c:forEach items="${member.plannerVO}" var="pl">
 	    <c:forEach items="${pl.diaryVO}" var="di">
@@ -276,159 +395,6 @@ span.star-prototype > * {
 /* 해시태그 & 링크 끝 */
 </script>
 
-<style>
-
-.plBox {
-	background-color: white;
-	border-radius: 15px;
-}
-
-.searchBtn {
-	border-radius: 15px;
-	font-weight: bold;
-	width: 100px;
-}
-
-
-
-#keyword_search{
-	height: 45px;
-/* 	width: 50%; */
-/* 	min-width: 100%; */
-	line-height: 70px;
-	background-color: transparent;
-	color: black;
-	font-size: 20px;
-	border-radius: 50px;
-	border: 2px solid #303E57;
-	font-family: 'GongGothicMedium';
-	outline:none;
-}
-
-.search_icon{
-	background-color: #303E57;
-	border-radius: 50px;
-	border: none;
- 	outline:none; 
-	padding-top: 10px;
-	padding-bottom: 9px;
-	text-align: center; 
-	width: 45px;
-	height: 45px;
-	margin-left:10px;
-	font-family: 'GongGothicMedium';  
-	font-size:20px; 
-	color:white;
-	
-}
-
-
-
-.wrap_search{
-	font-family: 'IBMPlexSansKR-Light';
-}
-
-.search_menu{
-	font-family: 'GongGothicMedium';
-	color:#303E57;
-	font-size:20px;
-}
-
-.font_h{
-	font-family: 'GongGothicMedium';
-	color:#1dcad3;
-	font-size:30px;
-}
-
-.memu{
-	border: solid 1px;
-	border-radius: 15px 15px 0 0;
-	font-family: 'GongGothicMedium';
-	color: white;
-	font-size:20px;
-	background-color: #1dcad3;
-	width:100px;
-	margin-left:-13px;
-}
-
-.hr_search{
-	border: 0.5px solid #1dcad3;
-}
-
-.line{
-	border: none;
-	outline: none;
-	border-bottom: 2px solid #1dcad3;
-	
-
-}
-
-.more{
-	float:right;
-	color:#1dcad3;
-	font-size:15px;
-	font-family: 'GongGothicMedium';
-}
-
-.search_keyword{
-	color:#303E57;
-	font-size:15px;
-	font-family: 'GongGothicMedium';
-	text-align:center;
-
-}
-
-.hash_color{
-	color:#303E57;
-}
-/* 여기 */
-/* 모달 스타일 */
-.dialogDi{
-   
-  	height : 40px;
-
-}
-
-.mainImg{
-    float: left;
-}
-
-.Mcontent{
-	padding:0px;
-	width:100%
-}
-
-.dialogtext{
-	width : 350px;
-  	height : 240px;
-  	font-weight: bold;
-  	
-  	
-  
-}
-.dialog-date, .dialog-hashtag{
-	text-align:right;
-}
-
-
-.popup_img{
-	position: relative; 
-	width: 400px; 
-	height: 400px;
-}
-
-.dialog-profile{
-	font-family: 'GongGothicMedium';
-}
-
-.dialog-wrap{
-	width : 350px;
-	margin: 20px 0 20px 20px;
-   	float: left;
-}
-
-</style>
-
 </head>
 <body>
 
@@ -451,10 +417,13 @@ span.star-prototype > * {
 		<br/>
 		
 		<!-- 검색 메뉴 -->
-	  	<div class=" line col-12">
-		<button type="button" class="memu btn" onclick="window.location.href='${pageContext.request.contextPath}/search?keyword=${keyword}'">통합</button>
-		<button type="button" class="memu btn " onclick="window.location.href='${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic'">일정</button>
-		<button type="button" class="memu btn " onclick="window.location.href='${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic'">다이어리</button>
+		<div class=" line col-12">
+			<button type="button" class="memu btn"
+				onclick="window.location.href='${pageContext.request.contextPath}/search?keyword=${keyword}'">통합</button>
+			<button type="button" class="memu btn "
+				onclick="window.location.href='${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic'">일정</button>
+			<button type="button" class="memu btn "
+				onclick="window.location.href='${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic'">다이어리</button>
 		</div>
 		
 		<br/><br/>

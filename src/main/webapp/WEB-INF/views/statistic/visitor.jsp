@@ -48,15 +48,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <style>
-	text{
-		fill : white;
-	}
-	
-	#chart-product-list td {
-		max-width: 180px;
-		overflow: hidden;
-		table-layout: fixed;
-	}
+text {
+	fill: white;
+}
+
+#chart-product-list td {
+	max-width: 180px;
+	overflow: hidden;
+	table-layout: fixed;
+}
 </style>
 
 <script type="text/javascript">

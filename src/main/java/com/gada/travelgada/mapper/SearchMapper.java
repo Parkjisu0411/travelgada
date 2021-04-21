@@ -20,9 +20,15 @@ public interface SearchMapper {
 	public List<MemberVO> searchDi(String keyword);
 	
 	//일정 더보기
-	public List<PlannerVO> searchPlMore(String keyword,String order);
+	public List<PlannerVO> searchPlMore(String keyword,String order, int nowPage, int amount);
 	
 	//다이어리 더보기
-	public List<DiaryVO> searchDiMore(String keyword,String order);
+	public List<DiaryVO> searchDiMore(String keyword,String order,int nowPage, int amount);
+
+	//다이어리 total
+	public int getDiTotal(String keyword,String order);
+
+	//일정 total
+	public int getPlTotal(String keyword, String order);
 	
 }

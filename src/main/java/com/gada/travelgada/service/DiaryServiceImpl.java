@@ -20,9 +20,9 @@ public class DiaryServiceImpl implements DiaryService {
 	private DiaryMapper mapper;
 
 	@Override
-	public List<DiaryVO> getDiary(String member_id) {
+	public List<DiaryVO> getDiary(String member_id, int nowPage, int amount) {
 		log.info("ServiceImpl getDiary()");
-		return mapper.getDiary(member_id);
+		return mapper.getDiary(member_id,nowPage,amount);
 	}
 
 	@Override
@@ -63,10 +63,17 @@ public class DiaryServiceImpl implements DiaryService {
 	}
 
 	
-	  @Override public int getImg_seq() { 
+	  @Override 
+	  public int getImg_seq() { 
 		  log.info("ServiceImpl getImg_seq()");
-	  return mapper.getImg_seq();
+		  return mapper.getImg_seq();
 	  
 	  }
+
+	@Override
+	public int getTotal(String member_id) {
+		log.info("ServiceImpl getTotal()");
+		return mapper.getTotal(member_id);
+	}
 
 }
