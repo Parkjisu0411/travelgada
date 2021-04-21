@@ -177,7 +177,7 @@
 				</div>
 			</div>
 		</div>
-			<a href="shopping/buy_list" class="more-view">주문 더보기</a>
+			<a href="/shopping/buy_list" class="more-view">주문 더보기</a>
 			<h2 class="gada-headline" style="">SHOPPING LIST</h2>
 			<hr />
 		<div class="row">
@@ -193,17 +193,17 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="buyDetail" items="${buyDetailList }">
+							<c:forEach var="buyDetail" items="${buyList }">
 								<tr>
 									<td>
-										<img class="product-img rounded" src="/resources/img/product/${productMap[buyDetail.buy_detail_id].img_path }" />
+										<img class="product-img rounded" src="/resources/img/product/${buyDetail.product.img_path}" />
 										<div class="product-info">
-											<strong class="gada-link" onclick="viewDetail(${buyDetail.product_id})">${buyDetail.product_name }</strong>
-											<p>₩ ${productMap[buyDetail.buy_detail_id].price }</p>
+											<strong class="gada-link" onclick="viewDetail(${buyDetail.product.product_id})">${buyDetail.product_name }</strong>
+											<p>₩ ${buyDetail.product.price}</p>
 										</div>
 									</td>
-									<td><fmt:formatDate value="${buyMap[buyDetail.buy_detail_id].buy_date }" pattern="yyyy.MM.dd"/></td>
-									<td><a href="/shopping/buy_list/${buyMap[buyDetail.buy_detail_id].buy_id }">${buyMap[buyDetail.buy_detail_id].buy_id }</a></td>
+									<td><fmt:formatDate value="${buyDetail.buy.buy_date}" pattern="yyyy.MM.dd"/></td>
+									<td><a href="/shopping/buy_list/${buyDetail.buy.buy_id}">${buyDetail.buy.buy_id}</a></td>
 									<td>₩ ${buyDetail.price }</td>
 								</tr>
 							</c:forEach>

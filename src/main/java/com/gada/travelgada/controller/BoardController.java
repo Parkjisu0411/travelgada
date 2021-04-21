@@ -46,6 +46,7 @@ import net.minidev.json.JSONObject;
 public class BoardController {
 	private BoardService boardService;
 	
+	// 게시글 목록
 	@GetMapping("/board/{board_type_id}")
 	public ModelAndView reviewBoard(ModelAndView modelAndView, CriteriaVO cri, @AuthenticationPrincipal MemberDetails member, BoardVO boardVO) {
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
@@ -76,7 +77,7 @@ public class BoardController {
 		return modelAndView;
 	}
 	
-	
+	// 게시글 제목 클릭 시 view
 	@GetMapping("/board/{board_id}/{member_id}/{board_type_id}")
 	public ModelAndView boardContentView(ModelAndView modelAndView, CriteriaVO cri, MemberVO memberVO, BoardVO boardVO) {
 
@@ -122,8 +123,9 @@ public class BoardController {
 //		return modelAndView;
 //	}
 	
-	@GetMapping("/board/replyContent/{board_id}/{member_id}")
-	public ModelAndView boardReplyContentView(ModelAndView modelAndView, MemberVO memberVO, BoardVO boardVO) {
+	// 댓글 숫자 클릭 시 view
+	@GetMapping("/board/replyContent/{board_id}/{member_id}/{board_type_id}")
+	public ModelAndView boardReplyContentView(ModelAndView modelAndView, CriteriaVO cri, MemberVO memberVO, BoardVO boardVO) {
 
 		log.info("boardContentView");
 		log.info("확인!!!!!!" + memberVO.getProfile_img_path());
@@ -138,13 +140,23 @@ public class BoardController {
 		modelAndView.addObject("bRecentReply", boardService.getRecentReply(boardVO));
 		
 		
+		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
+		
+		modelAndView.addObject("boardReviewList", boardService.getReviewBoard(nowPage, cri.getAmount(), boardVO.getBoard_type_id() ));
+		modelAndView.addObject("getBoardTypeId", boardVO.getBoard_type_id());
+		
+		int total = boardService.getTotalReviewBoard(boardVO.getBoard_type_id());
+		log.info("total" + total);
+		modelAndView.addObject("pageMaker", new PageVO(cri, total));
+		
+		
 		return modelAndView;
 	}
 	
-	
-	@GetMapping("/board")
+	// 게시글 작성 view
+	@GetMapping("/board/write/{board_type_id}")
 	//@GetMapping("/board/{board_type_id}")
-	public ModelAndView boardWriteView(ModelAndView modelAndView, Model model) {
+	public ModelAndView boardWriteView(ModelAndView modelAndView, Model model, BoardVO boardVO) {
 
       log.info("boardWriteView");
       //log.info(member.getName());
@@ -155,6 +167,7 @@ public class BoardController {
 
       modelAndView.setViewName("/board/board_write_view");
       model.addAttribute("checkAuthority", MemberDetails.hasAdminRole());
+      model.addAttribute("btID", boardVO.getBoard_type_id());
       //modelAndView.addObject("bWriteView", member_id);
       //modelAndView.addObject("bWriteView", board_type_id);
       
@@ -162,7 +175,7 @@ public class BoardController {
    }
    
    
-   
+   // 게시글 작성
    @PutMapping("/board")
    public ResponseEntity<String> writeBoard(@RequestBody BoardVO boardVO) {
       ResponseEntity<String> entity = null;
@@ -180,9 +193,9 @@ public class BoardController {
       return entity;
    }
    
-   
-   @GetMapping("/board/modify/{board_id}/{member_id}")
-   public ModelAndView boardModifyView(ModelAndView modelAndView, MemberVO memberVO, BoardVO boardVO) {
+   // 게시글 수정 view
+   @GetMapping("/board/modify/{board_id}/{member_id}/{board_type_id}")
+   public ModelAndView boardModifyView(ModelAndView modelAndView, Model model, MemberVO memberVO, BoardVO boardVO) {
 
       log.info("boardModifyView");
 
@@ -190,11 +203,12 @@ public class BoardController {
       
       modelAndView.addObject("bContentView", boardService.boardContentView(boardVO));
       modelAndView.addObject("bImgPath", boardService.boardImgPath(memberVO));
+      model.addAttribute("btID", boardVO.getBoard_type_id());
       
       return modelAndView;
    }
    
-   
+   // 게시글 수정
    @PutMapping("/board/{board_id}")
    public ResponseEntity<String> modifyContent(@RequestBody BoardVO boardVO) {
       ResponseEntity<String> entity = null;
@@ -212,7 +226,7 @@ public class BoardController {
       return entity;
    }
    
-   
+   // 게시글 삭제
    @DeleteMapping("/board/{board_id}")
    public ResponseEntity<String> deleteBoard(BoardVO boardVO){
       ResponseEntity<String> entity = null;
@@ -231,7 +245,7 @@ public class BoardController {
       return entity;
    }
    
-   
+   	// 댓글 작성
 	@PostMapping("/board/reply")
 	public ResponseEntity<Map<String,String>> writeReply(@RequestBody BoardVO boardVO) {
 		ResponseEntity<Map<String,String>> entity = null;
@@ -254,7 +268,7 @@ public class BoardController {
 		return entity;
 	}
    
-   
+   // 댓글 삭제
    @DeleteMapping("/board/reply/{answer_id}")
    public ResponseEntity<String> deleteReply(AnswerVO answerVO){
       ResponseEntity<String> entity = null;
@@ -272,7 +286,7 @@ public class BoardController {
       return entity;
    }
    
-   
+   // 답변 달기 view
    @GetMapping("/board/answer/{board_id}")
    public ModelAndView boardAnswerView(ModelAndView modelAndView, BoardVO boardVO) {
 
@@ -284,6 +298,7 @@ public class BoardController {
 		return modelAndView;
 	}
 	
+   	// 답변 달기
 	@PostMapping("/board/{board_id}")
 	public ResponseEntity<String> boardAnswer(@RequestBody BoardVO boardVO){
 		ResponseEntity<String> entity = null;
@@ -300,6 +315,24 @@ public class BoardController {
 		
 		return entity;
 	}
+	
+	// 게시판 검색
+//	@GetMapping("/searchBoard")
+//	public ModelAndView searchBoard(ModelAndView mav, @RequestParam("keyword") String keyword) {
+//		log.info("searchBoard");
+//		
+//		//통합 검색 일정 부분
+//		mav.addObject("searchPl", boardService.searchPl(keyword));
+//		//통합 검색 다이어리 부분 getSearchDiary
+//		mav.addObject("member", boardService.searchDi(keyword));
+//		//키워드 보내는 부분
+//		mav.addObject("keyword",keyword);
+//		
+//		mav.setViewName("search/search");
+//
+//		return mav;
+//
+//	}// search end
 	
 
    

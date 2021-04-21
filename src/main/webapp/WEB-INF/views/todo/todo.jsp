@@ -30,16 +30,32 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 
+
+<!-- 영어 폰트(헤드라인) -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap');
+</style>
+<!-- 한글 폰트(헤드라인) -->
+<style>
+@font-face {
+    font-family: 'GongGothicMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
+<!-- 한글 폰트(기본) -->
+<style>
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
   
   <style>
-	body {
-		font-family: 'yg-jalnan';
-		src:
-			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff')
-			format('woff');
-		font-weight: normal;
-		font-style: normal;
-	}
+
   
   	img {
   		object-fit: cover;
@@ -53,15 +69,81 @@
 	  	color:grey;
 
   	}
-  	
-  	.label{
-  		
-  	}
 	
 	dropdown {
 		float : right;
 	}
 	
+	.headline{
+		font-family: 'GongGothicMedium';
+		color:#1DCAD3;
+		font-size:28pt;
+		/* line */
+		display: flex;
+		flex-basis: 100%;
+		align-items: center;
+		margin: 8px 0px;
+	}
+	
+	/* line */	
+	.headline::after {
+		content: "";
+		flex-grow: 1;
+		background: #1DCAD3;
+		height: 1px;
+		font-size: 0px;
+		line-height: 0px;
+		margin: 0px 16px;
+	}
+	
+	.todoImg{
+		width:43px;
+		height:43px;
+		float:left;
+		margin:0 8px 3px 0;
+	}
+	
+	a:hover{
+		text-decoration:none !important;
+		color:#CFD2D3;
+	}	
+	
+	.inputTitle{
+		font-family: 'Montserrat', sans-serif;
+		font-weight:bold;
+		font-size: 20pt;
+		padding:0 15px;
+		color:#303E57;
+		/* line */
+		display: flex;
+		/* flex-basis: 82%; */
+		flex-basis: 100px;
+		align-items: center;
+		margin: 8px 0;
+	}
+	
+	/* line */	
+	.inputTitle::after {
+		content: "";
+		flex-grow: 1;
+		background: #1DCAD3;
+		height: 1px;
+		font-size: 0px;
+		line-height: 0px;
+		margin: 0px 16px;
+	}
+	
+/* 	.introduce{
+		color: #CFD2D3;
+		font-family: 'IBMPlexSansKR-Light';
+		font-weight:bold;
+		margin:14px 0 14px -10px;
+	} */
+
+	.introduce{
+		display:block;
+		float:right;
+	}
 	
 
   </style>
@@ -375,13 +457,12 @@
 </head>
 <body>
 
-<!-- 해더 -->
+<!-- Header -->
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
 	<br />
-	<br />
 	<div class="container">
-	<h2 class="headline" style="font-family: 'yg-jalnan'">준비물</h2>
+	<a class="headline" href="${pageContext.request.contextPath }/todo"><img class="todoImg" src="/resources/todo/checkImg.png">준비물</a><br />
 		<div class="row">
 			<div class="col-sm-12">
 				<select class="form-control" name="planner_id">
@@ -395,11 +476,10 @@
 
 	<br /><br />
 
-	<br />
-	<div class="container">
+<%-- 	<div class="container">
 		<div class="row">
-		&nbsp;&nbsp;<h4 style="font-family: 'yg-jalnan'">카테고리를 입력하세요</h4>
-		<hr style="border: solid 1px light-grey; width: 75%;">
+		<!-- &nbsp;&nbsp;<h4 style="font-family: 'yg-jalnan'">카테고리를 입력하세요</h4> -->
+		<span class="inputTitle">CATEGORY</span><span class="introduce">카테고리 제목을 입력하세요!</span>
 			<div class="col-sm-3">
 				<div class="jb-table">
 					<div class="jb-table-row">
@@ -417,7 +497,33 @@
 			</div>
 		</div>
 	</div>
+	<br /> --%>
+	
+	<div class="container">
+		
+		<!-- &nbsp;&nbsp;<h4 style="font-family: 'yg-jalnan'">카테고리를 입력하세요</h4> -->
+		
+			
+			<span class="inputTitle">CATEGORY</span>
+			<span class="introduce"><div >
+						<form id="addToDoTitle" action="/addTodoType" method="POST">
+						<input type="hidden" class="getRecentTodoTypeId" value="${getRecentTodoTypeId }"> <input type="hidden" id="planner_id" value="${getPlannerId }">
+						
+							
+							
+						 		
+								<input type="text" id="todo_title" placeholder="ex.전자기기">
+								
+								<input type="submit" value="카테고리 만들기">
+							
+						</form>
+			</div></span>
+			
+		
+	</div>
 	<br />
+	
+	
 	<hr style="border: solid 1px light-grey; width: 66%;">
 	<br />
 

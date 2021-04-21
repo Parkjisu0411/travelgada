@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gada.travelgada.domain.BuyDetailVO;
+import com.gada.travelgada.domain.BuyListVO;
 import com.gada.travelgada.domain.BuyVO;
+import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.MemberDetails;
+import com.gada.travelgada.domain.PageVO;
 import com.gada.travelgada.domain.PointVO;
 import com.gada.travelgada.domain.ProductVO;
 import com.gada.travelgada.service.MemberService;
@@ -133,7 +136,8 @@ public class ShoppingController {
 		return modelAndView;
 	}
    
-   // 결제 정보, 포인트 사용-적립 내역을 테이블에 저장
+    // 결제 정보, 포인트 사용-적립 내역을 테이블에 저장
+	@Transactional
 	@PostMapping("/shopping/order/result")
 	public ModelAndView insertOrderResult(HttpServletRequest request, ModelAndView modelAndView,
 			@AuthenticationPrincipal MemberDetails memberDetails) {
@@ -206,30 +210,36 @@ public class ShoppingController {
    
    @GetMapping("/shopping/buy_list")
    public ModelAndView buyList(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
-      List<BuyVO> buyList = shoppingService.getBuyList(memberDetails.getUsername());
-      List<BuyDetailVO> buyDetailList = null;
-      for(BuyVO vo : buyList) {
-         if(buyDetailList == null) {
-            buyDetailList = shoppingService.getBuyDetailList(vo.getBuy_id());            
-         } else {
-            for(BuyDetailVO detailVO : shoppingService.getBuyDetailList(vo.getBuy_id())) {
-               buyDetailList.add(detailVO);
-            }
-         }
-      }
-      Map<Integer, BuyVO> buyMap = new HashMap<>();
-      Map<Integer, ProductVO> productMap = new HashMap<>();
+	  Map<String, List<? extends Object>> buyListMap = new HashMap<>();
+	  CriteriaVO cri = new CriteriaVO(1, 10);
+      List<BuyListVO> buyList = shoppingService.getBuyListByIdWithPage(memberDetails.getUsername(), cri.getNowPage(), cri.getAmount());
+      List<PageVO> pageMaker = new ArrayList<PageVO>();
+      pageMaker.add(new PageVO(cri, shoppingService.getBuyListTotal(memberDetails.getUsername())));
+      buyListMap.put("pageMaker", pageMaker);
+      buyListMap.put("buyList", buyList);
       
-      for(BuyDetailVO vo : buyDetailList) {
-         buyMap.put(vo.getBuy_detail_id(), shoppingService.getBuyByDetail(vo));
-         productMap.put(vo.getBuy_detail_id(), shoppingService.getProductByDetail(vo));
-      }
-      
-      modelAndView.addObject("buyDetailList", buyDetailList);
-      modelAndView.addObject("buyMap", buyMap);
-      modelAndView.addObject("productMap", productMap);
+      modelAndView.addObject("buyListMap", buyListMap);
       modelAndView.setViewName("/shopping/buy_list");
       return modelAndView;
+   }
+   
+   @Transactional
+   @GetMapping("/shopping/buy_list_page")
+   public ResponseEntity<Map<String, List<? extends Object>>> buyListWithPaging(CriteriaVO cri, @AuthenticationPrincipal MemberDetails memberDetails) {
+	   ResponseEntity<Map<String, List<? extends Object>>> entity = null;
+	   Map<String, List<? extends Object>> buyListMap = new HashMap<>();
+	   try {
+		   List<PageVO> pageMaker = new ArrayList<>();
+		   pageMaker.add(new PageVO(cri, shoppingService.getBuyListTotal(memberDetails.getUsername())));
+		   List<BuyListVO> buyList = shoppingService.getBuyListByIdWithPage(memberDetails.getUsername(), cri.getNowPage(), cri.getAmount());
+		   buyListMap.put("pageMaker", pageMaker);
+		   buyListMap.put("buyList", buyList);
+		   entity = new ResponseEntity<Map<String, List<? extends Object>>>(buyListMap, HttpStatus.OK);
+	   } catch(Exception e) {
+		   e.printStackTrace();
+		   entity = new ResponseEntity<Map<String, List<? extends Object>>>(buyListMap, HttpStatus.BAD_REQUEST);
+	   }
+	   return entity;
    }
    
    @GetMapping("/shopping/buy_list/{buy_id}")

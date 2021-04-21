@@ -20,45 +20,76 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>Login Form</title>
 <style>
-html, body {
-	width: 100%;
-	height: 100%;
-	margins: 0;
-	padding: 0;
-}
-
-#wrap {
-	min-heigth: 100%;
-}
-
-.member-profile {
-	text-align: center;
-}
-
-.product-img {
-	height: 100px;
-	width: 100px;
-	display: block;
-	vertical-align: middle;
-	margin-right: auto;
-}
-
-.delete-btn-area {
-	float: right;
-}
-
-.cart-empty {
-	text-align: center;
-	height: 100px;
-	line-height: 100px;
-	color: gray;
-}
+	
+	body {
+		font-family: 'IBMPlexSansKR-Light';
+	}
+	
+	hr {
+		background-color: #1DCAD3;
+	}
+	
+	.product-img {
+		height: 100px;
+		width: 100px;
+		display: block;
+		vertical-align: middle;
+		margin-right: auto;
+	}
+	
+	.delete-btn-area {
+		float: right;
+	}
+	
+	.cart-empty {
+		text-align: center;
+		height: 100px;
+		line-height: 100px;
+		color: gray;
+	}
+	
+	.gada-btn-group {
+		text-align: right;
+	}
+	
+	.gada-link:hover {
+		color: #1DCAD3;
+		cursor: pointer;
+	}
+	
+	.quantity {
+		width: 50px;
+		text-align: center;
+	}
+	
+	.product-option a {
+		color: #1DCAD3;
+	}
 </style>
 <script type="text/javascript">
+	function viewDetail(product_id) {
+		location.href = "/shopping/" + product_id;
+	}
+
+	function countUp(product_id) {
+		$("#" + product_id + " .quantity").val(parseInt($("#" + product_id + " .quantity").val()) + parseInt(1));
+		getMul(product_id);
+		getTotal();
+	}
+	
+	function countDown(product_id) {
+		if(parseInt($("#" + product_id + " .quantity").val()) > 1) {			
+			$("#" + product_id + " .quantity").val(parseInt($("#" + product_id + " .quantity").val()) - parseInt(1));
+			getMul(product_id);
+			getTotal();
+		}
+	}
+
 	//삭제
 	function removeSelected() {
 		$("input:checkbox[name=select-product]").each(function() {
@@ -107,6 +138,17 @@ html, body {
 			}
 		})
 		$("#total-price").html(totalPrice);
+	}
+	//
+	//상품 가격 구하기
+	function getMul(product_id) {
+		if($("#" + product_id + " .quantity").val() < 1) {
+			$("#" + product_id + " .quantity").val(1); 
+		}
+		var price = $("#" + product_id + " .price").text();
+		var quantity = $("#" + product_id + " .quantity").val();
+		var mulPrice = price * quantity;
+		$("#" + product_id + " .mul-price").html(mulPrice);
 	}
 	//
 	//주문하기
@@ -194,11 +236,8 @@ html, body {
 		//
 		//상품 갯수 변경 금액 표시
 		$(".quantity").change(function () {
-			var product_id = $(this).parent().parent().parent().parent().attr("id");
-			var price = $("#" + product_id + " .price").text();
-			var quantity = $("#" + product_id + " .quantity").val();
-			var mulPrice = price * quantity;
-			$("#" + product_id + " .mul-price").html(mulPrice);
+			var product_id = $(this).parent().parent().parent().attr("id");
+			getMul(product_id);
 		})
 		//
 		//전체 선택
@@ -248,7 +287,7 @@ html, body {
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div class="container">
-	<h2 style="font-family: 'yg-jalnan'"><i class="fas fa-shopping-cart"></i> 장바구니</h2>
+	<h2 class="gada-headline"><i class="fas fa-shopping-cart"></i> CART</h2>
 	<hr />		
 		<table class="table">
 			<colgroup>
@@ -281,15 +320,19 @@ html, body {
 						</td>
 						<td class="product-status">
 							<div>
-								<p class="product_name">${product.key.product_name }</p>
+								<p class="product_name gada-link" onclick="viewDetail(${product.key.product_id})">${product.key.product_name }</p>
 								<p class="price">${product.key.price }</p>
 							</div>
-							<span>
-								<label>
-									<input type="number" name="quantity" class="quantity" min="1" value="${product.value }"/>
-								</label>
+							<span class="product-option">
+								<a href="javascript:;"  onclick="countDown(${product.key.product_id})">
+									<i class="fas fa-minus"></i>
+								</a>
+								<input class="quantity" type="text" name="quantity" value="${product.value }" autocomplete="off"/>
+								<a href="javascript:;"  onclick="countUp(${product.key.product_id})">
+									<i class="fas fa-plus"></i>
+								</a>
 							</span>
-							<div class="delete-btn-area"><button class="btn btn-secondary delete-btn" onclick="remove(${product.key.product_id})">삭제</button></div>
+							<div class="delete-btn-area"><button class="btn gada-btn delete-btn" onclick="remove(${product.key.product_id})">삭제</button></div>
 						</td>
 						<td>
 							<p class="mul-price"></p>
@@ -298,7 +341,7 @@ html, body {
 				</c:forEach>
 				<tr>
 					<td colspan="3">
-						<button class="btn btn-secondary delete-btn-selected" onclick="removeSelected()" >선택삭제</button>
+						<button class="btn gada-btn-reverse delete-btn-selected" onclick="removeSelected()" >선택삭제</button>
 					</td>
 					<td>
 						<span>총 상품가격</span>
@@ -307,8 +350,9 @@ html, body {
 				</tr>
 			</tbody>
 		</table>
-		<button type="button" class="btn btn-lg btn-primary" onclick="buy()">주문하기</button>
-		<hr />
+		<div class="gada-btn-group">
+			<button type="button" class="btn gada-btn" onclick="buy()">주문하기</button>
+		</div>
 	</div>
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>

@@ -36,4 +36,8 @@ public interface ScheduleMapper {
 
 	public List<ScheduleVO> getAllMap(int planner_id);
 	
+	public void deleteScheduleByPlannerId(int planner_id);
+	
+	public void deleteBeyondSchedule(@Param("planner_id") int planner_id, @Param("start_date") Date start_date, @Param("end_date") Date end_date);
+	
 }

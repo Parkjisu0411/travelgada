@@ -19,5 +19,6 @@ public interface DiaryMapper {
 	public List<DiaryVO> getDiaryOther(int planner_id);
 	public int getImg_seq();
 	public int getTotal(String member_id);
+	public void deleteDiaryByPlannerId(int planner_id);
 	
 }

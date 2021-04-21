@@ -23,29 +23,6 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- 영어 폰트(헤드라인) -->
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap');
-</style>
-<!-- 한글 폰트(헤드라인) -->
-<style>
-@font-face {
-    font-family: 'GongGothicMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
-<!-- 한글 폰트(기본) -->
-<style>
-@font-face {
-    font-family: 'IBMPlexSansKR-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
-
 <title>REVIEW BOARD</title>
 
 <style>
@@ -88,6 +65,7 @@ html, body {
 
 .con{
 	font-family: 'IBMPlexSansKR-Light';
+	font-weight:bold;
     text-align:center;
 }
 
@@ -129,7 +107,7 @@ a{
 }
 
 .Rcnt{
-	font-weight:bold;
+	color:#ff7473 !important;
 	font-size:11pt;
 }
 
@@ -154,9 +132,73 @@ a{
 		border:0;
 		outline:none;
 	}
+	
+	.con a:hover{
+		color:#1DCAD3;
+	}
+
+	.Rcnt:hover{
+		font-size:1em;
+	}
+	
+	.headline:hover{
+		color: #CFD2D3;
+	}	
+	
+	/* 검색 */
+	#board_keyword_search{
+		height: 30px;
+ 	 	width: 300px; 
+	 	/* min-width: 100%;  */ 
+		line-height: 70px;
+		background-color: transparent;
+		color: black;
+		font-size: 15px;
+		/* border-radius: 50px; */
+		border:none;
+		border-bottom: 2px solid #303E57;
+		font-family: 'GongGothicMedium';
+		outline:none;
+	}
+	.search_icon{
+		background-color: #303E57;
+		border-radius: 50px;
+		border: none;
+	 	outline:none; 
+		padding-top: 6px;
+		padding-bottom: 9px;
+		text-align: center; 
+		width: 28px;
+		height: 28px;
+		margin-left:1px;
+		margin-top:1px;
+		font-family: 'GongGothicMedium';  
+		font-size:13px; 
+		color:white;
+	}
+	
+	#select{
+		height: 30px;
+ 	 	width: 120px;
+	 	/* min-width: 100%;  */ 
+		line-height: 70px;
+		background-color: transparent;
+		color: black;
+		font-size: 15px;
+		border-radius: 50px;
+		border: 2px solid #303E57;
+		font-family: 'GongGothicMedium';
+		outline:none;
+	}
+	
+	.search_board{
+		width:50%;
+		margin:0 auto;
+	}
 
 </style>
-
+	
+	<!-- 로그인 상태 체크 -->
 	<script>
 		function check_id(){
       	 	alert("로그인이 필요한 서비스입니다.");
@@ -164,6 +206,7 @@ a{
    		}
 	</script>
 	
+	<!-- 작성자 클릭 시 이동 --> <!-- 미완성 -->
 	<script>
 		function show_member_history(){
 			
@@ -172,13 +215,14 @@ a{
 
 </head>
 <body>
+	
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
-	<!--Content -->
+	<!-- 게시판 목록 -->
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline">REVIEW</h2>
+			<a class="headline" href="${pageContext.request.contextPath }/board/1">REVIEW</a><br />
 			<span class="bar">|</span><span class="introduction"> 소중한 추억을 가다 회원들과 공유해보세요!</span><br /><br />
 			<table class="table">
 				<thead>
@@ -192,6 +236,7 @@ a{
 				</thead>
 
 				<tbody>
+					<!-- 공지사항 -->
 					<c:forEach items="${boardNoticeList }" var="boardNoticeList">
 						<tr class="notice">
 							<td>${boardNoticeList.board_id }</td>
@@ -204,6 +249,7 @@ a{
 						</tr>
 					</c:forEach>
 				
+					<!-- 게시글 -->
 					<c:forEach items="${boardReviewList }" var="boardReviewList">
 					<tr class="con">
 						<td>${boardReviewList.board_id }</td>
@@ -211,7 +257,7 @@ a{
 							<div class="content2">
 							<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
 							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">${boardReviewList.title }</a>			
-							<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>	
+							<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>	
 							</div>
 						</td>
 						<td class="content2"><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>
@@ -222,16 +268,18 @@ a{
 				</tbody>
 			</table>
 
+			<!-- 권한에 따라 쓰기 버튼 나타내기 -->
 			<div>	
 			<sec:authorize access="isAnonymous()">
   				<button class="writeButton" type="button" onclick="check_id()">쓰기</button>
 			</sec:authorize>
 
 			<sec:authorize access="isAuthenticated()">
-  				 <button class="writeButton" type="button"  onclick="window.location.href='${pageContext.request.contextPath }/board/'" >쓰기</button>
+  				 <button class="writeButton" type="button"  onclick="window.location.href='${pageContext.request.contextPath }/board/write/${getBoardTypeId}'" >쓰기</button>
 			</sec:authorize>	
 			</div>
 
+			<!-- 게시판 페이징 -->
   			<ul class="pagination" style="padding:80px 350px;">	
 		  		<c:if test="${pageMaker.prev}">
 	       		  <li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
@@ -247,18 +295,18 @@ a{
 		 	</ul>  
 		 	
 
-
-			<div style="padding:0 400px;">
-			<form class="form-inline">
-				<select style="border-radius:0.2em; border:2px solid black;">
-					<option>제목</option>
-					<option>제목+내용</option>
-					<option>내용</option>
+			<!-- 게시판 검색 bar -->
+			<div class="search_board">
+			<form action="${pageContext.request.contextPath}/searchBoard" method="get">	
+				<select id="select" class="col-sm-3" name="searchType">
+					<option value="title">제목</option>
+					<option value="2">제목+내용</option>
+					<option value="3">내용</option>
 				</select>&nbsp;&nbsp;
-				<input class="form-control mr-sm-2" type="text" aria-label="Search" style="width:50%;">
-				<button class="btn btn-outline-white btn-sm my-0" type="submit">
-					<i class="fas fa-search"></i>
-				</button>
+				
+				<!-- 검색 키워드 입력 -->
+				<input id="board_keyword_search" class="col-sm-7" type="text" name="keyword" placeholder="검색어를 입력하세요."/>
+				<button class="search_icon" type="submit"><i class="fa fa-search search-icon-in"></i></button>
 			</form>
 			</div>
 			

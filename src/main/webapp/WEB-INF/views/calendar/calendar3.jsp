@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +7,10 @@
 
 <title>달력</title>
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
-	integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
-	crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css" integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg==" crossorigin="anonymous" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
-   	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
-   	crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js" integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 <!-- 달력 -->
@@ -31,13 +26,6 @@
 @font-face {
     font-family: 'GongGothicMedium';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'GongGothicLight';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -70,9 +58,9 @@
 	font-size: 20px;
 	background-color: transparent;
 	outline: none;
-	height: 80px;
+	height: 55px;
 	padding-left:30px;
-	padding-bottom:20px;
+	margin-bottom:20px;
 }
 	
 /* label */
@@ -160,8 +148,8 @@
 <script>
 /* 엔드 날짜 클릭시 시작 날짜로 포거스가게 하기 */
 	$(document).ready(function(){
-		$("#input-end").click(function(){
-			$("#input-start").focus();
+		$("#input-end-2").click(function(){
+			$("#input-start-2").focus();
 		});//click function end
 	});//ready function end
 /* 날짜 동시에 띄우기 end */
@@ -172,10 +160,9 @@
 
 	<div class="container">
 
-	<form class="form" action="${pageContext.request.contextPath}/planner_create" method="post">
+	<form class="form" action="/planner" method="post">
 
 	<!-- 숨겨서 보내야 하는 정보들 -->
-	<input type="hidden" name="member_id" value="${member}"/>
 	<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
 	<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
 
@@ -187,15 +174,20 @@
 				</div>
 				<div class="dateGroup">
 					<label class="calLabel">여행시작</label>
-					<input name="start_date" class="input-style" type="text"  placeholder="YYYY/MM/DD" id="input-start">
+					<input name="start_date" class="input-style " type="text"  placeholder="YYYY/MM/DD" id="input-start-2" autocomplete="off">
 				</div>
 				<div class="dateGroup">
 					<label class="calLabel" >여행종료</label>
-					<input name="end_date" class="input-style" type="text"  placeholder="YYYY/MM/DD" id="input-end">
+					<input name="end_date" class="input-style " type="text"  placeholder="YYYY/MM/DD" id="input-end-2" autocomplete="off">
 				</div>
 				<div class="inputGroup">
-					<label class="calLabel">나라</label>
-					<input name="schedule_content" class="input-style" type="text" placeholder="어디로 여행 갈까요?" id="schedule_content">
+					<label class="calLabel" >나라</label>
+					<input list="country-list" id="country_name" name="country_name" class="input-style" placeholder="어디로 여행 갈까요?" />
+					<datalist id="country-list">
+						<c:forEach var="country" items="${countryList }">
+							<option value="${country.country_name }">
+						</c:forEach>
+					</datalist>
 				</div>
 				<input class="btn-submit" type="submit" value="작성"/>
 			</div>

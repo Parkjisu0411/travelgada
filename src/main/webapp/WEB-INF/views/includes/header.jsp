@@ -54,10 +54,9 @@
                   role="button" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false"> 플래너 </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                     <a class="dropdown-item nav-dropdown-item" href="/planner/schedule">일정</a> <a
-                        class="dropdown-item nav-dropdown-item" href="#">지도</a> <a class="dropdown-item nav-dropdown-item"
-                        href="/todo">준비물</a> <a class="dropdown-item nav-dropdown-item"
-                        href="/diary">다이어리</a>
+                     <a class="dropdown-item nav-dropdown-item" href="/planner/schedule">일정</a>
+                     <a class="dropdown-item nav-dropdown-item" href="/todo">준비물</a> 
+                     <a class="dropdown-item nav-dropdown-item" href="/diary">다이어리</a>
                   </div></li>
                <li class="nav-item dropdown"><a
                   class="nav-link dropdown-toggle nav-dropdown-toggle" href="#" id="navbarDropdown"
@@ -67,6 +66,7 @@
                      <a class="dropdown-item nav-dropdown-item" href="/board/2">Q&amp;A</a> <a
                         class="dropdown-item nav-dropdown-item" href="/board/1">리뷰</a> <a class="dropdown-item nav-dropdown-item"
                         href="/board/3">동행</a>
+                        <a class="dropdown-item nav-dropdown-item" href="/board/4">공지사항</a>
                   </div></li>
                <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle nav-dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">스토어</a>

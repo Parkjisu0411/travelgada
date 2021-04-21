@@ -103,6 +103,23 @@
       color: #ffffff;
       cursor: pointer;
     }
+	
+	.product-area {
+		border-radius: 10px;
+		margin: 0px 0px 30px 0px;
+		height: 430px;
+		background-color: #f5f5f5;
+	}
+	
+	.product-text {
+		padding:15px;
+		font-family: 'IBMPlexSansKR-Light';
+	}
+	
+	.gada-link:hover {
+		color: #1DCAD3;
+		cursor: pointer;
+	}
     
   </style>
   <script type="text/javascript">
@@ -135,14 +152,26 @@
 			  	</c:forEach>
 		  	</c:forEach>
 	  	</c:forEach>
+	  	
+/* 	  	$("#country-list");
+	  	<c:forEach items="${countryList}" var="country">
+	  		var data = "";
+	  		data += "<option value='${country.country_name}' />";
+	  		$("#country-list").append(data);
+	  		console.log(data);
+	  	</c:forEach> */
 	});
   	
 	function getCountry(clickedCountry) {
 		var country = $(clickedCountry).text();
 		
-		$('#schedule_content').val(country);
-		$('#schedule_content').focus();
+		$('#country_name').val(country);
+		$('#country_name').focus();
 	}	
+	
+	function viewDetail(product_id) {
+		location.href = "/shopping/" + product_id;
+	}
   	
   </script>
 </head>
@@ -179,7 +208,7 @@
           <h2 class="main-advice-title">가다에서 일정을 계획해 보세요</h2>
           <p class="main-advice-content">플래너를 이용하여 여행 계획을 세우고 챙겨야 할 준비물을 확인할 수 있습니다</p>
           <br>
-          <span class="main-advice-button" onclick="location.href='http://localhost:8282/planner/schedule'">일정
+          <span class="main-advice-button" onclick="location.href='http://localhost:8282/planner'">일정
             생성하기</span>
             </div>
         </div>
@@ -262,22 +291,19 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
-        <div class="col-md-3">
-          <img src="${pageContext.request.contextPath}/resources/img/main/museum.jpg" class="main-product-img">
-          <p>캐리어</p>
-        </div>
+      	<c:forEach var="product" items="${recommendProduct }">
+      		<div class="col-md-3">
+	      		<div class="product-area">
+	      			<div class="product-img">
+		      			<img src="/resources/img/product/${product.img_path }" class="main-product-img">
+	      			</div>
+	      			<div class="product-text">
+		      			<p class="gada-link" onclick="viewDetail(${product.product_id})">${product.product_name }</p>
+		      			<p>₩ ${product.price }</p>
+	      			</div>
+	      		</div>
+      		</div>
+      	</c:forEach>
       </div>
     </div>
 

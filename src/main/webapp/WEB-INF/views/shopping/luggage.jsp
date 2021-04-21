@@ -19,19 +19,44 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
 <meta charset="UTF-8">
 <title>캐리어</title>
 <style>
+
+	hr {
+		background-color: #1DCAD3;
+	}
+	
 	.product-img-area {
 		width: 100%;
 		overflow: hidden;
 		
 	}
 	
+	.product-area {
+		border-radius: 10px;
+		margin: 0px 0px 30px 0px;
+		height: 460;
+		background-color: #f5f5f5;
+	}
+	
+	.card-pl-img {
+		width: 100%;
+		height: 350px;
+		border-radius: 10px 10px 0px 0px;
+		object-fit: cover;
+	}
+	
+	.text_box{
+		padding:15px;
+		font-family: 'IBMPlexSansKR-Light';
+	}
+	
  	.product-img-area > img {
  		object-fit: cover;
 		width: 100%;
-		height: 250px;
+		/* height: 250px; */
 		display: block;
 		transform: scale(1);
   		-webkit-transform: scale(1);
@@ -50,20 +75,22 @@
   		
 	}
 	
-	.product-detail-area {
-		padding-left: 15px;
-		padding-right: 15px;
-		padding-top: 15px;
-		margin-left: 20px;
-		margin-top: 10px;
-	}
-	
 	.product-detail-area:hover {
 		cursor: pointer;
 	}
 	
 	.product-btn-area {
 		padding-left: 20px;
+		text-align: center;
+	}
+	
+	.buy {
+		font-family: 'Montserrat', sans-serif;
+		font-weight: bold;
+	}
+	
+	.gada-btn-group {
+		text-align: right;
 	}
 </style>
 <script>
@@ -139,14 +166,16 @@
 						content += "<div class='product-area'>";
 						content += "<div class='product-detail-area' onclick='viewDetail(" + result[i].product_id + ")'>";
 						content += "<div class='product-img-area'><img class='rounded' src='/resources/img/product/" + result[i].img_path  + "'></div>";
+						content += "<div class='text_box'>";
 						content += "<div class='product-info-aread'>";
-						content += "<strong>" + result[i].product_name + "</strong>";
+						content += "<p>" + result[i].product_name + "</p>";
 						content += "<p>₩ " + result[i].price + "</p>";
 						content += "</div>";
-						content += "</div>";
 						content += "<div class='product-btn-area'>";
-						content += "<button type='button' class='btn btn-primary' onclick='insertIntoCart(" + result[i].product_id + ")'>장바구니담기</button>";
-						content += "<button type='button' class='btn btn-primary'>바로구매</button>";
+						content += "<button type='button' class='btn gada-btn-reverse buy' onclick='insertIntoCart(" + result[i].product_id + ")'>CART</button>";
+						content += "<button type='button' class='btn gada-btn buy'>BUY NOW</button>";
+						content += "</div>";
+						content += "</div>";
 						content += "</div>";
 						content += "</div>";
 						content += "</div>";
@@ -172,14 +201,14 @@
 	<div class="container">
 	
 		<!-- headline -->
-		<h2 style="font-family: 'yg-jalnan'">캐리어</h2>
+		<h2 class="gada-headline">LUGGAGE</h2>
 		
-		
-		<a href="/shopping?product_type_id=2&sorter=salePriceAsc">낮은가격순</a>
-		<a href="/shopping?product_type_id=2&sorter=salePriceDesc">높은가격순</a>
-		<a href="#">판매량순</a>
-		<a href="/shopping?product_type_id=2&sorter=latestAsc">최신순</a>
-		
+		<div class="gada-btn-group">
+			<a href="/shopping?product_type_id=2&sorter=salePriceAsc" class="btn gada-btn">낮은가격순</a>
+			<a href="/shopping?product_type_id=2&sorter=salePriceDesc" class="btn gada-btn">높은가격순</a>
+			<a href="#" class="btn gada-btn">판매량순</a>
+			<a href="/shopping?product_type_id=2&sorter=latestAsc" class="btn gada-btn">최신순</a>
+		</div>
 		<hr />
 		<div class="divider-header-blank"></div>
 		<!-- Product List -->
@@ -187,16 +216,18 @@
 			<c:forEach var="product" items="${productList }">
 				<div class="col-md-4">
 					<div class="product-area">
-						<div class="product-detail-area" onclick="viewDetail(${product.product_id})">
-							<div class="product-img-area"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
-							<div class="product-info-area">
-								<strong>${product.product_name }</strong>
-								<p>₩ ${product.price }</p>
+						<div class="product-detail-area">
+							<div class="product-img-area" onclick="viewDetail(${product.product_id})"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
+							<div class="text_box">
+								<div class="product-info-area">
+									<p>${product.product_name }</p>
+									<p>₩ ${product.price }</p>
+								</div>
+								<div class="product-btn-area">
+									<button type="button" class="btn gada-btn-reverse buy" onclick="insertIntoCart(${product.product_id})">CART</button>
+									<button type="button" class="btn gada-btn buy">BUY NOW</button>
+								</div>
 							</div>
-						</div>
-						<div class="product-btn-area">
-							<button type="button" class="btn btn-primary" onclick="insertIntoCart(${product.product_id})">장바구니</button>
-							<button type="button" class="btn btn-primary">바로구매</button>
 						</div>
 					</div>
 				</div>
