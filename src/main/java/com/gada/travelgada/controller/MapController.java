@@ -60,6 +60,7 @@ public class MapController {
 		}
 		List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
 		
+		modelAndView.addObject("scheduleList", scheduleService.getMap(planner_id, schedule_date));
 		modelAndView.addObject("dateList", dateList);
 		modelAndView.addObject("planner_id", planner_id);
 		modelAndView.addObject("schedule_date", schedule_date);
