@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -19,10 +18,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-  <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-  <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
-  <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/footer.css">
 
   <style>
     .main-main-headline {

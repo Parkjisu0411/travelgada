@@ -136,7 +136,7 @@ public class ShoppingController {
 		return modelAndView;
 	}
 	
-	// 바로 구매 => 결제 페이지
+	// BUY NOW => 결제 페이지
 	@PostMapping("/shopping/order-single")
 	public ModelAndView sendImmediateOrderPage(@RequestParam("product_id") String productId, @RequestParam("product_img_src") String productImgSrc, @RequestParam("product_name") String productName, @RequestParam("price") String price, @RequestParam("quantity") String quantity, ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
 		BuyDetailVO buy = new BuyDetailVO();
