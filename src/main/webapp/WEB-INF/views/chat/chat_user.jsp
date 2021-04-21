@@ -47,9 +47,9 @@
 	}
 	
 	#yourMsg {
-		height: 50px;
+		height: 55px;
 		background-color: #000000;
-		line-height: 50px;
+		line-height: 55px;
 	}
 	
 	.send-button {
