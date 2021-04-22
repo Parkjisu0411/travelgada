@@ -15,9 +15,15 @@ public interface SearchService {
 	public List<MemberVO> searchDi(String keyword);
 	
 	//일정 더보기
-	public List<PlannerVO> searchPlMore(String keyword, String sorter);
+	public List<PlannerVO> searchPlMore(String keyword, String sorter, int nowPage, int amount);
 	
 	//다이어리 더보기
-	public List<DiaryVO> searchDiMore(String keyword, String sorter);
+	public List<DiaryVO> searchDiMore(String keyword, String sorter, int nowPage, int amount);
+
+	//다이어리 총 수
+	public int getDiTotal(String keyword, String sorter);
+
+	//플래너 총 수
+	public int getPlTotal(String keyword, String sorter);
 	
 }

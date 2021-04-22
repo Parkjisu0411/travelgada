@@ -29,7 +29,9 @@
 <!-- jquery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
 <meta charset="UTF-8">
+
 <title>Schedule</title>
+
 <style>
 .budget {
 	color: grey;

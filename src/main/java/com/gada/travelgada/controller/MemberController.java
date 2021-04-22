@@ -105,8 +105,7 @@ public class MemberController {
 			shippingList.add(new ShippingLocVO());
 		}
 		//주문 목록 조회
-		List<BuyListVO> buyList = shoppingService.getBuyListById(memberDetails.getUsername());
-		
+		List<BuyListVO> buyList = shoppingService.getBuyListByIdWithPage(memberDetails.getUsername(), 1, 4);
 	      
 	    modelAndView.addObject("point", PointCalculator.getCurrentPoint(memberService.getPoint(memberDetails.getUsername())));
 		modelAndView.addObject("member", memberService.getMember(memberDetails.getUsername()));

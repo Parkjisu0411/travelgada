@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[ 
 			select * from diary 
 				where planner_id=(select MAX(planner_id) from planner where member_id=#{member_id}) 
-					order by diary_id desc
+					order by diary_id desc LIMIT #{nowPage}, #{amount}
 		]]> 
 	</select> 
 	
@@ -58,10 +58,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]> 
 	</select> 
 	
+	<!-- 다이어리 수 -->
+	<select id="getTotal" resultType="int"> 
+		<![CDATA[ 
+			select count(*) from (select * from diary 
+				where planner_id=(select MAX(planner_id) from planner where member_id=#{member_id})
+					order by diary_id desc)a;
+		]]> 
+	</select> 
+
 	<delete id="deleteDiaryByPlannerId">
 		<![CDATA[	
 			delete from diary where planner_id = #{planner_id};
 		]]>
 	</delete>
+
 
 </mapper>

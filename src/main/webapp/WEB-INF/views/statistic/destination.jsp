@@ -94,7 +94,7 @@ function getDestinationMonthly(month) {
 				}
 			}
 			
-			var context = document.getElementById("chart-product-sales").getContext("2d");
+			var context = document.getElementById("doughnut-chart-destination").getContext("2d");
 			var config = {
 				type: 'doughnut',
 				data: {
@@ -140,7 +140,7 @@ function getDestinationMonthly(month) {
 					break;
 				}
 			}
-			$("#chart-product-list").html(html);
+			$("#mini-table-chart-destination").html(html);
 		},
 		error: function(e) {
 			console.log(e);
@@ -218,7 +218,7 @@ function getDestinationTotalTable() {
           html += "</table>";
 
           console.log(result[0].city);
-          $(".card-body-total").html(html);
+          $(".table-chart-destination").html(html);
         },
         error: function (e) {
           console.log(e);
@@ -260,7 +260,7 @@ $(document).ready(function() {
 			},
 	}
 	
-	var monthlyDestinationChart = new ApexCharts(document.querySelector("#chart-monthly-sales"), monthlyDestinationOptions);
+	var monthlyDestinationChart = new ApexCharts(document.querySelector("#bar-chart-destination"), monthlyDestinationOptions);
 	monthlyDestinationChart.render();
 	
 	getDestinationMonthly(${month});
@@ -271,17 +271,12 @@ $(document).ready(function() {
  
  <body class="bg-theme bg-theme9">
 
-	<!-- Start wrapper-->
  	<div id="wrapper">
- 		<!--Start sidebar-wrapper-->
 		<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
 			<div class="brand-logo">
-				<a href="index.html">
-					<img src="/resources/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-				</a>
+				<a href="/" style="font-family:yg-jalnan"><img src="/resources/img/main/logo.png" class="logo-icon" alt="logo icon">가다</a>
 			</div>
 			<ul class="sidebar-menu do-nicescrol">
-			<!-- <li class="sidebar-header">MAIN NAVIGATION</li> -->
 				<li>
 					<a href="/admin"><i class="zmdi zmdi-view-dashboard"></i> <span>회원 관리</span></a>
 				</li>
@@ -302,19 +297,16 @@ $(document).ready(function() {
 				<h3> ${year}년 ${month}월 ${day}일</h3>
 				<br/>
 				<div class="row">
-					<!-- start monthly sales -->
 					<div class="col-12 col-lg-8 col-xl-8">
 						<div class="card">
 							<div class="card-header">
 								월별 여행지 합계
 							</div>
 							<div class="card-body">
-								<div id="chart-monthly-sales"></div>
+								<div id="bar-chart-destination"></div>
 							</div>
 						</div>
 					</div>
-					<!-- end monthly sales -->
-					<!-- start product sales -->
 					<div class="col-12 col-lg-4 col-xl-4">
 						<div class="card">
 							<div class="card-header">월별 여행지 비율
@@ -322,21 +314,19 @@ $(document).ready(function() {
 							</div>
 							<div class="card-body">
 								<div class="chart-container-2">
-									<canvas id="chart-product-sales"></canvas>
+									<canvas id="doughnut-chart-destination"></canvas>
 								</div>
 							</div>
 							<div class="table-responsive">
 								<table class="table align-items-center">
-									<tbody id = "chart-product-list">
+									<tbody id = "mini-table-chart-destination">
 										
 									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
-					<!-- end product sales -->
 				</div>
-				<!-- start daily sales -->
 				<div class="row">
 					<div class="col-12 col-lg-12 col-xl-12">
 						<div class="card">
@@ -344,24 +334,16 @@ $(document).ready(function() {
 								<div class="card-action"></div>
 							</div>
 							<div id="map"></div>
-							<div class="card-body-total">
+							<div class="table-chart-destination">
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- end daily sales -->
-				<!--start overlay-->
 				<div class="overlay toggle-menu"></div>
-				<!--end overlay-->
 			</div>
-	    	<!-- End container-fluid-->
-	    
 		</div>
-	    <!--End content-wrapper-->
 	
-		
-		<!--start color switcher-->
 		<div class="right-sidebar">
 			<div class="switcher-icon">
 				<i class="zmdi zmdi-settings zmdi-hc-spin"></i>
@@ -392,7 +374,5 @@ $(document).ready(function() {
 				</ul>	      
 			</div>
 		</div>
-		<!--end color switcher-->
-	</div><!--End wrapper-->
 </body>
 </html>

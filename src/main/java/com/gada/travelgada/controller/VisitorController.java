@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class VisitorController {
 	
-	@Autowired
 	private VisitorService visitorService;
 
 	@GetMapping("/visitor")

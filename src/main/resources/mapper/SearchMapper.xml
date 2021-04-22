@@ -85,24 +85,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 일정 더보기 ( 조건 ) -->
 	<select id="searchPlMore" resultMap="plannerMap"> 
 		<![CDATA[ 
-			select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
-				where s.planner_id = p.planner_id 
-					and p.planner_name like CONCAT('%', #{keyword}, '%')	
-						${order}
-					
+			select a.* from(select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+				where s.planner_id = p.planner_id ) a
+					where a.schedule_content like CONCAT('%', #{keyword}, '%') 
+						or a.planner_name like CONCAT('%', #{keyword}, '%')	
+							order by a.planner_id desc LIMIT #{nowPage}, #{amount};		
 		]]>
 	</select>
 
 	<!-- 다이어리 더보기 ( 조건 ) -->
 	<select id="searchDiMore" resultMap="memberMap"> 
 		<![CDATA[ 
-		
 			select b.* from(select a.* from (select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
 				where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
 					where a.text like CONCAT('%', #{keyword}, '%') or a.hashtag like CONCAT('%', #{keyword}, '%'))b 
-						${order};
-		
+						${order} LIMIT #{nowPage}, #{amount}
 		]]>
 	</select>
+	
+	<!-- 다이어리 수 -->
+	<select id="getDiTotal" resultType="int"> 
+		<![CDATA[ 
+			select count(*) from(select a.* from (select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
+				where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
+					where a.text like CONCAT('%', #{keyword}, '%') or a.hashtag like CONCAT('%', #{keyword}, '%'))b 
+						${order}
+		]]> 
+	</select> 
+	
+	<!-- 일정 수 -->
+	<select id="getPlTotal" resultType="int"> 
+		<![CDATA[ 
+						
+			select count(*) from (
+	            select count(*), b.planner_id from (
+	                select a.* from(
+	                	select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+		                    where s.planner_id = p.planner_id 
+		                ) a
+		           	where a.schedule_content like CONCAT('%', #{keyword}, '%')
+		            or a.planner_name like CONCAT('%', #{keyword}, '%')
+		        )b group by b.planner_id ${order}
+		    )c;
+		    
+		]]> 
+	</select> 
+	
+	
+	
    
 </mapper>

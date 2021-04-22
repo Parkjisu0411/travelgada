@@ -48,8 +48,14 @@ public class ScheduleController {
 			log.info("Select planner First ==========");
 			modelAndView.setViewName("redirect:/planner");
 		} else {
-			log.info("View schedule ===========");
+			log.info("View schedule ===========" + member.getPlanner_id());
 			PlannerVO planner = plannerService.getPlannerById(member.getPlanner_id());
+			
+			if(planner == null) {
+				modelAndView.setViewName("redirect:/planner");
+				return modelAndView;
+			}
+			
 			List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
 			modelAndView.addObject("planner_id", planner.getPlanner_id());
 			modelAndView.addObject("plannerList", plannerList);

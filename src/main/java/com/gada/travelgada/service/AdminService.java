@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class AdminService {
 	
-	@Autowired
 	private AdminMapper mapper;
 
 	//member list

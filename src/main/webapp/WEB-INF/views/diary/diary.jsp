@@ -27,33 +27,9 @@
 
 <style>
 
-@font-face {
-    font-family: 'GongGothicMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'GongGothicLight';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* 내용 글씨 */
-@font-face {
-    font-family: 'IBMPlexSansKR-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 /* 모달 스타일 */
 .dialogDi{
-  
  	height : 40px;
-
 }
 
 .mainImg{
@@ -69,8 +45,6 @@
 	width : 350px;
   	height : 260px;
   	font-weight: bold;
-  	
-  	
   
 }
 .dialog-date, .dialog-hashtag{
@@ -78,11 +52,11 @@
 	text-align:right;
 }
 
-
 .popup_img{
 	position: relative; 
 	width: 400px; 
 	height: 400px;
+	object-fit: cover;
 }
 
 .dialog-profile{
@@ -95,214 +69,7 @@
    	float: left;
 }
 
-	
 </style>
- 
-<!-- csrf 토큰 -->
-<!-- <script type="text/javascript">
-
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	
-	$(document).ajaxSend(function(e, xhr, options) {
-		xhr.setRequestHeader(header, token);
-	});
-</script> -->
-
-<script type="text/javascript">
-/* 삭제 ajax */
-	$(document).ready(function() {
-		$(document).on("click", ".delete", function(event) {//※주의※		
-			if (confirm("삭제하시겠습니까?")) {
-				event.preventDefault();
-				console.log("delete click");
-
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-
-				var tr = $(this).parent().parent().parent().parent();
-
-				$.ajax({
-					type : "DELETE",
-					url : $(this).attr("href"),
-					cache : false,
-					beforeSend : function(xhr) { /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-						console.log("header 실행 " + header + token)
-						xhr.setRequestHeader(header, token);
-					},
-					success : function(result) {
-						console.log("result : " + result);
-						if (result == "SUCCESS") {
-							alert("삭제하시겠습니까?");
-							$(tr).remove();
-						}
-					},
-					error : function(e) {
-						alert("오류가 발생했습니다.");
-						console.log(e);
-					}
-				}); // ajax end
-			};
-		}); // event end
-	}); // ready end
-</script>
-
-<!-- 다른 플래너로 전환 -->
-<script type="text/javascript">
-	$(document).ready(function(){
-		$(document).on("change","#selectDiary",function(event){
-			
-			var planner_id = this.value;
-			console.log(planner_id);
-			getList();
-			
-			function getList() {
-				var url = "${pageContext.request.contextPath}/diary_other/"+planner_id;
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				
-				console.log(url);
-			
-				$.ajax({
-					type: 'GET',
-					url: url,
-					cache : false,
-					dataType: 'json',
-			 		beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-						console.log("header 실행 "+header+token)
-						xhr.setRequestHeader(header, token);
-					}, 
-					success: function(result) {
-						console.log(result);
-						$('#diaryDiv').children().remove();
-		        	
-						var htmls="";
-					
-		        		$("#diaryDiv").html("");	
-		        		
-		        		var content; //내용
-	            		var splitedArray; //배열
-	            		var linkedContent; //주소
-
-		        		$(result).each(function(){	
-		        		
-			 		       	//다이어리
-	 		  		      	htmls +='<div class="grid">';
-			   		     	htmls +='<img src="resources/diary/'+this.img_path+'" data-toggle="modal" data-target="#myModal'+this.diary_id+'"/>';
-			   		     	htmls +='<div class="grid__body">';    
-			   		     	htmls +='<div class="mt-auto" >';
-			 	 	      	htmls +='<span id= "'+this.diary_id+'"></span>';
-			 	 	      	htmls +='</div></div></div>';
-			       		 	
-			   	
-			        		//modal
-			      		  	htmls +='<div class="modal fade" id="myModal'+ this.diary_id +'" role="dialog">';
-			     		   	htmls +='<div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header">';
-			        		htmls +='<h3 class="modal-title" style="font-family: \'yg-jalnan\'">diary</h3>';
-			      		  	htmls +='<button type="button" class="close" data-dismiss="modal">&times;</button></div>';
-			      		  	htmls +='<div class="modal-body"><div id="mainImg">';
-			      		  	htmls +='<img class="popup_img" src="resources/diary/'+this.img_path+'" style="position:relative; width: 400px; height: 400px;"/></div>';
-			        		htmls +='<div class="dialog"><h4 style="font-family: \'yg-jalnan\'">'+this.diary_date+'</h4></div>';
-			       		 	htmls +='<div class="dialog"><span id="modal'+ this.diary_id +'"></span></div><div class="dialog">'+this.text+'</div></div>';
-			      		  	htmls +='<div class="modal-footer">';
-			      		  	htmls +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
-			      		  	htmls +='</div></div></div></div></div>';  
-		      		  	
-		      		  $("#diaryDiv").append(htmls);
-		      		  	
-		      		  console.log("너 안됨"+this.hashtag)
-	            		content = this.hashtag;
-	            		array = content.split("#");
-	            		console.log(array);
-	            		linkedContent = '';
-	            		array.shift();//첫번째 지워주는 함수
-
-	            		for(var word in array){
-	            			word = array[word];
-	            			if(word.indexOf("") == 0){ 
-	            				var word2 = "#"+word;
-	            				word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
-	            				console.log(word);
-	                	          console.log(word2);
-	            			}//if end
-	            			linkedContent += word+' ';
-	            		}//for end
-	                	 
-	            		console.log(this.diary_id);
-	            		$('#'+this.diary_id).append(linkedContent);
-	            		$('#modal'+this.diary_id).append(linkedContent);
-		      		  	
-		        		});//result end
-		        	}//sucess end
-				});//ajax end
-			}//getList end
-		});//change
-	});//document function
-</script>
-
-<script>
-/* 작성 팝업 */
-	function openwin() {
-		window.open('about:blank','popwin',
-		  'width=1000,height=650,toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, left=450, top=220');
-  	document.formDate.submit();
-	}//function end
-</script>
-
- <script type="text/javascript">
- /* select box 새로운 플래너 값 고정 */
-	$(document).ready(function(){
-	
-		var currPlanner_id= ${other.planner_id};  
-		console.log("현재 플래너의 아이디 : "+ currPlanner_id);
-	
-		$("#selectDiary").val(currPlanner_id).prop("selected", true);
-	}); 
- 
-</script> 
-
-<script>
-/* 해시태그 & 링크 */
-	$(document).ready(function(){
-		
-		link();
-
-	});//function end
-	
-	function link() {
-		var content; //내용
-		var splitedArray; //배열
-		var linkedContent; //주소
-		
-		//jstl
-	    <c:forEach items="${diary}" var="di"> 
-    		console.log("${di.hashtag}")
-			content = "${di.hashtag}";//# 해시태그
-			splitedArray = content.split('#');//#으로 구분
-			console.log(splitedArray);
-			linkedContent = '';
-			splitedArray.shift();//첫번째 지워주는 함수
-
-			for(var word in splitedArray){
-				word = splitedArray[word];
-				if(word.indexOf("") == 0){ 
-					var word2 = "#"+word;
-					word = '<span class="grid__tag" ><a style="color:black;" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a></span>&nbsp;'
-					console.log(word);
-    	          	console.log(word2);
-				}//if end
-				linkedContent += word+' ';
-			}//for end
-    	    
-			$("#${di.diary_id}").append(linkedContent);
-			$("#modal${di.diary_id}").append(linkedContent);
-    	
-		</c:forEach>
-
-		};
-		
-/* 해시태그 & 링크 끝 */
-</script>
 
 <style>
 
@@ -407,29 +174,179 @@ padding-right:10px;
 	border: 2px solid #1dcad3;
 	font-family: 'GongGothicMedium';
 	outline:none;
+}
+
+.paging{
+	margin:auto;
+	text-align:center;
+}
+
+.pagination{
+	border-radius: 5px;
+}
+
+.page-link{
+	outline:none;
+	border:none;
+	margin:2px;
+	background-color: #f5f5f5;
+	border-radius: 5px;
+	height:3px; *
+	color:gray;
+}
+.page-item{
+	outline:none;
+	border:none;
+	padding:3px; 
 
 }
 
 </style>
 
+<script type="text/javascript">
+/* 삭제 ajax */
+	$(document).ready(function() {
+		$(document).on("click", ".delete", function(event) {//※주의※		
+			if (confirm("삭제하시겠습니까?")) {
+				event.preventDefault();
+				console.log("delete click");
+
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+
+				var tr = $(this).parent().parent().parent().parent();
+
+				$.ajax({
+					type : "DELETE",
+					url : $(this).attr("href"),
+					cache : false,
+					beforeSend : function(xhr) { /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+						console.log("header 실행 " + header + token)
+						xhr.setRequestHeader(header, token);
+					},
+					success : function(result) {
+						console.log("result : " + result);
+						if (result == "SUCCESS") {
+							$(tr).remove();
+						}
+					},
+					error : function(e) {
+						alert("오류가 발생했습니다.");
+						console.log(e);
+					}
+				}); // ajax end
+			};
+		}); // event end
+	}); // ready end
+</script>
+
+<!-- 다른 플래너로 전환 -->
+
+
+<script>
+/* 작성 팝업 */
+	function openwin() {
+		window.open('about:blank','popwin',
+		  'width=1000,height=650,toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, left=450, top=220');
+  	document.formDate.submit();
+	}//function end
+</script>
+
+ <script type="text/javascript">
+ /* select box 새로운 플래너 값 고정 */
+	$(document).ready(function(){
+		var currPlanner_id= ${other.planner_id};  
+		console.log("현재 플래너의 아이디 : "+ currPlanner_id);
+	
+		$("#selectDiary").val(currPlanner_id).prop("selected", true);
+	}); 
+ 
+</script> 
+
+<script>
+/* 해시태그 & 링크 */
+	$(document).ready(function(){
+		
+		link();
+
+	});//function end
+	
+	function link() {
+		var content; //내용
+		var splitedArray; //배열
+		var linkedContent; //주소
+		
+		//jstl
+	    <c:forEach items="${diary}" var="di"> 
+    		console.log("${di.hashtag}")
+			content = "${di.hashtag}";//# 해시태그
+			splitedArray = content.split('#');//#으로 구분
+			console.log(splitedArray);
+			linkedContent = '';
+			linkedModalContent='';
+			splitedArray.shift();//첫번째 지워주는 함수
+
+			for(var word in splitedArray){
+				word = splitedArray[word];
+				if(word.indexOf("") == 0){ 
+					var word2 = "#"+word;
+					word = '<span class="grid__tag" ><a style="color:black;" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a></span>&nbsp;'
+					console.log(word);
+    	          	console.log(word2);
+				}//if end
+				linkedContent += word+' ';
+			}//for end
+			
+			$("#${di.diary_id}").append(linkedContent);
+			
+			for(var word in splitedArray){
+				word = splitedArray[word];
+				if(word.indexOf("") == 0){ 
+					var word2 = "#"+word;
+					word = '<a style="color:black;" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>&nbsp;'
+					console.log(word);
+    	          	console.log(word2);
+				}//if end
+				linkedModalContent += word+' ';
+			}//for end
+    	    
+			$("#modal${di.diary_id}").append(linkedModalContent);
+    	
+		</c:forEach>
+
+		};
+		
+/* 해시태그 & 링크 끝 */
+</script>
+
 </head>
 <body>
 
+<div class="wrap">
 	<!-- 해더 -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	
 	<!-- 플래너 셀렉트, 다이어리 작성 -->
-
 	<div class = "gallery">
-
 		<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
 			<div class="row">
 				<div class="col-sm-10"> 
-					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'">
-						<c:forEach var="id" items="${planner}">
-							<option value='${id.planner_id}' style="font-family: 'GongGothicMedium'">
-						  		${id.planner_name}&nbsp;&nbsp; ${id.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${id.end_date}
-							</option>
+					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'" onchange="location.href='${pageContext.request.contextPath}/diary_other/'+this.value">
+						<c:forEach var="di" items="${planner}">
+							<%-- <option value='${di.planner_id}' style="font-family: 'GongGothicMedium'">
+						  		${di.planner_name}&nbsp;&nbsp; ${di.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${di.end_date}
+							</option> --%>
+							
+							<c:if test="${di.planner_id eq planner_id}">
+								<option value='${di.planner_id}' style="font-family: 'GongGothicMedium'">
+							  		${di.planner_name}&nbsp;&nbsp; ${di.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${di.end_date}
+								</option>
+							</c:if>
+							<c:if test="${di.planner_id ne planner_id}">
+								<option value='${di.planner_id}' style="font-family: 'GongGothicMedium'">
+							  		${di.planner_name}&nbsp;&nbsp; ${di.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${di.end_date}
+								</option>
+							</c:if>
 						</c:forEach>
 					</select>		
 				</div>
@@ -444,7 +361,7 @@ padding-right:10px;
 			<div id="diaryDiv">
 				<c:forEach items="${diary}" var="di">
 					<div class="grid">
-						<img src='resources/diary/${di.img_path}' />
+						<img src='/resources/diary/${di.img_path}' />
 						<!-- 사진 -->
 						<div class="grid__body" data-toggle="modal" data-target="#myModal${di.diary_id}">
 							<!-- <div class="relative"> -->
@@ -458,7 +375,7 @@ padding-right:10px;
 										<a class="dropdown-item"
 											onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}&${di.planner_id}',
       					'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
-										<a class="delete dropdown-item" href="diary/${di.diary_id}">삭제</a>
+										<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
 									</div>
 								</div>
 							<!-- </div> -->
@@ -479,7 +396,7 @@ padding-right:10px;
 								<div class="modal-body Mcontent">
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 									<div class="mainImg">
-										<img class="popup_img" src='resources/diary/${di.img_path}' />
+										<img class="popup_img" src='/resources/diary/${di.img_path}' />
 									</div>
 									<div class="dialog-wrap">
 										<%-- 			<div class="dialogDi dialog-profile">
@@ -505,9 +422,37 @@ padding-right:10px;
 			</div>
 		</div>
 	</div>
-
+	
+		<br/><br/>
+		<div class="container">
+			<div class="row">
+				<div class="paging">
+					<!-- 페이징 -->
+					<ul class="pagination">
+						<c:if test="${pageMaker.prev}">
+							<li class="page-item"><a class="page-link"
+								href="/diary?nowPage=${pageMaker.startPage - 1}">◀</a></li>
+						</c:if>
+						<c:forEach begin="${pageMaker.startPage }"
+							end="${pageMaker.endPage}" var="idx">
+							<li class="page-item"><a class="page-link"
+								href="/diary?nowPage=${idx}"></a></li>
+						</c:forEach>
+						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+							<li class="page-item"><a class="page-link"
+								href="/diary?nowPage=${pageMaker.endPage +1}">▶</a></li>
+						</c:if>
+					</ul>
+					<!-- 페이징 끝 -->
+				</div>
+				<!-- 다이어리 row end -->
+			</div>
+		</div>
+		
 	<!-- footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	
+	</div>
 
 </body>
 </html>

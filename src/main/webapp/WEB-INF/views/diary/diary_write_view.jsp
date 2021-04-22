@@ -5,6 +5,9 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+
 
 <title>diary</title>
 
@@ -16,45 +19,95 @@
   
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	
-<script type="text/javascript">
+<style>
+/*    table, th, td {
+    border: 1px solid #bcbcbc;
+  } */
+table {
+	margin-left: 30px;
+	font-family: 'IBMPlexSansKR-Light';
+}
+
+@font-face {
+	font-family: 'GongGothicMedium';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'GongGothicLight';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* 내용 글씨 */
+@font-face {
+	font-family: 'IBMPlexSansKR-Light';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.modifyBtn {
+	text-align: right;
+}
+
+.diaryHr {
+	color: #1dcad3;
+	font-size: 40px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.fileStyle {
+	border: solid 1px;
+	/* border-radius: 15px 15px 0 0; */
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size: 18px;
+	background-color: #1dcad3;
+	/* width:100px; */
+	border-radius: 5px;
+}
+
+#fileCheck {
+	border: solid 1px;
+	/* border-radius: 15px 15px 0 0; */
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size: 18px;
+	background-color: #1dcad3;
+	/* width:100px; */
+	border-radius: 5px;
+}
+
+#View_area, #prev_View_area {
+	border-radius: 10px;
+}
+</style>
+	
+<script>
+	/* 미리보기 */
 	function previewImage(targetObj, View_area) {
-		var preview = document.getElementById(View_area); //div id
+		var preview = document.getElementById(View_area); 
 		var ua = window.navigator.userAgent;
 
- 	//ie일때(IE8 이하에서만 작동)
-	if (ua.indexOf("MSIE") > -1) {
-		targetObj.select();
-		try {
-			var src = document.selection.createRange().text; // get file full path(IE9, IE10에서 사용 불가)
-			var ie_preview_error = document.getElementById("ie_preview_error_" + View_area);
-
-
-			if (ie_preview_error) {
-				preview.removeChild(ie_preview_error); //error가 있으면 delete
-			}
-
-			var img = document.getElementById(View_area); //이미지가 뿌려질 곳
-
-			//이미지 로딩, sizingMethod는 div에 맞춰서 사이즈를 자동조절 하는 역할
-			img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+src+"', sizingMethod='scale')";
-		} catch (e) {
-			if (!document.getElementById("ie_preview_error_" + View_area)) {
-				var info = document.createElement("<p>");
-				info.id = "ie_preview_error_" + View_area;
-				info.innerHTML = e.name;
-				preview.insertBefore(info, null);
-			}
-		}
-  //ie가 아닐때(크롬, 사파리, FF)
-	} else {
 		var files = targetObj.files;
 		for ( var i = 0; i < files.length; i++) {
 			var file = files[i];
-			var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
+			var imageType = /image.*/; 
 			if (!file.type.match(imageType))
 				continue;
-			var prevImg = document.getElementById("prev_" + View_area); //이전에 미리보기가 있다면 삭제
+			var prevImg = document.getElementById("prev_" + View_area); 
 			if (prevImg) {
+				//$("#firstImg").remove();
 				preview.removeChild(prevImg);
 			}
 			var img = document.createElement("img"); 
@@ -64,7 +117,7 @@
 			img.style.width = '400px'; 
 			img.style.height = '400px';
 			preview.appendChild(img);
-			if (window.FileReader) { // FireFox, Chrome, Opera 확인.
+			if (window.FileReader) { 
 				var reader = new FileReader();
 				reader.onloadend = (function(aImg) {
 					return function(e) {
@@ -72,8 +125,7 @@
 					};
 				})(img);
 				reader.readAsDataURL(file);
-			} else { // safari is not supported FileReader
-				//alert('not supported FileReader');
+			} else { 
 				if (!document.getElementById("sfr_preview_error_"
 						+ View_area)) {
 					var info = document.createElement("p");
@@ -84,10 +136,9 @@
 			}
 		}
 	}
-}
-	
 </script>
-<script type="text/javascript">
+
+<script>
 $(document).ready(function(){
 	
 	$("#fileCheck").on("click",function(e){
@@ -107,135 +158,73 @@ $(document).ready(function(){
    	 });
 	});
 
-
-
 </script>
 
-<style>
-/*    table, th, td {
-    border: 1px solid #bcbcbc;
-  } */ 
-  table {
-    margin-left:30px;
-    font-family: 'IBMPlexSansKR-Light';
-  }
-  
-  @font-face {
-    font-family: 'GongGothicMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+<script>
 
-@font-face {
-    font-family: 'GongGothicLight';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+function checkCode(){
+	
+	var kcode = event.keyCode;
+	var tag = document.getElementById("hashtag");
+	
+	if(kcode == 13){ 
+		console.log("엔터");
+		event.returnValue=false;
+	}
+/* 	if(kcode == 32) {
+		console.log("스페이스바");
+		tag.append("#");
+		event.returnValue=false;
 
-/* 내용 글씨 */
-@font-face {
-    font-family: 'IBMPlexSansKR-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	} */
 }
-
-.modifyBtn{
-	text-align:right;
-}
-.diaryHr{
-	color: #1dcad3;
-	font-size:40px;
-	font-family: 'Montserrat', sans-serif;  
-}
-.fileStyle{
-	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
-	font-family: 'GongGothicMedium';
-	color: white;
-	font-size:18px;
-	background-color: #1dcad3;
-	/* width:100px; */
-	border-radius: 5px; 
-
-}
-#fileCheck{
-	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
-	font-family: 'GongGothicMedium';
-	color: white;
-	font-size:18px;
-	background-color: #1dcad3;
-	/* width:100px; */
-	 border-radius: 5px; 
-
-}
-#View_area, #prev_View_area{
-border-radius: 10px; 
-
-}
-</style>
-
+</script>
 
 </head>
 <body>
-<form id='submitBtn' name="myForm" action="${pageContext.request.contextPath}/diary_write?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
-<input type="hidden" name="planner_id" value="${planner.planner_id}"/>
-<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
-<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>
-		  
+	<form id='submitBtn' name="myForm" action="${pageContext.request.contextPath}/diary_write?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+		
+		<input type="hidden" name="planner_id" value="${planner.planner_id}" />
+		<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}" />
+		<input type="hidden" id="_csrf_header" name="_csrf_header"
+			value="${_csrf.headerName}" />
 
+		<div class="container">
+			<br>
+			<div class="diaryHr">Diary</div>
+			<div class="row">
 
-<div class="container">
-<br>
-  <div class="diaryHr">Diary</div>
-  <div class="row">
+				<!-- <div class="col-sm-3"> -->
+				<table class="table table-borderless">
+					<tr>
+						<td rowspan='5'>
+							<div id='View_area' style='position: relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline;'>
+								<br> <img id="prev_View_area" src='/resources/diary/camera2.png' style='position: relative; width: 400px; height: 400px;' />
+							</div>
+						</td>
+						<td>
+							 <input type="file" class="form-control-file border fileStyle" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+						</td>
+					</tr>
+					<tr>
+						<td><textarea rows="10" cols="55" name="text" /></textarea></td>
+					</tr>
+					<tr>
+						<td><span style="font-family: 'GongGothicMedium'">Tag</span></td>
+					</tr>
+					<tr>
+						<td><textarea rows="2" cols="55" name="hashtag" id="hashtag" onkeydown="checkCode()">#</textarea></td>
+					</tr>
+					<tr>
+						<td class="modifyBtn">
+							<button type="button" id="fileCheck">작성</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- 	</div> -->
+	</form>
 
-<!-- <div class="col-sm-3"> -->
- <table class="table table-borderless">
-			<tr>
-      			<td rowspan='5'>
-				<div id='View_area' style='position:relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline; '>
-				<br>
-				<img id="prev_View_area"  src='/resources/diary/camera2.png' style='position:relative; width: 400px; height: 400px;'/>
-				</div>
-					</td>
-				<td>
-<!--      <div class="form-group"> -->
-      
-     	<input type="file" class="form-control-file border fileStyle" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
-		<!-- <input type="button" id='uploadBtn' value="업로드"/> -->
-<!--     </div>  -->
-				</td>
-			</tr> 
-			<tr>
-				<td>
-      				<textarea rows= "10" cols="55" name="text"/></textarea>
-				</td>
-			</tr>
-			<tr>
-      			<td>
-      				<span style="font-family: 'GongGothicMedium'">Tag</span>
-				</td>
-			</tr>
-			<tr>
-			<td>
-      		<textarea rows= "2" cols="55" name="hashtag"/></textarea>
-			</td>
-			</tr>
-			<tr>
-			<td class="modifyBtn">
-			<!-- <input type="button" value="작성" style="display:none;" > -->
-			<button type="button" id="fileCheck">작성</button>
-			</td>
-			</tr>
-			</table>
-			</div> 
-	</div>
-<!-- 	</div> -->
-</form>
-	
 </body>
 </html>

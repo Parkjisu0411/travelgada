@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class CalendarController {
 	
-	@Autowired
 	private CalendarService calendarService;
 	
 	//플래너 달력 페이지

@@ -10,12 +10,7 @@ import com.gada.travelgada.domain.PlannerVO;
 @Mapper
 public interface DiaryMapper {
 
-//	public List<Integer> getDday() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
-	public List<DiaryVO> getDiary(String member_id);
+	public List<DiaryVO> getDiary(String member_id, int nowPage, int amount);
 	public List<PlannerVO> getPlanner(String member_id);
 	public void writeDiary(DiaryVO diaryVO);
 	public void deleteDiary(int diary_id);
@@ -23,6 +18,7 @@ public interface DiaryMapper {
 	public DiaryVO view_Diary(int diary_id);
 	public List<DiaryVO> getDiaryOther(int planner_id);
 	public int getImg_seq();
+	public int getTotal(String member_id);
 	public void deleteDiaryByPlannerId(int planner_id);
 	
 }

@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.DiaryVO;
 import com.gada.travelgada.domain.MemberDetails;
+import com.gada.travelgada.domain.PageVO;
 import com.gada.travelgada.service.DiaryService;
 import com.gada.travelgada.service.UserCounter;
 
@@ -40,12 +42,20 @@ public class DairyController {
 
 	// 다이어리
 	@GetMapping("/diary")
-	public ModelAndView diary(ModelAndView mav, @AuthenticationPrincipal MemberDetails member) {
+	public ModelAndView diary(ModelAndView mav, @AuthenticationPrincipal MemberDetails member, CriteriaVO cri) {
 		log.info("controller diary();");
+		log.info("=========="+cri.getNowPage());
 		
-		mav.addObject("diary", diaryService.getDiary(member.getUsername()));
+		int amount = 20;
+		int nowPage = (cri.getNowPage() - 1) * 20;
+		int total = diaryService.getTotal(member.getUsername());
+		
+		cri.setAmount(amount);
+		
+		mav.addObject("diary", diaryService.getDiary(member.getUsername(),nowPage, amount));
 		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-
+		mav.addObject("pageMaker", new PageVO(cri, total));
+		
 		mav.setViewName("diary/diary");
 
 		return mav;
@@ -56,7 +66,7 @@ public class DairyController {
 	@GetMapping("/diary_write_view")
 	public ModelAndView diary_write_view(ModelAndView mav, DiaryVO diaryVO) {
 		log.info("controller diary_write_view();");
-
+		
 		mav.addObject("planner", diaryVO);
 		mav.setViewName("diary/diary_write_view");
 
@@ -70,8 +80,8 @@ public class DairyController {
 	public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO,
 			@AuthenticationPrincipal MemberDetails member) throws IllegalStateException, IOException {
 		log.info("controller diary_write();");
-
-		String img_path = file.getOriginalFilename();
+		
+		/* String img_path = file.getOriginalFilename(); */
 		int seq = diaryService.getImg_seq();
 		seq++;
 		String img_seq = Integer.toString(seq);
@@ -99,7 +109,7 @@ public class DairyController {
 	@GetMapping("/diary_modify_view/{diary_id}&{planner_id}")
 	public ModelAndView diary_modify_view(ModelAndView mav, DiaryVO diaryVO) {
 		log.info("controller diary_write_view();");
-
+		
 		mav.addObject("planner", diaryVO);
 		mav.addObject("diary_view", diaryService.view_Diary(diaryVO.getDiary_id()));
 		mav.setViewName("diary/diary_modify_view");
@@ -177,11 +187,15 @@ public class DairyController {
       
 	// 다른 다이어리로 이동 json
 	@GetMapping("/diary_other/{planner_id}")
-	public List<DiaryVO> diary_another(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO) {
+	public ModelAndView diary_another(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO, ModelAndView mav) {
 		log.info("controller diary_test();");
-		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!1"+diaryVO.getPlanner_id());
-		log.info("나와야 한다.!!!!!!!!!!!!!!!!!!!!!!!!"+diaryService.getDiaryOther(diaryVO.getPlanner_id()));
-		return diaryService.getDiaryOther(diaryVO.getPlanner_id());
+		
+		mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
+		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+		mav.addObject("other", diaryVO);
+		mav.setViewName("diary/diary");
+
+		return mav;
 
 	}// end
 	

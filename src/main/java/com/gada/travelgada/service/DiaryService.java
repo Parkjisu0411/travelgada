@@ -7,7 +7,7 @@ import com.gada.travelgada.domain.PlannerVO;
 
 public interface DiaryService {
 		
-	public List<DiaryVO> getDiary(String member_id);
+	public List<DiaryVO> getDiary(String member_id, int nowPage, int amount);
 	public List<PlannerVO> getPlanner(String member_id);
 	public void writeDiary(DiaryVO diaryVO);
 	public void deleteDiary(int diary_id);
@@ -15,5 +15,6 @@ public interface DiaryService {
 	public DiaryVO view_Diary(int diary_id);
 	public List<DiaryVO> getDiaryOther(int planner_id);
 	public int getImg_seq();
+	public int getTotal(String member_id);
 	
 }
