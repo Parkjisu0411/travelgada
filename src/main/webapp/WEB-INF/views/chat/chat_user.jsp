@@ -52,11 +52,6 @@
 		line-height: 55px;
 	}
 	
-	.send-button {
-		background-color: #ffffff;
-		border-radius: 32px;
-	}
-	
 	#notice {
 	  	position: relative;
 		background: #ffffff;
@@ -257,7 +252,7 @@
 					<tr>
 						<th style="color: #ffffff;">메시지&nbsp;</th>
 						<th style="width: 345px;"><input id="chatting" class="form-control" placeholder="보내실 메시지를 입력하세요."></th>
-						<th>&nbsp;<button onclick="send()" class="btn send-button" id="sendBtn" style="margin-bottom: 4px;">보내기</button></th>
+						<th>&nbsp;<button onclick="send()" class="btn gada-btn-reverse" id="sendBtn" style="margin-bottom: 4px;">보내기</button></th>
 					</tr>
 				</table>
 			</div>
