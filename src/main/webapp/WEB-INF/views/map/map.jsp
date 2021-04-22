@@ -56,7 +56,7 @@
     }
 
     /* Button */
-    #centerControlDiv {
+    #weather {
       width: 180px;
       border: none;
       background-color: #ffffff;
@@ -172,6 +172,25 @@
 	      border-left-color: transparent;
 	   }
 	}
+	
+	#goToMain {
+	  height: 41px;
+	  width: 180px;
+      border: none;
+      background-color: #ffffff;
+      box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
+      border-radius: 8px;
+      margin: 10px;
+      font-size: 16px;
+      text-align-last: center;
+      font-weight: 600;
+      padding: 5px;
+      line-height: 41px;
+	}
+	
+	#goToMain:hover {
+	  cursor: pointer;
+	}
   </style>
 </head>
 
@@ -181,7 +200,9 @@
       <div class="loader"></div>
    </div>
 
-  <div id="centerControlDiv"></div>
+  <div id="weather"></div>
+  <div id="goToMain" onclick="location.href='http://localhost:8282/planner'"><i class="fas fa-chevron-left" style="margin-right: 15px;"></i>플래너로 돌아가기</div>
+  
   <div id="sidePanel">
       <c:forEach var="date" items="${dateList}">
       <c:set var="dayIndex" value="${dayIndex + 1}" />
@@ -207,7 +228,8 @@
           fullscreenControl: false
         });
         /* map.setOptions({draggable: false}); */
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(weather);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(goToMain);
         var bounds = new google.maps.LatLngBounds();
 
         for (var index = 0; index < paths.length; index++) {
@@ -273,7 +295,7 @@
 	        	var icon = result.weather[0].icon;
 	        	var iconUrl = 'http://openweathermap.org/img/wn/' + icon + "@2x.png";
 	        	
-	        	$("#centerControlDiv").prepend('<div class="city">' + result.name + ', ' + result.sys.country + '</div>' + '<img src=' + iconUrl + '><br>' + weatherEnglishToKorean(weatherId) + '<br><br>' + '<span style="font-size: 15px !important; font-weight: 500;">최저 기온: ' + result.main.temp_min + '&#8451;' + '<br>' + '최고 기온: ' + result.main.temp_max + '&#8451;' + '<br>' + '체감 기온: ' + result.main.feels_like + '&#8451;' + '</span></span>');
+	        	$("#weather").prepend('<div class="city">' + result.name + ', ' + result.sys.country + '</div>' + '<img src=' + iconUrl + '><br>' + weatherEnglishToKorean(weatherId) + '<br><br>' + '<span style="font-size: 15px !important; font-weight: 500;">최저 기온: ' + result.main.temp_min + '&#8451;' + '<br>' + '최고 기온: ' + result.main.temp_max + '&#8451;' + '<br>' + '체감 기온: ' + result.main.feels_like + '&#8451;' + '</span></span>');
 			}
 		})
     }
@@ -304,12 +326,11 @@
 		    		return weatherKoreanArr[i];
 	    	}
 	    }
-    	return "날씨 정보 없음";
     }
     
     $(window).on('load', function () {
         $(".loader").fadeOut();
-        $("#preloder").delay(150).fadeOut("slow");
+        $("#preloder").delay(200).fadeOut("slow");
     });
     
 	getWeather();
