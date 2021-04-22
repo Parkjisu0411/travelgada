@@ -125,58 +125,7 @@
 	}
     
   </style>
-  <script type="text/javascript">
-  	$(document).ready(function(){
-		
-		var content; //내용
-		var splitedArray; //배열
-		var linkedContent; //주소
-		
-		//jstl
-	    
-	    <c:forEach items="${member}" var="member">
-		    <c:forEach items="${member.plannerVO}" var="pl">
-			    <c:forEach items="${pl.diaryVO}" var="di">
-		  	    content = "${di.hashtag}";
-		  	    splitedArray = content.split('#');//#으로 구분
-		  	    linkedContent = '';
-		  	    splitedArray.shift();//첫번째 지워주는 함수
-		
-		  	    for(var word in splitedArray){
-		  	      word = splitedArray[word];
-		  	       if(word.indexOf("") == 0)
-		  	       { var word2 = "#"+word;
-		  	          word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
-		  	       }
-		  	       linkedContent += word+' ';
-		  	    }
-		  	    
-		  	    $("#${di.diary_id}").append(linkedContent);
-			  	</c:forEach>
-		  	</c:forEach>
-	  	</c:forEach>
-	  	
-/* 	  	$("#country-list");
-	  	<c:forEach items="${countryList}" var="country">
-	  		var data = "";
-	  		data += "<option value='${country.country_name}' />";
-	  		$("#country-list").append(data);
-	  		console.log(data);
-	  	</c:forEach> */
-	});
-  	
-	function getCountry(clickedCountry) {
-		var country = $(clickedCountry).text();
-		
-		$('#country_name').val(country);
-		$('#country_name').focus();
-	}	
-	
-	function viewDetail(product_id) {
-		location.href = "/shopping/" + product_id;
-	}
-  	
-  </script>
+
 </head>
 
 <body>
@@ -313,6 +262,59 @@
     <%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
     
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+    
+      <script type="text/javascript">
+  	$(document).ready(function(){
+		
+		var content; //내용
+		var splitedArray; //배열
+		var linkedContent; //주소
+		
+		//jstl
+	    
+	    <c:forEach items="${member}" var="member">
+		    <c:forEach items="${member.plannerVO}" var="pl">
+			    <c:forEach items="${pl.diaryVO}" var="di">
+		  	    content = "${di.hashtag}";
+		  	    splitedArray = content.split('#');//#으로 구분
+		  	    linkedContent = '';
+		  	    splitedArray.shift();//첫번째 지워주는 함수
+		
+		  	    for(var word in splitedArray){
+		  	      word = splitedArray[word];
+		  	       if(word.indexOf("") == 0)
+		  	       { var word2 = "#"+word;
+		  	          word = '<a href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+		  	       }
+		  	       linkedContent += word+' ';
+		  	    }
+		  	    
+		  	    $("#${di.diary_id}").append(linkedContent);
+			  	</c:forEach>
+		  	</c:forEach>
+	  	</c:forEach>
+	  	
+/* 	  	$("#country-list");
+	  	<c:forEach items="${countryList}" var="country">
+	  		var data = "";
+	  		data += "<option value='${country.country_name}' />";
+	  		$("#country-list").append(data);
+	  		console.log(data);
+	  	</c:forEach> */
+	});
+  	
+	function getCountry(clickedCountry) {
+		var country = $(clickedCountry).text();
+		
+		$('#country_name').val(country);
+		$('#country_name').focus();
+	}	
+	
+	function viewDetail(product_id) {
+		location.href = "/shopping/" + product_id;
+	}
+	
+  </script>
 
 </body>
 
