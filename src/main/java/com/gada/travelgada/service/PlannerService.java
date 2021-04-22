@@ -113,4 +113,8 @@ public class PlannerService {
 		plannerMapper.updatePlanner(plannerVO);
 		scheduleMapper.deleteBeyondSchedule(plannerVO.getPlanner_id(), plannerVO.getStart_date(), plannerVO.getEnd_date());
 	}
+	
+	public void updateImgPath(int planner_id, String img_path) {
+		plannerMapper.updateImgPath(planner_id, img_path);
+	}
 }

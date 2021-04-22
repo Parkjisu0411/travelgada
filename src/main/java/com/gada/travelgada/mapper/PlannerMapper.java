@@ -3,6 +3,7 @@ package com.gada.travelgada.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.gada.travelgada.domain.CountryVO;
 import com.gada.travelgada.domain.PlannerVO;
@@ -29,4 +30,6 @@ public interface PlannerMapper {
 	void deletePlanner(int planner_id);
 	
 	void updatePlanner(PlannerVO plannerVO);
+	
+	void updateImgPath(@Param("planner_id") int planner_id, @Param("img_path") String img_path);
 }

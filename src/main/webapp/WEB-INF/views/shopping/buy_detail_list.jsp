@@ -136,7 +136,8 @@
 											<p class="product-price">₩ ${productMap[buyDetail.buy_detail_id].price }</p>
 										</div>
 									</td>
-									<td>${buyDetail.price / 20 }</td>
+									<fmt:parseNumber var="accumulatePoint" value="${buyDetail.price / 20 }" integerOnly="true"/>
+									<td>${accumulatePoint}</td>
 									<td class="payment-price">${buyDetail.price }</td>
 									<td style="text-align: center;">
 										<button type="button" class="btn gada-btn" data-toggle="modal" data-target="#shipping-check">배송조회</button>

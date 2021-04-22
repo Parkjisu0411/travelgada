@@ -239,58 +239,36 @@
 	
 
 /* 페이징 */
-.flex {
-     -webkit-box-flex: 1;
-     -ms-flex: 1 1 auto;
-     flex: 1 1 auto
- }
+.paging{
+   margin:20px auto;
+   text-align:center;
+}
 
- @media (max-width:991.98px) {
-     .padding {
-         padding: 1.5rem
-     }
- }
+.pagination{
+   border-radius: 5px;
+}
 
- @media (max-width:767.98px) {
-     .padding {
-         padding: 1rem
-     }
- }
+.page-link{
+   font-family: 'GongGothicMedium';
+   color: white;
+   font-size:12px;
+   background-color: #1DCAD3;
+   width:30px;
+   border-radius: 5px;
+   padding:5px;
+}
 
- .padding {
-     padding: 5rem
- }
+.page-link1{
+   font-family: 'GongGothicMedium';
+   color: #303E57;
+   font-size:12px;
+   background-color:none;
+   width:50px;
+   border-radius: 5px;	
+   margin:0 10px;
+}
 
- .pagination,
- .jsgrid .jsgrid-pager {
-     display: flex;
-     padding-left: 0;
-     list-style: none;
-     border-radius: 0.25rem
- }
 
- .page-link {
-     color: black
- }
-
- .pagination.pagination-rounded-flat .page-item {
-     margin: 0 .25rem
- }
-
- .pagination-rounded-flat {}
-
- .pagination-success .page-item.active .page-link,
- .page-link a {
-     background: #00c689;
-     border-color: #00c689
- }
-
- .pagination.pagination-rounded-flat .page-item .page-link,
- .page-link a {
-     border: none;
-     border-radius: 50px;
- }
- 
  	/* 게시판 목록 */
  	.ListTable td{
 	border:1px solid #1DCAD3;
@@ -701,10 +679,10 @@ a{
 	$(document).on("click",".showContent",function(){
 	      if( $(this).parent().find("#contents").css("display")=="none"){
 	    	document.all.contents.style.display="";
-	        $(this).text("목록 열기");
+	        $(this).text("목록 닫기");
 	      }else{
 	    	  document.all.contents.style.display="none";
-	        $(this).text("목록 닫기");
+	        $(this).text("목록 열기");
 	      }
 	});
 
@@ -743,7 +721,7 @@ a{
 								<img class="nav-profile-img" src='/resources/img/profile/${bImgPath.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">&nbsp;
 								<span class="writer">${bContentView.member_id }</span>
 								<span class="date">
-								<fmt:formatDate value="${bContentView.board_date }" pattern="yyyy/MM/dd hh:mm"/>&nbsp;
+								<fmt:formatDate value="${bContentView.board_date }" pattern="yyyy/MM/dd HH:mm"/>&nbsp;
 								<span id="commLastTime" class="${bContentView.board_date}"></span>
 								</span>
 								
@@ -839,22 +817,27 @@ a{
 			</table>
 
 
+		  <div class="row">
+         	<div class="paging">
 			
-			<ul class="pagination d-flex justify-content-center flex-wrap pagination-rounded-flat pagination-success">
+			<ul class="pagination">
   			<!-- <ul class="pagination" style="padding:80px 350px;">	 -->
 		  		<c:if test="${pageMaker.prev}">
-	       		  <li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
+	       		  <li class="page-item"><a class="page-link1" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
 	     		</c:if>
 
 	      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-	         		<li class="page-item active"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(idx)}">${idx}</a></li>
+	         		<li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(idx)}">${idx}</a></li>
 	      		</c:forEach>
 	      
 	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-	         		<li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
+	         		<li class="page-item"><a class="page-link1" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
 	      		</c:if>  
 		 	</ul> 
-			</div><br /><br /><br />
+			</div>
+		  </div>
+		  </div>	
+			<br /><br /><br />
 
 
 			

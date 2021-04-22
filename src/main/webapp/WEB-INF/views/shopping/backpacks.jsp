@@ -216,6 +216,7 @@
 			<c:forEach var="product" items="${productList }">
 				<div class="col-md-4">
 					<div class="product-area">
+					<form action="/shopping/order-single" method="post">
 						<div class="product-detail-area">
 							<div class="product-img-area" onclick="viewDetail(${product.product_id})">
 								<img class="rounded" src="/resources/img/product/${product.img_path }">
@@ -227,10 +228,17 @@
 								</div>
 								<div class="product-btn-area">
 									<button type="button" class="btn gada-btn-reverse buy" onclick="insertIntoCart(${product.product_id})">CART</button>
-									<button type="button" class="btn gada-btn buy">BUY NOW</button>
+									<button type="submit" class="btn gada-btn buy">BUY NOW</button>
 								</div>
 							</div>
 						</div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						<input type="hidden" name="product_img_src" value="${product.img_path}">
+						<input type="hidden" name="product_name" value="${product.product_name}">
+						<input type="hidden" name="quantity" value="1">
+						<input type="hidden" name="product_id" value="${product.product_id}">
+						<input type="hidden" name="price" value="${product.price}">
+					</form>
 					</div>
 				</div>
 			</c:forEach>
