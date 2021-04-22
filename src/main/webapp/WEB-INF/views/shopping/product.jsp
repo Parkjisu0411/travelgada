@@ -70,7 +70,7 @@
 		text-align: right;
 	}
 	
-	.btn {
+	.product-btn {
 		width: 150px;
 		height: 80px;
 		font-family: 'Montserrat', sans-serif;
@@ -90,6 +90,10 @@
 	  background-color: #1DCAD3;
 	  border-radius: 10px;
 	  color: white;
+	}
+	
+	.go-top:focus {
+		outline: none;
 	}
 	
 	.gada-card {
@@ -227,8 +231,8 @@
 							</div>
 						</div>					
 						<div class="gada-btn-group">
-							<button type="button" class="btn gada-btn-reverse" onclick="insertIntoCart()">CART</button>
-							<button type="submit" class="btn gada-btn">BUY NOW</button>
+							<button type="button" class="btn gada-btn-reverse product-btn" onclick="insertIntoCart()">CART</button>
+							<button type="submit" class="btn gada-btn product-btn">BUY NOW</button>
 						</div>
 					</form>
 				</div>
