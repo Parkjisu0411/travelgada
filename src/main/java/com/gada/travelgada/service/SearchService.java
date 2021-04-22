@@ -8,22 +8,18 @@ import com.gada.travelgada.domain.PlannerVO;
 
 public interface SearchService {
 
-	//통합 검색 일정 부분
-	public List<PlannerVO> searchPl(String keyword);
+	public List<PlannerVO> searchPl(String keyword, int limit);
 	
-	//통합 검색 다이어리 부분
 	public List<MemberVO> searchDi(String keyword);
-	
-	//일정 더보기
-	public List<PlannerVO> searchPlMore(String keyword, String sorter, int nowPage, int amount);
-	
-	//다이어리 더보기
+
+	public List<PlannerVO> searchPlMore(String keyword, String sorter, int beforeLimit, int limit);
+
 	public List<DiaryVO> searchDiMore(String keyword, String sorter, int nowPage, int amount);
 
-	//다이어리 총 수
 	public int getDiTotal(String keyword, String sorter);
 
-	//플래너 총 수
 	public int getPlTotal(String keyword, String sorter);
+
+	public Integer getLimit(String keyword, String sorter, int nowPage , int amount);
 	
 }

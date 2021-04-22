@@ -90,6 +90,7 @@ table {
 
 #View_area, #prev_View_area {
 	border-radius: 10px;
+	object-fit: cover;
 }
 </style>
 	
@@ -153,6 +154,26 @@ $(document).ready(function(){
 
 </script>
 
+<script>
+
+function checkCode(){
+	
+	var kcode = event.keyCode;
+	var tag = document.getElementById("hashtag");
+	
+	if(kcode == 13){ 
+		console.log("엔터");
+		event.returnValue=false;
+	}
+/* 	if(kcode == 32) {
+		console.log("스페이스바");
+		tag.append("#");
+		event.returnValue=false;
+
+	} */
+}
+</script>
+
 </head>
 <body>
 
@@ -190,7 +211,7 @@ $(document).ready(function(){
 						<td><span style="font-family: 'GongGothicMedium'">Tag</span></td>
 					</tr>
 					<tr>
-						<td><textarea rows="2" cols="55" name="hashtag">${diary_view.hashtag}</textarea></td>
+						<td><textarea rows="2" cols="55" name="hashtag" onkeydown="checkCode()">${diary_view.hashtag}</textarea></td>
 					</tr>
 					<tr>
 						<td class="modifyBtn">

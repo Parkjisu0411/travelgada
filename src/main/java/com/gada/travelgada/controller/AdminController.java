@@ -79,26 +79,28 @@ public class AdminController {
 	//회원 탈퇴 시키기
 	@PutMapping("/withdrawalMember")
 	public ResponseEntity<String> withdrawal(@RequestBody MemberVO memberVO, Model model) {
-		ResponseEntity<String> entity = null;
+		
 		log.info("controller diary_delete()");
 		log.info("멤버 아이디 : " + memberVO.getMember_id());
 		log.info("탈퇴 코드 : " + memberVO.getWithdrawal_code());
-
+		
+		ResponseEntity<String> entity = null;
+		
 		String member_id = memberVO.getMember_id();
 		int withdrawal_code = memberVO.getWithdrawal_code();
 		
 		try {
-			if(withdrawal_code == 0){
+				if(withdrawal_code == 0){
+					
+					adiminService.withdrawal(0 ,member_id, withdrawal_code);
+					entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+					
+				}else {
+					
+					adiminService.withdrawal(1, member_id, withdrawal_code);
+					entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 				
-				adiminService.withdrawal(0 ,member_id, withdrawal_code);
-				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-				
-			}else {
-				
-				adiminService.withdrawal(1, member_id, withdrawal_code);
-				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-			
-			}
+				}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -122,8 +124,8 @@ public class AdminController {
 		
 		mav.addObject("memberList",adiminService.search(nowPage, cri.getAmount(),keyword));
 		mav.addObject("pageMaker", new PageVO(cri, total));
-
 		mav.addObject("keyword",keyword);
+		
 		mav.setViewName("admin/admin");
 
 		return mav;
@@ -139,15 +141,18 @@ public class AdminController {
 		
 		//배송지 목록 조회
 		List<ShippingLocVO> shippingList = null;
+		
 		try {
 			shippingList = adiminService.getShippingLoc(memberVO.getMember_id());
 		}catch(Exception e) {
 			log.info(memberVO.getMember_id() + "의 배송지 목록이 없습니다.");
 			shippingList.add(new ShippingLocVO());
 		}
+		
 		mav.addObject("point", PointCalculator.getCurrentPoint(adiminService.getPoint(memberVO.getMember_id())));
 		mav.addObject("member", adiminService.getMember(memberVO.getMember_id()));
 		mav.addObject("shippingList", shippingList);
+		
 		return mav;
 
 	}// memberDetailList end

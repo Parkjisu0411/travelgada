@@ -49,9 +49,7 @@ public class VisitorController {
 		mav.addObject("total", total);
 		//탈퇴한 회원 수 
 		mav.addObject("withdrawal",visitorService.getWithdrawal());
-		
 		mav.addObject("monthCount",visitorService.getMonthCount(year));
-		
 		mav.addObject("dayCount",visitorService.getDayCount(year,month));
 		
 		mav.setViewName("statistic/visitor");

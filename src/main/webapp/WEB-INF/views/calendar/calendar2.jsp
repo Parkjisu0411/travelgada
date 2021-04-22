@@ -140,9 +140,6 @@
 </head>
 <body>
 
-	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
-
 	<!--Content -->
 	<img id="calImg" src="resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
 
@@ -187,125 +184,10 @@
       	  	</div>
 		</div>
 
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
 	<!-- 달력 (아래 추가) -->
 	<script src="resources/calendar/datepicker/moment.min.js"></script>
 	<script src="resources/calendar/datepicker/daterangepicker.js"></script>
     <script src="resources/calendar/js/global.js"></script>
-
-	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 </body>
 </html>

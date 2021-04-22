@@ -75,97 +75,121 @@
 
 /* 사진 */
 .masonry {
-  columns: 4;
-  column-gap: 16px;
+	columns: 4;
+	column-gap: 16px;
 }
-@media (max-width: 1200px) {
-  .masonry {
-    columns: 3;
-  }
+
+@media ( max-width : 1200px) {
+	.masonry {
+		columns: 3;
+	}
 }
-@media (max-width: 992px) {
-  .masonry {
-    columns: 2;
-  }
+
+@media ( max-width : 992px) {
+	.masonry {
+		columns: 2;
+	}
 }
+
 .masonry .grid {
-  display: inline-block;
-  margin-bottom: 16px;
-  position: relative;
+	display: inline-block;
+	margin-bottom: 16px;
+	position: relative;
 }
+
 .masonry .grid:before {
-  border-radius: 5px;
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.2);
 }
+
 .masonry .grid img {
-  width: 100%;
-  border-radius: 5px;
+	width: 100%;
+	border-radius: 5px;
 }
+
 .masonry .grid__title {
-  font-size: 28px;
- /*  font-weight: bold; */
-  margin: -30px 0px 0px 0px;
-	float:right;
+	font-size: 28px;
+	/*  font-weight: bold; */
+	margin: -30px 0px 0px 0px;
+	float: right;
+	width: 100px;
+	text-align: right;
 }
+
 .masonry .grid__author {
-  font-size: 14px;
-  font-weight: 300;
+	font-size: 14px;
+	font-weight: 300;
 }
+
 .masonry .grid__link {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
 }
+
 .masonry .grid__body {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  padding: 30px 30px;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-/*   margin-top: 30px; */
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 30px 30px;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	/*   margin-top: 30px; */
 }
+
+.modal-click {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 30px 30px;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	margin-top: 30px;
+}
+
 .masonry .grid__tag {
-  background-color: rgba(255, 255, 255, 0.6);
-  color: #333;
-  border-radius: 5px;
-  padding: 5px 15px;
-  margin-bottom: 5px;
+	background-color: rgba(255, 255, 255, 0.6);
+	color: #333;
+	border-radius: 5px;
+	padding: 5px 15px;
+	margin: 1px;
 }
 
 .mt-auto {
-  margin-top: auto;
+	margin-top: auto;
 }
 
-.gallery{
-
-padding-left:10px;
-padding-right:10px;
-
+.gallery {
+	padding-left: 10px;
+	padding-right: 10px;
 }
-.writeBtn{
+
+.writeBtn {
 	border: solid 1px;
 	/* border-radius: 15px 15px 0 0; */
 	font-family: 'GongGothicMedium';
 	color: white;
-	font-size:18px;
+	font-size: 18px;
 	background-color: #1dcad3;
 	/* width:100px; */
 	border-radius: 15px;
 }
 
-#selectDiary{
+#selectDiary {
 	line-height: 60px;
 	background-color: transparent;
 	color: black;
@@ -173,34 +197,42 @@ padding-right:10px;
 	border-radius: 15px;
 	border: 2px solid #1dcad3;
 	font-family: 'GongGothicMedium';
-	outline:none;
+	outline: none;
 }
 
-.paging{
-	margin:auto;
-	text-align:center;
+.paging {
+	margin: auto;
+	text-align: center;
 }
 
-.pagination{
+.pagination {
 	border-radius: 5px;
 }
 
-.page-link{
-	outline:none;
-	border:none;
-	margin:2px;
-	background-color: #f5f5f5;
+.page-link {
+	outline: none;
+	border: none;
+	margin: 2px;
+	background-color: gray;
 	border-radius: 5px;
-	height:3px; *
-	color:gray;
-}
-.page-item{
-	outline:none;
-	border:none;
-	padding:3px; 
-
+	height: 3px; *
+	color: gray;
 }
 
+.page-item {
+	outline: none;
+	border: none;
+	padding: 3px;
+}
+
+.hashtag-font {
+	font-family: 'IBMPlexSansKR-Light';
+	border: bold;
+}
+
+.selected {
+	background-color: #1dcad3;
+}
 </style>
 
 <script type="text/javascript">
@@ -287,7 +319,8 @@ padding-right:10px;
 			splitedArray.shift();//첫번째 지워주는 함수
 
 			for(var word in splitedArray){
-				word = splitedArray[word];
+				var word = splitedArray[word];
+				console.log("word : "+word);
 				if(word.indexOf("") == 0){ 
 					var word2 = "#"+word;
 					word = '<span class="grid__tag" ><a style="color:black;" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a></span>&nbsp;'
@@ -319,6 +352,15 @@ padding-right:10px;
 /* 해시태그 & 링크 끝 */
 </script>
 
+<script>
+	$(document).ready(function(){
+		
+		var paging = $("#"+${nowPage});
+		$(paging).addClass("selected");
+	
+	});
+</script>
+	
 </head>
 <body>
 
@@ -351,11 +393,16 @@ padding-right:10px;
 					</select>		
 				</div>
 				<div class="col-sm-2">
-					<input class="writeBtn form-control" value="다이어리 작성" style="font-family: 'GongGothicMedium'" type="button" class="btn btn-outline-warning bg-warning text-white" onclick="openwin();"/>
+					<input class="writeBtn form-control" value="다이어리 작성" style="font-family: 'GongGothicMedium'" type="button" 
+						class="btn btn-outline-warning bg-warning text-white" onclick="openwin();" />
 					<br/>    
 		    	</div>
 		     </div>
 		</form><!-- 다이어리 작성을 위한 form -->
+		
+		<c:if test="${empty diary}">
+			<div>다이어리를 작성해주세요!</div>
+		</c:if>
 
 		<div class="masonry">
 			<div id="diaryDiv">
@@ -363,26 +410,32 @@ padding-right:10px;
 					<div class="grid">
 						<img src='/resources/diary/${di.img_path}' />
 						<!-- 사진 -->
-						<div class="grid__body" data-toggle="modal" data-target="#myModal${di.diary_id}">
-							<!-- <div class="relative"> -->
-								<!--  <a class="grid__link" target="_blank" href="/" ></a> -->
-								<!--    <p class="grid__author"></p> -->
-								<div class="dropdown">
+						
+						<div class="grid__body" >
+						<div class="dropdown">
 									<div class="grid__title"
 										class="grid__title btn dropdown-toggle" data-toggle="dropdown">...</div>
 									<!-- <img src="resources/diary/dot3.png" /> -->
 									<div class="dropdown-menu">
 										<a class="dropdown-item"
 											onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}&${di.planner_id}',
-      					'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
+      											'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
 										<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
 									</div>
 								</div>
+							<div class="modal-click" data-toggle="modal" data-target="#myModal${di.diary_id}">
+							<!-- <div class="relative"> -->
+								<!--  <a class="grid__link" target="_blank" href="/" ></a> -->
+								<!--    <p class="grid__author"></p> -->
+								
+								
 							<!-- </div> -->
 							<div class="mt-auto">
-								<span id="${di.diary_id}"></span>
+								<span class="hashtag-font"id="${di.diary_id}"></span>
 							</div>
-						</div>
+							</div>
+							
+						</div><!-- grid_body -->
 					</div>
 
 					<!-- Modal -->
@@ -430,17 +483,19 @@ padding-right:10px;
 					<!-- 페이징 -->
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
-							<li class="page-item"><a class="page-link"
-								href="/diary?nowPage=${pageMaker.startPage - 1}">◀</a></li>
+							<li class="page-item">
+								<a class="page-link"href="/diary?nowPage=${pageMaker.startPage - 1}">◀</a>
+							</li>
 						</c:if>
-						<c:forEach begin="${pageMaker.startPage }"
-							end="${pageMaker.endPage}" var="idx">
-							<li class="page-item"><a class="page-link"
-								href="/diary?nowPage=${idx}"></a></li>
+						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+							<li class="page-item">
+								<a id ="${idx}" class="page-link" href="/diary?nowPage=${idx}"></a>
+							</li>
 						</c:forEach>
 						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-							<li class="page-item"><a class="page-link"
-								href="/diary?nowPage=${pageMaker.endPage +1}">▶</a></li>
+							<li class="page-item">
+								<a class="page-link" href="/diary?nowPage=${pageMaker.endPage +1}">▶</a>
+							</li>
 						</c:if>
 					</ul>
 					<!-- 페이징 끝 -->

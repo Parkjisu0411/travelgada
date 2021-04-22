@@ -29,9 +29,7 @@
 
 /* 모달 스타일 */
 .dialogDi{
-  
  	height : 40px;
-
 }
 
 .mainImg{
@@ -47,8 +45,6 @@
 	width : 350px;
   	height : 260px;
   	font-weight: bold;
-  	
-  	
   
 }
 .dialog-date, .dialog-hashtag{
@@ -56,11 +52,11 @@
 	text-align:right;
 }
 
-
 .popup_img{
 	position: relative; 
 	width: 400px; 
 	height: 400px;
+	object-fit: cover;
 }
 
 .dialog-profile{
@@ -73,19 +69,172 @@
    	float: left;
 }
 
-	
 </style>
- 
-<!-- csrf 토큰 -->
-<!-- <script type="text/javascript">
 
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	
-	$(document).ajaxSend(function(e, xhr, options) {
-		xhr.setRequestHeader(header, token);
-	});
-</script> -->
+<style>
+
+/* 사진 */
+.masonry {
+	columns: 4;
+	column-gap: 16px;
+}
+
+@media ( max-width : 1200px) {
+	.masonry {
+		columns: 3;
+	}
+}
+
+@media ( max-width : 992px) {
+	.masonry {
+		columns: 2;
+	}
+}
+
+.masonry .grid {
+	display: inline-block;
+	margin-bottom: 16px;
+	position: relative;
+}
+
+.masonry .grid:before {
+	border-radius: 5px;
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.masonry .grid img {
+	width: 100%;
+	border-radius: 5px;
+}
+
+.masonry .grid__title {
+	font-size: 28px;
+	/*  font-weight: bold; */
+	margin: -30px 0px 0px 0px;
+	float: right;
+	width:50px;
+	text-align:center;
+}
+
+.masonry .grid__author {
+	font-size: 14px;
+	font-weight: 300;
+}
+
+.masonry .grid__link {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.masonry .grid__body {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 30px 30px;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	/*   margin-top: 30px; */
+}
+
+.modal-click {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 30px 30px;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	margin-top: 30px;
+}
+
+.masonry .grid__tag {
+	background-color: rgba(255, 255, 255, 0.6);
+	color: #333;
+	border-radius: 5px;
+	padding: 5px 15px;
+	margin: 1px;
+}
+
+.mt-auto {
+	margin-top: auto;
+}
+
+.gallery {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.writeBtn {
+	border: solid 1px;
+	/* border-radius: 15px 15px 0 0; */
+	font-family: 'GongGothicMedium';
+	color: white;
+	font-size: 18px;
+	background-color: #1dcad3;
+	/* width:100px; */
+	border-radius: 15px;
+}
+
+#selectDiary {
+	line-height: 60px;
+	background-color: transparent;
+	color: black;
+	font-size: 18px;
+	border-radius: 15px;
+	border: 2px solid #1dcad3;
+	font-family: 'GongGothicMedium';
+	outline: none;
+}
+
+.paging {
+	margin: auto;
+	text-align: center;
+}
+
+.pagination {
+	border-radius: 5px;
+}
+
+.page-link {
+	outline: none;
+	border: none;
+	margin: 2px;
+	background-color: gray;
+	border-radius: 5px;
+	height: 3px; *
+	color: gray;
+}
+
+.page-item {
+	outline: none;
+	border: none;
+	padding: 3px;
+}
+
+.hashtag-font{
+	font-family: 'IBMPlexSansKR-Light';
+	border: bold;
+}
+
+.selected {
+	background-color: #1dcad3;
+}
+
+</style>
 
 <script type="text/javascript">
 /* 삭제 ajax */
@@ -111,7 +260,6 @@
 					success : function(result) {
 						console.log("result : " + result);
 						if (result == "SUCCESS") {
-							alert("삭제하시겠습니까?");
 							$(tr).remove();
 						}
 					},
@@ -126,43 +274,7 @@
 </script>
 
 <!-- 다른 플래너로 전환 -->
-<script type="text/javascript">
-	$(document).ready(function(){
-		$(document).on("change","#selectDiary",function(event){
-			
-			var planner_id = this.value;
-			console.log(planner_id);
-			getList();
-			
-			function getList() {
-				var url = "${pageContext.request.contextPath}/diary_other/"+planner_id;
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				
-				console.log(url);
-			
-				$.ajax({
-					type: 'GET',
-					url: url,
-					cache : false,
-					dataType : "html",
-			 		beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-						console.log("header 실행 "+header+token)
-						xhr.setRequestHeader(header, token);
-					}, 
-					success: function(result) {
-						console.log(result);
-						$("body > div.gallery").html(result);
-		        	},//sucess end
-					error : function(e) {
-						console.log(e);
-						alert("에러가 발생했습니다.");
-					}
-				});//ajax end
-			}//getList end
-		});//change
-	});//document function
-</script>
+
 
 <script>
 /* 작성 팝업 */
@@ -176,8 +288,7 @@
  <script type="text/javascript">
  /* select box 새로운 플래너 값 고정 */
 	$(document).ready(function(){
-	
-		var currPlanner_id= ${diary.planner_id};  
+		var currPlanner_id= ${other.planner_id};  
 		console.log("현재 플래너의 아이디 : "+ currPlanner_id);
 	
 		$("#selectDiary").val(currPlanner_id).prop("selected", true);
@@ -205,10 +316,12 @@
 			splitedArray = content.split('#');//#으로 구분
 			console.log(splitedArray);
 			linkedContent = '';
+			linkedModalContent='';
 			splitedArray.shift();//첫번째 지워주는 함수
 
 			for(var word in splitedArray){
-				word = splitedArray[word];
+				var word = splitedArray[word];
+				console.log("word : "+word);
 				if(word.indexOf("") == 0){ 
 					var word2 = "#"+word;
 					word = '<span class="grid__tag" ><a style="color:black;" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a></span>&nbsp;'
@@ -217,9 +330,21 @@
 				}//if end
 				linkedContent += word+' ';
 			}//for end
-    	    
+			
 			$("#${di.diary_id}").append(linkedContent);
-			$("#modal${di.diary_id}").append(linkedContent);
+			
+			for(var word in splitedArray){
+				word = splitedArray[word];
+				if(word.indexOf("") == 0){ 
+					var word2 = "#"+word;
+					word = '<a style="color:black;" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>&nbsp;'
+					console.log(word);
+    	          	console.log(word2);
+				}//if end
+				linkedModalContent += word+' ';
+			}//for end
+    	    
+			$("#modal${di.diary_id}").append(linkedModalContent);
     	
 		</c:forEach>
 
@@ -228,127 +353,28 @@
 /* 해시태그 & 링크 끝 */
 </script>
 
-<style>
-
-/* 사진 */
-.masonry {
-  columns: 4;
-  column-gap: 16px;
-}
-@media (max-width: 1200px) {
-  .masonry {
-    columns: 3;
-  }
-}
-@media (max-width: 992px) {
-  .masonry {
-    columns: 2;
-  }
-}
-.masonry .grid {
-  display: inline-block;
-  margin-bottom: 16px;
-  position: relative;
-}
-.masonry .grid:before {
-  border-radius: 5px;
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-.masonry .grid img {
-  width: 100%;
-  border-radius: 5px;
-}
-.masonry .grid__title {
-  font-size: 28px;
- /*  font-weight: bold; */
-  margin: -30px 0px 0px 0px;
-	float:right;
-}
-.masonry .grid__author {
-  font-size: 14px;
-  font-weight: 300;
-}
-.masonry .grid__link {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-.masonry .grid__body {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  padding: 30px 30px;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-/*   margin-top: 30px; */
-}
-.masonry .grid__tag {
-  background-color: rgba(255, 255, 255, 0.6);
-  color: #333;
-  border-radius: 5px;
-  padding: 5px 15px;
-  margin-bottom: 5px;
-}
-
-.mt-auto {
-  margin-top: auto;
-}
-
-.gallery{
-
-padding-left:10px;
-padding-right:10px;
-
-}
-.writeBtn{
-	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
-	font-family: 'GongGothicMedium';
-	color: white;
-	font-size:18px;
-	background-color: #1dcad3;
-	/* width:100px; */
-	border-radius: 15px;
-}
-
-#selectDiary{
-	line-height: 60px;
-	background-color: transparent;
-	color: black;
-	font-size: 18px;
-	border-radius: 15px;
-	border: 2px solid #1dcad3;
-	font-family: 'GongGothicMedium';
-	outline:none;
-}
-
-</style>
+<script>
+	$(document).ready(function(){
+		
+		var paging = $("#"+${nowPage});
+		$(paging).addClass("selected");
+	
+	});
+</script>
 
 </head>
 <body>
 
+<div class="wrap">
 	<!-- 해더 -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	
 	<!-- 플래너 셀렉트, 다이어리 작성 -->
-
 	<div class = "gallery">
-
 		<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
 			<div class="row">
 				<div class="col-sm-10"> 
-					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'">
+					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'" onchange="location.href='${pageContext.request.contextPath}/diary_other/'+this.value">
 						<c:forEach var="di" items="${planner}">
 							<%-- <option value='${di.planner_id}' style="font-family: 'GongGothicMedium'">
 						  		${di.planner_name}&nbsp;&nbsp; ${di.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${di.end_date}
@@ -368,7 +394,8 @@ padding-right:10px;
 					</select>		
 				</div>
 				<div class="col-sm-2">
-					<input class="writeBtn form-control" value="다이어리 작성" style="font-family: 'GongGothicMedium'" type="button" class="btn btn-outline-warning bg-warning text-white" onclick="openwin();"/>
+					<input class="writeBtn form-control" value="다이어리 작성" style="font-family: 'GongGothicMedium'" type="button" 
+						class="btn btn-outline-warning bg-warning text-white" onclick="openwin();" />
 					<br/>    
 		    	</div>
 		     </div>
@@ -380,26 +407,32 @@ padding-right:10px;
 					<div class="grid">
 						<img src='/resources/diary/${di.img_path}' />
 						<!-- 사진 -->
-						<div class="grid__body" data-toggle="modal" data-target="#myModal${di.diary_id}">
-							<!-- <div class="relative"> -->
-								<!--  <a class="grid__link" target="_blank" href="/" ></a> -->
-								<!--    <p class="grid__author"></p> -->
-								<div class="dropdown">
+						
+						<div class="grid__body" >
+						<div class="dropdown">
 									<div class="grid__title"
 										class="grid__title btn dropdown-toggle" data-toggle="dropdown">...</div>
 									<!-- <img src="resources/diary/dot3.png" /> -->
 									<div class="dropdown-menu">
 										<a class="dropdown-item"
 											onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}&${di.planner_id}',
-      					'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
-										<a class="delete dropdown-item" href="diary/${di.diary_id}">삭제</a>
+      											'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
+										<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
 									</div>
 								</div>
+							<div class="modal-click" data-toggle="modal" data-target="#myModal${di.diary_id}">
+							<!-- <div class="relative"> -->
+								<!--  <a class="grid__link" target="_blank" href="/" ></a> -->
+								<!--    <p class="grid__author"></p> -->
+								
+								
 							<!-- </div> -->
 							<div class="mt-auto">
-								<span id="${di.diary_id}"></span>
+								<span class="hashtag-font"id="${di.diary_id}"></span>
 							</div>
-						</div>
+							</div>
+							
+						</div><!-- grid_body -->
 					</div>
 
 					<!-- Modal -->
@@ -438,11 +471,40 @@ padding-right:10px;
 				</c:forEach>
 			</div>
 		</div>
-	
 	</div>
-
+	
+		<br/><br/>
+		<div class="container">
+			<div class="row">
+				<div class="paging">
+					<!-- 페이징 -->
+					<ul class="pagination">
+						<c:if test="${pageMaker.prev}">
+							<li class="page-item">
+								<a class="page-link" href="/diary_other/${planner_id}?nowPage=${pageMaker.startPage - 1}">◀</a>
+							</li>
+						</c:if>
+						<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage}" var="idx">
+							<li class="page-item">
+								<a id ="${idx}" class="page-link" href="/diary_other/${planner_id}?nowPage=${idx}"></a>
+							</li>
+						</c:forEach>
+						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+							<li class="page-item">
+								<a class="page-link" href="/diary_other/${planner_id}?nowPage=${pageMaker.endPage +1}">▶</a>
+							</li>
+						</c:if>
+					</ul>
+					<!-- 페이징 끝 -->
+				</div>
+				<!-- 다이어리 row end -->
+			</div>
+		</div>
+		
 	<!-- footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	
+	</div>
 
 </body>
 </html>

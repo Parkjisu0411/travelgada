@@ -1,20 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-<title>검색</title>
+<title>다이어리 검색</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
 	
@@ -22,17 +22,15 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	<!-- 폰트 -->
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
-
+	
 <style>
 html, body {
 	width: 100%;
 	height: 100%;
 	margins: 0;
 	padding: 0;
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight: bold;
 }
 
 /* 다이어리 이미지 */
@@ -49,9 +47,7 @@ html, body {
 <style>
 /* 모달 스타일 */
 .dialogDi{
-  
  	height : 40px;
-
 }
 
 .mainImg{
@@ -67,7 +63,6 @@ html, body {
 	width : 350px;
   	height : 240px;
   	font-weight: bold;
-  
 }
 
 .dialog-date, .dialog-hashtag{
@@ -91,47 +86,15 @@ html, body {
    	float: left;
 }
 
-</style>
-
-<script>
-
-	$(document).ready(function(){
-		// 숫자 평점을 별로 변환하도록 호출하는 함수
-		$.fn.generateStars = function() {
-	    	return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
-	    	
-	};
-		$('.star-prototype').generateStars();
-		        
-	});
- 
-</script>
-
-<style>
-	span.star-prototype, span.star-prototype > * {
-	    height: 17px; 
-	    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
-	    width: 80px;
-	    display: inline-block;
-	}
-	 
-	span.star-prototype > * {
-	    background-position: 0 0;
-	    max-width:80px; 
-	}
-
-</style>
-
-<style>
-
 .main-card-diary-area{
 	background-color: #f5f5f5;
 }
+
 .diHover:hover{
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+	transform:scale(1.02);
 }
 </style>
-
 
 <style>
 #keyword_search{
@@ -226,7 +189,6 @@ html, body {
 	font-size:15px;
 	font-family: 'GongGothicMedium';
 	text-align:center;
-
 }
 
 .hash_color{
@@ -239,13 +201,14 @@ html, body {
 }
 
 .drop{
-/* 		border: 2px solid #303E57;
-		background-color: transparent;
-		border-radius: 10px; */
-		border:none;
-		float: right;
-		background-color: #CFD2D3;
+/* 	border: 2px solid #303E57;
+	background-color: transparent;
+	border-radius: 10px; */
+	border:none;
+	float: right;
+	background-color: #CFD2D3;
 }
+
 .paging{
 	margin:auto;
 	text-align:center;
@@ -264,6 +227,12 @@ html, body {
 	border-radius: 5px;
 }
 
+.searchResult{
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight: bold;
+	font-size: 22px
+}
+
 </style>
 
 <script>
@@ -276,30 +245,30 @@ html, body {
 		
 		//jstl
 	    <c:forEach items="${member}" var="member">
-	    <c:forEach items="${member.plannerVO}" var="pl">
-	    <c:forEach items="${pl.diaryVO}" var="di">
-    		
-    	    content = "${di.hashtag}";
-    	    splitedArray = content.split('#');//#으로 구분
-    	    console.log(splitedArray);
-    	    linkedContent = '';
-    	    splitedArray.shift();//첫번째 지워주는 함수
-
-    	    for(var word in splitedArray){
-    	      word = splitedArray[word];
-    	       if(word.indexOf("") == 0)
-    	       { var word2 = "#"+word;
-    	          word = '<a class="hash_color" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
-    	          console.log(word);
-    	          console.log(word2);
-    	       }
-    	       linkedContent += word+' ';
-    	    }
-    	    
-    	    $("#${di.diary_id}").append(linkedContent);
-    	    $("#modal${di.diary_id}").append(linkedContent);
-    	</c:forEach>
-    	</c:forEach>
+		    <c:forEach items="${member.plannerVO}" var="pl">
+			    <c:forEach items="${pl.diaryVO}" var="di">
+		    		
+		    	    content = "${di.hashtag}";
+		    	    splitedArray = content.split('#');//#으로 구분
+		    	    console.log(splitedArray);
+		    	    linkedContent = '';
+		    	    splitedArray.shift();//첫번째 지워주는 함수
+		
+		    	    for(var word in splitedArray){
+		    	      word = splitedArray[word];
+		    	       if(word.indexOf("") == 0)
+		    	       { var word2 = "#"+word;
+		    	          word = '<a class="hash_color" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a>'
+		    	          console.log(word);
+		    	          console.log(word2);
+		    	       }
+		    	       linkedContent += word+' ';
+		    	    }
+		    	    
+		    	    $("#${di.diary_id}").append(linkedContent);
+		    	    $("#modal${di.diary_id}").append(linkedContent);
+		    	</c:forEach>
+	    	</c:forEach>
     	</c:forEach>
 
 	});
@@ -342,32 +311,39 @@ html, body {
 		<br />
 		<br />
 		<!-- 일정 searchPl -->
-		<span class="font_h">다이어리&nbsp;&nbsp;&nbsp;</span> <span
-			class="dropdown">
+		<span class="font_h">다이어리&nbsp;&nbsp;&nbsp;</span> 
+		
+		<span class="dropdown">
 			<button class="dropdown-toggle drop" data-toggle="dropdown">정렬</button>
-			<span class="dropdown-menu"> <a class="dropdown-item"
+			<span class="dropdown-menu"> <a class="dropdown-item" 
 				href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">최신순</a>
 		</span>
+		
 		</span> &nbsp; <span class="dropdown">
 			<button class="dropdown-toggle drop" data-toggle="dropdown">기간</button>
-			<span class="dropdown-menu"> <a class="dropdown-item"
-				href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=day">1일</a>
+			<span class="dropdown-menu"> 
 				<a class="dropdown-item"
-				href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=week">1주</a>
+					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=day">1일</a>
 				<a class="dropdown-item"
-				href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=month">1개월</a>
+					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=week">1주</a>
 				<a class="dropdown-item"
-				href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=year">1년</a>
-		</span>
-		</span> <br />
+					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=month">1개월</a>
+				<a class="dropdown-item"
+					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=year">1년</a>
+			</span>
+		</span> 
 		<br />
+		<br />
+
+		<c:if test="${empty member}">
+			<span class="searchResult">" ${keyword} "</span> 에 관한 다이어리가 없습니다.
+		</c:if>
 
 		<!-- 다이어리 반복 -->
 		<div class="row">
 			<c:forEach items="${member}" var="member">
 				<c:forEach items="${member.plannerVO}" var="pl">
 					<c:forEach items="${pl.diaryVO}" var="di">
-
 						<div class="col-md-3 ">
 							<div class="main-card-diary-area diHover">
 								<img src="resources/diary/${di.img_path}"
@@ -391,11 +367,8 @@ html, body {
 						<!-- Modal -->
 						<!-- 여기  -->
 						<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
-							<!-- <div class="mySlides"> -->
 							<div class="modal-dialog modal-lg modal-dialog-centered">
 								<div class="modal-content MDI">
-									<!-- 						<div class="modal-header">
-							</div> -->
 									<div class="modal-body Mcontent">
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<div class="mainImg">

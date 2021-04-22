@@ -47,7 +47,7 @@ public class DairyController {
 		log.info("=========="+cri.getNowPage());
 		
 		int amount = 20;
-		int nowPage = (cri.getNowPage() - 1) * 20;
+		int nowPage = (cri.getNowPage() - 1) * amount;
 		int total = diaryService.getTotal(member.getUsername());
 		
 		cri.setAmount(amount);
@@ -55,12 +55,36 @@ public class DairyController {
 		mav.addObject("diary", diaryService.getDiary(member.getUsername(),nowPage, amount));
 		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
 		mav.addObject("pageMaker", new PageVO(cri, total));
+		mav.addObject("nowPage", cri.getNowPage());
 		
 		mav.setViewName("diary/diary");
 
 		return mav;
 
 	}// diary end
+	
+	// 다른 다이어리로 이동
+	@GetMapping("/diary_other/{planner_id}")
+	public ModelAndView diary_another(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO, ModelAndView mav, CriteriaVO cri) {
+		log.info("controller diary_test();");
+		int amount = 20;
+		int nowPage = (cri.getNowPage() - 1) * amount;
+		int total = diaryService.getOtherTotal(member.getUsername(), diaryVO.getPlanner_id());
+		
+		cri.setAmount(amount);
+		
+		mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
+		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+		mav.addObject("pageMaker", new PageVO(cri, total));
+		mav.addObject("other", diaryVO);
+		mav.addObject("planner_id", diaryVO.getPlanner_id());
+		mav.addObject("nowPage", cri.getNowPage());
+		
+		mav.setViewName("diary/diary_other");
+
+		return mav;
+
+	}// end
 
 	// 다이어리 작성 페이지
 	@GetMapping("/diary_write_view")
@@ -78,28 +102,30 @@ public class DairyController {
 	// 다이어리 작성
 	@PostMapping("/diary_write")
 	public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO,
-			@AuthenticationPrincipal MemberDetails member) throws IllegalStateException, IOException {
+			@AuthenticationPrincipal MemberDetails member, CriteriaVO cri) throws IllegalStateException, IOException {
 		log.info("controller diary_write();");
 		
 		/* String img_path = file.getOriginalFilename(); */
 		int seq = diaryService.getImg_seq();
 		seq++;
 		String img_seq = Integer.toString(seq);
+		int amount = 20;
+		int nowPage = (cri.getNowPage() - 1) * amount;
+		int total = diaryService.getOtherTotal(member.getUsername(), diaryVO.getPlanner_id());
 
 		diaryVO.setImg_path(img_seq);
 		diaryService.writeDiary(diaryVO);
-
-		mav.addObject("other", diaryVO);
-		mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
+		cri.setAmount(amount);
+		file.transferTo(new File(FILE_SERVER_PATH, img_seq));
+		
+		mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
 		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-		mav.setViewName("diary/diary");
-
-		if (!file.getOriginalFilename().isEmpty()) {
-			file.transferTo(new File(FILE_SERVER_PATH, img_seq));
-			/* mav.addObject("msg", "File uploaded successfully."); */
-		} else {
-			/* mav.addObject("msg", "Please select a valid mediaFile.."); */
-		}
+		mav.addObject("pageMaker", new PageVO(cri, total));
+		mav.addObject("other", diaryVO);
+		mav.addObject("planner_id", diaryVO.getPlanner_id());
+		mav.addObject("nowPage", cri.getNowPage());
+		
+		mav.setViewName("diary/diary_other");
 
 		return mav;
 
@@ -112,6 +138,7 @@ public class DairyController {
 		
 		mav.addObject("planner", diaryVO);
 		mav.addObject("diary_view", diaryService.view_Diary(diaryVO.getDiary_id()));
+		
 		mav.setViewName("diary/diary_modify_view");
 
 		return mav;
@@ -121,7 +148,7 @@ public class DairyController {
 	// 다이어리 수정
 	@PostMapping("/diary_modify")
 	public ModelAndView diary_modify(ModelAndView mav, DiaryVO diaryVO, @RequestParam("uploadfile") MultipartFile file,
-			@RequestParam("currImg") String currImg, @AuthenticationPrincipal MemberDetails member)
+			@RequestParam("currImg") String currImg, @AuthenticationPrincipal MemberDetails member, CriteriaVO cri)
 			throws IllegalStateException, IOException {
 		log.info("controller diary_modify()");
 		log.info(currImg);
@@ -130,34 +157,42 @@ public class DairyController {
 		int seq = diaryService.getImg_seq();
 		seq++;
 		String img_seq = Integer.toString(seq);
+		int amount = 20;
+		int nowPage = (cri.getNowPage() - 1) * amount;
+		int total = diaryService.getOtherTotal(member.getUsername(), diaryVO.getPlanner_id());
+		
+		cri.setAmount(amount);
 
 		if (img_path.length() == 0) {
 			diaryVO.setImg_path(currImg);
 			diaryService.modifyDiary(diaryVO);
+			file.transferTo(new File(FILE_SERVER_PATH, img_seq));
 
 			log.info("플래너 아이디 : " + diaryVO.getPlanner_id());
-			mav.addObject("other", diaryVO);
-			mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
+			
+			mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
 			mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-			mav.setViewName("diary/diary");
+			mav.addObject("pageMaker", new PageVO(cri, total));
+			mav.addObject("other", diaryVO);
+			mav.addObject("planner_id", diaryVO.getPlanner_id());
+			mav.addObject("nowPage", cri.getNowPage());
+			
+			mav.setViewName("diary/diary_other");
 
 		} else {
+			
 			diaryVO.setImg_path(img_seq);
 			diaryService.modifyDiary(diaryVO);
-
-			mav.addObject("other", diaryVO);
-			mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
-			mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-			mav.setViewName("diary/diary");
-
-		} // if end
-
-		if (!file.getOriginalFilename().isEmpty()) {
 			file.transferTo(new File(FILE_SERVER_PATH, img_seq));
-			/* mav.addObject("msg", "File uploaded successfully."); */
 
-		} else {
-			/* mav.addObject("msg", "Please select a valid mediaFile.."); */
+			mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
+			mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+			mav.addObject("pageMaker", new PageVO(cri, total));
+			mav.addObject("other", diaryVO);
+			mav.addObject("planner_id", diaryVO.getPlanner_id());
+			mav.addObject("nowPage", cri.getNowPage());
+			
+			mav.setViewName("diary/diary_other");
 
 		} // if end
 
@@ -185,24 +220,9 @@ public class DairyController {
 
 	}// diary_delete end
       
-	// 다른 다이어리로 이동 json
-	@GetMapping("/diary_other/{planner_id}")
-	public ModelAndView diary_another(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO, ModelAndView mav) {
-		log.info("controller diary_test();");
-		
-		mav.addObject("diary", diaryService.getDiaryOther(diaryVO.getPlanner_id()));
-		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-		mav.addObject("other", diaryVO);
-		mav.setViewName("diary/diary");
-
-		return mav;
-
-	}// end
-	
 	// 다이어리
 	@GetMapping("/sta")
 	public ModelAndView test(ModelAndView mav, @AuthenticationPrincipal MemberDetails member) {
-		log.info("controller diary();");
 
 		mav.setViewName("diary/test");
 

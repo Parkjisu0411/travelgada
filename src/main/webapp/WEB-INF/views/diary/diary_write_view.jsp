@@ -90,6 +90,7 @@ table {
 
 #View_area, #prev_View_area {
 	border-radius: 10px;
+	object-fit: cover;
 }
 </style>
 	
@@ -179,6 +180,18 @@ function checkCode(){
 	} */
 }
 </script>
+
+<script>
+
+$(document).ready(function(){
+	 
+	  $('#hashtag').popover({content: "ex) #여행  #가다 ", placement: "bottom"}); 
+	 
+	});
+
+</script>
+
+
 
 </head>
 <body>

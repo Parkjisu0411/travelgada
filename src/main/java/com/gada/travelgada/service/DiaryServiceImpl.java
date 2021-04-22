@@ -24,6 +24,12 @@ public class DiaryServiceImpl implements DiaryService {
 		log.info("ServiceImpl getDiary()");
 		return mapper.getDiary(member_id,nowPage,amount);
 	}
+	
+	@Override
+	public List<DiaryVO> getDiaryOtherPaging(int planner_id, int nowPage, int amount) {
+		log.info("ServiceImpl getDiary()");
+		return mapper.getDiaryOtherPaging(planner_id,nowPage,amount);
+	}
 
 	@Override
 	public List<PlannerVO> getPlanner(String member_id) {
@@ -74,6 +80,12 @@ public class DiaryServiceImpl implements DiaryService {
 	public int getTotal(String member_id) {
 		log.info("ServiceImpl getTotal()");
 		return mapper.getTotal(member_id);
+	}
+
+	@Override
+	public int getOtherTotal(String member_id, int planner_id) {
+		log.info("ServiceImpl getOtherTotal()");
+		return mapper.getOtherTotal(member_id, planner_id);
 	}
 
 }
