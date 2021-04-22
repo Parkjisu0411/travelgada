@@ -190,6 +190,10 @@
 			
 		}
 	})
+	
+	function buyNow(product_id) {
+		
+	}
 	//
 </script>
 </head>
@@ -215,20 +219,25 @@
 		<div class="row">
 			<c:forEach var="product" items="${productList }">
 				<div class="col-md-4">
-					<div class="product-area">
-						<div class="product-detail-area">
-							<div class="product-img-area" onclick="viewDetail(${product.product_id})"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
-							<div class="text_box">
-								<div class="product-info-area">
-									<p>${product.product_name }</p>
-									<p>₩ ${product.price }</p>
-								</div>
-								<div class="product-btn-area">
-									<button type="button" class="btn gada-btn-reverse buy" onclick="insertIntoCart(${product.product_id})">CART</button>
-									<button type="button" class="btn gada-btn buy">BUY NOW</button>
+					<div class="product-area" id="${product_id }">
+						<form>
+							<div class="product-detail-area">
+								<div class="product-img-area" onclick="viewDetail(${product.product_id})"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
+								<div class="text_box">
+									<div class="product-info-area">
+										<p>${product.product_name }</p>
+										<p>₩ ${product.price }</p>
+									</div>
+									<div class="product-btn-area">
+										<button type="button" class="btn gada-btn-reverse buy" onclick="insertIntoCart(${product.product_id})">CART</button>
+										<button type="submit" class="btn gada-btn buy">BUY NOW</button>
+									</div>
 								</div>
 							</div>
-						</div>
+							<input type="hidden" name="img_path" value="${product.img_path }" />
+							<input type="hidden" name="img_path" value="${product.img_path }" />
+							<input type="hidden" name="img_path" value="${product.img_path }" />
+						</form>
 					</div>
 				</div>
 			</c:forEach>
