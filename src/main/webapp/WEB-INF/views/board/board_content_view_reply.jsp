@@ -728,10 +728,10 @@ a{
 		$(document).on("click",".showContent",function(){
 		      if( $(this).parent().find("#contents").css("display")=="none"){
 		    	document.all.contents.style.display="";
-		        $(this).text("목록 열기");
+		        $(this).text("목록 닫기");
 		      }else{
 		    	  document.all.contents.style.display="none";
-		        $(this).text("목록 닫기");
+		        $(this).text("목록 열기");
 		      }
 		});
 
@@ -770,7 +770,7 @@ a{
 								<img class="nav-profile-img" src='/resources/img/profile/${bImgPath.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">&nbsp;
 								${bContentView.member_id }&nbsp;&nbsp;&nbsp;
 								<span class="date">
-								<fmt:formatDate value="${bContentView.board_date }" pattern="yyyy/MM/dd hh:mm"/>&nbsp;
+								<fmt:formatDate value="${bContentView.board_date }" pattern="yyyy/MM/dd HH:mm"/>&nbsp;
 								<span id="commLastTime" class="${bContentView.board_date}"></span>
 								</span>
 							</td>
@@ -858,7 +858,7 @@ a{
 							</div>
 						</td>
 						<td class="content2"><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>
-						<td><fmt:formatDate value="${boardReviewList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
+						<td><fmt:formatDate value="${boardReviewList.board_date }" pattern="yyyy/MM/dd HH:mm"/></td>
 					</tr>
 					</c:forEach>
 			</table>

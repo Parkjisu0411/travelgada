@@ -30,33 +30,18 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 
+<!-- form__group input box -->
+<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+<link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+<link rel="canonical" href="https://codepen.io/lucasyem/pen/ZEEYKdj">
 
-<!-- 영어 폰트(헤드라인) -->
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap');
-</style>
-<!-- 한글 폰트(헤드라인) -->
-<style>
-@font-face {
-    font-family: 'GongGothicMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
-<!-- 한글 폰트(기본) -->
-<style>
-@font-face {
-    font-family: 'IBMPlexSansKR-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
+<!-- submit button -->
+<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+<link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   
   <style>
-
-  
   	img {
   		object-fit: cover;
   		max-width: 70px;
@@ -103,12 +88,19 @@
 		margin:0 8px 3px 0;
 	}
 	
+	.checkImg2{
+		width:30px;
+		height:30px;
+		float:left;
+		margin:0 8px 3px 0;
+	}
+	
 	a:hover{
 		text-decoration:none !important;
 		color:#CFD2D3;
 	}	
 	
-	.inputTitle{
+	.inputTitle, .todoList{
 		font-family: 'Montserrat', sans-serif;
 		font-weight:bold;
 		font-size: 20pt;
@@ -116,14 +108,15 @@
 		color:#303E57;
 		/* line */
 		display: flex;
-		/* flex-basis: 82%; */
-		flex-basis: 100px;
+		 /* flex-basis: 82%;  */
+		 flex-basis: 600px;
 		align-items: center;
 		margin: 8px 0;
+		
 	}
 	
 	/* line */	
-	.inputTitle::after {
+	.inputTitle::after, .todoList::after{
 		content: "";
 		flex-grow: 1;
 		background: #1DCAD3;
@@ -133,29 +126,304 @@
 		margin: 0px 16px;
 	}
 	
-/* 	.introduce{
+	.recommend1{
+		font-family: 'GongGothicMedium';
+		font-size: 20pt;
+		padding:0 15px;
+		color:#303E57;
+		/* line */
+		display: flex;
+		 flex-basis: 82%; 
+		/* flex-basis: 100px; */
+		align-items: center;
+		margin: 8px 0;		
+	}
+	
+   	.introduce{
 		color: #CFD2D3;
 		font-family: 'IBMPlexSansKR-Light';
 		font-weight:bold;
 		margin:14px 0 14px -10px;
-	} */
+	}   
 
-	.introduce{
+   	.introduce{
 		display:block;
 		float:right;
-	}
+	}  
 	
+ 	.introduction{
+		font-family: 'GongGothicMedium';
+		color: #CFD2D3;
+	} 
+	
+	/* form__group input box */
+    .form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 50%;
+}
+
+.form__field {
+  font-family: 'Montserrat', sans-serif;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #1DCAD3;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #303E57;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+.form__field::placeholder {
+  color: transparent;
+}
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  font-weight:bold;
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #1DCAD3;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #ff7473, #fff);
+  border-image-slice: 1;
+}
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #ff7473;
+  font-weight: 700;
+}
+
+/* reset input */
+.form__field:required, .form__field:invalid {
+  box-shadow: none;
+}
+
+/* submit button */
+/* .wrapper{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper input{
+  font-family: 'Ubuntu', sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  width: 170px;
+  height: 40px;
+  line-height: 1;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border: 3px solid #8C82FC;
+  background: #fff;
+  color: #8C82FC;
+  border-radius: 40px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all .35s;
+}
+
+.wrapper input:hover{
+  background: #8C82FC;
+  color: #fff;
+}
+
+.wrapper input span value{
+  opacity: 1;
+  visibility: visible;
+  transition: all .35s;
+}
+
+.success{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .35s;
+}
+
+.success svg{
+  width: 20px;
+  height: 20px;
+  fill: yellowgreen;
+  transform-origin: 50% 50%;
+  transform: translateY(-50%) rotate(0deg) scale(0);
+  transition: all .35s;
+}
+
+.wrapper input .is_active{
+  width: 40px;
+  height: 40px;
+}
+
+.wrapper input .is_active .success{
+  opacity: 1;
+  visibility: visible;
+}
+
+.wrapper input .is_active .success svg{
+  margin-top: 50%;
+  transform: translateY(-50%) rotate(720deg) scale(1);
+}
+
+.wrapper input .is_active span{
+  opacity: 0;
+  visibility: hidden;
+} */
+
+/* submit button */
+
+
+.wrapper{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.wrapper button{
+  font-family: 'Ubuntu', sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  width: 170px;
+  height: 40px;
+  line-height: 1;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border: 3px solid #8C82FC;
+  background: #fff;
+  color: #8C82FC;
+  border-radius: 40px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all .35s;
+}
+
+.wrapper button:hover{
+  background: #8C82FC;
+  color: #fff;
+}
+
+.wrapper button span{
+  opacity: 1;
+  visibility: visible;
+  transition: all .35s;
+}
+
+.success{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .35s;
+}
+
+.success svg{
+  width: 20px;
+  height: 20px;
+  fill: yellowgreen;
+  transform-origin: 50% 50%;
+  transform: translateY(-50%) rotate(0deg) scale(0);
+  transition: all .35s;
+}
+
+.wrapper button.is_active{
+  width: 40px;
+  height: 40px;
+}
+
+.wrapper button.is_active .success{
+  opacity: 1;
+  visibility: visible;
+}
+
+.wrapper button.is_active .success svg{
+  margin-top: 50%;
+  transform: translateY(-50%) rotate(720deg) scale(1);
+}
+
+.wrapper button.is_active span{
+  opacity: 0;
+  visibility: hidden;
+}
+
+
 
   </style>
+  
+  <!-- form__group input box -->
+  <script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeConsoleRunner-d8236034cc3508e70b0763f2575a8bb5850f9aea541206ce56704c013047d712.js"></script>
+  <script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRefreshCSS-4793b73c6332f7f14a9b6bba5d5e62748e9d1bd0b5c52d7af6376f3d1c625d7e.js"></script>
+  <script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRuntimeErrors-4f205f2c14e769b448bcf477de2938c681660d5038bc464e3700256713ebe261.js"></script>
+  
+  <script>
+  	window.console = window.console || function(t) {};
+  </script>
+  
+  <script>  
+	  if (document.location.search.match(/type=embed/gi)) {
+	    window.parent.postMessage("resize", "*");
+	  }
+  </script>
+  
+  <!-- submit button -->
+<!--   <script>
+ 	 window.console = window.console || function(t) {};
+  </script>
+  
+  <script>
+	  if (document.location.search.match(/type=embed/gi)) {
+	    window.parent.postMessage("resize", "*");
+	  }
+  </script> -->
+  
+  
 
-	<script type="text/javascript">
+ 	<script type="text/javascript">
 	  var token = $("meta[name='_csrf']").attr("content");
 	  var header = $("meta[name='_csrf_header']").attr("content");
 	  $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
     </script>
 
 
-	<script>
+<!--	<script>
     	$(document).ready(function() {
     		$("#addToDoTitle").submit(function(event) {
     			event.preventDefault();
@@ -213,7 +481,70 @@
     			}); // ajax end
     		}) // submit end
     	});
-    </script>
+    </script> -->
+    
+
+
+
+	<script>
+    	$(document).ready(function() {
+    		$("#addToDoTitle").on('submit', function(event) {
+    			event.preventDefault();
+    			console.log("addToDo submit");
+
+    			var planner_id = $("#planner_id").val();
+    			var todo_title = $("#todo_title").val();
+     			var getRecentTodoTypeId = $(".getRecentTodoTypeId").val();
+    			
+    			var form = {
+    					planner_id : planner_id,
+    					todo_title : todo_title,
+     					getRecentTodoTypeId : getRecentTodoTypeId
+    			};
+    				
+    			$.ajax({
+    				type : "POST",
+    				url : $(this).attr("action"),
+    				cache : false,
+    				data : JSON.stringify(form),
+    				contentType : 'application/json; charset=utf-8',
+    	            beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+    	                 console.log("header 실행 "+header+token)
+    	                 //console.log(sentence.toLowerCase());
+    	                 xhr.setRequestHeader(header, token);
+    	            },
+    				success : function(result){
+    					if(result == "SUCCESS"){
+    						console.log("success");
+    						
+    						var htmls="";
+
+    						    htmls +='<div class="container"><div class="row">'
+    							htmls +='<div class="col-sm-3"><div class="dropdown"><button type="button" class="btn dropdown-toggle" data-toggle="dropdown"></button>'
+    							htmls +='<div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" >수정</a>'
+    							htmls +='<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${getRecentTodoTypeId}">삭제</a></div></div>'
+    							htmls +='<table class="table table-bordered"><tr><td colspan="3">${getRecentTodoTypeId }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>'
+    							htmls +='<c:forEach var="todoName" items="${todoName }"><input class="here" type="hidden" class="todo_type_id" value="${todoName.todo_type_id }">'
+    							htmls +='<c:if test="${todoName.todo_type_id} eq ${getRecentTodoTypeId} }">'
+    							htmls +='<tr><td><p>${todoName.todo_name }</p></td>'
+    							htmls +='<td><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label></td>'
+    							htmls +='<td><a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a></td></tr></c:if></c:forEach>'
+    							htmls +='<tr><td colspan="3"><a class="makeForm" href="javascript:void(0);" onclick="function makeForm();">+ 체크리스트 추가</a></td></tr>'
+    							htmls +='</table></div></div></div>'
+
+    			        	$(".todoTable").append(htmls); 
+    						//$(location).attr('href', '${pageContext.request.contextPath}/todo');
+    						    location.reload();
+    					}  
+    				},
+    				error : function(e){
+    					console.log(e);
+    				}
+    				
+    			}); // ajax end
+    		}) // submit end
+    	});
+    </script> 
 
 	<script>
     	$(document).ready(function() {
@@ -476,35 +807,106 @@
 
 	<br /><br />
 
-<%-- 	<div class="container">
+ 	<div class="container">
+ 	<span class="inputTitle"><img class="checkImg2" src="/resources/todo/checkImg2.png">CATEGORY</span><span class="introduce"> 카테고리 제목을 입력하세요!</span>
+ 	
+		<%-- <span class="introduce"> "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}"님만의 카테고리를 만들어보세요!</span> --%>
 		<div class="row">
-		<!-- &nbsp;&nbsp;<h4 style="font-family: 'yg-jalnan'">카테고리를 입력하세요</h4> -->
-		<span class="inputTitle">CATEGORY</span><span class="introduce">카테고리 제목을 입력하세요!</span>
-			<div class="col-sm-3">
+			<div class="col-sm-7">
 				<div class="jb-table">
 					<div class="jb-table-row">
 						<form id="addToDoTitle" action="/addTodoType" method="POST">
 							<input type="hidden" class="getRecentTodoTypeId" value="${getRecentTodoTypeId }"> <input type="hidden" id="planner_id" value="${getPlannerId }">
-							<div class="jb-table-cell"> <br />
+<!-- 							<div class="jb-table-cell"> <br />
 						 		<p>
 									<input type="text" id="todo_title" placeholder="ex.전자기기">
 								</p>
 								<input type="submit" value="카테고리 만들기">
-							</div>
+							</div> -->
+						
+						<div class="form__group field">
+						  <input type="text" id="todo_title" class="form__field" placeholder="ex.전자기기" name="name" required/>
+						  <label for="todo_title" class="form__label">Make Category</label>
+						</div>
+						 <!-- <input type="submit" value="카테고리 만들기" style="float:right; margin:-30px 0 30px 0;"> -->
+						 
+<!-- <div class="wrapper">
+	<input type="submit" class="is_active" value="Submit" style="float:right; margin:-20px 0 20px 100px;">
+    <div class="success">
+    <svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 29.756 29.756" style="enable-background:new 0 0 29.756 29.756;" xml:space="preserve">
+      
+	<path d="M29.049,5.009L28.19,4.151c-0.943-0.945-2.488-0.945-3.434,0L10.172,18.737l-5.175-5.173   c-0.943-0.944-2.489-0.944-3.432,0.001l-0.858,0.857c-0.943,0.944-0.943,2.489,0,3.433l7.744,7.752   c0.944,0.943,2.489,0.943,3.433,0L29.049,8.442C29.991,7.498,29.991,5.953,29.049,5.009z"></path>
+ 	</svg>
+    </div>
+</div>
+<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script id="rendered-js">
+	let btn = document.querySelector("button");
+	
+	btn.addEventListener("click", active);
+	
+	function active() {
+	  btn.classList.toggle("is_active");
+	}
+</script>		 -->
+
+<div class="wrapper">
+	
+	<button class="" type="submit" style="float:right; margin:-20px 0 20px 100px;">
+	<span id="submitValue">Submit</span>
+    <div class="success">
+    <svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 29.756 29.756" style="enable-background:new 0 0 29.756 29.756;" xml:space="preserve">
+      
+	<path d="M29.049,5.009L28.19,4.151c-0.943-0.945-2.488-0.945-3.434,0L10.172,18.737l-5.175-5.173   c-0.943-0.944-2.489-0.944-3.432,0.001l-0.858,0.857c-0.943,0.944-0.943,2.489,0,3.433l7.744,7.752   c0.944,0.943,2.489,0.943,3.433,0L29.049,8.442C29.991,7.498,29.991,5.953,29.049,5.009z"></path>
+ 	</svg>
+    </div>
+    </button>
+</div>
+<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script id="rendered-js">
+	let btn = document.querySelector(".wrapper button");
+	
+	btn.addEventListener("click", active);
+	
+/* 	function active() {
+	if(#todo_title != ""){
+		btn.classList.toggle("is_active");
+	}else{
+		btn.classList.toggle("");
+	}
+	  
+	} */
+	
+	function active() {
+		if(result == "SUCCESS"){
+			btn.classList.toggle("is_active");
+		}else{
+			btn.classList.toggle("");
+		}
+		  
+		}
+</script>		 				 
+						 
+						 
+						<!-- form__group input box -->
+						<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+						<script src="https://cdpn.io/cp/internal/boomboom/pen.js?key=pen.js-26d5455c-a1ec-dcaa-7dc1-56eead3bc59d" crossorigin=""></script>
+
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<br /> --%>
+	<br />
 	
-	<div class="container">
+<%-- 	<div class="container">
 		
 		<!-- &nbsp;&nbsp;<h4 style="font-family: 'yg-jalnan'">카테고리를 입력하세요</h4> -->
 		
 			
-			<span class="inputTitle">CATEGORY</span>
+			<span class="inputTitle"><img class="checkImg2" src="/resources/todo/checkImg2.png">CATEGORY</span>
+			<span class="introduction"> "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}"님만의 카테고리를 만들어보세요!</span>
 			<span class="introduce"><div >
 						<form id="addToDoTitle" action="/addTodoType" method="POST">
 						<input type="hidden" class="getRecentTodoTypeId" value="${getRecentTodoTypeId }"> <input type="hidden" id="planner_id" value="${getPlannerId }">
@@ -521,13 +923,13 @@
 			
 		
 	</div>
-	<br />
+	<br /> --%>
 	
 	
-	<hr style="border: solid 1px light-grey; width: 66%;">
-	<br />
 
+	
 	<div class="todoTable container">
+	<span class="todoList"><img class="checkImg2" src="/resources/todo/checkImg2.png">TODO LIST</span>
 		<div class="row">
 			<c:forEach items="${todoTitle }" var="todoTitle">
 				<div class="col-sm-3">
@@ -596,7 +998,7 @@
 
 	<br /><br /><br /><br /><br /><br />
 	<div class="container">
-		<h4 style="font-family: 'yg-jalnan'">혹시 잊어버린 물건은 없으신가요?</h4>  
+		<span class="recommend1"><img class="checkImg2" src="/resources/todo/checkImg2.png">혹시 잊어버린 물건은 없으신가요?</span>
 		<hr style="border: solid 1px light-grey; width: 100%;">
 		
 		<div>다른 여행객들이 주로 챙기는 물품들</div>
@@ -612,7 +1014,7 @@
 
 	<br /><br /><br /><br /><br /><br />
 	<div class="container">
-		<h4 style="font-family: 'yg-jalnan'">이 상품이 필요하진 않으신가요?</h4>  
+		<span class="recommend1"><img class="checkImg2" src="/resources/todo/checkImg2.png">이 상품이 필요하진 않으신가요?</span>  
 		<hr style="border: solid 1px light-grey; width: 100%;">
 		<br />
 		<div class="row">

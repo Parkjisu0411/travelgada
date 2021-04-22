@@ -128,6 +128,11 @@ a{
 	margin:10px 0;
 }
 
+.writeButton:hover{
+	box-shadow: 5px 5px 5px #CFD2D3;
+	color: #303E57;
+}
+
 	button:focus{
 		border:0;
 		outline:none;
@@ -195,6 +200,38 @@ a{
 		width:50%;
 		margin:0 auto;
 	}
+	
+/* 페이징 */
+.paging{
+   margin:20px auto;
+   text-align:center;
+}
+
+.pagination{
+   border-radius: 5px;
+}
+
+.page-link{
+   font-family: 'GongGothicMedium';
+   color: white;
+   font-size:12px;
+   background-color: #1DCAD3;
+   width:30px;
+   border-radius: 5px;
+   padding:5px 2px 2px 2px;
+   border:none;
+   margin:5px 2px;
+}
+
+.page-link1{
+   font-family: 'GongGothicMedium';
+   color: #303E57;
+   font-size:12px;
+   background-color:none;
+   width:50px;
+   border-radius: 5px;	
+   margin:0 10px;
+}
 
 </style>
 	
@@ -244,7 +281,7 @@ a{
 								<a href="${pageContext.request.contextPath }/board/${boardNoticeList.board_id}/${boardNoticeList.member_id}/${boardNoticeList.board_type_id}" class="noticeContent2" ><img class="pin" src="/resources/board/push-pin.png">&nbsp;&nbsp;&nbsp;${boardNoticeList.title }</a>
 							</td>
 							<td>${boardNoticeList.member_id }</td>
-							<td><fmt:formatDate value="${boardNoticeList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
+							<td><fmt:formatDate value="${boardNoticeList.board_date }" pattern="yyyy/MM/dd HH:mm"/></td>
 							<td>${boardNoticeList.bhit }</td>
 						</tr>
 					</c:forEach>
@@ -261,7 +298,7 @@ a{
 							</div>
 						</td>
 						<td class="content2"><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>
-						<td><fmt:formatDate value="${boardReviewList.board_date }" pattern="yyyy/MM/dd hh:mm"/></td>
+						<td><fmt:formatDate value="${boardReviewList.board_date }" pattern="yyyy/MM/dd HH:mm"/></td>
 						<td>${boardReviewList.bhit }</td>
 					</tr>
 					</c:forEach>
@@ -277,12 +314,16 @@ a{
 			<sec:authorize access="isAuthenticated()">
   				 <button class="writeButton" type="button"  onclick="window.location.href='${pageContext.request.contextPath }/board/write/${getBoardTypeId}'" >쓰기</button>
 			</sec:authorize>	
-			</div>
+			</div><br /><br /><br />
 
 			<!-- 게시판 페이징 -->
-  			<ul class="pagination" style="padding:80px 350px;">	
+		 	<div class="row">
+         	<div class="paging">
+			
+			<ul class="pagination">
+  			<!-- <ul class="pagination" style="padding:80px 350px;">	 -->
 		  		<c:if test="${pageMaker.prev}">
-	       		  <li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
+	       		  <li class="page-item"><a class="page-link1" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.startPage - 1) }">prev</a></li>
 	     		</c:if>
 
 	      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
@@ -290,9 +331,12 @@ a{
 	      		</c:forEach>
 	      
 	      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-	         		<li class="page-item"><a class="page-link" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
-	      		</c:if> <br /> 
-		 	</ul>  
+	         		<li class="page-item"><a class="page-link1" href="${getBoardTypeId}${pageMaker.makeQuery(pageMaker.endPage +1) }">next</a></li>
+	      		</c:if>  
+		 	</ul> 
+			</div>
+		  </div><br /><br /><br />
+  
 		 	
 
 			<!-- 게시판 검색 bar -->
