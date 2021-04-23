@@ -181,7 +181,7 @@
 		}
 		var form = document.createElement("form");
 		form.method = "post";
-		form.action = "/shopping/order-cart";
+		form.action = "/shopping/order/cart";
 		
 		var inputId = document.createElement("input");
         inputId.setAttribute("type","hidden");

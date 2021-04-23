@@ -216,7 +216,7 @@
 			<c:forEach var="product" items="${productList }">
 				<div class="col-md-4">
 					<div class="product-area">
-					<form action="/shopping/order-single" method="post">
+					<form action="/shopping/order/single" method="post">
 						<div class="product-detail-area">
 							<div class="product-img-area" onclick="viewDetail(${product.product_id})">
 								<img class="rounded" src="/resources/img/product/${product.img_path }">
