@@ -26,7 +26,7 @@
 <title>Login Form</title>
 <style>
 	
-	body {
+	.table {
 		font-family: 'IBMPlexSansKR-Light';
 	}
 	
