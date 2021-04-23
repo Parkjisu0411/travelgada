@@ -33,28 +33,25 @@
 	}
 	
 	.header {
-		background-color: #000000;
+		background: linear-gradient(103deg, rgb(29, 202, 211) 0%, rgb(29, 202, 211) 50%, rgb(29, 160, 211)) 100% center;
+		box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px 0px;
 		color: #ffffff;
 		font-size: 30px;
-		height: 55px;
-		line-height: 45px;
+		height: 60px;
+		line-height: 50px;
 		position: fixed;
 		z-index: 1;
 	}
 	
 	#chatting {
-		border-radius: 32px;
+		border: 0 !important;
 	}
 	
 	#yourMsg {
 		height: 55px;
-		background-color: #000000;
 		line-height: 55px;
-	}
-	
-	.send-button {
-		background-color: #ffffff;
-		border-radius: 32px;
+		background: #ffffff;
+		border-top: 1px solid #E8EBED;
 	}
 	
 	#notice {
@@ -101,7 +98,7 @@
 		margin-top: -7px;
 	}
 	
-	#chating .others{
+	#chating .others {
 		text-align: left;
 		position: relative;
 		background: #ffffff;
@@ -109,7 +106,7 @@
 		color: #000000;
 	}
 	
-	#chating .others:after{
+	#chating .others:after {
 		right: 100%;
 		top: 50%;
 		border: solid transparent;
@@ -237,6 +234,26 @@
 	}
 	
 	$(document).ready(function() {
+		var strWidth;
+	    var strHeight;
+
+	    if (window.innerWidth && window.innerHeight && window.outerWidth && window.outerHeight) {
+	        strWidth = $('.container').outerWidth() + (window.outerWidth - window.innerWidth);
+	        strHeight = $('.container').outerHeight() + (window.outerHeight - window.innerHeight);
+	    } else {
+	        var strDocumentWidth = $(document).outerWidth();
+	        var strDocumentHeight = $(document).outerHeight();
+
+	        window.resizeTo (strDocumentWidth, strDocumentHeight);
+
+	        var strMenuWidth = strDocumentWidth - $(window).width();
+	        var strMenuHeight = strDocumentHeight - $(window).height();
+
+	        strWidth = $('.container').outerWidth() + strMenuWidth;
+	        strHeight = $('.container').outerHeight() + strMenuHeight;
+	    }
+	    window.resizeTo(strWidth, strHeight);
+	    
 		wsOpen();
 	})
 </script>
@@ -255,9 +272,9 @@
 			<div class="col-md-12" id="yourMsg">
 				<table class="inputTable">
 					<tr>
-						<th style="color: #ffffff;">메시지&nbsp;</th>
+						<th style="color: #242428;">메시지&nbsp;</th>
 						<th style="width: 345px;"><input id="chatting" class="form-control" placeholder="보내실 메시지를 입력하세요."></th>
-						<th>&nbsp;<button onclick="send()" class="btn send-button" id="sendBtn" style="margin-bottom: 4px;">보내기</button></th>
+						<th>&nbsp;<button onclick="send()" class="btn gada-btn-reverse" id="sendBtn" style="margin-bottom: 4px;">보내기</button></th>
 					</tr>
 				</table>
 			</div>
