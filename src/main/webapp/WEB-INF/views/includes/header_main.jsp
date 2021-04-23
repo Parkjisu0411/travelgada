@@ -79,6 +79,9 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item nav-dropdown-item" href="/member/mypage">회원정보</a>
               <a class="dropdown-item nav-dropdown-item" href="/shopping/buy_list">주문내역</a>
+              <sec:authorize access="hasRole('ROLE_ADMIN')">
+              	<a class="dropdown-item nav-dropdown-item" href="/admin">관리자</a>
+              </sec:authorize>
               <div class="dropdown-divider"></div>
               <form id="logout" action="/member/logout" method="POST">
                 <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/> 
