@@ -57,7 +57,7 @@ public class PlannerController {
 		plannerService.writePlanner(plannerVO);
 		plannerService.setCountry(plannerService.getPlanner_id(memberDetails.getUsername()), plannerVO.getStart_date(), plannerVO.getEnd_date(), countryVO.getCountry_name());
 		
-		modelAndView.setViewName("redirect:planner/schedule");
+		modelAndView.setViewName("redirect:planner");
 		
 		return modelAndView;
 	}

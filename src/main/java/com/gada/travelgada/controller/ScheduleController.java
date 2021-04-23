@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.domain.ScheduleVO;
+import com.gada.travelgada.service.MainService;
 import com.gada.travelgada.service.PlannerService;
 import com.gada.travelgada.service.ScheduleService;
 import com.gada.travelgada.utils.DateCalculator;
@@ -33,11 +33,9 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class ScheduleController {
 	
-	@Autowired
 	private ScheduleService scheduleService;
-	
-	@Autowired
 	private PlannerService plannerService;
+	private MainService mainService;
 	
 	@GetMapping("/planner/schedule")
 	public ModelAndView getSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member) throws ParseException {
@@ -57,7 +55,10 @@ public class ScheduleController {
 			}
 			
 			List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
+			
 			modelAndView.addObject("planner_id", planner.getPlanner_id());
+			modelAndView.addObject("country", mainService.getCountry());
+			
 			modelAndView.addObject("plannerList", plannerList);
 			modelAndView.addObject("dateList", dateList);
 			modelAndView.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));

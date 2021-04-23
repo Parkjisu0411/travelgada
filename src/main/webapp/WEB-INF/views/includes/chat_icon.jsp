@@ -53,7 +53,7 @@
 </style>
 <script type="text/javascript">
 	function openChat() { 
-		window.open("/chat", "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}", "width=400px, height=435px");
+		window.open("/chat", "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}", "width=580px, height=540px");
 	}
 </script>
 </head>
