@@ -75,13 +75,13 @@
         </button>
         <div class="nav-item dropdown">
           <sec:authorize access="isAuthenticated()">
-            <a class="nav-link dropdown-toggle nav-dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/resources/img/profile/<sec:authentication property=" principal.profile" />" class="nav-profile-img" onerror="this.src='/resources/img/profile/default_profile_img.jpg'"></a>
+            <a class="nav-link dropdown-toggle nav-dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/resources/img/profile/<sec:authentication property="principal.profile" />" class="nav-profile-img" onerror="this.src='/resources/img/profile/default_profile_img.jpg'"></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item nav-dropdown-item" href="/member/mypage">회원정보</a>
               <a class="dropdown-item nav-dropdown-item" href="/shopping/buy_list">주문내역</a>
               <div class="dropdown-divider"></div>
               <form id="logout" action="/member/logout" method="POST">
-                <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" /> 
+                <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/> 
                 <a class="dropdown-item nav-dropdown-item" href="#" onclick="document.getElementById('logout').submit();">로그아웃</a>
               </form>
             </div>

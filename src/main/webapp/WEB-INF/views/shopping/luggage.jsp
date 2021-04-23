@@ -195,56 +195,57 @@
 </head>
 <body>
 
-   <!-- Header -->
-   <%@ include file="/WEB-INF/views/includes/header.jsp"%>
-   
-   <div class="container">
-   
-      <!-- headline -->
-      <h2 class="gada-headline">LUGGAGE</h2>
-      
-      <div class="gada-btn-group">
-         <a href="/shopping?product_type_id=2&sorter=salePriceAsc" class="btn gada-btn">낮은가격순</a>
-         <a href="/shopping?product_type_id=2&sorter=salePriceDesc" class="btn gada-btn">높은가격순</a>
-         <a href="#" class="btn gada-btn">판매량순</a>
-         <a href="/shopping?product_type_id=2&sorter=latestAsc" class="btn gada-btn">최신순</a>
-      </div>
-      <hr />
-      <div class="divider-header-blank"></div>
-      <!-- Product List -->
-      <div class="row">
-         <c:forEach var="product" items="${productList }">
-            <div class="col-md-4">
-               <div class="product-area">
-               <form action="/shopping/order-single" method="post">
-                  <div class="product-detail-area">
-                     <div class="product-img-area" onclick="viewDetail(${product.product_id})"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
-                     <div class="text_box">
-                        <div class="product-info-area">
-                           <p>${product.product_name }</p>
-                           <p>₩ ${product.price }</p>
-                        </div>
-                        <div class="product-btn-area">
-                           <button type="button" class="btn gada-btn-reverse buy" onclick="insertIntoCart(${product.product_id})">CART</button>
-                           <button type="submit" class="btn gada-btn buy">BUY NOW</button>
-                        </div>
-                     </div>
-                  </div>
-                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                  <input type="hidden" name="product_img_src" value="${product.img_path}">
-                  <input type="hidden" name="product_name" value="${product.product_name}">
-                  <input type="hidden" name="quantity" value="1">
-                  <input type="hidden" name="product_id" value="${product.product_id}">
-                  <input type="hidden" name="price" value="${product.price}">
-                  </form>
-               </div>
-            </div>
-         </c:forEach>
-      </div>
-      
-   </div>
-   
-   <!-- Footer -->
-   <%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+	<!-- Header -->
+	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+	
+	<div class="container">
+	
+		<!-- headline -->
+		<h2 class="gada-headline">LUGGAGE</h2>
+		
+		<div class="gada-btn-group">
+			<a href="/shopping?product_type_id=2&sorter=salePriceAsc" class="btn gada-btn">낮은가격순</a>
+			<a href="/shopping?product_type_id=2&sorter=salePriceDesc" class="btn gada-btn">높은가격순</a>
+			<a href="#" class="btn gada-btn">판매량순</a>
+			<a href="/shopping?product_type_id=2&sorter=latestAsc" class="btn gada-btn">최신순</a>
+		</div>
+		<hr />
+		<div class="divider-header-blank"></div>
+		<!-- Product List -->
+		<div class="row">
+			<c:forEach var="product" items="${productList }">
+				<div class="col-md-4">
+					<div class="product-area">
+					<form action="/shopping/order/single" method="post">
+						<div class="product-detail-area">
+							<div class="product-img-area" onclick="viewDetail(${product.product_id})"><img class="rounded" src="/resources/img/product/${product.img_path }"></div>
+							<div class="text_box">
+								<div class="product-info-area">
+									<p>${product.product_name }</p>
+									<p>₩ ${product.price }</p>
+								</div>
+								<div class="product-btn-area">
+									<button type="button" class="btn gada-btn-reverse buy" onclick="insertIntoCart(${product.product_id})">CART</button>
+									<button type="submit" class="btn gada-btn buy">BUY NOW</button>
+								</div>
+							</div>
+						</div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						<input type="hidden" name="product_img_src" value="${product.img_path}">
+						<input type="hidden" name="product_name" value="${product.product_name}">
+						<input type="hidden" name="quantity" value="1">
+						<input type="hidden" name="product_id" value="${product.product_id}">
+						<input type="hidden" name="price" value="${product.price}">
+						</form>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+		
+	</div>
+	
+	<!-- Footer -->
+	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
+
 </body>
 </html>
