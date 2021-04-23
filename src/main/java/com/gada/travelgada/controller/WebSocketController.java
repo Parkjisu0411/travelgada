@@ -34,11 +34,11 @@ public class WebSocketController {
     	return modelAndView;
     }
     
-    @GetMapping("/room")
+    @GetMapping("/admin/room")
     public ModelAndView room(ModelAndView modelAndView) {
     	log.info("========================= 현재 채팅방의 수 : " + String.valueOf(roomList.size()));
     	modelAndView.addObject("roomList", roomList);
-    	modelAndView.setViewName("/chat/room");
+    	modelAndView.setViewName("/admin/room");
     	return modelAndView;
     }
     
