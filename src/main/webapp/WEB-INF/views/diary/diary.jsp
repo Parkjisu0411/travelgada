@@ -233,6 +233,32 @@
 .selected {
 	background-color: #1dcad3;
 }
+
+#diaryDiv{
+	/* min-height:1200px; */
+}
+
+.di_hr{
+	font-family: 'Montserrat', sans-serif;  
+	color: #1dcad3; 
+	font-size: 50px; 
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.img_hr{
+	width:50px;
+	margin: 0 0 30px 30px;
+}
+
+.default-img{
+	width:1000px;
+}
+
+.default-div{
+	vertical-align: middle; 
+	text-align: center;
+}
 </style>
 
 <script type="text/javascript">
@@ -368,6 +394,11 @@
 	<!-- 해더 -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	
+	<div>
+		<img class="img_hr" src = "/resources/notebook.png"/>&nbsp;&nbsp;
+		<span class="di_hr">DIARY</span>
+	</div>
+	
 	<!-- 플래너 셀렉트, 다이어리 작성 -->
 	<div class = "gallery">
 		<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
@@ -401,7 +432,9 @@
 		</form><!-- 다이어리 작성을 위한 form -->
 		
 		<c:if test="${empty diary}">
-			<div>다이어리를 작성해주세요!</div>
+			<div class = "default-div">
+				<div><img class="default-img" src='/resources/diarywrite2.png' /></div>
+			</div>
 		</c:if>
 
 		<div class="masonry">
