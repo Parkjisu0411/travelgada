@@ -234,6 +234,26 @@
 	}
 	
 	$(document).ready(function() {
+		var strWidth;
+	    var strHeight;
+
+	    if (window.innerWidth && window.innerHeight && window.outerWidth && window.outerHeight) {
+	        strWidth = $('.container').outerWidth() + (window.outerWidth - window.innerWidth);
+	        strHeight = $('.container').outerHeight() + (window.outerHeight - window.innerHeight);
+	    } else {
+	        var strDocumentWidth = $(document).outerWidth();
+	        var strDocumentHeight = $(document).outerHeight();
+
+	        window.resizeTo (strDocumentWidth, strDocumentHeight);
+
+	        var strMenuWidth = strDocumentWidth - $(window).width();
+	        var strMenuHeight = strDocumentHeight - $(window).height();
+
+	        strWidth = $('.container').outerWidth() + strMenuWidth;
+	        strHeight = $('.container').outerHeight() + strMenuHeight;
+	    }
+	    window.resizeTo(strWidth, strHeight);
+	    
 		wsOpen();
 	})
 </script>
