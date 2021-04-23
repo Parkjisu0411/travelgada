@@ -126,4 +126,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return mapper.getAllMap(planner_id);
 	}
 
+	@Override
+	public int getBudgetByDate(Date date) {
+		return mapper.selectBudgetByDate(date);
+	}
+
 }
