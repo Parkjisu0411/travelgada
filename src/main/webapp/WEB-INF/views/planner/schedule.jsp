@@ -288,7 +288,52 @@
 	function sleep(ms) {
 	  return new Promise(resolve=>setTimeout(resolve, ms));
 	}
-
+	
+	function changeCountry(Date) {
+		
+	}
+	
+	//날짜 추가
+	function inputDate() {
+		var date = new Date('${planner.end_date}');
+		date.setDate(date.getDate() + 1);
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		if(month < 10) {
+			month = "0" + month;
+		}
+		var day = date.getDate();
+		
+		var next = year + "-" + month + "-" + day;
+		
+		var data = {
+			planner_id : ${planner.planner_id},
+			planner_name : '${planner.planner_name}',
+			start_date : '${planner.start_date}',
+			end_date : next
+		}
+		console.log(data);
+		
+		$.ajax({
+			type : "PUT",
+			url : "/planner/" + ${planner.planner_id},
+			data : JSON.stringify(data),
+			contentType : "application/json",
+			cache : false,
+			beforeSend : function(xhr){
+  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(result) {
+				location.reload();
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
+			}
+		})
+	}
+	
+	//
 	//예산 추가/수정
 	function inputBudget(schedule_id) {
 		$("#" + schedule_id + " .input-budget-after").replaceWith("<input id='input-budget-area' type='number' ></input>")
@@ -618,7 +663,7 @@
 		insertForm += "<div id='map'></div>"
 		insertForm += "<form id='insert-schedule-form'>";
 		insertForm += "<div class='input'>";
-		insertForm += "<input type='hidden' name = 'planner_id' value='${planner_id}' />";
+		insertForm += "<input type='hidden' name = 'planner_id' value='${planner.planner_id }' />";
 		insertForm += "<input type='hidden' name = 'schedule_date' value='" + date + "' />";
 		insertForm += "<input type='hidden' name = 'schedule_type_id' value='" + schedule_type_id + "' />";
 		insertForm += "<input type='hidden' name = 'latitude' id='latitude' />";
@@ -822,19 +867,19 @@
 						<col width="10%" />
 					</colgroup>
 					<thead>
-						<tr class="table-schedule-hr">
-							<th><i class="far fa-calendar-alt"></i> 날짜</th>
-							<th><i class="fas fa-city"></i> 도시</th>
-							<th><i class="fas fa-bus"></i> 교통</th>
-							<th><i class="fas fa-map-marked"></i> 일정</th>
-							<th><i class="fas fa-bed"></i> 숙소</th>
-							<th><i class="fas fa-money-check-alt"></i> 비용</th>
+						<tr class="table-schedule-hr row">
+							<th class="col-md-2"><i class="far fa-calendar-alt"></i> 날짜</th>
+							<th class="col-md-2"><i class="fas fa-city"></i> 도시</th>
+							<th class="col-md-2"><i class="fas fa-bus"></i> 교통</th>
+							<th class="col-md-2"><i class="fas fa-map-marked"></i> 일정</th>
+							<th class="col-md-2"><i class="fas fa-bed"></i> 숙소</th>
+							<th class="col-md-2"><i class="fas fa-money-check-alt"></i> 비용</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="date" items="${dateList}" varStatus="idx">
-							<tr id="${date }">
-								<td class="date-area">
+							<tr id="${date }" class="row">
+								<td class="date-area col-md-2">
 									<p class="date-area-date">${date}</p>
 									<p class="date-area-day">DAY &nbsp;${idx.count }</p>
 									<c:forEach var="country" items="${countryList }">
@@ -846,7 +891,7 @@
 										</c:if>
 									</c:forEach>
 								</td>
-								<td class="city-area">
+								<td class="city-area col-md-2">
 									<c:forEach var="city" items="${cityList }">
 										<c:if test="${city.schedule_date eq date }">
 											<div class="content-box" id="${city.schedule_id }">
@@ -857,7 +902,7 @@
 									</c:forEach>
 									<div class="insert-btn" onclick="insertSchedule('city', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div>
 								</td>
-								<td class="vehicle-area">
+								<td class="vehicle-area col-md-2">
 									<c:forEach var="vehicle" items="${vehicleList }">
 										<c:if test="${vehicle.schedule_date eq date }">
 											<div class="content-box" id="${vehicle.schedule_id }" >
@@ -870,7 +915,7 @@
 									</c:forEach>
 									<div class="insert-btn" onclick="insertSchedule('vehicle', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div>
 								</td>
-								<td class="schedule-area">
+								<td class="schedule-area col-md-2">
 									<c:forEach var="schedule" items="${scheduleList }">
 										<c:if test="${schedule.schedule_date eq date }">
 											<div class="sortable-order content-box" id="${schedule.schedule_id }">
@@ -884,7 +929,7 @@
 									</c:forEach>
 									<div class="insert-btn ui-state-disabled" onclick="insertSchedule('schedule', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div>
 								</td>
-								<td class="hotel-area">
+								<td class="hotel-area col-md-2">
 									<c:forEach var="hotel" items="${hotelList }">
 										<c:if test="${hotel.schedule_date eq date }">
 											<div class="content-box" id="${hotel.schedule_id }">
@@ -897,7 +942,7 @@
 									</c:forEach>
 									<div class="insert-btn" onclick="insertSchedule('hotel', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div>
 								</td>
-								<td class="budget-area">
+								<td class="budget-area col-md-2">
 									<span class="budget-total"><c:out value="${dayBudget[date] }"></c:out></span>
 									<span>₩</span>
 								</td>
@@ -905,7 +950,7 @@
 						</c:forEach>
 						<tr class="insert-date-area">
 							<td colspan="7">
-								<a onclick="" class="btn gada-btn-reverse">날짜 추가하기</a>
+								<a onclick="inputDate()" class="btn gada-btn-reverse">날짜 추가하기</a>
 							</td>
 						</tr>
 					</tbody>

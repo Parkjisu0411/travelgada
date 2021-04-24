@@ -125,7 +125,7 @@
 							var content = "";
 							content += "<tr id=" + d.username + ">";
 							content += "	<td class='room'>" + d.username + "</td>";
-							content += "	<td class='go'><button type='button' onclick='join(\"" + d.username + "\")'>참여</button></td>";
+							content += "	<td class='go'><button type='button' class='btn-light btn-round px-5' onclick='join(\"" + d.username + "\")'>참여</button></td>";
 							content += "</tr>";
 							$("#chat-table").append(content);
 							chatCount();

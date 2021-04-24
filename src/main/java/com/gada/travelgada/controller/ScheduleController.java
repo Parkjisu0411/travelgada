@@ -55,7 +55,7 @@ public class ScheduleController {
 			
 			List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
 			
-			modelAndView.addObject("planner_id", planner.getPlanner_id());
+			modelAndView.addObject("planner", planner);
 			modelAndView.addObject("country", mainService.getCountry());
 			
 			modelAndView.addObject("plannerList", plannerList);
