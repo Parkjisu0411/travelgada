@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +48,9 @@
 <link rel="stylesheet" href="/resources/css/font.css">
 <link rel="stylesheet" href="/resources/css/header.css">
 <link rel="stylesheet" href="/resources/css/footer.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <style>
@@ -267,22 +269,35 @@
 			<div class="brand-logo">
 				<a href="/" style="font-family:yg-jalnan"><img src="/resources/img/main/logo.png" class="logo-icon" alt="logo icon">가다</a>
 			</div>
-			<ul class="sidebar-menu do-nicescrol">
-			<!-- <li class="sidebar-header">MAIN NAVIGATION</li> -->
-				<li>
-					<a href="/admin"><i class="zmdi zmdi-view-dashboard"></i> <span>회원 관리</span></a>
-				</li>
-				<li>
-					<a href="/visitor"><i class="zmdi zmdi-invert-colors"></i> <span>방문자 통계</span></a>
-				</li>
-				<li>
-					<a href="/statistic/sales"><i class="zmdi zmdi-format-list-bulleted"></i> <span>매출 통계</span></a>
-				</li>
-				<li>
-					<a href="/statistic/destination"><i class="zmdi zmdi-grid"></i> <span>여행지 통계</span></a>
-				</li>
-			</ul>
+   				<ul class="sidebar-menu do-nicescrol">
+      				<li>
+        				<a href="/admin">
+          					<i class="fas fa-user-cog"></i> <span>회원 관리</span>
+        				</a>
+      				</li>
+      				<li>
+        				<a href="/admin/room">
+          					<i class="fas fa-comment-dots"></i> <span>1:1 채팅 문의</span>
+        				</a>
+      				</li>
+					<li>
+						<a href="/visitor">
+							<i class="fas fa-chart-line"></i> <span>방문자 통계</span>
+						</a>
+					</li>
+					<li>
+						<a href="/statistic/sales">
+							<i class="fas fa-hand-holding-usd"></i> <span>매출 통계</span>
+						</a>
+					</li>
+					<li>
+						<a href="/statistic/destination">
+							<i class="fas fa-globe-americas"></i> <span>여행지 통계</span>
+						</a>
+					</li>
+				</ul>
 		</div>
+		<!--End sidebar-wrapper-->
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid">

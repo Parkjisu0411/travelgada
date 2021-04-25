@@ -86,4 +86,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</delete>
 	
+	<select id="selectBudgetByDate" resultType="int">
+		<![CDATA[	
+			select sum(budget) from schedule where schedule_date = #{date} group by schedule_date
+		]]>
+	</select>
+	
 </mapper>

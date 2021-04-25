@@ -24,7 +24,7 @@
 <title>Product</title>
 <style>
 
-	body {
+	.gada-card {
 		font-family: 'IBMPlexSansKR-Light';
 	}
 	

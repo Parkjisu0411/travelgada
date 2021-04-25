@@ -16,6 +16,8 @@
 	
 	#chat-icon:hover {
 		cursor: pointer;
+		content: url('/resources/img/icon/chat_hover.png');
+		height: 65px;
 	}
 	
 	#chat-icon:hover > #arrow-box {
@@ -60,7 +62,7 @@
 <body>
 	<div id="chat-icon" onclick="openChat()">
 	<div id="arrow-box">챗봇</div>
-		<img src="/resources/img/icon/Red.png" style="height:60px;">
+		<img src="/resources/img/icon/chat.png" style="height:60px;">
 	</div>
 </body>
 </html>
