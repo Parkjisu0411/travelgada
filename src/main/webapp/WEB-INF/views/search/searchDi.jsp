@@ -45,46 +45,112 @@ html, body {
 </style>
 
 <style>
+/* 여기 */
 /* 모달 스타일 */
-.dialogDi{
+/* .dialogDi{
  	height : 40px;
-}
+} */
 
-.mainImg{
+/* .mainImg{
     float: left;
-}
+} */
 
 .Mcontent{
-	padding:0px;
-	width:100%
-}
+/* 	padding:0px;
+	width:100% */
+	width:800px; 
+} 
 
 .dialogtext{
-	width : 350px;
+	width:100%;
   	height : 240px;
   	font-weight: bold;
+  	overflow: auto;
+  	padding-right:20px;
+  	float:left;
+  	padding-left:10px;
 }
 
-.dialog-date, .dialog-hashtag{
+  .dialogtext::-webkit-scrollbar {
+    width: 10px;
+  }
+  .dialogtext::-webkit-scrollbar-thumb {
+    background-color: #a1eef2;/*  연한 민트 */
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+  .dialogtext::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+
+.dialog-hashtag{
+	margin-top:10px;
 	text-align:right;
+	overflow: auto;
+	width:100%;
+	padding-right:20px;
+	float:left;
+	height:50px;
+}
+
+  .dialog-hashtag::-webkit-scrollbar {
+    width: 10px;
+  }
+  .dialog-hashtag::-webkit-scrollbar-thumb {
+    background-color: #a1eef2;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+  .dialog-hashtag::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+
+.dialog-date{
+	width:100%;
+	height:40px;
+	margin-top:10px;
+	padding-right:20px;
+	text-align:right;
+	float:left;
 }
 
 .popup_img{
-	position: relative; 
-	width: 400px; 
+	width: 100%; 
 	height: 400px;
 	object-fit: cover;
+	border-radius: 4px;
+	padding:0;
+}
+.close{
+	margin:10px 20px 10px 0;
+	/* padding-right:20px; */
+	/* width: 100%;  */
+	text-align:right;
+	outline:none;
+}
+
+.close:hover{
+	color: #1dcad3;
 }
 
 .dialog-profile{
-	font-family: 'GongGothicMedium';
-}
+	margin-top:15px;
+	padding-left:10px;
+} 
 
 .dialog-wrap{
-	width : 350px;
-	margin: 20px 0 20px 20px;
+	width : 100%;
+	/* width : 350px; */
+	
    	float: left;
 }
+/* 모달 스타일 끝 */
 
 .main-card-diary-area{
 	background-color: #f5f5f5;
@@ -367,14 +433,17 @@ html, body {
 						<!-- Modal -->
 						<!-- 여기  -->
 						<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
+							<!-- <div class="mySlides"> -->
 							<div class="modal-dialog modal-lg modal-dialog-centered">
-								<div class="modal-content MDI">
-									<div class="modal-body Mcontent">
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-										<div class="mainImg">
-											<img class="popup_img" src='resources/diary/${di.img_path}' />
+								<div class="modal-content">
+									<!-- 						<div class="modal-header">
+							</div> -->
+									<div class="row  ">
+									<div class="col-sm-6">
+											<img class="popup_img" src='resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'"/>
 										</div>
-										<div class="dialog-wrap">
+										<div class="dialog-wrap col-sm-6">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
 											<div class="dialogDi dialog-profile">
 												<img class="nav-profile-img"
 													src='/resources/img/profile/${member.profile_img_path }'
@@ -382,12 +451,16 @@ html, body {
 												${member.member_id}
 											</div>
 											<div class="dialogDi dialog-date">${di.diary_date}</div>
-											<div class="dialogtext">${di.text}</div>
+											<div class="dialogtext"><pre>${di.text}</pre></div>
 											<div class="dialogDi dialog-hashtag">
 												<span id="modal${di.diary_id}"></span>
 											</div>
 										</div>
 									</div>
+									<!-- <div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+							</div> -->
 								</div>
 								<!-- modal-content end -->
 							</div>

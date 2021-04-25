@@ -68,6 +68,8 @@ html, body {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	margin: 10px;
+	float: left;
 }
 
 .plBox:hover {
@@ -216,7 +218,7 @@ html, body {
 
 /* 일정 이미지 */
 .card-pl-img{
-	width: 500px;
+	width: 90%;
 	height: 300px;
 	margin: 20px;
 	object-fit: cover;
@@ -302,17 +304,16 @@ html, body {
 						<br /><br />
 						
 						<span class="country">국가 : &nbsp;</span>
-						<c:forEach items="${pl.scheduleVO}" var="sc" begin="1" end="100">
+						<c:forEach items="${pl.scheduleVO}" var="sc">
 							<c:if test="${sc.schedule_type_id eq 5}">
 								${sc.schedule_content}
 							</c:if>
 						</c:forEach>
 					</div>
-					<br/>
 				
 					<div class="box">
 						<span class="city">도시 : &nbsp;</span>
-						<c:forEach items="${pl.scheduleVO}" var="sc" begin="1" end="100">
+						<c:forEach items="${pl.scheduleVO}" var="sc">
 							<c:if test="${sc.schedule_type_id eq 1}">
 								${sc.schedule_content}
 							  </c:if>

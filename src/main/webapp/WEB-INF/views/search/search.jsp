@@ -48,6 +48,8 @@ html, body {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	margin: 10px;
+	float: left;
 }
 
 .plBox {
@@ -72,9 +74,7 @@ html, body {
 	margin: 0px auto;
 	padding-bottom: 20px;
 }
-</style>
 
-<style>
 .plBox {
 	border-radius: 15px;
 }
@@ -185,53 +185,125 @@ html, body {
 }
 /* 여기 */
 /* 모달 스타일 */
-.dialogDi {
-	height: 40px;
+/* .dialogDi{
+ 	height : 40px;
+} */
+
+/* .mainImg{
+    float: left;
+} */
+
+.Mcontent{
+/* 	padding:0px;
+	width:100% */
+	width:800px; 
+} 
+
+.dialogtext{
+	width:100%;
+  	height : 240px;
+  	font-weight: bold;
+  	overflow: auto;
+  	padding-right:20px;
+  	float:left;
+  	padding-left:10px;
 }
 
-.mainImg {
-	float: left;
-}
-
-.Mcontent {
-	padding: 0px;
-	width: 100%
-}
-
-.dialogtext {
-	width: 350px;
-	height: 240px;
+pre{
+	font-family: 'IBMPlexSansKR-Light';
 	font-weight: bold;
+	font-size: 16px;
 }
 
-.dialog-date, .dialog-hashtag {
-	text-align: right;
+  .dialogtext::-webkit-scrollbar {
+    width: 10px;
+  }
+  .dialogtext::-webkit-scrollbar-thumb {
+    background-color: #a1eef2;/*  연한 민트 */
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+  .dialogtext::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+
+.dialog-hashtag{
+	margin-top:10px;
+	text-align:right;
+	overflow: auto;
+	width:100%;
+	padding-right:20px;
+	float:left;
+	height:50px;
 }
 
-.popup_img {
-	position: relative;
-	width: 400px;
+  .dialog-hashtag::-webkit-scrollbar {
+    width: 10px;
+  }
+  .dialog-hashtag::-webkit-scrollbar-thumb {
+    background-color: #a1eef2;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+  .dialog-hashtag::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+
+.dialog-date{
+	width:100%;
+	height:40px;
+	margin-top:10px;
+	padding-right:20px;
+	text-align:right;
+	float:left;
+}
+
+.popup_img{
+	width: 100%; 
 	height: 400px;
 	object-fit: cover;
+	border-radius: 4px;
+	padding:0;
+}
+.close{
+	margin:10px 20px 10px 0;
+	/* padding-right:20px; */
+	/* width: 100%;  */
+	text-align:right;
+	outline:none;
 }
 
-.dialog-profile {
-	font-family: 'GongGothicMedium';
+.close:hover{
+	color: #1dcad3;
 }
 
-.dialog-wrap {
-	width: 350px;
-	margin: 20px 0 20px 20px;
-	float: left;
+.dialog-profile{
+	margin-top:15px;
+	padding-left:10px;
+} 
+
+.dialog-wrap{
+	width : 100%;
+	/* width : 350px; */
+	
+   	float: left;
 }
+/* 모달 스타일 끝 */
 
 /* 일정 이미지 */
 .card-pl-img{
-	width: 520px;
+	width: 90%;
 	height: 300px;
 	margin: 20px;
 	object-fit: cover;
 	border-radius: 15px;
+	float: left;
 }
 
 /* .main-card-diary-img{
@@ -249,50 +321,45 @@ html, body {
 </style>
 
 <script>
-	/* 해시태그 & 링크 */
-	$(document).ready(
-		function() {
+/* 해시태그 & 링크 */
+$(document).ready(
+	function() {
 
-			var content; //내용
-			var splitedArray; //배열
-			var linkedContent; //주소
+		var content; //내용
+		var splitedArray; //배열
+		var linkedContent; //주소
 
-			//jstl
-			<c:forEach items="${member}" var="member">
-				<c:forEach items="${member.plannerVO}" var="pl">
-					<c:forEach items="${pl.diaryVO}" var="di">
-						console.log("${di.hashtag}")
-			
-						content = "${di.hashtag}";
-						splitedArray = content.split('#');//#으로 구분
-						console.log(splitedArray);
-						linkedContent = '';
-						splitedArray.shift();//첫번째 지워주는 함수
-			
-						for ( var word in splitedArray) {
-							word = splitedArray[word];
-							if (word.indexOf("") == 0) {
-								var word2 = "#" + word;
-								word = '<a class="hash_color" href="${pageContext.request.contextPath}/search?keyword='+ word + '">' + word2 + '</a>'
-								console.log(word);
-								console.log(word2);
-							}
-							linkedContent += word + ' ';
+		//jstl
+		<c:forEach items="${member}" var="member">
+			<c:forEach items="${member.plannerVO}" var="pl">
+				<c:forEach items="${pl.diaryVO}" var="di">
+					console.log("${di.hashtag}")
+		
+					content = "${di.hashtag}";
+					splitedArray = content.split('#');//#으로 구분
+					console.log(splitedArray);
+					linkedContent = '';
+					splitedArray.shift();//첫번째 지워주는 함수
+		
+					for ( var word in splitedArray) {
+						word = splitedArray[word];
+						if (word.indexOf("") == 0) {
+							var word2 = "#" + word;
+							word = '<a class="hash_color" href="${pageContext.request.contextPath}/search?keyword='+ word + '">' + word2 + '</a>'
+							console.log(word);
+							console.log(word2);
 						}
-			
-						$("#${di.diary_id}").append(linkedContent);
-						$("#modal${di.diary_id}").append(linkedContent);
-					</c:forEach>
+						linkedContent += word + ' ';
+					}
+		
+					$("#${di.diary_id}").append(linkedContent);
+					$("#modal${di.diary_id}").append(linkedContent);
 				</c:forEach>
 			</c:forEach>
+		</c:forEach>
 
-		});
-	/* 해시태그 & 링크 끝 */
-</script>
-
-<script>
-
-
+	});
+/* 해시태그 & 링크 끝 */
 
 </script>
 
@@ -358,12 +425,11 @@ html, body {
 						<span class="country">국가 : &nbsp;</span>
 						<c:forEach items="${pl.scheduleVO}" var="sc">
       						<c:if test="${sc.schedule_type_id eq 5}">
-								${sc.schedule_content}	
+									${sc.schedule_content}	
 							</c:if>
 						</c:forEach>
 					</div>
-					<br />
-
+					
 					<div class="box">
 						<span class="city">도시 : &nbsp;</span>
 						<c:forEach items="${pl.scheduleVO}" var="sc">
@@ -407,7 +473,8 @@ html, body {
 							<div class="main-card-diary-area diHover">
 								<img src="resources/diary/${di.img_path}"
 									class="main-card-diary-img" loading="lazy" data-toggle="modal"
-									data-target="#myModal${di.diary_id}">
+									data-target="#myModal${di.diary_id}"
+									onerror="this.src='/resources/img/main/logo3.png'">
 								<div class="main-card-diary-content">
 									<div class="main-card-diary-profile">
 										<img class="nav-profile-img"
@@ -428,15 +495,15 @@ html, body {
 						<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
 							<!-- <div class="mySlides"> -->
 							<div class="modal-dialog modal-lg modal-dialog-centered">
-								<div class="modal-content MDI">
+								<div class="modal-content">
 									<!-- 						<div class="modal-header">
 							</div> -->
-									<div class="modal-body Mcontent">
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-										<div class="mainImg">
-											<img class="popup_img" src='resources/diary/${di.img_path}' />
+									<div class="row  ">
+									<div class="col-sm-6">
+											<img class="popup_img" src='resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'"/>
 										</div>
-										<div class="dialog-wrap">
+										<div class="dialog-wrap col-sm-6">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
 											<div class="dialogDi dialog-profile">
 												<img class="nav-profile-img"
 													src='/resources/img/profile/${member.profile_img_path }'
@@ -444,7 +511,7 @@ html, body {
 												${member.member_id}
 											</div>
 											<div class="dialogDi dialog-date">${di.diary_date}</div>
-											<div class="dialogtext">${di.text}</div>
+											<div class="dialogtext"><pre>${di.text}</pre></div>
 											<div class="dialogDi dialog-hashtag">
 												<span id="modal${di.diary_id}"></span>
 											</div>

@@ -125,14 +125,19 @@ public class DairyController {
 		mav.addObject("planner_id", diaryVO.getPlanner_id());
 		mav.addObject("nowPage", cri.getNowPage());
 		
-		mav.setViewName("diary/diary_other");
+		mav.setViewName("redirect:/diary_other/{planner_id}");
+		//http://localhost:8282/diary_other?planner_id=51&nowPage=1
+		//http://localhost:8282/diary_other/50?nowPage=1
+		//http://localhost:8282/diary_other?planner_id=51&nowPage=1
+		//http://localhost:8282/diary_other?planner_id=51&nowPage=1
+		//http://localhost:8282/diary_other?planner_id=50&nowPage=1
 
 		return mav;
 
 	}// diary_write end
 
 	// 다이어리 수정 페이지
-	@GetMapping("/diary_modify_view/{diary_id}&{planner_id}")
+	@GetMapping("/diary_modify_view/{diary_id}/{planner_id}")
 	public ModelAndView diary_modify_view(ModelAndView mav, DiaryVO diaryVO) {
 		log.info("controller diary_write_view();");
 		
@@ -177,7 +182,7 @@ public class DairyController {
 			mav.addObject("planner_id", diaryVO.getPlanner_id());
 			mav.addObject("nowPage", cri.getNowPage());
 			
-			mav.setViewName("diary/diary_other");
+			mav.setViewName("redirect:/diary_other/{planner_id}");
 
 		} else {
 			
@@ -192,7 +197,7 @@ public class DairyController {
 			mav.addObject("planner_id", diaryVO.getPlanner_id());
 			mav.addObject("nowPage", cri.getNowPage());
 			
-			mav.setViewName("diary/diary_other");
+			mav.setViewName("redirect:/diary_other/{planner_id}");
 
 		} // if end
 

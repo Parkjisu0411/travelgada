@@ -11,11 +11,11 @@
 
 <title>diary</title>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet"><!-- 큰 영어 -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet"><!-- 큰 영어 -->
   
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	
@@ -23,44 +23,13 @@
 /*    table, th, td {
     border: 1px solid #bcbcbc;
   } */
-table {
-	margin-left: 30px;
-	font-family: 'IBMPlexSansKR-Light';
-}
-
-@font-face {
-	font-family: 'GongGothicMedium';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'GongGothicLight';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-/* 내용 글씨 */
-@font-face {
-	font-family: 'IBMPlexSansKR-Light';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
 
 .modifyBtn {
 	text-align: right;
 }
 
 .diaryHr {
+	padding-top: 100px;
 	color: #1dcad3;
 	font-size: 40px;
 	font-family: 'Montserrat', sans-serif;
@@ -92,6 +61,60 @@ table {
 	border-radius: 10px;
 	object-fit: cover;
 }
+
+.header {
+	background: linear-gradient(103deg, rgb(29, 202, 211) 0%, rgb(29, 202, 211) 50%, rgb(29, 160, 211)) 100% center;
+	box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px 0px;
+	color: #ffffff;
+	font-size: 30px;
+	height: 60px;
+	line-height: 50px;
+	position: fixed;
+	z-index: 1;
+}
+
+textarea{
+	width:100%;
+}
+
+.tag-label{
+	margin:20px;
+}
+
+.text-area::-webkit-scrollbar {
+	width: 10px;
+}
+
+.text-area::-webkit-scrollbar-thumb {
+	background-color: #a1eef2;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.text-area::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.tag-area::-webkit-scrollbar {
+	width: 10px;
+}
+
+.tag-area::-webkit-scrollbar-thumb {
+	background-color: #a1eef2;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.tag-area::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
 </style>
 	
 <script>
@@ -115,7 +138,7 @@ table {
 			img.id = "prev_" + View_area;
 			img.classList.add("obj");
 			img.file = file;
-			img.style.width = '400px'; 
+			img.style.width = '100%'; 
 			img.style.height = '400px';
 			preview.appendChild(img);
 			if (window.FileReader) { 
@@ -191,52 +214,43 @@ $(document).ready(function(){
 
 </script>
 
-
-
 </head>
 <body>
 	<form id='submitBtn' name="myForm" action="${pageContext.request.contextPath}/diary_write?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 		
 		<input type="hidden" name="planner_id" value="${planner.planner_id}" />
 		<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}" />
-		<input type="hidden" id="_csrf_header" name="_csrf_header"
-			value="${_csrf.headerName}" />
+		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}" />
 
+		<div class="col-md-12 header">
+			<img class="nav-logo-img" src="/resources/img/main/logo.png" style="height: 25px;">
+			<h5 style="font-family:yg-jalnan; display: inline;">가다</h5>
+		</div>
+			
 		<div class="container">
-			<br>
-			<div class="diaryHr">Diary</div>
+		
+			<div class="diaryHr"></div>
+			
 			<div class="row">
-
-				<!-- <div class="col-sm-3"> -->
-				<table class="table table-borderless">
-					<tr>
-						<td rowspan='5'>
-							<div id='View_area' style='position: relative; width: 400px; height: 400px; color: black; border: 0px solid black; dispaly: inline;'>
-								<br> <img id="prev_View_area" src='/resources/diary/camera2.png' style='position: relative; width: 400px; height: 400px;' />
-							</div>
-						</td>
-						<td>
-							 <input type="file" class="form-control-file border fileStyle" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
-						</td>
-					</tr>
-					<tr>
-						<td><textarea rows="10" cols="55" name="text" /></textarea></td>
-					</tr>
-					<tr>
-						<td><span style="font-family: 'GongGothicMedium'">Tag</span></td>
-					</tr>
-					<tr>
-						<td><textarea rows="2" cols="55" name="hashtag" id="hashtag" onkeydown="checkCode()">#</textarea></td>
-					</tr>
-					<tr>
-						<td class="modifyBtn">
-							<button type="button" id="fileCheck">작성</button>
-						</td>
-					</tr>
-				</table>
+				<div class="col-sm-6 box">
+					<div  id='View_area' style=' width: 100%; height:400px; color: black; border: 0px solid black; '>
+						<br> 
+						<img id="prev_View_area" src='/resources/diary/camera2.png' style=' width: 100%; height:400px;' />
+					</div>
+				</div>
+				<div class="col-sm-6 box">
+					<input type="file" class="form-control-file border fileStyle" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+					<br />
+					<textarea class="text-area" rows="10" cols="55" name="text" /></textarea>
+					<div class="tag-label"style="font-family: 'GongGothicMedium'">Tag</div>
+					<textarea class="tag-area" rows="2" cols="55" name="hashtag" id="hashtag" onkeydown="checkCode()">#</textarea>
+					<div class="modifyBtn ">
+						<br/>
+						<button type="button" id="fileCheck">작성</button>
+					</div>
+				</div>
 			</div>
 		</div>
-		<!-- 	</div> -->
 	</form>
 
 </body>
