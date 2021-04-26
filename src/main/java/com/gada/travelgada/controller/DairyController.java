@@ -91,7 +91,7 @@ public class DairyController {
 	
 	// 다른 다이어리로 이동
 	@GetMapping("/diary_other")
-	public ModelAndView diaryOther(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO, ModelAndView mav, CriteriaVO cri) {
+	public ModelAndView diaryOther(@AuthenticationPrincipal MemberDetails member,  ModelAndView mav, CriteriaVO cri) {
 		log.info("controller diaryOther();");
 		log.info("====planner_id : "+member.getPlanner_id());
 		
@@ -104,7 +104,7 @@ public class DairyController {
 		
 		if(planner_id == 0) {
 			
-			mav.setViewName("redirect:diary/diary");
+			mav.setViewName("redirect:/diary");
 			
 		}else {
 		
@@ -128,6 +128,7 @@ public class DairyController {
 		log.info("controller diary_write_view();");
 		
 		mav.addObject("planner", diaryVO);
+		
 		mav.setViewName("diary/diary_write_view");
 
 		return mav;
@@ -227,7 +228,7 @@ public class DairyController {
 		mav.addObject("nowPage", cri.getNowPage());
 		/* int now = cri.getNowPage(); */
 		
-		mav.setViewName("redirect:/diary_other");
+		mav.setViewName("redirect:/diary");
 
 		return mav;
 

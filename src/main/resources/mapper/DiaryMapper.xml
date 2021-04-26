@@ -7,7 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getDiary" resultType="com.gada.travelgada.domain.DiaryVO"> 
 		<![CDATA[ 
 			select * from diary 
-				where planner_id=(select planner_id from planner where end_date > now() order by start_date limit 1) 
+				where planner_id=(
+					select planner_id from planner 
+						where end_date > now() and member_id =#{member_id} order by start_date limit 1) 
 					order by diary_id desc 
 					LIMIT #{nowPage}, #{amount}
 		]]> 
@@ -72,7 +74,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getTotal" resultType="int"> 
 		<![CDATA[ 
 			select count(*) from (select * from diary 
-				where planner_id=(select planner_id from planner where end_date > now() order by start_date limit 1) 
+				where planner_id=(
+					select planner_id from planner where end_date > now() and member_id =#{member_id}
+						order by start_date limit 1) 
 					order by diary_id desc)a
 		]]> 
 	</select>
