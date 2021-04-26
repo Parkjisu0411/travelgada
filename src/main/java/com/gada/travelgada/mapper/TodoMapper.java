@@ -45,6 +45,8 @@ public interface TodoMapper {
 	
 	public void deleteTodoTypeByPlannerId(int planner_id);
 
+	public TodoTypeVO getRecentTodoType(TodoTypeVO todoTypeVO);
+
 	
 	//public void addToDo(String todo_name, int getRecentTodoTypeId);
 

@@ -26,29 +26,6 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- 영어 폰트(헤드라인) -->
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap');
-</style>
-<!-- 한글 폰트(헤드라인) -->
-<style>
-@font-face {
-    font-family: 'GongGothicMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
-<!-- 한글 폰트(기본) -->
-<style>
-@font-face {
-    font-family: 'IBMPlexSansKR-Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
-
 <title>BOARD WRITE</title>
 
 <!-- include summernote css/js -->
@@ -59,6 +36,13 @@
 <!-- CKeditor -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 <style>
+
+/* 드래그 */
+::selection {
+	background-color: #1DCAD3;
+	color: white;
+}  
+
 html, body {
 	width: 100%;
 	height: 100%;

@@ -180,6 +180,10 @@
 		font-family: 'GongGothicMedium';
 	}
 	
+	.date-area-country:hover {
+		cursor: pointer;
+	}
+		
 	.date-area-date {
 		font-size: 20px;
 		color: #1dcad3;
@@ -203,7 +207,7 @@
 	}
 	
 	.city-area {
-		text-align: center;
+		text-align: left;
 	}
 	
 	.vehicle-area {
@@ -289,8 +293,57 @@
 	  return new Promise(resolve=>setTimeout(resolve, ms));
 	}
 	
-	function changeCountry(Date) {
+	function changeCountry(date, schedule_id) {
+		var thisCountry = $("#" + date + " .date-area-country").text();
+		console.log(thisCountry);
+		var countryList = "<select class='form-control' id='change-country-select' name='country' onchange='selectCountry(this.value, " + schedule_id + ")'>";
+		countryList += "<c:forEach var='country' items='${country}'>";
+		if(thisCountry == "${country.country_name}") {
+			countryList += "<option value='${country.country_name}|${country.longitude}|${country.latitude}' selected>${country.country_name}</option>";
+		} else {
+			countryList += "<option value='${country.country_name}|${country.longitude}|${country.latitude}'>${country.country_name}</option>";
+		}
+		countryList += "</c:forEach>";
+		countryList += "</select>";
 		
+		$("#" + date + " .date-area-country").css("display", "none");
+		$("#" + date + " .date-area").append(countryList);
+		$("#change-country-select").focus();
+		$("#change-country-select").blur(function() {
+			$("#" + date + " .date-area-country").css("display", "");
+			$(this).remove();
+		});
+		
+	}
+	
+	function selectCountry(country, schedule_id) {
+		country = country.split("|");
+		var data = {
+				schedule_id : schedule_id,
+				schedule_content : country[0],
+				longitude : country[1],
+				latitude : country[2]
+		}
+		
+		console.log(data);
+		
+		/* $.ajax({
+			type : "PUT",
+			url : "/planner/schedule",
+			data : JSON.stringify(data),
+			contentType : "application/json",
+			cache : false,
+			beforeSend : function(xhr){
+  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(result) {
+				
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
+			}
+		}) */
 	}
 	
 	//날짜 추가
@@ -884,7 +937,7 @@
 									<p class="date-area-day">DAY &nbsp;${idx.count }</p>
 									<c:forEach var="country" items="${countryList }">
 										<c:if test="${country.schedule_date eq date}">											
-											<p class="date-area-country">${country.schedule_content }</p>
+											<p class="date-area-country" onclick="changeCountry('${date}', ${country.schedule_id })">${country.schedule_content }</p>
 											<span class='latitude' style='display:none'>${country.latitude }</span>
 											<span class='longitude' style='display:none'>${country.longitude }</span>
 											<span class='this_planner_id' style='display:none'>${country.planner_id }</span>
@@ -942,7 +995,7 @@
 									</c:forEach>
 									<div class="insert-btn" onclick="insertSchedule('hotel', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div>
 								</td>
-								<td class="budget-area col-md-2">
+								<td class="col-md-2 budget-area">
 									<span class="budget-total"><c:out value="${dayBudget[date] }"></c:out></span>
 									<span>₩</span>
 								</td>

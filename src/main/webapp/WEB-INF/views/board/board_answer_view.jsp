@@ -35,6 +35,13 @@
 	 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 	 
 <style>
+
+	/* 드래그 */
+	::selection {
+		background-color: #1DCAD3;
+		color: white;
+	}  
+
 	html, body {
 		width: 100%;
 		height: 100%;
