@@ -24,7 +24,7 @@
 <title>Product</title>
 <style>
 
-	body {
+	.gada-card {
 		font-family: 'IBMPlexSansKR-Light';
 	}
 	
@@ -70,7 +70,7 @@
 		text-align: right;
 	}
 	
-	.btn {
+	.product-btn {
 		width: 150px;
 		height: 80px;
 		font-family: 'Montserrat', sans-serif;
@@ -90,6 +90,10 @@
 	  background-color: #1DCAD3;
 	  border-radius: 10px;
 	  color: white;
+	}
+	
+	.go-top:focus {
+		outline: none;
 	}
 	
 	.gada-card {
@@ -196,7 +200,8 @@
 			</div>
 			<div class="col-md-6">
 				<div class="gada-card">
-					<form action="#" method="POST">
+					<form id="buy-now" action="/shopping/order/single" method="POST">
+						<input type="hidden" name="product_img_src" value="${product.img_path}">
 						<input type="hidden" name="product_name" value="${product.product_name }" />
 						<input type="hidden" name="product_id" value="${product.product_id }" />
 						<input type="hidden" name="price" value="${product.price }" />
@@ -226,8 +231,8 @@
 							</div>
 						</div>					
 						<div class="gada-btn-group">
-							<button type="button" class="btn gada-btn-reverse" onclick="insertIntoCart()">CART</button>
-							<button type="submit" class="btn gada-btn">BUY NOW</button>
+							<button type="button" class="btn gada-btn-reverse product-btn" onclick="insertIntoCart()">CART</button>
+							<button type="submit" class="btn gada-btn product-btn">BUY NOW</button>
 						</div>
 					</form>
 				</div>

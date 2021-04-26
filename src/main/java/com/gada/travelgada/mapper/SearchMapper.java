@@ -14,13 +14,13 @@ import com.gada.travelgada.domain.ProductVO;
 public interface SearchMapper {
 
 	//통합 검색 일정 부분
-	public List<PlannerVO> searchPl(String keyword);
+	public List<PlannerVO> searchPl(String keyword, int limit);
 	
 	//통합 검색 다이어리 부분
 	public List<MemberVO> searchDi(String keyword);
 	
 	//일정 더보기
-	public List<PlannerVO> searchPlMore(String keyword,String order, int nowPage, int amount);
+	public List<PlannerVO> searchPlMore(String keyword,String order, int beforeLimit, int limit);
 	
 	//다이어리 더보기
 	public List<DiaryVO> searchDiMore(String keyword,String order,int nowPage, int amount);
@@ -29,6 +29,9 @@ public interface SearchMapper {
 	public int getDiTotal(String keyword,String order);
 
 	//일정 total
-	public int getPlTotal(String keyword, String order);
+	public int getPlTotal(String keyword, String order, String choose);
+
+	//limit
+	public Integer getLimit(String keyword, String order, int nowPage , int amount, String choose);
 	
 }

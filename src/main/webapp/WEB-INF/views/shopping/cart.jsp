@@ -26,7 +26,7 @@
 <title>Login Form</title>
 <style>
 	
-	body {
+	.table {
 		font-family: 'IBMPlexSansKR-Light';
 	}
 	
@@ -181,7 +181,7 @@
 		}
 		var form = document.createElement("form");
 		form.method = "post";
-		form.action = "/shopping/order";
+		form.action = "/shopping/order/cart";
 		
 		var inputId = document.createElement("input");
         inputId.setAttribute("type","hidden");

@@ -5,7 +5,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.gada.travelgada.mapper.SearchMapper">
 
 	<!-- resultMap -->
-	
 	<!-- 멤버 1 -->
 	<resultMap id="memberMap"
 		type="com.gada.travelgada.domain.MemberVO">
@@ -65,73 +64,96 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 통합 검색 일정 부분 -->
 	<select id="searchPl" resultMap="plannerMap"> 
 		<![CDATA[ 
-			select a.* from (select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
-				where s.planner_id = p.planner_id) a
-					where a.planner_name like CONCAT('%', #{keyword}, '%') 
-						order by a.planner_id desc LIMIT 2
+			select a.* from (
+				select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+					where s.planner_id = p.planner_id ) a
+				where a.planner_name like CONCAT('%', #{keyword}, '%')
+				or a.schedule_content like CONCAT('%', #{keyword}, '%') 
+				order by a.planner_id desc LIMIT #{limit}
 		]]>
 	</select>
 	
 	<!-- 통합 검색 다이어리 부분 -->
 	<select id="searchDi" resultMap="memberMap"> 
 		<![CDATA[ 
-			select a.* from (select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
-				where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
-					where a.text like CONCAT('%', #{keyword}, '%') or a.hashtag like CONCAT('%', #{keyword}, '%')
-		 				LIMIT 8
-		]]>
-	</select>
-
-	<!-- 일정 더보기 ( 조건 ) -->
-	<select id="searchPlMore" resultMap="plannerMap"> 
-		<![CDATA[ 
-			select a.* from(select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
-				where s.planner_id = p.planner_id ) a
-					where a.schedule_content like CONCAT('%', #{keyword}, '%') 
-						or a.planner_name like CONCAT('%', #{keyword}, '%')	
-							order by a.planner_id desc LIMIT #{nowPage}, #{amount};		
+			select a.* from (
+				select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
+					where p.member_id = m.member_id and d.planner_id = p.planner_id )a 
+				where a.text like CONCAT('%', #{keyword}, '%') 
+				or a.hashtag like CONCAT('%', #{keyword}, '%')
+		 		LIMIT 8
 		]]>
 	</select>
 
 	<!-- 다이어리 더보기 ( 조건 ) -->
 	<select id="searchDiMore" resultMap="memberMap"> 
 		<![CDATA[ 
-			select b.* from(select a.* from (select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
-				where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
+			select b.* from(
+				select a.* from (
+					select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
+						where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
 					where a.text like CONCAT('%', #{keyword}, '%') or a.hashtag like CONCAT('%', #{keyword}, '%'))b 
-						${order} LIMIT #{nowPage}, #{amount}
+					${order} LIMIT #{nowPage}, #{amount}
 		]]>
 	</select>
 	
 	<!-- 다이어리 수 -->
 	<select id="getDiTotal" resultType="int"> 
 		<![CDATA[ 
-			select count(*) from(select a.* from (select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
-				where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
+			select count(*) from(
+				select a.* from (
+					select m.member_id, m.profile_img_path ,d.* from member m, planner p,diary d 
+						where p.member_id = m.member_id and d.planner_id = p.planner_id)a 
 					where a.text like CONCAT('%', #{keyword}, '%') or a.hashtag like CONCAT('%', #{keyword}, '%'))b 
-						${order}
+					${order}
 		]]> 
 	</select> 
 	
-	<!-- 일정 수 -->
+	<!-- 일정 전체 수 -->
 	<select id="getPlTotal" resultType="int"> 
 		<![CDATA[ 
-						
-			select count(*) from (
-	            select count(*), b.planner_id from (
-	                select a.* from(
-	                	select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
-		                    where s.planner_id = p.planner_id 
-		                ) a
-		           	where a.schedule_content like CONCAT('%', #{keyword}, '%')
-		            or a.planner_name like CONCAT('%', #{keyword}, '%')
-		        )b group by b.planner_id ${order}
-		    )c;
-		    
+			select count(*)from(
+				select count(*)from(
+					select b.* from (
+						select a.* from(
+							select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+								where s.planner_id = p.planner_id ) a
+							where a.schedule_content like CONCAT('%', #{keyword}, '%')
+							or a.planner_name like CONCAT('%', #{keyword}, '%'))b 
+						${choose})c
+						group by c.planner_id ${order})d
 		]]> 
 	</select> 
 	
+	<select id="getLimit" resultType="Integer"> 
+		<![CDATA[ 
+			select sum(sumList) from(
+				select count(*)as sumList,c.planner_id from(
+					select b.* from(
+						select a.* from(
+							select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+								where s.planner_id = p.planner_id ) a
+							where a.schedule_content like CONCAT('%', #{keyword}, '%')
+							or a.planner_name like CONCAT('%', #{keyword}, '%') )b
+                        ${choose})c
+					group by c.planner_id ${order}
+                    limit #{nowPage}, #{amount})d	
+                    
+		]]> 
+	</select> 
 	
-	
+	<!-- 일정 더보기 ( 조건 ) -->
+	<select id="searchPlMore" resultMap="plannerMap"> 
+		<![CDATA[ 
+			select b.* from(
+				select a.* from(
+					select s.schedule_content,s.schedule_type_id,p.* from schedule s,planner p
+						where s.planner_id = p.planner_id ) a
+					where a.schedule_content like CONCAT('%', #{keyword}, '%') 
+					or a.planner_name like CONCAT('%', #{keyword}, '%')	)b
+				${order} 
+				LIMIT #{beforeLimit}, #{limit}	
+		]]>
+	</select>
    
 </mapper>

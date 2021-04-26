@@ -115,19 +115,23 @@
 		for ( var i = 0; i < files.length; i++) {
 			var file = files[i];
 			var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
-			if (!file.type.match(imageType))
-				continue;
+			if (!file.type.match(imageType)) {
+				console.log("이미지가 아니다")
+				continue;				
+			}
 			var prevImg = document.getElementById("prev_" + view_area); //이전에 미리보기가 있다면 삭제
 			if (prevImg) {
 				preview.removeChild(prevImg);
 			}
-			var img = document.createElement("img"); 
+			var img = document.createElement("img");
 			img.id = "prev_" + view_area;
-			img.classList.add("obj");
+			img.classList.add("rounded-circle");
+			img.classList.add("member-img");
 			img.file = file;
 			img.style.width = '100px'; 
 			img.style.height = '100px';
 			preview.appendChild(img);
+			console.log(img);
 			
 			var reader = new FileReader();
 			reader.onloadend = (function(aImg) {
@@ -163,6 +167,8 @@
 		//change button click event
 		$("#change-img-btn").click(function(e) {
 			e.preventDefault();
+			$("#view_area img").attr("src", $("#img").attr("src"));
+			$("#fileForm input[name='uploadfile']").val("");
 			$("#img-area").css("display", "none");
 			$("#change-img-area").css("display", "");
 		});
@@ -233,8 +239,6 @@
 			e.preventDefault();
 			var form = $("#fileForm")[0];
 			var formData = new FormData(form);
-			console.log(form);
-			console.log(formData);
 			$.ajax({
 				type : "POST",
 				url : "/file/profile",
@@ -246,8 +250,6 @@
 					xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 				},
 				success : function(result) {
-					console.log("파일 업로드 완료.");
-					console.log(result);
 					var img_path = result;
 					var id = $("#id").text();
 					var form = {
@@ -266,7 +268,6 @@
 						},
 						success : function(result) {
 							if(result == "SUCCESS") {
-								console.log(result);
 								location.reload();
 							}
 						},
@@ -631,10 +632,11 @@
 						<div class="img-preview">
 							<div id='view_area'>
 								<img class="rounded-circle member-img" id="prev_view_area" width='100' src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'"/>
-							</div>							</div>
+							</div>
+						</div>
 						<form id="fileForm" enctype="multipart/form-data" method="post">
 							<label for="profile_pt" class="gada-btn">UPLOAD</label>
-							<input type="file" class="" name="uploadfile" id="profile_pt" onchange="previewImage(this,'view_area')">
+							<input type="file" name="uploadfile" id="profile_pt" onchange="previewImage(this,'view_area')">
 						</form>
 						<div class="gada-btn-group">
 							<button type="button" class="btn gada-btn-reverse" id="change-img-cancle-btn">취소</button>

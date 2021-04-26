@@ -2,6 +2,7 @@
 <!DOCTYPE mapper 
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
 <mapper namespace="com.gada.travelgada.mapper.AdminMapper"> 
 	
 	<resultMap id="memberMap" type="com.gada.travelgada.domain.MemberVO">
@@ -95,8 +96,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 회원 정보 -->
 	<select id="selectMember" resultMap="memberMap">
-		select * from member , authorities 
-		where member.member_id = authorities.member_id and member.member_id = #{member_id}
+		<![CDATA[
+			select * from member , authorities 
+				where member.member_id = authorities.member_id and member.member_id = #{member_id}
+		]]>
 	</select>
 	
 	<!-- 회원 포인트 -->

@@ -40,4 +40,6 @@ public interface ScheduleMapper {
 	
 	public void deleteBeyondSchedule(@Param("planner_id") int planner_id, @Param("start_date") Date start_date, @Param("end_date") Date end_date);
 	
+	public int selectBudgetByDate(Date date);
+	
 }

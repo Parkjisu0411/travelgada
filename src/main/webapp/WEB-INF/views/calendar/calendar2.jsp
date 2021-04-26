@@ -130,8 +130,8 @@
 <script>
 /* 엔드 날짜 클릭시 시작 날짜로 포거스가게 하기 */
 	$(document).ready(function(){
-		$("#input-end").click(function(){
-			$("#input-start").focus();
+		$("#input-end-2").click(function(){
+			$("#input-start-2").focus();
 		});//click function end
 	});//ready function end
 /* 날짜 동시에 띄우기 end */
@@ -139,9 +139,6 @@
 	
 </head>
 <body>
-
-	<!-- Header -->
-	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
 	<!--Content -->
 	<img id="calImg" src="resources/calendar/cal.png" data-toggle="modal" data-target="#calModal"/>
@@ -166,11 +163,11 @@
                         </div>
                         <div class="modalInput">
                             <h3 class="modalLabel">여행시작</h3>
-                            <input style="font-family: 'yg-jalnan'" name="start_date" class="modal_input-style" type="text"  placeholder="YYYY/MM/DD" id="input-start">
+                            <input style="font-family: 'yg-jalnan'" name="start_date" class="modal_input-style" type="text"  placeholder="YYYY/MM/DD" id="input-start-2" autocomplete="off">
                         </div>
                         <div class="modalInput">
                             <h3 class="modalLabel">여행종료</h3>
-                            <input style="font-family: 'yg-jalnan'" name="end_date" class="modal_input-style" type="text"  placeholder="YYYY/MM/DD" id="input-end">
+                            <input style="font-family: 'yg-jalnan'" name="end_date" class="modal_input-style" type="text"  placeholder="YYYY/MM/DD" id="input-end-2" autocomplete="off">
                         </div>
                         <div class="modalInput">
                             <h3 class="modalLabel">나라</h3>
@@ -187,125 +184,10 @@
       	  	</div>
 		</div>
 
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
 	<!-- 달력 (아래 추가) -->
 	<script src="resources/calendar/datepicker/moment.min.js"></script>
 	<script src="resources/calendar/datepicker/daterangepicker.js"></script>
     <script src="resources/calendar/js/global.js"></script>
-
-	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 
 </body>
 </html>

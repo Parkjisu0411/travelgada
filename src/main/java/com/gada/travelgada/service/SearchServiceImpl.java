@@ -21,10 +21,10 @@ public class SearchServiceImpl implements SearchService {
 	
 	//통합 검색 일정 부분
 	@Override
-	public List<PlannerVO> searchPl(String keyword) {
+	public List<PlannerVO> searchPl(String keyword, int limit) {
 		log.info("ServiceImpl searchPl() - 통합 검색 일정 부분");
 			
-		return mapper.searchPl(keyword);
+		return mapper.searchPl(keyword, limit);
 		
 	}//searchPl end
 	
@@ -38,33 +38,33 @@ public class SearchServiceImpl implements SearchService {
 	
 	//일정 더보기
 	@Override
-	public List<PlannerVO> searchPlMore(String keyword, String sorter, int nowPage, int amount) {
+	public List<PlannerVO> searchPlMore(String keyword, String sorter, int beforeLimit, int limit) {
 		log.info("ServiceImpl searchPlMore() - 일정 더보기");
 		
 		String order = null;
 		
 		switch(sorter) {
 			case("basic")://기본 정렬 (일정 처음 보여지는 부분에서 정렬)
-				order = "order by p.planner_id desc";
+				order = "order by b.planner_id desc";
 				break;
 			case("startDate") ://최신순 - 여행 시작 날짜를 내림순
-				order = "order by start_date desc";
+				order = "order by b.start_date desc";
 				break;
 			case("day") :// 여행 시작 날짜가 오늘 하루 전 날짜부터 검색  
-				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 day) order by start_date desc";
+				order = "where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 day) order by b.start_date desc";
 				break;
 			case("week") :// 일주일 
-				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 week) order by start_date desc";		
+				order = "where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 week) order by b.start_date desc";		
 				break;
 			case("month") :// 한달
-				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 month) order by start_date desc";		
+				order = "where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 month) order by b.start_date desc";		
 				break;
 			case("year") :// 일년
-				order = "and start_date >= DATE_SUB(NOW(), INTERVAL 1 year) order by start_date desc";		
+				order = "where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 year) order by b.start_date desc";		
 				break;
 		}
 		
-		return mapper.searchPlMore(keyword, order, nowPage, amount);
+		return mapper.searchPlMore(keyword, order, beforeLimit, limit);
 	} 
 	
 	//다이어리 더보기
@@ -128,29 +128,68 @@ public class SearchServiceImpl implements SearchService {
 		log.info("ServiceImpl getTotal()");
 		
 		String order = null;
+		String choose = null;
 		
 		switch(sorter) {
 			case("basic")://기본 정렬 (일정 처음 보여지는 부분에서 정렬)
-				order = "order by b.planner_id desc";
+				order = "order by c.planner_id desc";
 				break;
 			case("startDate") ://최신순 - 여행 시작 날짜를 내림순
-				order = "order by b.start_date desc";
+				order = "order by c.start_date desc";
 				break;
 			case("day") :// 여행 시작 날짜가 오늘 하루 전 날짜부터 검색  
-				order = "and b.start_date >= DATE_SUB(NOW(), INTERVAL 1 day) order by b.start_date desc";
+				order = " order by c.start_date desc";
+				choose = " where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 day) ";
 				break;
 			case("week") :// 일주일 
-				order = "and b.start_date >= DATE_SUB(NOW(), INTERVAL 1 week) order by b.start_date desc";		
+				order = " order by c.start_date desc";		
+				choose = " where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 week) ";	
 				break;
 			case("month") :// 한달
-				order = "and b.start_date >= DATE_SUB(NOW(), INTERVAL 1 month) order by b.start_date desc";		
+				order = " order by c.start_date desc";		
+				choose = " where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 month) ";	
 				break;
 			case("year") :// 일년
-				order = "and b.start_date >= DATE_SUB(NOW(), INTERVAL 1 year) order by b.start_date desc";		
+				order = " order by c.start_date desc";		
+				choose = " where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 year) ";
 				break;
 		}
 		
-		return mapper.getPlTotal(keyword, order);
+		return mapper.getPlTotal(keyword, order, choose);
+	}
+
+	@Override
+	public Integer getLimit(String keyword, String sorter, int nowPage, int amount) {
+		
+		String order = null;
+		String choose = null;
+		
+		switch(sorter) {
+			case("basic")://기본 정렬 (일정 처음 보여지는 부분에서 정렬)
+				order = "order by c.planner_id desc";
+				break;
+			case("startDate") ://최신순 - 여행 시작 날짜를 내림순
+				order = "order by c.start_date desc";
+				break;
+			case("day") :// 여행 시작 날짜가 오늘 하루 전 날짜부터 검색  
+				order = "order by c.start_date desc ";
+				choose = "where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 day) ";
+				break;
+			case("week") :// 일주일 
+				order = "order by c.start_date desc";		
+				choose ="where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 week) "; 
+				break;
+			case("month") :// 한달
+				order = "order by c.start_date desc";		
+				choose = "where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 month) ";
+				break;
+			case("year") :// 일년
+				order = "order by c.start_date desc";		
+				choose = "where b.start_date >= DATE_SUB(NOW(), INTERVAL 1 year) ";
+				break;
+		}
+		
+		return mapper.getLimit(keyword, order, nowPage, amount, choose);
 	}
 
 }

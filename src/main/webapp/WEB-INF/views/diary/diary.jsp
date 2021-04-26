@@ -26,146 +26,261 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 
 <style>
-
+/* 여기 */
 /* 모달 스타일 */
-.dialogDi{
+/* .dialogDi{
  	height : 40px;
-}
+} */
 
-.mainImg{
+/* .mainImg{
     float: left;
+} */
+html, body {
+	width: 100%;
+	height: 100%;
+	margins: 0;
+	padding: 0;
+	/* background-color: #f5f5f5; */
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight: bold;
 }
 
-.Mcontent{
-	padding:0px;
-	width:100%
+.Mcontent {
+	/* 	padding:0px;
+	width:100% */
+	width: 800px;
 }
 
-.dialogtext{
-	width : 350px;
-  	height : 260px;
-  	font-weight: bold;
-  
-}
-.dialog-date, .dialog-hashtag{
-	margin-top:10px;
-	text-align:right;
+.dialogtext {
+	width: 100%;
+	height: 240px;
+	font-weight: bold;
+	overflow: auto;
+	padding-right: 20px;
+	float: left;
+	padding-left: 10px;
 }
 
-.popup_img{
-	position: relative; 
-	width: 400px; 
+pre {
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.dialogtext::-webkit-scrollbar {
+	width: 10px;
+}
+
+.dialogtext::-webkit-scrollbar-thumb {
+	background-color: #a1eef2; /*  연한 민트 */
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.dialogtext::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.dialog-hashtag {
+	margin-top: 10px;
+	text-align: right;
+	overflow: auto;
+	width: 100%;
+	padding-right: 20px;
+	float: left;
+	height: 50px;
+}
+
+.dialog-hashtag::-webkit-scrollbar {
+	width: 10px;
+}
+
+.dialog-hashtag::-webkit-scrollbar-thumb {
+	background-color: #a1eef2;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.dialog-hashtag::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.dialog-date {
+	width: 100%;
+	height: 40px;
+	margin-top: 10px;
+	padding-right: 20px;
+	text-align: right;
+	float: left;
+}
+
+.popup_img {
+	width: 100%;
 	height: 400px;
 	object-fit: cover;
+	border-radius: 4px;
+	padding: 0;
 }
 
-.dialog-profile{
+.close {
+	margin: 10px 20px 10px 0;
+	/* padding-right:20px; */
+	/* width: 100%;  */
+	text-align: right;
+	outline: none;
+}
+
+.close:hover {
+	color: #1dcad3;
+}
+
+/* .dialog-profile{
 	font-family: 'GongGothicMedium';
+} */
+.dialog-wrap {
+	width: 100%;
+	/* width : 350px; */
+	float: left;
 }
-
-.dialog-wrap{
-	width : 350px;
-	margin: 20px 0 20px 20px;
-   	float: left;
-}
-
+/* 모달 스타일 끝 */
 </style>
 
 <style>
 
 /* 사진 */
 .masonry {
-  columns: 4;
-  column-gap: 16px;
+	columns: 4;
+	column-gap: 16px;
 }
-@media (max-width: 1200px) {
-  .masonry {
-    columns: 3;
-  }
+
+@media ( max-width : 1200px) {
+	.masonry {
+		columns: 3;
+	}
 }
-@media (max-width: 992px) {
-  .masonry {
-    columns: 2;
-  }
+
+@media ( max-width : 992px) {
+	.masonry {
+		columns: 2;
+	}
 }
+
 .masonry .grid {
-  display: inline-block;
-  margin-bottom: 16px;
-  position: relative;
+	display: inline-block;
+	margin-bottom: 16px;
+	position: relative;
 }
+
 .masonry .grid:before {
-  border-radius: 5px;
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.2);
 }
+
 .masonry .grid img {
-  width: 100%;
-  border-radius: 5px;
+	width: 100%;
+	border-radius: 5px;
 }
+
 .masonry .grid__title {
-  font-size: 28px;
- /*  font-weight: bold; */
-  margin: -30px 0px 0px 0px;
-	float:right;
+	font-size: 25px;
+	font-weight: bold;
+	text-align:right;
+	float: right;
+	width: 50px;
+	padding-right:10px;
+	margin-right:10px;
+
 }
+
+.grid__title:hover{
+	color: #1dcad3;
+}
+
 .masonry .grid__author {
-  font-size: 14px;
-  font-weight: 300;
+	font-size: 14px;
+	font-weight: 300;
 }
+
 .masonry .grid__link {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
 }
+
 .masonry .grid__body {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  padding: 30px 30px;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-/*   margin-top: 30px; */
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	/* padding: 10px; */
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	float: left;
+	/*   margin-top: 30px; */
 }
+
+.modal-click {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 10px;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	margin-top: 60px;
+}
+
 .masonry .grid__tag {
-  background-color: rgba(255, 255, 255, 0.6);
-  color: #333;
-  border-radius: 5px;
-  padding: 5px 15px;
-  margin-bottom: 5px;
+	background-color: rgba(255, 255, 255, 0.6);
+	color: #333;
+	border-radius: 5px;
+	padding: 5px 15px;
+	margin: 1px;
+	float:left;
+	
 }
 
 .mt-auto {
-  margin-top: auto;
+	margin-top: auto;
+	overflow:hidden;
 }
 
-.gallery{
-
-padding-left:10px;
-padding-right:10px;
-
+.gallery {
+	padding-left: 10px;
+	padding-right: 10px;
 }
-.writeBtn{
+
+.writeBtn {
 	border: solid 1px;
 	/* border-radius: 15px 15px 0 0; */
 	font-family: 'GongGothicMedium';
 	color: white;
-	font-size:18px;
+	font-size: 18px;
 	background-color: #1dcad3;
 	/* width:100px; */
 	border-radius: 15px;
+	overflow:hidden;
 }
 
-#selectDiary{
+#selectDiary {
 	line-height: 60px;
 	background-color: transparent;
 	color: black;
@@ -173,34 +288,70 @@ padding-right:10px;
 	border-radius: 15px;
 	border: 2px solid #1dcad3;
 	font-family: 'GongGothicMedium';
-	outline:none;
+	outline: none;
 }
 
-.paging{
-	margin:auto;
-	text-align:center;
+.paging {
+	margin: auto;
+	text-align: center;
 }
 
-.pagination{
+.pagination {
 	border-radius: 5px;
 }
 
-.page-link{
-	outline:none;
-	border:none;
-	margin:2px;
-	background-color: #f5f5f5;
+.page-link {
+	outline: none;
+	border: none;
+	margin: 2px;
+	background-color: gray;
 	border-radius: 5px;
-	height:3px; *
-	color:gray;
-}
-.page-item{
-	outline:none;
-	border:none;
-	padding:3px; 
-
+	height: 3px; *
+	color: gray;
 }
 
+.page-item {
+	outline: none;
+	border: none;
+	padding: 3px;
+}
+
+.hashtag-font {
+	font-family: 'IBMPlexSansKR-Light';
+	border: bold;
+	overflow:hidden;
+	height: 35px;
+}
+
+.selected {
+	background-color: #1dcad3;
+}
+
+#diaryDiv{
+	/* min-height:1200px; */
+}
+
+.di_hr{
+	font-family: 'Montserrat', sans-serif;  
+	color: #1dcad3; 
+	font-size: 50px; 
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.img_hr{
+	width:50px;
+	margin: 0 0 30px 30px;
+}
+
+.default-img{
+	width:1000px;
+}
+
+.default-div{
+	vertical-align: middle; 
+	text-align: center;
+}
 </style>
 
 <script type="text/javascript">
@@ -248,7 +399,7 @@ padding-right:10px;
 	function openwin() {
 		window.open('about:blank','popwin',
 		  'width=1000,height=650,toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, left=450, top=220');
-  	document.formDate.submit();
+  		document.formDate.submit();
 	}//function end
 </script>
 
@@ -287,10 +438,11 @@ padding-right:10px;
 			splitedArray.shift();//첫번째 지워주는 함수
 
 			for(var word in splitedArray){
-				word = splitedArray[word];
+				var word = splitedArray[word];
+				console.log("word : "+word);
 				if(word.indexOf("") == 0){ 
 					var word2 = "#"+word;
-					word = '<span class="grid__tag" ><a style="color:black;" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a></span>&nbsp;'
+					word = '<div class="grid__tag" ><a style="color:black;" href="${pageContext.request.contextPath}/search?keyword='+word+'">'+word2+'</a></div>'
 					console.log(word);
     	          	console.log(word2);
 				}//if end
@@ -319,12 +471,26 @@ padding-right:10px;
 /* 해시태그 & 링크 끝 */
 </script>
 
+<script>
+	$(document).ready(function(){
+		
+		var paging = $("#"+${nowPage});
+		$(paging).addClass("selected");
+	
+	});
+</script>
+	
 </head>
 <body>
 
 <div class="wrap">
 	<!-- 해더 -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
+	
+	<div>
+		<img class="img_hr" src = "/resources/notebook.png"/>&nbsp;&nbsp;
+		<a href="/diary"><span class="di_hr">DIARY</span></a>
+	</div>
 	
 	<!-- 플래너 셀렉트, 다이어리 작성 -->
 	<div class = "gallery">
@@ -351,38 +517,50 @@ padding-right:10px;
 					</select>		
 				</div>
 				<div class="col-sm-2">
-					<input class="writeBtn form-control" value="다이어리 작성" style="font-family: 'GongGothicMedium'" type="button" class="btn btn-outline-warning bg-warning text-white" onclick="openwin();"/>
+					<input class="writeBtn form-control" value="다이어리 작성" style="font-family: 'GongGothicMedium'" type="button" 
+						class="btn btn-outline-warning bg-warning text-white" onclick="openwin();" />
 					<br/>    
 		    	</div>
 		     </div>
 		</form><!-- 다이어리 작성을 위한 form -->
+		
+		<c:if test="${empty diary}">
+			<div class = "default-div">
+				<div><img class="default-img" src='/resources/diarywrite2.png' /></div>
+			</div>
+		</c:if>
 
 		<div class="masonry">
 			<div id="diaryDiv">
 				<c:forEach items="${diary}" var="di">
 					<div class="grid">
-						<img src='/resources/diary/${di.img_path}' />
+						<img src='/resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'"/>
 						<!-- 사진 -->
-						<div class="grid__body" data-toggle="modal" data-target="#myModal${di.diary_id}">
+						
+						<div class="grid__body" >
+							<div class="dropdown">
+								<div class="grid__title" data-toggle="dropdown">...</div>
+										<!-- <img src="resources/diary/dot3.png" /> -->
+								<div class="dropdown-menu">
+									<a class="dropdown-item"
+										onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}/${di.planner_id}',
+	    											'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
+									<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
+								</div>
+								</div>
+							<div class="modal-click" data-toggle="modal" data-target="#myModal${di.diary_id}">
 							<!-- <div class="relative"> -->
 								<!--  <a class="grid__link" target="_blank" href="/" ></a> -->
 								<!--    <p class="grid__author"></p> -->
-								<div class="dropdown">
-									<div class="grid__title"
-										class="grid__title btn dropdown-toggle" data-toggle="dropdown">...</div>
-									<!-- <img src="resources/diary/dot3.png" /> -->
-									<div class="dropdown-menu">
-										<a class="dropdown-item"
-											onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}&${di.planner_id}',
-      					'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
-										<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
-									</div>
-								</div>
+								
+								
 							<!-- </div> -->
 							<div class="mt-auto">
-								<span id="${di.diary_id}"></span>
+								<div class="hashtag-font"id="${di.diary_id}"></div>
 							</div>
-						</div>
+							</div>
+							
+						</div><!-- grid_body -->
 					</div>
 
 					<!-- Modal -->
@@ -390,21 +568,22 @@ padding-right:10px;
 					<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
 						<!-- <div class="mySlides"> -->
 						<div class="modal-dialog modal-lg modal-dialog-centered">
-							<div class="modal-content MDI">
+							<div class="modal-content ">
 								<!-- 						<div class="modal-header">
 							</div> -->
-								<div class="modal-body Mcontent">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<div class="mainImg">
-										<img class="popup_img" src='/resources/diary/${di.img_path}' />
-									</div>
-									<div class="dialog-wrap">
+							<div class="row  ">
+									<div class="col-sm-6">
+										<img class="popup_img" src='/resources/diary/${di.img_path}'
+											onerror="this.src='/resources/img/main/logo3.png'"/>
+									</div> 
+									<div class="dialog-wrap col-sm-6 ">
 										<%-- 			<div class="dialogDi dialog-profile">
 									<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
 									${member.member_id}								
 								</div> --%>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<div class="dialogDi dialog-date">${di.diary_date}</div>
-										<div class="dialogtext">${di.text}</div>
+										<div class="dialogtext"><pre>${di.text}</pre></div>
 										<div class="dialogDi dialog-hashtag">
 											<span id="modal${di.diary_id}"></span>
 										</div>
@@ -414,7 +593,7 @@ padding-right:10px;
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">Close</button>
 							</div> -->
-							</div>
+							</div> 
 							<!-- modal-content end -->
 						</div>
 					</div>
@@ -430,17 +609,19 @@ padding-right:10px;
 					<!-- 페이징 -->
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
-							<li class="page-item"><a class="page-link"
-								href="/diary?nowPage=${pageMaker.startPage - 1}">◀</a></li>
+							<li class="page-item">
+								<a class="page-link"href="/diary?nowPage=${pageMaker.startPage - 1}">◀</a>
+							</li>
 						</c:if>
-						<c:forEach begin="${pageMaker.startPage }"
-							end="${pageMaker.endPage}" var="idx">
-							<li class="page-item"><a class="page-link"
-								href="/diary?nowPage=${idx}"></a></li>
+						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+							<li class="page-item">
+								<a id ="${idx}" class="page-link" href="/diary?nowPage=${idx}"></a>
+							</li>
 						</c:forEach>
 						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-							<li class="page-item"><a class="page-link"
-								href="/diary?nowPage=${pageMaker.endPage +1}">▶</a></li>
+							<li class="page-item">
+								<a class="page-link" href="/diary?nowPage=${pageMaker.endPage +1}">▶</a>
+							</li>
 						</c:if>
 					</ul>
 					<!-- 페이징 끝 -->

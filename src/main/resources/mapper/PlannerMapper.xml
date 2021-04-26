@@ -63,4 +63,11 @@
 			update planner set planner_name = #{planner_name}, start_date = #{start_date}, end_date = #{end_date} where planner_id = #{planner_id} 
 		]]>
 	</update>
+	
+	<update id="updateImgPath">
+		<![CDATA[	
+			 update planner set planner_img_path = #{img_path} where planner_id = #{planner_id}
+		]]>
+	</update>
+	
 </mapper>

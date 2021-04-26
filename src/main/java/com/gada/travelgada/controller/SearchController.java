@@ -27,11 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class SearchController {
 
-	
 	private SearchService searchService;
-	
 	private ScheduleService scheduleService;
-	
 	private PlannerService plannerService;
 
 	//통합 검색 페이지
@@ -39,11 +36,17 @@ public class SearchController {
 	public ModelAndView search(ModelAndView mav, @RequestParam("keyword") String keyword) {
 		log.info("controller search();");
 		
-		//통합 검색 일정 부분
-		mav.addObject("searchPl", searchService.searchPl(keyword));
-		//통합 검색 다이어리 부분 getSearchDiary
+		String sorter = "basic";
+		Integer limit = searchService.getLimit(keyword, sorter, 0, 2);
+		log.info("============= limit : " + limit);
+		
+		if(limit==null) {
+			mav.addObject("searchPl", searchService.searchPl(keyword ,0));
+		}else {
+			mav.addObject("searchPl", searchService.searchPl(keyword ,limit));
+		}
+		
 		mav.addObject("member", searchService.searchDi(keyword));
-		//키워드 보내는 부분
 		mav.addObject("keyword",keyword);
 		
 		mav.setViewName("search/search");
@@ -57,20 +60,47 @@ public class SearchController {
 	public ModelAndView searchPl(ModelAndView mav, @RequestParam("keyword") String keyword,
 			@RequestParam(value="sorter", required=false, defaultValue="basic") String sorter, CriteriaVO cri) {
 		log.info("controller searchPl();");
+		
 		int amount = 4;
 		int nowPage = (cri.getNowPage() - 1) * amount;
+		int beforPage = (cri.getNowPage() - 2) * amount;
 		int total = searchService.getPlTotal(keyword, sorter);
+		Integer limit = searchService.getLimit(keyword, sorter, nowPage ,amount);
+		
+		log.info("============= limit : " + limit);
+		log.info("============= nowPage : " + nowPage);
+		log.info("============= beforPage : " + beforPage);
+		log.info("============= total : " + total);
 		
 		cri.setAmount(amount);
+
+		if(nowPage == 0){
+			
+			if(limit == null) {
+				mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, 0, 0)); 
+			}else {
+				mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, 0, limit)); 
+			}
+			
+		}else{
+			Integer beforeLimit = searchService.getLimit(keyword, sorter, beforPage ,amount);
+			
+			log.info("============= beforeLimit : " + beforeLimit);
+			
+			if(limit == null) {
+				mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, beforeLimit, 0)); 
+			}else {
+				mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, beforeLimit, limit));
+			}
+			                                          		
+		}
 		
-		//일정 더보기 getSearchPl
-		mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, nowPage, amount));
 		mav.addObject("pageMaker", new PageVO(cri, total));
 		mav.addObject("keyword",keyword);
 		mav.addObject("sorter",sorter);
 		
 		mav.setViewName("search/searchPl");
-
+		
 		return mav;
 
 	}// search end
@@ -87,10 +117,8 @@ public class SearchController {
 		
 		cri.setAmount(amount);
 		
-		//다이어리 더보기
 		mav.addObject("member",searchService.searchDiMore(keyword, sorter, nowPage, amount));
 		mav.addObject("pageMaker", new PageVO(cri, total));
-		
 		mav.addObject("keyword",keyword);
 		mav.addObject("sorter",sorter);
 		
@@ -105,23 +133,24 @@ public class SearchController {
 		
 		List<PlannerVO> plannerList = plannerService.getPlanner(plannerVO.getMember_id());
 		
-			log.info("View schedule ===========");
-			PlannerVO planner = plannerService.getPlannerById(plannerVO.getPlanner_id());
-			List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
-			mav.addObject("planner_id", planner.getPlanner_id());
-			mav.addObject("plannerList", plannerList);
-			mav.addObject("dateList", dateList);
-			mav.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));
-			mav.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
-			mav.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
-			mav.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));
-			mav.addObject("hotelList", scheduleService.getHotel(planner.getPlanner_id()));
-			mav.addObject("dayBudget", scheduleService.getBudget(planner.getPlanner_id()));
-			mav.addObject("member_id", plannerVO.getMember_id());
-			
-			mav.setViewName("search/searchSchedule");
+		log.info("View schedule ===========");
+		PlannerVO planner = plannerService.getPlannerById(plannerVO.getPlanner_id());
+		
+		List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
+		mav.addObject("planner_id", planner.getPlanner_id());
+		mav.addObject("plannerList", plannerList);
+		mav.addObject("dateList", dateList);
+		mav.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));
+		mav.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
+		mav.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
+		mav.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));
+		mav.addObject("hotelList", scheduleService.getHotel(planner.getPlanner_id()));
+		mav.addObject("dayBudget", scheduleService.getBudget(planner.getPlanner_id()));
+		mav.addObject("member_id", plannerVO.getMember_id());
+		
+		mav.setViewName("search/searchSchedule");
 			
 		return mav;
 	}
 	
-}// Controller end
+}

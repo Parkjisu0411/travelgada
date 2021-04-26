@@ -85,6 +85,7 @@
 		height: 350px;
 		border-radius: 10px 10px 0px 0px;
 		object-fit: cover;
+		position: relative;
 	}
 	
 	.card-pl-img:hover {
@@ -112,10 +113,95 @@
 	.cal {
 		display: inline;
 	}
+	
+	.uploadFile {
+		position: absolute;
+		top: 3%;
+		right: 8%;
+	}
+	
+	.input-file {
+		display: none;
+	}
+	
+	/* Float Shadow */
+	.hvr-float-shadow {
+	  display: inline-block;
+	  vertical-align: middle;
+	  -webkit-transform: perspective(1px) translateZ(0);
+	  transform: perspective(1px) translateZ(0);
+	  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+	  position: relative;
+	  -webkit-transition-duration: 0.3s;
+	  transition-duration: 0.3s;
+	  -webkit-transition-property: transform;
+	  transition-property: transform;
+	}
+	.hvr-float-shadow:before {
+	  pointer-events: none;
+	  position: absolute;
+	  z-index: -1;
+	  content: '';
+	  top: 100%;
+	  left: 5%;
+	  height: 10px;
+	  width: 90%;
+	  opacity: 0;
+	  background: -webkit-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+	  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+	  /* W3C */
+	  -webkit-transition-duration: 0.3s;
+	  transition-duration: 0.3s;
+	  -webkit-transition-property: transform, opacity;
+	  transition-property: transform, opacity;
+	}
+	.hvr-float-shadow:hover, .hvr-float-shadow:focus, .hvr-float-shadow:active {
+	  -webkit-transform: translateY(-5px);
+	  transform: translateY(-5px);
+	  /* move the element up by 5px */
+	}
+	.hvr-float-shadow:hover:before, .hvr-float-shadow:focus:before, .hvr-float-shadow:active:before {
+	  opacity: 1;
+	  -webkit-transform: translateY(5px);
+	  transform: translateY(5px);
+	  /* move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px) */
+	}
 
 </style>
 
 <script>
+	var imgFlag = false;
+
+	function previewImage(targetObj, planner_id) {
+		console.log(planner_id)
+		var files = targetObj.files;
+		
+		for ( var i = 0; i < files.length; i++) {
+			var file = files[i];
+			var imageType = /image.*/;
+			if (!file.type.match(imageType)) {
+				continue;
+			}
+			
+			$("#" + planner_id + " .planner-preview-img").remove();
+
+			var img = document.createElement("img");
+			img.classList.add("card-pl-img");
+			img.classList.add("planner-preview-img");
+			img.file = file;
+			$("#" + planner_id + " .planner-area").prepend(img);
+			
+			var reader = new FileReader();
+			reader.onloadend = (function(aImg) {
+				return function(e) {
+					aImg.src = e.target.result;
+				};
+			})(img);
+			reader.readAsDataURL(file);
+			imgFlag = true;
+		}
+	}
+
 	function selectPlanner(planner_id) {
 		$.ajax({
 			type : "GET",
@@ -163,17 +249,26 @@
 		$("#" + planner_id + " .input-start").val($("#" + planner_id + " .start_date").text());
 		$("#" + planner_id + " .input-end").val($("#" + planner_id + " .end_date").text());
 		$("#" + planner_id + " input[name=planner_name]").focus();
+		
+		$("#" + planner_id + " .planner-img").css("display", "none");
+		$("#" + planner_id + " .planner-preview-img").css("display", "");
+		imgFlag = false;
 	}
 	
 	function cancelModify(planner_id) {
 		$("#" + planner_id + " div .planner-text-area").css("display", "");
 		$("#" + planner_id + " div .planner-modify-area").css("display", "none");
+		$("#" + planner_id + " .planner-img").css("display", "");
+		$("#" + planner_id + " .planner-preview-img").css("display", "none");
+		$("#" + planner_id + " .planner-preview-img").attr("src", $("#" + planner_id + " .planner-img").attr("src"));
+		$("#" + planner_id + " input[name=uploadfile]").val("");
 	}
 	
 	function submitModify(planner_id) {
 		var planner_name = $("#" + planner_id + " input[name=planner_name]").val();
 		var start_date = $("#" + planner_id + " input[name=start_date]").val();
 		var end_date = $("#" + planner_id + " input[name=end_date]").val();
+		var planner_img
 		
 		var data = {
 			planner_id : planner_id,
@@ -204,6 +299,30 @@
 					alert("에러가 발생했습니다.");
 				}
 			});
+			
+			if(imgFlag) {
+				var form = $("#planner-form" + planner_id)[0];
+				var formData = new FormData(form);
+				
+				$.ajax({
+					type : "POST",
+					url : "/file/planner",
+					data : formData,
+					cache : false,
+					contentType : false,
+					processData : false,
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},
+					success : function() {
+						console.log("success");
+						location.reload();
+					},
+					error : function(e) {
+						console.log(e);
+					}
+				})
+			}
 		}
 	}
 	
@@ -232,8 +351,9 @@
 			<div class="row">
 				<c:forEach var="planner" items="${plannerList }">
 					<div class="col-md-4" id="${planner.planner_id }">
-						<div class="planner-area" >
-							<img class="card-pl-img" src="/resources/img/planner/${ planner.planner_img_path}"  onclick="selectPlanner(${planner.planner_id})" onerror="this.src='/resources/img/profile/gada'">
+						<div class="planner-area hvr-float-shadow">
+							<img class="card-pl-img planner-img" src="/resources/img/planner/${ planner.planner_img_path}"  onclick="selectPlanner(${planner.planner_id})" onerror="this.src='/resources/img/profile/gada'">
+							<img class="card-pl-img planner-preview-img" src="/resources/img/planner/${ planner.planner_img_path}" onerror="this.src='/resources/img/profile/gada'" style="display:none"/>				
 							<div class="planner-text-area">
 								<strong class="planner_name">${planner.planner_name }</strong>&nbsp; 
 								<span class="badge dday">
@@ -242,6 +362,7 @@
 								<br><br>
 								<span class="start_date">${planner.start_date }</span> ~ <span class="end_date">${planner.end_date }</span>
 								<div class="gada-btn-group">
+									<button type="button" class="btn gada-btn" onclick="location.href='http://localhost:8282/map/${planner.planner_id}?schedule_date=${planner.start_date}'" style="position: absolute; top: 3%; right: 8%;"><i class="fas fa-map-marked-alt"></i></button>
 									<button type="button" class="btn gada-btn-reverse" onclick="modifyPlanner(${planner.planner_id})">수정</button>
 									<button type="button" class="btn gada-btn" onclick="deletePlanner(${planner.planner_id})">삭제</button>
 								</div>
@@ -252,12 +373,18 @@
 									<br><br>
 									<input name="start_date" type="text" placeholder="YYYY/MM/DD" class="planner-modify-input-cal input-start" autocomplete="off"/> ~ 
 									<input name="end_date" type="text" placeholder="YYYY/MM/DD" class="planner-modify-input-cal input-end" autocomplete="off"/>
-									<div class="gada-btn-group">
-										<button type="button" class="btn gada-btn-reverse" onclick="cancelModify(${planner.planner_id})">취소</button>
-										<button type="button" class="btn gada-btn" onclick="submitModify(${planner.planner_id})">확인</button>
-									</div>
 								</form>
+								<div class="gada-btn-group">
+									<button type="button" class="btn gada-btn-reverse" onclick="cancelModify(${planner.planner_id})">취소</button>
+									<button type="button" class="btn gada-btn" onclick="submitModify(${planner.planner_id})">확인</button>
+									<form id="planner-form${planner.planner_id }" enctype="multipart/form-data" method="POST">
+										<label for="file_${planner.planner_id }" class="btn gada-btn-reverse uploadFile">커버이미지 변경</label>
+										<input type="file" name="uploadfile" id="file_${planner.planner_id }" class="input-file" onchange="previewImage(this,${planner.planner_id })">
+										<input type="hidden" name="planner_id" value="${planner.planner_id }" />
+									</form>
+								</div>
 							</div>
+							
 						</div>
 					</div>
 				</c:forEach>

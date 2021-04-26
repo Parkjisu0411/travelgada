@@ -1,11 +1,9 @@
 package com.gada.travelgada.controller;
 
+import java.sql.Date;
 import java.text.ParseException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.domain.ScheduleVO;
+import com.gada.travelgada.service.MainService;
 import com.gada.travelgada.service.PlannerService;
 import com.gada.travelgada.service.ScheduleService;
 import com.gada.travelgada.utils.DateCalculator;
@@ -33,11 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class ScheduleController {
 	
-	@Autowired
 	private ScheduleService scheduleService;
-	
-	@Autowired
 	private PlannerService plannerService;
+	private MainService mainService;
 	
 	@GetMapping("/planner/schedule")
 	public ModelAndView getSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member) throws ParseException {
@@ -57,7 +54,10 @@ public class ScheduleController {
 			}
 			
 			List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
-			modelAndView.addObject("planner_id", planner.getPlanner_id());
+			
+			modelAndView.addObject("planner", planner);
+			modelAndView.addObject("country", mainService.getCountry());
+			
 			modelAndView.addObject("plannerList", plannerList);
 			modelAndView.addObject("dateList", dateList);
 			modelAndView.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));
@@ -70,36 +70,6 @@ public class ScheduleController {
 			modelAndView.setViewName("planner/schedule");
 			
 		}
-		return modelAndView;
-	}
-	
-	@GetMapping("/planner/schedule/callback")
-	public ModelAndView callBackSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "0") int planner_id) throws ParseException {
-		List<PlannerVO> plannerList = plannerService.getPlanner(member.getUsername());
-		PlannerVO planner = null;
-		if(planner_id != 0) {
-			for(PlannerVO vo : plannerList) {
-				if(vo.getPlanner_id() == planner_id) {
-					planner = vo;
-				}
-			}
-		} else {
-			planner = plannerList.get(0);
-		}
-		
-		List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
-		modelAndView.addObject("planner_id", planner.getPlanner_id());
-		modelAndView.addObject("plannerList", plannerList);
-		modelAndView.addObject("dateList", dateList);
-		modelAndView.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));
-		modelAndView.addObject("cityList", scheduleService.getCity(planner.getPlanner_id()));
-		modelAndView.addObject("vehicleList", scheduleService.getVehicle(planner.getPlanner_id()));
-		modelAndView.addObject("scheduleList", scheduleService.getSchedule(planner.getPlanner_id()));
-		modelAndView.addObject("hotelList", scheduleService.getHotel(planner.getPlanner_id()));
-		modelAndView.addObject("dayBudget", scheduleService.getBudget(planner.getPlanner_id()));
-		
-		modelAndView.setViewName("planner/callback_schedule");
-		
 		return modelAndView;
 	}
 	
@@ -116,23 +86,15 @@ public class ScheduleController {
 		return entity;
 	}
 	
-	@PostMapping("/planner/schedule2")
-	public ResponseEntity<Map<String,String>> insertSchedule(@RequestBody ScheduleVO scheduleVO) {
-		ResponseEntity<Map<String,String>> entity = null;
-		Map<String, String> data = new HashMap<>();
+	@PostMapping("/planner/schedule")
+	public ResponseEntity<ScheduleVO> insertSchedule(@RequestBody ScheduleVO scheduleVO) {
+		ResponseEntity<ScheduleVO> entity = null;
 		try {
 			scheduleService.insertSchedule(scheduleVO);
 			ScheduleVO result = scheduleService.getLastSchedule(scheduleVO.getPlanner_id());
-			data.put("planner_id",String.valueOf(result.getPlanner_id()));
-			data.put("latitude", String.valueOf(result.getLatitude()));
-			data.put("longitude", String.valueOf(result.getLongitude()));
-			data.put("schedule_id", String.valueOf(result.getSchedule_id()));
-			data.put("schedule_content", result.getSchedule_content());
-			data.put("schedule_order", String.valueOf(result.getSchedule_order()));
-			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.OK);
+			entity = new ResponseEntity<ScheduleVO>(result, HttpStatus.OK);
 		} catch(Exception e) {
-			data.put("error", e.getMessage());
-			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<ScheduleVO>(new ScheduleVO(), HttpStatus.BAD_REQUEST);
 			log.info("ERROR Message : " + e.getMessage());
 		}
 		return entity;
@@ -147,6 +109,19 @@ public class ScheduleController {
 		} catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@GetMapping("/planner/schedule/budget")
+	public ResponseEntity<Integer> getBudget(@RequestParam("schedule_date") String date) {
+		ResponseEntity<Integer> entity = null;
+		log.info("----------------------------- date >>" + date);
+		try {
+			entity = new ResponseEntity<Integer>(scheduleService.getBudgetByDate(Date.valueOf(date)), HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<Integer>(0, HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}

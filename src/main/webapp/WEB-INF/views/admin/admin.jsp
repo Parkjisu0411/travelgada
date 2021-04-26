@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,14 +13,9 @@
 	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
   
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
-		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
-		crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css" integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg==" crossorigin="anonymous" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
-    	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
-    	crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js" integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A==" crossorigin="anonymous"></script>
     	
 	<!-- simplebar CSS-->
  	<link href="/resources/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
@@ -42,6 +36,10 @@
 	<script src="/resources/assets/js/jquery.min.js"></script>
 	<script src="/resources/assets/js/popper.min.js"></script>
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
+	
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   
 	<title>회원 관리</title>
   
@@ -216,22 +214,27 @@
    				<ul class="sidebar-menu do-nicescrol">
       				<li>
         				<a href="/admin">
-          					<i class="zmdi zmdi-view-dashboard"></i> <span>회원 관리</span>
+          					<i class="fas fa-user-cog"></i> <span>회원 관리</span>
+        				</a>
+      				</li>
+      				<li>
+        				<a href="/admin/room">
+          					<i class="fas fa-comment-dots"></i> <span>1:1 채팅 문의</span>
         				</a>
       				</li>
 					<li>
-						<a href="/visitor"> <i class="zmdi zmdi-invert-colors"></i>
-							<span>방문자 통계</span>
+						<a href="/visitor">
+							<i class="fas fa-chart-line"></i> <span>방문자 통계</span>
 						</a>
 					</li>
 					<li>
 						<a href="/statistic/sales">
-							<i class="zmdi zmdi-format-list-bulleted"></i> <span>매출 통계</span>
+							<i class="fas fa-hand-holding-usd"></i> <span>매출 통계</span>
 						</a>
 					</li>
 					<li>
 						<a href="/statistic/destination">
-							<i class="zmdi zmdi-grid"></i> <span>여행지 통계</span>
+							<i class="fas fa-globe-americas"></i> <span>여행지 통계</span>
 						</a>
 					</li>
 				</ul>

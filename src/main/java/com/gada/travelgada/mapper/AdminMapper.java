@@ -11,7 +11,6 @@ import com.gada.travelgada.domain.ShippingLocVO;
 @Mapper
 public interface AdminMapper {
 
-	//member list
 	public List<MemberVO> getMemberList(int nowPage, int amount);
 
 	//총 member 수
