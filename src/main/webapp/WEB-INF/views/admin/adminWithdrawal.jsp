@@ -43,7 +43,9 @@
 	<script src="/resources/assets/js/popper.min.js"></script>
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
 	
-	<title>탈퇴한 회원 관리</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+	
+	<title>탈퇴 회원 관리</title>
 
 <style>
 /* 탈퇴된 경우 */

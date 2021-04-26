@@ -1,206 +1,403 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
+<!-- jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- font -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
+<!-- GADA CSS -->
+<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/utils.css">
+<!-- slick -->
+<link rel="stylesheet" type="text/css" href="/resources/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/slick/slick-theme.css"/>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/resources/slick/slick.min.js"></script>
+<!-- jquery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+
 <meta charset="UTF-8">
-
-<title>Schedule</title>
-	
-	<!-- jquery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<!-- bootstrap -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- font -->
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
-	<!-- GADA CSS -->
-	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
-	<!-- slick -->
-	<link rel="stylesheet" type="text/css" href="/resources/slick/slick.css"/>
-	<link rel="stylesheet" type="text/css" href="/resources/slick/slick-theme.css"/>
-	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<script type="text/javascript" src="/resources/slick/slick.min.js"></script>
-	<!-- jquery UI -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
-
+<title>일정</title>
 <style>
-.budget {
-	color: grey;
-	font-size: 15px;
-}
+	.insert-cancel-btn {
+		float: right;
+		color: #1dcad3;
+		font-size: 24px;
+	}
+	
+	.insert-cancel-btn:hover {
+		cursor: pointer;
+		color: #189fa6;
+	}
 
-.order-control {
-	/* display: inline-block; */
-	float: right;
-	color: #A2A2A2;
-	display: none;
-}
-
-.date-btn {
-	height: 50px !important;
-	margin: 10px;
-	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
-	font-family: 'GongGothicMedium';
-	color: white;
-	font-size: 18px;
-	background-color: #1dcad3;
-	/* width:100px; */
-	border-radius: 15px;
-}
-
-.delete-btn {
-	display: inline-block;
-	float: right;
-	color: #A2A2A2;
-	display: none;
-}
-
-.input-budget-after {
-	color: #A2A2A2;
-	display: none;
-}
-
-.input-budget-area {
-	width: 70px;
-	border: none;
-	border-bottom: 2px solid gray;
-}
-
-#map {
-	width: 300px;
-	height: 300px;
-	display: none;
-	overflow: hidden;
-	float: right;
-}
-
-.ui-state-highlight {
-	width: 200px;
-	height: 2px;
-	background-color: grey;
-}
-
-.insert-btn {
-	text-align: center;
-	color: #A2A2A2;
-	display: none;
-}
-
-thead {
-	text-align: center;
-}
-
-.headline {
+	.gada-btn-group {
+		text-align: right;
+	}
+	
+	.input {
+		padding-left: 40px;
+		font-family: 'GongGothicMedium';
+	}
+	
+	.input input {
+		margin-left: 15px;
+		border-radius: 5px;
+		border: none;
+		background-color: white;
+		margin: 5px;
+		width: 200px;
+	}
+	
+	.input input:focus {
+		outline: none;
+		border: 2px solid #1dcad3;
+	}
+	
+	.budget {
+		color: grey;
+		font-size: 16px;
+	}
+	
+	.order-control {
+		display: inline-block;
+		float: right;
+		color: #A2A2A2;
+	}
+	
+	.date-btn {
+		height: 50px !important;
+		margin: 10px;
+		border: solid 1px;
+		font-family: 'GongGothicMedium';
+		color: white;
+		font-size: 18px;
+		background-color: #1dcad3;
+		border-radius: 15px;
+	}
+	
+	.date-btn:hover {
+		background-color: #189fa6;
+		border: none;
+	}
+	
+	.delete-btn {
+		display: none;
+		float: right;
+		color: #A2A2A2;
+	}
+	
+	.delete-btn:hover {
+		cursor: pointer;
+	}
+	
+	input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+	
+	.input-budget-after {
+		color: #1dcad3;
+		display: none;
+		font-size: 0.8em;
+		opacity: 0.8;
+	}
+	
+	#input-budget-area {
+		width: 100px;
+		border: none;
+		border-radius: 30px;
+		background-color: #abf1f5;
+	}
+	
+	#input-budget-area:focus {
+		outline: none;
+	}
+	
+	#map {
+	  width: 450px;
+	  height: 300px;
+	  overflow: hidden;
+	  margin: auto;
+	  margin-bottom: 10px;
+	  border-radius: 10px;
+	}
+	
+	.ui-state-highlight{
+	  width:200px;
+	  height: 2px;
+	  background-color: #1dcad3;
+	}
+	
+	.table td {
+		position: relative;
+		font-size: 18px;
+	}
+	
+	.insert-btn {
+		text-align: center;
+		color: #1dcad3;
+		position: absolute;
+		bottom: 3%;
+		right: 50%;
+	}
+	
+	.insert-btn:hover {
+		cursor: pointer;
+	}
+	
+	.table thead th {
+		border-top: 2px solid #1dcad3 !important;
+		border-bottom: 2px solid #1dcad3 !important;
+	}
+	
+	.table {
+		font-family: 'IBMPlexSansKR-Light';
+		font-weight: bold;
+		text-align: center;
+	}
+	
+	.table-schedule-hr {
+		font-family: 'GongGothicLight';
+		font-size: 20px;
+	}
+	
+	.date-area-country {
+		font-size: 20px;
+		color: #CFD2D3;
+		font-family: 'GongGothicMedium';
+	}
+	
+	.date-area-date {
+		font-size: 20px;
+		color: #1dcad3;
+		font-family: 'GongGothicMedium';
+	}
+	
+	.date-area-day {
+		font-size: 24px;
+		color: #FF7472;
+		font-family: 'GongGothicMedium';
+	}
+	
+	.schedule-area {
+		text-align: left;
+	}
+	
+	.budget-area {
+		font-size: 20px;
+		text-align: right;
+		vertical-align: middle !important;
+	}
+	
+	.city-area {
+		text-align: center;
+	}
+	
+	.vehicle-area {
+		text-align: left;
+	}
+	
+	.hotel-area {
+		text-align: left;
+	}
+	
+	h1 {
+		margin-left: 30px;
+	}
+	
+	.introduction{
+		font-family: 'GongGothicMedium';
+		color: #CFD2D3;
+		font-size: 24px;
+	}
+	
+	.bar{
+		color: #b4b5b4;
+		font-size:20pt;
+		font-weight:bold;
+		margin-left: 30px;
+	}
+	
+	.planner-area {
+		font-family: 'GongGothicMedium';
+	}
+	
+	.insert-schedule-form {
+		padding: 10px;
+		width: 570px;
+		height: 490px;
+		position: absolute;
+		top: 3%;
+		left: 100%;
+		background-color: #f5f5f5;
+		border-radius: 10px;
+		text-align: left;
+		z-index: 1;
+		animation: slit-in-vertical 0.45s ease-out both;
+	}
+	@keyframes slit-in-vertical {
+	  0% {
+	    -webkit-transform: translateZ(-800px) rotateY(90deg);
+	            transform: translateZ(-800px) rotateY(90deg);
+	    opacity: 0;
+	  }
+	  54% {
+	    -webkit-transform: translateZ(-160px) rotateY(87deg);
+	            transform: translateZ(-160px) rotateY(87deg);
+	    opacity: 1;
+	  }
+	  100% {
+	    -webkit-transform: translateZ(0) rotateY(0);
+	            transform: translateZ(0) rotateY(0);
+	  }
+	}
+	@keyframes slit-out-vertical {
+	  0% {
+	    -webkit-transform: translateZ(0) rotateY(0);
+	            transform: translateZ(0) rotateY(0);
+	    opacity: 1;
+	  }
+	  54% {
+	    -webkit-transform: translateZ(-160px) rotateY(87deg);
+	            transform: translateZ(-160px) rotateY(87deg);
+	    opacity: 1;
+	  }
+	  100% {
+	    -webkit-transform: translateZ(-800px) rotateY(90deg);
+	            transform: translateZ(-800px) rotateY(90deg);
+	    opacity: 0;
+	  }
+	}
+	.headline {
 	font-size: 30px;
 	color: #1dcad3;
 	font-family: 'GongGothicMedium';
 }
-
-.table thead {
-	border-top: 2px solid #1dcad3;
-	border-bottom: 2px solid #1dcad3;
-}
-
-.table {
-	font-family: 'IBMPlexSansKR-Light';
-	font-weight: bold;
-	text-align: center;
-}
-
-.table-schedule-hr {
-	font-family: 'GongGothicLight';
-	font-size: 20px;
-}
-
-.date-area {
-	font-family: 'GongGothicMedium';
-}
-
-.schedule-area {
-	text-align: left;
-}
-
-.budget-area {
-	text-align: right;
-}
-
+	
+	
 </style>
-
 <script type="text/javascript">
 	function sleep(ms) {
 	  return new Promise(resolve=>setTimeout(resolve, ms));
 	}
-
-	//예산 추가/수정
-	function inputBudget(obj) {
-		$(obj).html("<input class='input-budget-area' type='number' name='input-budget-area'>₩</input>");
-		$(obj).children(".input-budget-area").focus();
-		$(obj).children(".input-budget-area").blur(function() {
-			if(!$(obj).children(".input-budget-area").val()) {
-				$(obj).html("<i class='fas fa-plus'></i>");				
+	
+	function changeCountry(Date) {
+		
+	}
+	
+	//날짜 추가
+	function inputDate() {
+		var date = new Date('${planner.end_date}');
+		date.setDate(date.getDate() + 1);
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		if(month < 10) {
+			month = "0" + month;
+		}
+		var day = date.getDate();
+		
+		var next = year + "-" + month + "-" + day;
+		
+		var data = {
+			planner_id : ${planner.planner_id},
+			planner_name : '${planner.planner_name}',
+			start_date : '${planner.start_date}',
+			end_date : next
+		}
+		console.log(data);
+		
+		$.ajax({
+			type : "PUT",
+			url : "/planner/" + ${planner.planner_id},
+			data : JSON.stringify(data),
+			contentType : "application/json",
+			cache : false,
+			beforeSend : function(xhr){
+  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(result) {
+				location.reload();
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
 			}
+		})
+	}
+	
+	//
+	//예산 추가/수정
+	function inputBudget(schedule_id) {
+		$("#" + schedule_id + " .input-budget-after").replaceWith("<input id='input-budget-area' type='number' ></input>")
+		$("#input-budget-area").focus();
+		$("#input-budget-area").blur(function() {
+			$("#input-budget-area").replaceWith("<span class='input-budget-after' onclick='inputBudget(" + schedule_id + ")'>예산 추가하기</span>");
 		});
-		$(obj).children(".input-budget-area").keydown(function(key) {
+		$("#input-budget-area").keydown(function(key) {
 			if(key.keyCode == 13) {
-				data = {
-					budget : $(obj).children(".input-budget-area").val(),
-					schedule_id : $(obj).siblings(".delete-btn").attr("id")
-				};
-				$.ajax({
-					type : "PUT",
-					url : "/planner/schedule",
-					data : JSON.stringify(data),
-					contentType : "application/json",
-					cache : false,
-					beforeSend : function(xhr){
-		  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-					},
-					success : function(result) {
-						var now = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total').text();
-						var budgetObj = $(obj).parent().parent().parent().children(".budget-area").children(".budget-total");
-						if(!$(obj).children(".input-budget-area").val()) {
-							$(obj).html("<i class='fas fa-plus'></i>");		
-						} else {
-							$(obj).replaceWith($("<span class='budget' onclick='modifyBudget(this)'>(" + $(obj).children(".input-budget-area").val() + "₩)</span>"));
-							var plus = $(obj).children(".input-budget-area").val();
-							var total = parseInt(now) + parseInt(plus);
-							budgetObj.html(total);
+				var budget = $("#input-budget-area").val();
+				if(!budget) {
+					$("#input-budget-area").blur();
+				} else {
+					data = {
+						budget : budget,
+						schedule_id : schedule_id
+					};
+					$.ajax({
+						type : "PUT",
+						url : "/planner/schedule",
+						data : JSON.stringify(data),
+						contentType : "application/json",
+						cache : false,
+						beforeSend : function(xhr){
+			  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+						},
+						success : function(result) {
+							$("#input-budget-area").replaceWith("<span class='budget' onclick='modifyBudget(" + schedule_id + ")'>(" + budget + "₩)</span>");
+							calBudget($("#" + schedule_id).parent().parent().attr("id"));
+						},
+						error : function(e) {
+							console.log(e);
+							alert("에러가 발생했습니다.");
 						}
-					},
-					error : function(e) {
-						console.log(e);
-						alert("에러가 발생했습니다.");
-					}
-				});
+					});
+				}
 			}
 		});
 	}
 	
-	function modifyBudget(obj) {
-		var nowHtml = $(obj).text();
-		var now = $(obj).text().substr(1, $(obj).text().length - 3);
-		console.log(now);
-		$(obj).html("<input class='input-budget-area' type='number' name='input-budget-area' value='" + now + "'>₩</input>");
-		$(obj).children(".input-budget-area").focus();
-		$(obj).children(".input-budget-area").blur(function() {
-			$(obj).html(nowHtml);
+	function modifyBudget(schedule_id) {
+		var budget = $("#" + schedule_id + " .budget");
+		var now = $(budget).text().substr(1, $(budget).text().length - 3);
+		$(budget).replaceWith("<input id='input-budget-area' type='number' value='" + now + "'></input>");
+		$("#input-budget-area").focus();
+		$("#input-budget-area").blur(function() {
+			$("#input-budget-area").replaceWith("<span class='budget' onclick='modifyBudget(" + schedule_id + ")'>(" + now + "₩)</span>");
 		})
-		$(obj).children(".input-budget-area").keydown(function(key) {
+		$("#input-budget-area").keydown(function(key) {
 			if(key.keyCode == 13) {
-				var next = $(obj).children(".input-budget-area").val();
+				var next = $("#input-budget-area").val();
 				data = {
 					budget : next,
-					schedule_id : $(obj).siblings(".delete-btn").attr("id")
+					schedule_id : schedule_id
 				};
+				console.log(data);
 				$.ajax({
 					type : "PUT",
 					url : "/planner/schedule",
@@ -211,18 +408,12 @@ thead {
 		  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 					},
 					success : function(result) {
-						var total = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total').text();
-						var budgetObj = $(obj).parent().parent().parent().children(".budget-area").children(".budget-total");
 						if(!next) {
-							$(obj).replaceWith($("<span class='input-budget-after' onclick='inputBudget(this)'><i class='fas fa-plus'></i></span>"));
-							var total = parseInt(total) - parseInt(now);
-							budgetObj.html(total);
+							$("#input-budget-area").replaceWith("<span class='input-budget-after' onclick='inputBudget(" + schedule_id + ")'>예산 추가하기</span>");
 						} else {
-							$(obj).html(nowHtml);
-							$(obj).text("(" + next + "₩)");
-							var total = parseInt(total) - parseInt(now) + parseInt(next);
-							budgetObj.html(total);
+							$("#input-budget-area").replaceWith("<span class='budget' onclick='modifyBudget(" + schedule_id + ")'>(" + next + "₩)</span>");
 						}
+						calBudget($("#" + schedule_id).parent().parent().attr("id"));
 					},
 					error : function(e) {
 						console.log(e);
@@ -235,6 +426,8 @@ thead {
 	//
 	//일정 순서 재정렬
 	function reOrder(date) {
+		console.log(date);
+		console.log("reOrder()");
 		var size = $("#" + date + " .order").size();
 		for(var i = 0; i < size; i++) {
 			$("#" + date + " .order").eq(i).html(i+1 + ". ");
@@ -247,10 +440,9 @@ thead {
 			var index = i + 1;
 			var data = {
 				schedule_order : index,
-				schedule_id : $("#" + date + " .schedule-area .delete-btn").eq(i).attr('id'),
+				schedule_id : $("#" + date + " .schedule-area .content-box").eq(i).attr('id'),
 				budget : -1
 			};
-			
 			$.ajax({
 				type : "PUT",
 				url : "/planner/schedule",
@@ -270,6 +462,23 @@ thead {
 		}
 	}
 	//
+	
+	// 비용 계산
+	function calBudget(date) {
+		$.ajax({
+			type : "GET",
+			url : "/planner/schedule/budget?schedule_date=" + date,
+			cache : false,
+			success : function(result) {
+				$("#" + date + " .budget-total").html(result);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
+	//
+	
 	//text parsing to json object
 	$.fn.serializeObject = function() {
 		var o = {};
@@ -287,52 +496,30 @@ thead {
 		return o;
 	};
 	//
+	
 	//버튼 스크롤 이동
 	function moveTo(date) {
 		var offset = $("#" + date).offset();
 		//헤더의 크기 52를 빼줌.
-		$("html, body").animate({scrollTop : offset.top - 52}, 400);
+		$("html, body").animate({scrollTop : offset.top - 82}, 400);
 	}
 	//
-	//일정 추가 테이블 삭제
-	function remove(obj) {
-		$(obj).parent().parent().parent().slideUp(400);
-		$("#map").slideUp(400);
-		setTimeout(function() {
-				$(obj).parent().parent().parent().parent().parent().delay(500).remove();
-			}, 350);
-	}
-	//
+	
 	//delete function
-	function deleteSchedule(obj) {
-		console.log("delete");
-		
-		var date = $(obj).parent().parent().parent().attr("id");
-		var schedule = $(obj).parent();
-		var budget = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total');
-		var now = $(obj).siblings('.budget').text().substr(1, $(obj).siblings('.budget').text().length-3);
-		var total = $(obj).parent().parent().parent().children('.budget-area').children('.budget-total').text();
-		var schedule_type = $(obj).parent().parent().attr('class');
-		if(!now) {
-			var next = total
-		} else {
-			var next = parseInt(total) - parseInt(now);
-		}
-		
+	function deleteSchedule(schedule_id, schedule_date, schedule_type_id) {
  		$.ajax({
-			type : "DELETE",
-			url : "/planner/schedule/" + $(obj).attr('id'),
+			type : "DELETE",	
+			url : "/planner/schedule/" + schedule_id,
 			cache : false,
 			beforeSend : function(xhr){
 	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 			},
 			success : function(result) {
-				console.log(result);
-				schedule.remove();
-				budget.html(next);
-				if(schedule_type == 'schedule-area ui-sortable') {
-					reOrder(date);
-					reOrderDB(date);
+				calBudget(schedule_date);
+				$("#" + schedule_id).remove();
+				if(schedule_type_id == "4") {
+					reOrder(schedule_date);
+					reOrderDB(schedule_date);
 				}
 			},
 			error : function(e) {
@@ -343,23 +530,19 @@ thead {
 	}
 	//
 	
-	//
-	function submitForm(obj) {
-		if(schedule_content = $("input[name=schedule_content]").val() == "") {
-			schedule_content = $("input[name=schedule_content]").val($("#search-area").val());
+	// submit insert form
+	function submitForm() {
+		if($("#input-content").val() == "") {
+			$("#input-content").val($("#search-area").val());
 		}
-		var formData = $(obj).parent().parent().serializeObject();
-		var jsonForm = JSON.stringify(formData);
 		
-		var schedule_date = $("input[name=schedule_date]").val();
-		var schedule_content = $("input[name=schedule_content]").val();
-		var schedule_type_id = $("input[name=schedule_type_id]").val();
-		var budget = $("input[name=budget]").val();
+		var formData = $("#insert-schedule-form").serializeObject();
+		var jsonForm = JSON.stringify(formData);
 		
 		if(confirm("저장하시겠습니까?")) {
 			$.ajax({
 	            type: "POST",
-	            url: "/planner/schedule2",
+	            url: "/planner/schedule",
 	            data : jsonForm,
 	            dataType : "json",
 				contentType : "application/json",
@@ -367,103 +550,61 @@ thead {
 	            beforeSend : function(xhr){
 	  	             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 				},
-				success : function(data){
-					remove(obj);
-					console.log(data);
-					var schedule_content = data.schedule_content;
-					var schedule_order = data.schedule_order;
-					var schedule_id = data.schedule_id;
-					var latitude = data.latitude;
-					var longitude = data.longitude;
-					var planner_id = data.planner_id;
+				success : function(result){
+					cancel();
 					var content = "";
 					
-					switch(schedule_type_id) {
-						case "1" :
-							content += "<div>";
-							content += "    <span class='content'>" + schedule_content + "</span>";
-							content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
+					switch(result.schedule_type_id) {
+						case 1 :
+							content += "<div class='content-box' id=" + result.schedule_id + " >";
+							content += "    <span class='content'>" + result.schedule_content + "</span>";
+							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", '" + result.schedule_date + "', " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
 							content += "</div>";
-							$("#" + schedule_date).children(".city-area").children("div.insert-btn").before(content);
+							$("#" + result.schedule_date + " .city-area .insert-btn").before(content);
 							break
-						case "2" :
-							if(budget == "") {
-								content += "<div>";
-								content += "    <span class='content'>" + schedule_content + "</span>";
-								content += "	<span class='input-budget-after' onclick='inputBudget(this)'><i class='fas fa-plus'></i></span>";
-								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-								content += "</div>";
-								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-								var next = parseInt(curr);
+						case 2 :
+							content += "<div class='content-box' id=" + result.schedule_id + ">";
+							content += "    <span class='content'>" + result.schedule_content + "</span>";
+							if(result.budget == "") {
+								content += "	<span class='input-budget-after' onclick='inputBudget(" + result.schedule_id + ")'>예산 추가하기</i></span>";
 							} else {
-								content += "<div>";
-								content += "    <span class='content'>" + schedule_content + "</span>";
-								content += "	<span class='budget' onclick='modifyBudget(this)'>(" + budget + "₩)</span>";
-								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-								content += "</div>";
-								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-								var next = parseInt(curr) + parseInt(budget);
+								content += "	<span class='budget' onclick='modifyBudget(" + result.schedule_id + ")'>(" + result.budget + "₩)</span>";
 							}
-							$("#" + schedule_date).children(".hotel-area").children("div.insert-btn").before(content);
-							$("#" + schedule_date).children(".budget-area").children(".budget-total").html(next);
-							break
-						case "3" :
-							if(budget == "") {
-								content += "<div>";
-								content += "    <span class='content'>" + schedule_content + "</span>";
-								content += "	<span class='input-budget-after' onclick='inputBudget(this)'><i class='fas fa-plus'></i></span>";
-								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-								content += "</div>";
-								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-								var next = parseInt(curr);
-							} else {
-								content += "<div>";
-								content += "    <span class='content'>" + schedule_content + "</span>";
-								content += "	<span class='budget' onclick='modifyBudget(this)'>(" + budget + "₩)</span>";
-								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-								content += "</div>";
-								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-								var next = parseInt(curr) + parseInt(budget);
-							}
-							$("#" + schedule_date).children(".vehicle-area").children("div.insert-btn").before(content);
-							$("#" + schedule_date).children(".budget-area").children(".budget-total").html(next);
-							break
-						case "4" :
-							if(budget == "") {
-								content += "<div>";
-								content += "	<span class='order'>" + schedule_order + ".</span>";
-								content += "    <span class='content'>" + schedule_content + "</span>";
-								content += "	<span class='input-budget-after' onclick='inputBudget(this)'><i class='fas fa-plus'></i></span>";
-								content += "	<span class='order-control'>&nbsp;&nbsp;<i class='fas fa-bars'></i></span>";
-								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-								content += "</div>";
-								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-								var next = parseInt(curr);
-							} else {
-								content += "<div>";
-								content += "	<span class='order'>" + schedule_order + ".</span>";
-								content += "    <span class='content'>" + schedule_content + "</span>";
-								content += "	<span class='budget' onclick='modifyBudget(this)'>(" + budget + "₩)</span>";
-								content += "	<span class='order-control'>&nbsp;&nbsp;<i class='fas fa-bars'></i></span>";
-								content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
-								content += "</div>";
-								var curr = $("#" + schedule_date).children(".budget-area").children(".budget-total").text();
-								var next = parseInt(curr) + parseInt(budget);
-							}
-							$("#" + schedule_date).children(".schedule-area").children("div.insert-btn").before(content);
-							$("#" + schedule_date).children(".budget-area").children(".budget-total").html(next);
-							break
-						case "5" :
-							content += "<div>";
-							content += "    <span class='content'>" + schedule_content + "</span>";
-							content += "	<span class='latitude' style='display:none'>" + latitude + "</span>";
-							content += "	<span class='longitude' style='display:none'>" + longitude + "</span>";
-							content += "	<span class='this_planner_id' style='display:none'>" + planner_id + "</span>";
-							content += "    <span class='delete-btn' id=" + schedule_id + " onclick='deleteSchedule(this)'><i class='far fa-trash-alt'></i></span>";
+							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", '" + result.schedule_date + "', " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
 							content += "</div>";
-							$("#" + schedule_date).children(".country-area").children("div.insert-btn").before(content);
+							
+							$("#" + result.schedule_date + " .hotel-area .insert-btn").before(content);
+							break
+						case 3 :
+							content += "<div class='content-box' id=" + result.schedule_id + ">";
+							content += "    <span class='content'>" + result.schedule_content + "</span>";
+							if(result.budget == "") {
+								content += "	<span class='input-budget-after' onclick='inputBudget(" + result.schedule_id + ")'>예산 추가하기</span>";
+							} else {
+								content += "	<span class='budget' onclick='modifyBudget(" + result.schedule_id + ")'>(" + result.budget + "₩)</span>";
+							}
+							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", '" + result.schedule_date + "', " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
+							content += "</div>";
+							
+							$("#" + result.schedule_date + " .vehicle-area .insert-btn").before(content);
+							break
+						case 4 :
+							content += "<div class='content-box sortable-order' id=" + result.schedule_id + ">";
+							content += "	<span class='order'>" + result.schedule_order + ".</span>";
+							content += "    <span class='content'>" + result.schedule_content + "</span>";
+							if(result.budget == "") {
+								content += "	<span class='input-budget-after' onclick='inputBudget(" + result.schedule_id + ")'>예산 추가하기</span>";
+							} else {
+								content += "	<span class='budget' onclick='modifyBudget(" + result.schedule_id + ")'>(" + result.budget + "₩)</span>";
+							}
+							content += "	<span class='order-control'>&nbsp;&nbsp;<i class='fas fa-bars'></i></span>";
+							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", '" + result.schedule_date + "', " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
+							content += "</div>";
+							
+							$("#" + result.schedule_date + " .schedule-area .insert-btn").before(content);
 							break
 					}
+					calBudget(result.schedule_date);
 				},
 				error : function(e){
 					alert("오류가 발생했습니다.");
@@ -473,105 +614,102 @@ thead {
 		}
 	}
 	//
-	$(document).ready(function () {
-		//slick
-		$('.date-group').slick({
-			slide: 'button',
-			arrow:true,
-			infinite: false,
-			slidesToShow: 4,
-			slidesToScroll: 4,
-			prevArrow : "<img src='/resources/prev2.png' class='slick-prev'/>",      // 이전 화살표 모양 설정
-            nextArrow : "<img src='/resources/next2.png' class='slick-next'/>",      // 다음 화살표 모양 설정
-			responsive: [ // 반응형 웹 구현 옵션
-				{  
-					breakpoint: 960, //화면 사이즈 960px
-					settings: {
-						//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-						slidesToShow:3 ,
-						slidesToScroll:3
-					} 
-				},
-				{ 
-					breakpoint: 768, //화면 사이즈 768px
-					settings: {	
-						//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-						slidesToShow:2,
-						slidesToScroll:2
-					} 
-				}
-			]
-	   });
+	
+	// schedule type to schedule tyep id
+	function getScheduleTypeId(schedule_type) {
+		if(schedule_type == "country") {
+			return 5;
+		} else if(schedule_type == "city") {
+			return 1;
+		}  else if(schedule_type == "vehicle") {
+			return 3;
+		}  else if(schedule_type == "schedule") {
+			return 4;
+		}  else if(schedule_type == "hotel") {
+			return 2;
+		}
+	}
+	//
+	
+	// schedule type to kor
+	function parseKOR(schedule_type) {
+		if(schedule_type == "country") {
+			return "국가";
+		} else if(schedule_type == "city") {
+			return "도시";
+		}  else if(schedule_type == "vehicle") {
+			return "교통";
+		}  else if(schedule_type == "schedule") {
+			return "일정";
+		}  else if(schedule_type == "hotel") {
+			return "숙소";
+		}
+	}
+	//
+	// 
+	function cancel() {
+		$(".insert-schedule-form").css("animation", "slit-out-vertical 0.45s ease-in both");
+		setTimeout(function() {
+			$(".insert-schedule-form").delay(500).remove();
+		}, 350);
+	}
+	//
+	
+	// insert schedule function
+	async function insertSchedule(schedule_type, date, day) {
+		if($(".insert-schedule-form").length) {
+			cancel();
+			await sleep(500);
+		}
+		var schedule_type_id = getScheduleTypeId(schedule_type);
+		var type = parseKOR(schedule_type);
+		var area = schedule_type + "-area";
+		var insertForm = "";
+		insertForm += "<div class='insert-schedule-form'>";
+		insertForm += "<span class='date-area-day'>DAY " + day + "</span>";
+		insertForm += "<div class='insert-cancel-btn' onclick='cancel()'><i class='fas fa-times'></i></div>";
+		insertForm += "<div id='map'></div>"
+		insertForm += "<form id='insert-schedule-form'>";
+		insertForm += "<div class='input'>";
+		insertForm += "<input type='hidden' name = 'planner_id' value='${planner.planner_id }' />";
+		insertForm += "<input type='hidden' name = 'schedule_date' value='" + date + "' />";
+		insertForm += "<input type='hidden' name = 'schedule_type_id' value='" + schedule_type_id + "' />";
+		insertForm += "<input type='hidden' name = 'latitude' id='latitude' />";
+		insertForm += "<input type='hidden' name = 'longitude' id='longitude' />";
+		insertForm += "<input type='hidden' name = 'schedule_content' id='input-content' />";
+		insertForm += "<input id='search-area' class='form-control'  type='text' placeholder='" + type + " 입력하기.' />";
+		insertForm += "</div>";
+		if(schedule_type != 'city') {
+			insertForm += "<div class='input'>";
+			insertForm += "<input id='input-budget' class='form-control' type='number' placeholder='예산 입력하기.' name='budget'/>";
+			insertForm += "</div>";
+		} else {
+			insertForm += "<div class='input'>";
+			insertForm += "<input id='input-budget' class='form-control' readonly='readonly' type='number' placeholder='예산 입력하기.' name='budget'/>";
+			insertForm += "</div>";
+		}
+		insertForm += "<div class='gada-btn-group'>";
+		insertForm += "<button type='button' class='btn gada-btn' onclick='submitForm()'>저장하기</button>";
+		insertForm += "</div>";
+		insertForm += "</form>";
+		insertForm += "</div>";
 		
-		//추가하기 버튼 클릭 이벤트
-		$(".insert-btn").click(async function(e) {
-			e.preventDefault();
-			if($(".insert-area").length) {
-				remove($(".insert-cancel-btn"));
-				await sleep(500);
-			}
-			var date = $(this).parent().parent().attr("id");
-			var schedule_type  = $(this).parent().attr("class");
-			console.log(schedule_type);
-			var schedule_type_id;
-			var planner_id = $(this).parent().parent().children(".country-area").children("div").children(".this_planner_id").text();
-			if(schedule_type == "country-area") {
-				schedule_type_id = 5;
-			} else if(schedule_type == "city-area") {
-				schedule_type_id = 1;
-			}  else if(schedule_type == "vehicle-area") {
-				schedule_type_id = 3;
-			}  else if(schedule_type == "schedule-area ui-sortable") {
-				schedule_type_id = 4;
-			}  else if(schedule_type == "hotel-area") {
-				schedule_type_id = 2;
-			}
-			
-			var insertForm = "";
-			insertForm += "<tr class='insert-area'>";
-			insertForm += "<td colspan='7'>";
-			insertForm += "<div class='insert-box' style='display:none'>";
-			insertForm += "<form>";
-			insertForm += "<p style='font-family:yg-jalnan'>일정 추가하기</p>";
-			insertForm += "<div class='input'>";
-			insertForm += "<input type='hidden' name = 'planner_id' value='${planner_id}' />";
-			insertForm += "<input type='hidden' name = 'schedule_date' value='" + date + "' />";
-			insertForm += "<input type='hidden' name = 'schedule_type_id' value='" + schedule_type_id + "' />";
-			insertForm += "<input type='hidden' name = 'schedule_content' id='input-content' />";
-			insertForm += "<input type='hidden' name = 'latitude' id='latitude' />";
-			insertForm += "<input type='hidden' name = 'longitude' id='longitude' />";
-			insertForm += "<label for='search-area'>일정 검색</label>";
-			insertForm += "<input id='search-area' type='text' placeholder='일정을 검색하세요.' />";
-			insertForm += "</div>";
-			insertForm += "<div class='input'>";
-			insertForm += "<label for='input-budget'>예산</label>";
-			insertForm += "<input id='input-budget' type='number' placeholder='예산을 입력하세요.' name='budget'/>";
-			insertForm += "</div>";
-			insertForm += "<div class='btn-group'>";
-			insertForm += "<button type='button' class='n-btn btn-sm-btn-lighter insert-cancel-btn' onclick='remove(this)'>취소</button>";
-			insertForm += "<button type='button' class='n-btn btn-sm-btn-lighter insert-finish-btn' onclick='submitForm(this)'>저장</button>";
-			insertForm += "</div>";
-			insertForm += "</form>";
-			insertForm += "</div>";
-			insertForm += "<div id='map'></div>";
-			insertForm += "</td>";
-			insertForm += "</tr>";
-			
-			$(this).parent().parent().after(insertForm);
-			$(this).parent().parent().parent().children('.insert-area').children('td').children('div').slideDown(400);
-			$(this).parent().parent().parent().children('.insert-area').children('td').children('div.insert-box').css("display", "inline-block");
-			//center 설정
-			var latitude = $(this).parent().parent().children(".country-area").children("div").children(".latitude").text();
-			var longitude = $(this).parent().parent().children(".country-area").children("div").children(".longitude").text();
-			var country = {
-				lat: parseFloat(latitude),
-				lng: parseFloat(longitude)
-			};
-			//google map 시작
-			initMap(country);
-			
-		})
-		// GoogleMap
+		
+		$("#" + date + " ." + area).append(insertForm);
+		if(schedule_type == 'hotel') {
+			$(".insert-schedule-form").css("left", 0);
+			$(".insert-schedule-form").css("top", 100);
+		}
+		
+		var latitude = $("#" + date + " .latitude").text();
+		var longitude = $("#" + date + " .longitude").text();
+		var country = {
+			lat: parseFloat(latitude),
+			lng: parseFloat(longitude)
+		};
+		//google map 시작
+		initMap(country);
+		
 		function initMap(country) {
 	        var map = new google.maps.Map(document.getElementById('map'), {
 	          center: country,
@@ -633,24 +771,38 @@ thead {
 	        });
 	      }
 		
-		//Planner-select
-		$("#select-planner").on('change',function() {
-			var planner_id = this.value;
-			
-			$.ajax({
-				type : "GET",
-				url : "/planner/schedule/callback?planner_id=" + planner_id,
-				cache : false,
-				dataType : "html",
-				success : function(result) {
-					$("body > div.container").html(result);
+	}
+	//
+	$(document).ready(function () {
+		//slick
+		$('.date-group').slick({
+			slide: 'button',
+			arrows: true,
+			infinite: false,
+			slidesToShow: 4,
+			slidesToScroll: 4,
+			prevArrow : "<img src='/resources/prev2.png' class='slick-prev'/>",      // 이전 화살표 모양 설정
+            nextArrow : "<img src='/resources/next2.png' class='slick-next'/>",      // 다음 화살표 모양 설정
+			responsive: [ // 반응형 웹 구현 옵션
+				{  
+					breakpoint: 960, //화면 사이즈 960px
+					settings: {
+						//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+						slidesToShow:3 ,
+						slidesToScroll:3
+					} 
 				},
-				error : function(e) {
-					console.log(e);
-					alert("에러가 발생했습니다.");
+				{ 
+					breakpoint: 768, //화면 사이즈 768px
+					settings: {	
+						//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+						slidesToShow:2,
+						slidesToScroll:2
+					} 
 				}
-			});
-		})
+			]
+	   });
+		
 		//드래그 앤 드롭으로 일정 순서 변경하기
 		$(".schedule-area").sortable({
 			axis : 'y',
@@ -663,174 +815,157 @@ thead {
 	        	reOrderDB(date);
 	        }
 		});
-		//
-		//hover event
-	/* 	$(".content-box").hover(function() {
-			$(this).children(".input-budget-after").css("display","inline");
-		}, function() {
-			$(this).children(".input-budget-after").css("display", "none");
-		}) */
-		//
-		
 	});
 	
 	$(document).on("hover", ".content-box", function() {
 		$(".content-box").hover(function() {
 			$(this).children(".input-budget-after").css("display","inline");
+			$(this).children(".delete-btn").css("display", "inline-block");
 		}, function() {
 			$(this).children(".input-budget-after").css("display", "none");
+			$(this).children(".delete-btn").css("display", "none");
 		})
+		
+		//hover event
+		$(".order-control").hover(function() {
+			$(this).parent().css("color", "#1dcad3");
+			$(this).css("cursor", "pointer");
+		}, function() {
+			$(this).parent().css("color", "black");
+		})
+		//
 	});
 </script>
 <!-- google Map API -->
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDK3h87HvHsFJIOBZ7Vuo-9V6lqognoY2M&callback=initMap"></script>
-
 </head>
 <body>
 
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	
-	<div class="container">
-	
+	<div class="container-fluid gada-headline">
 		<!-- headline -->
-		<p class="headline"><span style="color: #303E57">" ${member_id} "</span> 님의 일정입니다.</p>
-		<br/>
-		<!-- planner option -->
-		<%-- <form>
-				<div class="col-md-12"> 
-					<select class="form-control" name="planner_id" id="select-planner" style="font-family: 'yg-jalnan'">
-						<c:forEach var="planner" items="${plannerList}">
-							<c:if test="${planner.planner_id eq planner_id}">
-								<option value='${planner.planner_id}' style="font-family: 'yg-jalnan'" selected>
-							  		${planner.planner_name}&nbsp;&nbsp; ${planner.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${planner.end_date}
-								</option>
-							</c:if>
-							<c:if test="${planner.planner_id ne planner_id}">
-								<option value='${planner.planner_id}' style="font-family: 'yg-jalnan'">
-							  		${planner.planner_name}&nbsp;&nbsp; ${planner.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${planner.end_date}
-								</option>
-							</c:if>
-						</c:forEach>
-					</select>
-				</div>
-		</form> --%>
+		<!-- <h1>Schedule</h1> -->
+		<p class="headline"><span style="color: #303E57">&nbsp;&nbsp;" ${member_id} "</span> 님의 일정입니다.</p>
+		<!-- <span class="bar">|</span><span class="introduction"> 가다와 함께 여행을 계획해 보세요!</span><br /><br /> -->
+		
+	</div>
+	<div class="container-fluid">
+		<hr>
 		<!-- date button -->
 		<div class="col-md-12">
 			<div class="date-group">
 				<c:forEach var="date" items="${dateList }">
-					<button class="btn btn-lg date-btn" onclick="moveTo('${date}')">
+					<button class="btn btn-secondary btn-lg date-btn" onclick="moveTo('${date}')">
 						${date}
 					</button>
 				</c:forEach>
 			</div>
 		</div>
+		<!-- end date button -->
 		<!-- schedule table -->
 		<div class="col-md-12">
-			<table class="table" id="table-schedule">
-				<colgroup>
-					<col width="15%" />
-					<col width="10%" />
-					<col width="10%" />
-					<col width="10%" />
-					<col width="25%" />
-					<col width="15%" />
-					<col width="15%" />
-				</colgroup>
-				<thead>
-					<tr class="table-schedule-hr">
-						<td>날짜</td>
-						<td>국가</td>
-						<td>도시</td>
-						<td>교통</td>
-						<td>일정</td>
-						<td>숙소</td>
-						<td>비용</td>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="date" items="${dateList}">
-						<tr id="${date }">
-							<td class="date-area">${date}</td>
-							<td class="country-area">
-								<c:forEach var="country" items="${countryList }">
-									<c:if test="${country.schedule_date eq date}">
-										<div class="content-box">
-											<span class="content">${country.schedule_content }</span>
+			<div class="planner-area">
+				<table class="table" id="table-schedule">
+					<colgroup>
+						<col width="10%" />
+						<col width="10%" />
+						<col width="15%" />
+						<col width="25%" />
+						<col width="20%" />
+						<col width="10%" />
+					</colgroup>
+					<thead>
+						<tr class="table-schedule-hr row">
+							<th class="col-md-2"><i class="far fa-calendar-alt"></i> 날짜</th>
+							<th class="col-md-2"><i class="fas fa-city"></i> 도시</th>
+							<th class="col-md-2"><i class="fas fa-bus"></i> 교통</th>
+							<th class="col-md-2"><i class="fas fa-map-marked"></i> 일정</th>
+							<th class="col-md-2"><i class="fas fa-bed"></i> 숙소</th>
+							<th class="col-md-2"><i class="fas fa-money-check-alt"></i> 비용</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="date" items="${dateList}" varStatus="idx">
+							<tr id="${date }" class="row">
+								<td class="date-area col-md-2">
+									<p class="date-area-date">${date}</p>
+									<p class="date-area-day">DAY &nbsp;${idx.count }</p>
+									<c:forEach var="country" items="${countryList }">
+										<c:if test="${country.schedule_date eq date}">											
+											<p class="date-area-country">${country.schedule_content }</p>
 											<span class='latitude' style='display:none'>${country.latitude }</span>
 											<span class='longitude' style='display:none'>${country.longitude }</span>
 											<span class='this_planner_id' style='display:none'>${country.planner_id }</span>
-											<span class="delete-btn" id="${country.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="city-area">
-								<c:forEach var="city" items="${cityList }">
-									<c:if test="${city.schedule_date eq date }">
-										<div class="content-box">
-											<span class="content">${city.schedule_content }</span>
-											<span class="delete-btn" id="${city.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="vehicle-area">
-								<c:forEach var="vehicle" items="${vehicleList }">
-									<c:if test="${vehicle.schedule_date eq date }">
-										<div class="content-box">
-											<span class="content">${vehicle.schedule_content }</span>
-											<c:if test="${vehicle.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${vehicle.budget }₩)</span></c:if>
-											<c:if test="${vehicle.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
-											<span class="delete-btn" id="${vehicle.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="schedule-area">
-								<c:forEach var="schedule" items="${scheduleList }">
-									<c:if test="${schedule.schedule_date eq date }">
-										<div class="sortable-order content-box">
-											<span class="order">${schedule.schedule_order}. </span><span class="content">${schedule.schedule_content }</span>
-											<c:if test="${schedule.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${schedule.budget }₩)</span></c:if>
-											<c:if test="${schedule.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
-											<span class='order-control'>&nbsp;&nbsp;<i class="fas fa-bars"></i></span>
-											<span class="delete-btn" id="${schedule.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn ui-state-disabled"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="hotel-area">
-								<c:forEach var="hotel" items="${hotelList }">
-									<c:if test="${hotel.schedule_date eq date }">
-										<div class="content-box">
-											<span class="content">${hotel.schedule_content }</span>
-											<br />
-											<c:if test="${hotel.budget ne 0 }"><span class="budget" onclick="modifyBudget(this)">(${hotel.budget }₩)</span></c:if>
-											<c:if test="${hotel.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(this)"><i class="fas fa-plus"></i></span></c:if>
-											<span class="delete-btn" id="${hotel.schedule_id }" onclick="deleteSchedule(this)"><i class="far fa-trash-alt"></i></span>
-										</div>
-									</c:if>
-								</c:forEach>
-								<div class="insert-btn"><i class="fas fa-plus-circle"></i></div>
-							</td>
-							<td class="budget-area">
-								<span class="budget-total"><c:out value="${dayBudget[date] }"></c:out></span>
-								<span>₩</span>
+										</c:if>
+									</c:forEach>
+								</td>
+								<td class="city-area col-md-2">
+									<c:forEach var="city" items="${cityList }">
+										<c:if test="${city.schedule_date eq date }">
+											<div class="content-box" id="${city.schedule_id }">
+												<span class="content">${city.schedule_content }</span>
+												<%-- <span class="delete-btn"  onclick="deleteSchedule(${city.schedule_id}, '${city.schedule_date }', ${city.schedule_type_id })"><i class="far fa-trash-alt"></i></span> --%>
+											</div>
+										</c:if>
+									</c:forEach>
+									<%-- <div class="insert-btn" onclick="insertSchedule('city', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div> --%>
+								</td>
+								<td class="vehicle-area col-md-2">
+									<c:forEach var="vehicle" items="${vehicleList }">
+										<c:if test="${vehicle.schedule_date eq date }">
+											<div class="content-box" id="${vehicle.schedule_id }" >
+												<span class="content">${vehicle.schedule_content }</span>
+												<c:if test="${vehicle.budget ne 0 }"><span class="budget" >(${vehicle.budget }₩)</span></c:if>
+												<%-- <c:if test="${vehicle.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(${vehicle.schedule_id})">예산 추가하기</span></c:if> --%>
+												<%-- <span class="delete-btn" onclick="deleteSchedule(${vehicle.schedule_id}, '${vehicle.schedule_date }', ${vehicle.schedule_type_id })"><i class="far fa-trash-alt"></i></span> --%>
+											</div>
+										</c:if>
+									</c:forEach>
+									<%-- <div class="insert-btn" onclick="insertSchedule('vehicle', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div> --%>
+								</td>
+								<td class="schedule-area col-md-2">
+									<c:forEach var="schedule" items="${scheduleList }">
+										<c:if test="${schedule.schedule_date eq date }">
+											<div class="sortable-order content-box" id="${schedule.schedule_id }">
+												<span class="order">${schedule.schedule_order}. </span><span class="content">${schedule.schedule_content }</span>
+												<c:if test="${schedule.budget ne 0 }"><span class="budget" >(${schedule.budget }₩)</span></c:if>
+												<%-- <c:if test="${schedule.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(${schedule.schedule_id})">예산 추가하기</span></c:if> --%>
+												<!-- <span class='order-control'>&nbsp;&nbsp;<i class="fas fa-bars"></i></span> -->
+												<%-- <span class="delete-btn" onclick="deleteSchedule(${schedule.schedule_id}, '${schedule.schedule_date }', ${schedule.schedule_type_id })"><i class="far fa-trash-alt"></i></span> --%>
+											</div>
+										</c:if>
+									</c:forEach>
+									<%-- <div class="insert-btn ui-state-disabled" onclick="insertSchedule('schedule', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div> --%>
+								</td>
+								<td class="hotel-area col-md-2">
+									<c:forEach var="hotel" items="${hotelList }">
+										<c:if test="${hotel.schedule_date eq date }">
+											<div class="content-box" id="${hotel.schedule_id }">
+												<span class="content">${hotel.schedule_content }</span>
+												<c:if test="${hotel.budget ne 0 }"><span class="budget" >(${hotel.budget }₩)</span></c:if>
+												<%-- <c:if test="${hotel.budget eq 0 }"><span class="input-budget-after" onclick="inputBudget(${hotel.schedule_id})">예산 추가하기</span></c:if> --%>
+												<%-- <span class="delete-btn" onclick="deleteSchedule(${hotel.schedule_id}, '${hotel.schedule_date }', ${hotel.schedule_type_id })"><i class="far fa-trash-alt"></i></span> --%>
+											</div>
+										</c:if>
+									</c:forEach>
+									<%-- <div class="insert-btn" onclick="insertSchedule('hotel', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div> --%>
+								</td>
+								<td class="budget-area col-md-2">
+									<span class="budget-total"><c:out value="${dayBudget[date] }"></c:out></span>
+									<span>₩</span>
+								</td>
+							</tr>
+						</c:forEach>
+						<tr class="insert-date-area">
+							<td colspan="7">
+								<a onclick="inputDate()" class="btn gada-btn-reverse">날짜 추가하기</a>
 							</td>
 						</tr>
-					</c:forEach>
-<!-- 				<tr class="insert-date-area">
-						<td colspan="7">
-							<a onclick="">날짜 추가하기</a>
-						</td>
-					</tr> -->
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	

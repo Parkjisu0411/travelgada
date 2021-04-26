@@ -48,6 +48,8 @@
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK3h87HvHsFJIOBZ7Vuo-9V6lqognoY2M&callback=initMap"></script>
     
+<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">    
+    
 <style>
     #map {
       width: 100%;

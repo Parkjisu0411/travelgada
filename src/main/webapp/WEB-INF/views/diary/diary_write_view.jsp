@@ -8,8 +8,7 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-
-<title>diary</title>
+<title>다이어리 작성</title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -18,6 +17,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet"><!-- 큰 영어 -->
   
 <link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+
+<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
 	
 <style>
 /*    table, th, td {

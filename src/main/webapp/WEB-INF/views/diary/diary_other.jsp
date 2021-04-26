@@ -9,7 +9,7 @@
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>diary</title>
+<title>다이어리</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -24,7 +24,9 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+	
 <style>
 html, body {
 	width: 100%;
@@ -185,7 +187,7 @@ pre {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background-color: rgba(0, 0, 0, 0.2);
+	/* background-color: rgba(0, 0, 0, 0.2); */
 }
 
 .masonry .grid img {
@@ -355,16 +357,17 @@ pre {
 <script type="text/javascript">
 /* 삭제 ajax */
 	$(document).ready(function() {
-		$(document).on("click", ".delete", function(event) {//※주의※		
+		$(document).on("click", ".delete", function(event) {//※주의※	
+			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+
+			var tr = $(this).parent().parent().parent().parent();
+			
+			event.preventDefault();
+			console.log("delete click");
+			
 			if (confirm("삭제하시겠습니까?")) {
-				event.preventDefault();
-				console.log("delete click");
-
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-
-				var tr = $(this).parent().parent().parent().parent();
-
 				$.ajax({
 					type : "DELETE",
 					url : $(this).attr("href"),
@@ -404,7 +407,7 @@ pre {
  <script type="text/javascript">
  /* select box 새로운 플래너 값 고정 */
 	$(document).ready(function(){
-		var currPlanner_id= ${other.planner_id};  
+		var currPlanner_id= ${planner_id};  
 		console.log("현재 플래너의 아이디 : "+ currPlanner_id);
 	
 		$("#selectDiary").val(currPlanner_id).prop("selected", true);
@@ -478,6 +481,31 @@ pre {
 	});
 </script>
 
+<script>
+
+	function selectPlanner() {
+		
+		var planner_id = $("#selectDiary option:selected").val();
+		console.log(planner_id);
+	
+		console.log("selectPlanner");
+		$.ajax({
+			type : "GET",
+			url : "/diary/" + planner_id,
+			cache : false,
+			success : function(result) {
+				console.log("success");
+				location.href="/diary_other";
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
+			}
+		});
+	} 
+
+</script>
+
 </head>
 <body>
 
@@ -495,7 +523,8 @@ pre {
 		<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
 			<div class="row">
 				<div class="col-sm-10"> 
-					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'" onchange="location.href='${pageContext.request.contextPath}/diary_other/'+this.value">
+					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'" 
+						onchange="selectPlanner()">
 						<c:forEach var="di" items="${planner}">
 							<%-- <option value='${di.planner_id}' style="font-family: 'GongGothicMedium'">
 						  		${di.planner_name}&nbsp;&nbsp; ${di.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${di.end_date}
@@ -580,7 +609,7 @@ pre {
 								</div> --%>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<div class="dialogDi dialog-date">${di.diary_date}</div>
-										<div class="dialogtext"><pre>${di.text}</pre></div>
+										<div class="dialogtext" style="white-space:pre-wrap;">${di.text}</div>
 										<div class="dialogDi dialog-hashtag">
 											<span id="modal${di.diary_id}"></span>
 										</div>
@@ -607,17 +636,17 @@ pre {
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
 							<li class="page-item">
-								<a class="page-link" href="/diary_other/${planner_id}?nowPage=${pageMaker.startPage - 1}">◀</a>
+								<a class="page-link" href="/diary_other?nowPage=${pageMaker.startPage - 1}">◀</a>
 							</li>
 						</c:if>
 						<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage}" var="idx">
 							<li class="page-item">
-								<a id ="${idx}" class="page-link" href="/diary_other/${planner_id}?nowPage=${idx}"></a>
+								<a id ="${idx}" class="page-link" href="/diary_other?nowPage=${idx}"></a>
 							</li>
 						</c:forEach>
 						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 							<li class="page-item">
-								<a class="page-link" href="/diary_other/${planner_id}?nowPage=${pageMaker.endPage +1}">▶</a>
+								<a class="page-link" href="/diary_other?nowPage=${pageMaker.endPage +1}">▶</a>
 							</li>
 						</c:if>
 					</ul>
@@ -626,6 +655,8 @@ pre {
 				<!-- 다이어리 row end -->
 			</div>
 		</div>
+		
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
 		
 	<!-- footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>

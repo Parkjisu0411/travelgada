@@ -14,6 +14,7 @@ import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PageVO;
 import com.gada.travelgada.domain.PlannerVO;
+import com.gada.travelgada.service.MainService;
 import com.gada.travelgada.service.PlannerService;
 import com.gada.travelgada.service.ScheduleService;
 import com.gada.travelgada.service.SearchService;
@@ -30,6 +31,7 @@ public class SearchController {
 	private SearchService searchService;
 	private ScheduleService scheduleService;
 	private PlannerService plannerService;
+	private MainService mainService;
 
 	//통합 검색 페이지
 	@GetMapping("/search")
@@ -137,7 +139,9 @@ public class SearchController {
 		PlannerVO planner = plannerService.getPlannerById(plannerVO.getPlanner_id());
 		
 		List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
-		mav.addObject("planner_id", planner.getPlanner_id());
+		mav.addObject("planner", planner);
+		mav.addObject("country", mainService.getCountry());
+		
 		mav.addObject("plannerList", plannerList);
 		mav.addObject("dateList", dateList);
 		mav.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));

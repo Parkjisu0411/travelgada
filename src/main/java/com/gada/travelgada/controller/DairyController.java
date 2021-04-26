@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,9 @@ import com.gada.travelgada.domain.CriteriaVO;
 import com.gada.travelgada.domain.DiaryVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PageVO;
+import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.service.DiaryService;
+import com.gada.travelgada.service.PlannerService;
 import com.gada.travelgada.service.UserCounter;
 
 import lombok.AllArgsConstructor;
@@ -37,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DairyController {
 
 	private DiaryService diaryService;
+	private PlannerService plannerService;
 
 	private static final String FILE_SERVER_PATH = "C:\\Users\\김보람\\git\\travelgada\\src\\main\\webapp\\resources\\diary";
 
@@ -44,44 +48,76 @@ public class DairyController {
 	@GetMapping("/diary")
 	public ModelAndView diary(ModelAndView mav, @AuthenticationPrincipal MemberDetails member, CriteriaVO cri) {
 		log.info("controller diary();");
-		log.info("=========="+cri.getNowPage());
+		log.info("nowPage : "+cri.getNowPage());
+		log.info("planner_id============= : "+member.getPlanner_id());
 		
 		int amount = 20;
 		int nowPage = (cri.getNowPage() - 1) * amount;
 		int total = diaryService.getTotal(member.getUsername());
+		int planner_id = member.getPlanner_id();
 		
 		cri.setAmount(amount);
 		
-		mav.addObject("diary", diaryService.getDiary(member.getUsername(),nowPage, amount));
-		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-		mav.addObject("pageMaker", new PageVO(cri, total));
-		mav.addObject("nowPage", cri.getNowPage());
-		
-		mav.setViewName("diary/diary");
+		if(planner_id == 0) {
+			
+			mav.addObject("diary", diaryService.getDiary(member.getUsername(),nowPage, amount));
+			mav.addObject("planner", plannerService.getPlanner(member.getUsername()));
+			mav.addObject("pageMaker", new PageVO(cri, total));
+			mav.addObject("nowPage", cri.getNowPage());
+			
+			mav.setViewName("diary/diary");
+			
+		}else {
 
+			mav.setViewName("redirect:/diary_other");
+		}
+		
 		return mav;
 
 	}// diary end
 	
+	@GetMapping("/diary/{planner_id}")
+	public ResponseEntity<String> selectOtherPlanner(PlannerVO plannerVO, @AuthenticationPrincipal MemberDetails memberDetails) {
+		ResponseEntity<String> entity = null;
+		try {
+			memberDetails.setPlanner_id(plannerVO.getPlanner_id());
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 	// 다른 다이어리로 이동
-	@GetMapping("/diary_other/{planner_id}")
-	public ModelAndView diary_another(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO, ModelAndView mav, CriteriaVO cri) {
-		log.info("controller diary_test();");
+	@GetMapping("/diary_other")
+	public ModelAndView diaryOther(@AuthenticationPrincipal MemberDetails member, DiaryVO diaryVO, ModelAndView mav, CriteriaVO cri) {
+		log.info("controller diaryOther();");
+		log.info("====planner_id : "+member.getPlanner_id());
+		
 		int amount = 20;
 		int nowPage = (cri.getNowPage() - 1) * amount;
-		int total = diaryService.getOtherTotal(member.getUsername(), diaryVO.getPlanner_id());
+		int total = diaryService.getOtherTotal(member.getUsername(), member.getPlanner_id());
+		int planner_id = member.getPlanner_id();
 		
 		cri.setAmount(amount);
 		
-		mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
-		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-		mav.addObject("pageMaker", new PageVO(cri, total));
-		mav.addObject("other", diaryVO);
-		mav.addObject("planner_id", diaryVO.getPlanner_id());
-		mav.addObject("nowPage", cri.getNowPage());
+		if(planner_id == 0) {
+			
+			mav.setViewName("redirect:diary/diary");
+			
+		}else {
 		
-		mav.setViewName("diary/diary_other");
-
+			mav.addObject("diary", diaryService.getDiaryOtherPaging(member.getPlanner_id(),nowPage, amount));
+			mav.addObject("planner", plannerService.getPlanner(member.getUsername()));
+			mav.addObject("pageMaker", new PageVO(cri, total));
+			mav.addObject("planner_id", member.getPlanner_id());
+			mav.addObject("nowPage", cri.getNowPage());
+			
+			mav.setViewName("diary/diary_other");
+		
+		}
+		
 		return mav;
 
 	}// end
@@ -100,6 +136,7 @@ public class DairyController {
 
    
 	// 다이어리 작성
+	@Transactional
 	@PostMapping("/diary_write")
 	public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO,
 			@AuthenticationPrincipal MemberDetails member, CriteriaVO cri) throws IllegalStateException, IOException {
@@ -112,25 +149,22 @@ public class DairyController {
 		int amount = 20;
 		int nowPage = (cri.getNowPage() - 1) * amount;
 		int total = diaryService.getOtherTotal(member.getUsername(), diaryVO.getPlanner_id());
+		/* int planner_id = member.getPlanner_id(); */
 
 		diaryVO.setImg_path(img_seq);
 		diaryService.writeDiary(diaryVO);
 		cri.setAmount(amount);
 		file.transferTo(new File(FILE_SERVER_PATH, img_seq));
+		member.setPlanner_id(diaryVO.getPlanner_id());
 		
 		mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
-		mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
+		mav.addObject("planner", plannerService.getPlanner(member.getUsername()));
 		mav.addObject("pageMaker", new PageVO(cri, total));
-		mav.addObject("other", diaryVO);
+		/* mav.addObject("other", diaryVO); */
 		mav.addObject("planner_id", diaryVO.getPlanner_id());
 		mav.addObject("nowPage", cri.getNowPage());
 		
-		mav.setViewName("redirect:/diary_other/{planner_id}");
-		//http://localhost:8282/diary_other?planner_id=51&nowPage=1
-		//http://localhost:8282/diary_other/50?nowPage=1
-		//http://localhost:8282/diary_other?planner_id=51&nowPage=1
-		//http://localhost:8282/diary_other?planner_id=51&nowPage=1
-		//http://localhost:8282/diary_other?planner_id=50&nowPage=1
+		mav.setViewName("redirect:/diary");
 
 		return mav;
 
@@ -151,6 +185,7 @@ public class DairyController {
 	}// diary_modify_view end
   
 	// 다이어리 수정
+	@Transactional
 	@PostMapping("/diary_modify")
 	public ModelAndView diary_modify(ModelAndView mav, DiaryVO diaryVO, @RequestParam("uploadfile") MultipartFile file,
 			@RequestParam("currImg") String currImg, @AuthenticationPrincipal MemberDetails member, CriteriaVO cri)
@@ -159,30 +194,22 @@ public class DairyController {
 		log.info(currImg);
 
 		String img_path = file.getOriginalFilename();
-		int seq = diaryService.getImg_seq();
-		seq++;
-		String img_seq = Integer.toString(seq);
+		String img_seq = diaryVO.getImg_path();
+		log.info("+++++++++++++++++++++++++"+img_seq);
 		int amount = 20;
 		int nowPage = (cri.getNowPage() - 1) * amount;
 		int total = diaryService.getOtherTotal(member.getUsername(), diaryVO.getPlanner_id());
+		/* int planner_id = member.getPlanner_id(); */
 		
 		cri.setAmount(amount);
+		member.setPlanner_id(diaryVO.getPlanner_id());
 
+		log.info("플래너 아이디 : " + diaryVO.getPlanner_id());
+		
 		if (img_path.length() == 0) {
 			diaryVO.setImg_path(currImg);
 			diaryService.modifyDiary(diaryVO);
-			file.transferTo(new File(FILE_SERVER_PATH, img_seq));
-
-			log.info("플래너 아이디 : " + diaryVO.getPlanner_id());
-			
-			mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
-			mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-			mav.addObject("pageMaker", new PageVO(cri, total));
-			mav.addObject("other", diaryVO);
-			mav.addObject("planner_id", diaryVO.getPlanner_id());
-			mav.addObject("nowPage", cri.getNowPage());
-			
-			mav.setViewName("redirect:/diary_other/{planner_id}");
+			/* file.transferTo(new File(FILE_SERVER_PATH, img_seq)); */
 
 		} else {
 			
@@ -190,16 +217,17 @@ public class DairyController {
 			diaryService.modifyDiary(diaryVO);
 			file.transferTo(new File(FILE_SERVER_PATH, img_seq));
 
-			mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
-			mav.addObject("planner", diaryService.getPlanner(member.getUsername()));
-			mav.addObject("pageMaker", new PageVO(cri, total));
-			mav.addObject("other", diaryVO);
-			mav.addObject("planner_id", diaryVO.getPlanner_id());
-			mav.addObject("nowPage", cri.getNowPage());
-			
-			mav.setViewName("redirect:/diary_other/{planner_id}");
-
 		} // if end
+		
+		mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
+		mav.addObject("planner", plannerService.getPlanner(member.getUsername()));
+		mav.addObject("pageMaker", new PageVO(cri, total));
+		mav.addObject("other", diaryVO);
+		mav.addObject("planner_id", diaryVO.getPlanner_id());
+		mav.addObject("nowPage", cri.getNowPage());
+		/* int now = cri.getNowPage(); */
+		
+		mav.setViewName("redirect:/diary_other");
 
 		return mav;
 

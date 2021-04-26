@@ -23,6 +23,8 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+	
 <style>
 html, body {
 	width: 100%;
@@ -54,111 +56,113 @@ html, body {
 /* .mainImg{
     float: left;
 } */
-
-.Mcontent{
-/* 	padding:0px;
+.Mcontent {
+	/* 	padding:0px;
 	width:100% */
-	width:800px; 
-} 
-
-.dialogtext{
-	width:100%;
-  	height : 240px;
-  	font-weight: bold;
-  	overflow: auto;
-  	padding-right:20px;
-  	float:left;
-  	padding-left:10px;
+	width: 800px;
 }
 
-  .dialogtext::-webkit-scrollbar {
-    width: 10px;
-  }
-  .dialogtext::-webkit-scrollbar-thumb {
-    background-color: #a1eef2;/*  연한 민트 */
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-  .dialogtext::-webkit-scrollbar-track {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  }
-
-.dialog-hashtag{
-	margin-top:10px;
-	text-align:right;
+.dialogtext {
+	width: 100%;
+	height: 240px;
+	font-weight: bold;
 	overflow: auto;
-	width:100%;
-	padding-right:20px;
-	float:left;
-	height:50px;
+	padding-right: 20px;
+	float: left;
+	padding-left: 10px;
 }
 
-  .dialog-hashtag::-webkit-scrollbar {
-    width: 10px;
-  }
-  .dialog-hashtag::-webkit-scrollbar-thumb {
-    background-color: #a1eef2;
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-  .dialog-hashtag::-webkit-scrollbar-track {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  }
-
-.dialog-date{
-	width:100%;
-	height:40px;
-	margin-top:10px;
-	padding-right:20px;
-	text-align:right;
-	float:left;
+.dialogtext::-webkit-scrollbar {
+	width: 10px;
 }
 
-.popup_img{
-	width: 100%; 
+.dialogtext::-webkit-scrollbar-thumb {
+	background-color: #a1eef2; /*  연한 민트 */
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.dialogtext::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.dialog-hashtag {
+	margin-top: 10px;
+	text-align: right;
+	overflow: auto;
+	width: 100%;
+	padding-right: 20px;
+	float: left;
+	height: 50px;
+}
+
+.dialog-hashtag::-webkit-scrollbar {
+	width: 10px;
+}
+
+.dialog-hashtag::-webkit-scrollbar-thumb {
+	background-color: #a1eef2;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.dialog-hashtag::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.dialog-date {
+	width: 100%;
+	height: 40px;
+	margin-top: 10px;
+	padding-right: 20px;
+	text-align: right;
+	float: left;
+}
+
+.popup_img {
+	width: 100%;
 	height: 400px;
 	object-fit: cover;
 	border-radius: 4px;
-	padding:0;
-}
-.close{
-	margin:10px 20px 10px 0;
-	/* padding-right:20px; */
-	/* width: 100%;  */
-	text-align:right;
-	outline:none;
+	padding: 0;
 }
 
-.close:hover{
+.close {
+	margin: 10px 20px 10px 0;
+	/* padding-right:20px; */
+	/* width: 100%;  */
+	text-align: right;
+	outline: none;
+}
+
+.close:hover {
 	color: #1dcad3;
 }
 
-.dialog-profile{
-	margin-top:15px;
-	padding-left:10px;
-} 
+.dialog-profile {
+	margin-top: 15px;
+	padding-left: 10px;
+}
 
-.dialog-wrap{
-	width : 100%;
+.dialog-wrap {
+	width: 100%;
 	/* width : 350px; */
-	
-   	float: left;
+	float: left;
 }
 /* 모달 스타일 끝 */
-
-.main-card-diary-area{
+.main-card-diary-area {
 	background-color: #f5f5f5;
 }
 
-.diHover:hover{
+.diHover:hover {
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
-	transform:scale(1.02);
+	transform: scale(1.02);
 }
 </style>
 
@@ -261,7 +265,7 @@ html, body {
 	color:#303E57;
 }
 
-.dropdown-toggle{
+.searchDrop{
 	color:#303E57;
 	font-family: 'GongGothicMedium';
 }
@@ -341,6 +345,21 @@ html, body {
 /* 해시태그 & 링크 끝 */
 </script>
 
+<script>
+/* 검색어를 입력하지 않을 경우 */
+$(document).ready(function() {
+		$(".search_icon").click(function() {
+			var keyword = $("#keyword_search").val();
+			
+			if(keyword.length == 0){
+				alert("검색어를 입력해주세요!");
+				$("#keyword_search").focus();
+				return false;
+			}
+		});
+});
+</script>
+
 </head>
 <body>
 
@@ -380,13 +399,13 @@ html, body {
 		<span class="font_h">다이어리&nbsp;&nbsp;&nbsp;</span> 
 		
 		<span class="dropdown">
-			<button class="dropdown-toggle drop" data-toggle="dropdown">정렬</button>
+			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">정렬</button>
 			<span class="dropdown-menu"> <a class="dropdown-item" 
 				href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">최신순</a>
 		</span>
 		
 		</span> &nbsp; <span class="dropdown">
-			<button class="dropdown-toggle drop" data-toggle="dropdown">기간</button>
+			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">기간</button>
 			<span class="dropdown-menu"> 
 				<a class="dropdown-item"
 					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=day">1일</a>
@@ -451,7 +470,7 @@ html, body {
 												${member.member_id}
 											</div>
 											<div class="dialogDi dialog-date">${di.diary_date}</div>
-											<div class="dialogtext"><pre>${di.text}</pre></div>
+											<div class="dialogtext" style="white-space:pre-wrap;">${di.text}</div>
 											<div class="dialogDi dialog-hashtag">
 												<span id="modal${di.diary_id}"></span>
 											</div>
@@ -497,6 +516,8 @@ html, body {
 		</div>
 		<br />
 	</div>
+	
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
 	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>

@@ -45,8 +45,10 @@
 	<script src="/resources/assets/js/jquery.min.js"></script>
 	<script src="/resources/assets/js/popper.min.js"></script>
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
 
-	<title>${member.member_id}</title>
+	<title>${member.member_id} 회원</title>
 	
 <style>
 
@@ -75,6 +77,13 @@ html, body {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.headline{
+	font-size: 40px;
+	font-family: 'yg-jalnan';
+	color: white;
+	margin: 60px 20px 30px 20px;
+}
 </style>
 
 <style>
@@ -96,6 +105,7 @@ html, body {
 	#memberKeyword{
 		color : white;
 	}
+
 </style>
 
 </head>
@@ -136,11 +146,13 @@ html, body {
 		<!--End sidebar-wrapper-->
 	
 		<div class="content-wrapper">
-			<div class="container-fluid">
+			<div class="container container-fluid">
+				
+				<div class="headline">${member.member_id }</div>
 
-				<h4 class="headline" style="font-family: 'yg-jalnan'">${member.member_id }</h4>
 				<hr />
 				<p class="view-more-p"></p>
+	
 				<div class="row">
 					<div class="col-md-4 member-profile member-profile">
 						<img class="rounded-circle member-img"

@@ -28,6 +28,8 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
 
 <style>
 html, body {
@@ -183,7 +185,7 @@ html, body {
 	color:#303E57;
 }
 
-.dropdown-toggle{
+.searchDrop{
 	color:#303E57;
 	font-family: 'GongGothicMedium';
 	 
@@ -230,6 +232,21 @@ html, body {
 }
 </style>
 
+<script>
+/* 검색어를 입력하지 않을 경우 */
+$(document).ready(function() {
+		$(".search_icon").click(function() {
+			var keyword = $("#keyword_search").val();
+			
+			if(keyword.length == 0){
+				alert("검색어를 입력해주세요!");
+				$("#keyword_search").focus();
+				return false;
+			}
+		});
+});
+</script>
+
 </head>
 <body>
 
@@ -264,7 +281,7 @@ html, body {
 		<span class="font_h">일정&nbsp;&nbsp;&nbsp;</span>
 		
 		<span class="dropdown">
-			<button class="dropdown-toggle drop" data-toggle="dropdown">정렬</button>
+			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">정렬</button>
 			<span class="dropdown-menu">
    	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=startDate">최신순</a>
    			</span>		
@@ -272,7 +289,7 @@ html, body {
 		 &nbsp;
 		 
 		<span class="dropdown">
-			<button class="dropdown-toggle drop" data-toggle="dropdown">기간</button>
+			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">기간</button>
 				<span class="dropdown-menu">
      		 		<a class="dropdown-item" 
      		 			href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=day">1일</a>
@@ -349,6 +366,8 @@ html, body {
 			</div><!-- 다이어리 row end -->
 		</div><br/>
 	</div><!-- container end -->
+	
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
 
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>

@@ -8,7 +8,7 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-<title>다이어리</title>
+<title>다이어리 수정</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -16,6 +16,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
  	
  	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+ 	
+ 	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
  	
 <style>
 /*    table, th, td {
@@ -211,6 +213,7 @@ $(document).ready(function(){
 		
 		<input type="hidden" name="diary_id" value="${diary_view.diary_id}" />
 		<input type="hidden" name="planner_id" value="${planner.planner_id}" />
+		<input type="hidden" name="img_path" value="${diary_view.img_path}" />
 		<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}" />
 		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}" />
 

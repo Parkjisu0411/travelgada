@@ -30,7 +30,9 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+	
 <style>
 html, body {
 	width: 100%;
@@ -360,7 +362,21 @@ $(document).ready(
 
 	});
 /* 해시태그 & 링크 끝 */
+</script>
 
+<script>
+/* 검색어를 입력하지 않을 경우 */
+$(document).ready(function() {
+		$(".search_icon").click(function() {
+			var keyword = $("#keyword_search").val();
+			
+			if(keyword.length == 0){
+				alert("검색어를 입력해주세요!");
+				$("#keyword_search").focus();
+				return false;
+			}
+		});
+});
 </script>
 
 </head>
@@ -376,7 +392,7 @@ $(document).ready(
 		<form action="${pageContext.request.contextPath}/search" method="get">
 			<input id="keyword_search" class="col-sm-11" type="text"
 				name="keyword" placeholder="검색어를 입력하세요." />
-			<button class="search_icon" type="submit" onclick="focusSearch()" >
+			<button class="search_icon" type="submit" >
 				<i class="fa fa-search search-icon-in"></i>
 			</button>
 		</form>
@@ -511,7 +527,7 @@ $(document).ready(
 												${member.member_id}
 											</div>
 											<div class="dialogDi dialog-date">${di.diary_date}</div>
-											<div class="dialogtext"><pre>${di.text}</pre></div>
+											<div class="dialogtext" style="white-space:pre-wrap;">${di.text}</div>
 											<div class="dialogDi dialog-hashtag">
 												<span id="modal${di.diary_id}"></span>
 											</div>
@@ -542,6 +558,8 @@ $(document).ready(
 
 	</div>
 	<!-- container end -->
+	
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
 
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
