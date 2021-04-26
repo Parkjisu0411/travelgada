@@ -47,7 +47,15 @@
 </style>
 
 <title>NOTICE BOARD</title>
+
 <style>
+
+/* 드래그 */
+::selection {
+	background-color: #1DCAD3;
+	color: white;
+}  
+
 html, body {
 	width: 100%;
 	height: 100%;

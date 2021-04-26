@@ -3,7 +3,9 @@ package com.gada.travelgada.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.gada.travelgada.domain.BoardVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.domain.TodoTypeVO;
@@ -96,24 +98,41 @@ public class TodoController {
 		  return entity;
 	}   
 	
-	
-	// TodoTypeVO todoTypeVO, TodoVO todoVO
-	// TodoListVO todoListVO
-	
+	// TodoType(카테고리) 추가하기 기존
+//	@PostMapping("/addTodoType")
+//	public ResponseEntity<String> addTodoType(@RequestBody TodoTypeVO todoTypeVO) throws Exception{
+//		ResponseEntity<String> entity = null;
+//		
+//		log.info("addTodoType");
+//		
+//		try {
+//			service.addTodoType(todoTypeVO);
+//			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+//		}catch(Exception e){
+//			e.printStackTrace();
+//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//		
+//		return entity;
+//	}
+	// TodoType(카테고리) 추가하기 
 	@PostMapping("/addTodoType")
-	public ResponseEntity<String> addTodoType(@RequestBody TodoTypeVO todoTypeVO) throws Exception{
-		ResponseEntity<String> entity = null;
-		
-		log.info("addTodoType");
-		
+	public ResponseEntity<Map<String,String>> writeReply(@RequestBody TodoTypeVO todoTypeVO) {
+		ResponseEntity<Map<String,String>> entity = null;
+		Map<String, String> data = new HashMap<>();
 		try {
 			service.addTodoType(todoTypeVO);
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		}catch(Exception e){
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			TodoTypeVO todoType = service.getRecentTodoType(todoTypeVO);
+			data.put("todo_type_id",String.valueOf(todoType.getTodo_type_id()));
+			data.put("todo_title",String.valueOf(todoType.getTodo_title()));
+			data.put("planner_id",String.valueOf(todoType.getPlanner_id()));
+
+			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.OK);
+		} catch(Exception e) {
+			data.put("error", e.getMessage());
+			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.BAD_REQUEST);
+			log.info("ERROR Message : " + e.getMessage());
 		}
-		
 		return entity;
 	}
 	

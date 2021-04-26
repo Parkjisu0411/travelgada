@@ -42,6 +42,49 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   
   <style>
+  	/* 드래그 */
+	::selection {
+		background-color: #1DCAD3;
+		color: white;
+	}  
+  
+  	.makeForm{
+  		border:none;
+  		border-radius: 15px;
+  		width: 20px;
+  		height: 20px;
+  		margin: 1px 0 0 5px;
+  		background:white;
+  	}
+  	
+  	#todo_name{
+  		border:2px solid #1DCAD3;
+  		border-radius:5px;
+  		margin: 30px 0 3px -20px;
+  		width:170px;
+  		height:30px;
+  	}
+  	
+  	#todo_name_button{
+  		font-family: 'IBMPlexSansKR-Light';
+  		font-weight:bold;
+  		color:white;
+  		border:2px solid white;
+  		border-radius:5px;
+  		height:30px;
+  		margin: 0 0 0 6px;
+  		padding: 8px 6px 21px 6px;
+  		background:#1DCAD3;
+  		text-align:center;
+  		line-height:100%;
+  	}
+  	
+  	.dropdown > img{
+  		object-fit: cover;
+ 		width:45px;
+  		float: right;
+  	}
+  
   	img {
   		object-fit: cover;
   		max-width: 70px;
@@ -49,9 +92,9 @@
   	}
   	
   	.selected {
-	  	text-decoration:line-through grey;
-	  	font-weight:700;
-	  	color:grey;
+	  	text-decoration:line-through #ff7473;
+	  	font-weight:bold;
+	  	color:#ff7473;
 
   	}
 	
@@ -70,8 +113,14 @@
 		margin: 8px 0px;
 	}
 	
+	.headline2{
+		font-family: 'Montserrat', sans-serif;
+		color:#1DCAD3;
+		font-size:23pt;
+	}	
+	
 	/* line */	
-	.headline::after {
+/* 	.headline::after {
 		content: "";
 		flex-grow: 1;
 		background: #1DCAD3;
@@ -79,7 +128,7 @@
 		font-size: 0px;
 		line-height: 0px;
 		margin: 0px 16px;
-	}
+	} */
 	
 	.todoImg{
 		width:43px;
@@ -97,7 +146,8 @@
 	
 	a:hover{
 		text-decoration:none !important;
-		color:#CFD2D3;
+		color:#ccf3f3;
+		transition:1s;
 	}	
 	
 	.inputTitle, .todoList{
@@ -108,15 +158,31 @@
 		color:#303E57;
 		/* line */
 		display: flex;
-		 /* flex-basis: 82%;  */
-		 flex-basis: 600px;
+		flex-basis: 100%;
 		align-items: center;
 		margin: 8px 0;
-		
+	}
+	
+	.introduce{
+		font-family: 'IBMPlexSansKR-Light';
+		font-weight:bold;
+		font-size: 13pt;
+		padding:0 15px;
+		color:#CFD2D3;
+		/* line */
+		display: flex;
+		flex-basis: 100%;
+		align-items: center;
+		margin: 8px 0;	
+	}
+	
+	.name{
+		color:#65dae0;
+		font-size:15pt;
 	}
 	
 	/* line */	
-	.inputTitle::after, .todoList::after{
+	.inputTitle::after, .todoList::after, .introduce::before{
 		content: "";
 		flex-grow: 1;
 		background: #1DCAD3;
@@ -139,40 +205,26 @@
 		margin: 8px 0;		
 	}
 	
-   	.introduce{
-		color: #CFD2D3;
-		font-family: 'IBMPlexSansKR-Light';
-		font-weight:bold;
-		margin:14px 0 14px -10px;
-	}   
 
-   	.introduce{
-		display:block;
-		float:right;
-	}  
 	
- 	.introduction{
-		font-family: 'GongGothicMedium';
-		color: #CFD2D3;
-	} 
-	
-	/* form__group input box */
+/* form__group input box */
     .form__group {
-  position: relative;
-  padding: 15px 0 0;
-  margin-top: 10px;
-  width: 50%;
-}
+	  position: relative;
+	  padding: 15px 0 0;
+	  margin-top: 10px;
+	  width: 50%;
+	}
 
 .form__field {
   font-family: 'Montserrat', sans-serif;
-  width: 100%;
+  width: 400px;
   border: 0;
-  border-bottom: 2px solid #1DCAD3;
+  border-bottom: 2px solid #CFD2D3;
   outline: 0;
   font-size: 1.3rem;
-  color: #303E57;
+  color: #3d464b;
   padding: 7px 0;
+  margin: 8px 0 0 0;
   background: transparent;
   transition: border-color 0.2s;
 }
@@ -180,10 +232,11 @@
   color: transparent;
 }
 .form__field:placeholder-shown ~ .form__label {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight:bold;
+  color: #3d464b;
   cursor: text;
-  top: 20px;
+  top: 28px;
 }
 
 .form__label {
@@ -192,7 +245,9 @@
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #1DCAD3;
+  color: #CFD2D3;
+  margin: 0 0 0 6px;
+  font-family: 'IBMPlexSansKR-Light';
 }
 
 .form__field:focus {
@@ -217,122 +272,58 @@
   box-shadow: none;
 }
 
-/* submit button */
-/* .wrapper{
-  position: relative;
-  width: 100%;
-  height: 100%;
+#addToDoTitle{
+	margin: 0 0 0 25px;
 }
 
-.wrapper input{
-  font-family: 'Ubuntu', sans-serif;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  
-  width: 170px;
-  height: 40px;
-  line-height: 1;
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  border: 3px solid #8C82FC;
-  background: #fff;
-  color: #8C82FC;
-  border-radius: 40px;
-  cursor: pointer;
-  overflow: hidden;
-  transition: all .35s;
-}
-
-.wrapper input:hover{
-  background: #8C82FC;
-  color: #fff;
-}
-
-.wrapper input span value{
-  opacity: 1;
-  visibility: visible;
-  transition: all .35s;
-}
-
-.success{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  border-radius: 50%;
-  z-index: 1;
-  opacity: 0;
-  visibility: hidden;
-  transition: all .35s;
-}
-
-.success svg{
-  width: 20px;
-  height: 20px;
-  fill: yellowgreen;
-  transform-origin: 50% 50%;
-  transform: translateY(-50%) rotate(0deg) scale(0);
-  transition: all .35s;
-}
-
-.wrapper input .is_active{
-  width: 40px;
-  height: 40px;
-}
-
-.wrapper input .is_active .success{
-  opacity: 1;
-  visibility: visible;
-}
-
-.wrapper input .is_active .success svg{
-  margin-top: 50%;
-  transform: translateY(-50%) rotate(720deg) scale(1);
-}
-
-.wrapper input .is_active span{
-  opacity: 0;
-  visibility: hidden;
-} */
 
 /* submit button */
-
-
 .wrapper{
   position: relative;
   width: 100%;
   height: 100%;
 }
 .wrapper button{
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'IBMPlexSansKR-Light';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   
-  width: 170px;
+  width: 40px;
   height: 40px;
   line-height: 1;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: bold;
   letter-spacing: 1px;
-  border: 3px solid #8C82FC;
+  /* border: 3px solid #8C82FC;  */
+  border:none;
   background: #fff;
-  color: #8C82FC;
-  border-radius: 40px;
+  color: #CFD2D3;
+  border-radius: 50px;
   cursor: pointer;
   overflow: hidden;
   transition: all .35s;
+  
+  float:right; 
+  margin:-17px 0 17px 130px;
 }
 
 .wrapper button:hover{
-  background: #8C82FC;
+  /* background: #CFD2D3; */
+  background:#dcf8fa;
   color: #fff;
+}
+
+#submitBT:focus{
+	border:0;
+	outline:none;
+}
+
+.sendImg{
+	width:27px;
+	height:27px;
+	padding:0 3px 0 0;
 }
 
 .wrapper button span{
@@ -358,7 +349,8 @@
 .success svg{
   width: 20px;
   height: 20px;
-  fill: yellowgreen;
+  /* fill: yellowgreen; */
+  fill:#ff7473;
   transform-origin: 50% 50%;
   transform: translateY(-50%) rotate(0deg) scale(0);
   transition: all .35s;
@@ -382,6 +374,87 @@
 .wrapper button.is_active span{
   opacity: 0;
   visibility: hidden;
+}
+
+/* table */
+
+#TB tr{
+	border:1px solid #65dae0;
+}
+
+#TB td{
+	border-bottom:1px solid #dcf8fa;
+}
+
+table{
+	border-radius:15px;
+	border-collapse:collapse;
+	overflow:hidden;
+}
+
+.TBcategory{
+	background-color: #65dae0;
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight:bold;
+	font-size: 18px;
+	color:white;
+}
+
+.label{
+	padding:0 -50px 0 0;
+}
+
+.TBtitle{
+	padding:0 0 0 10px;
+}
+
+.checkbox-inline{
+	padding:11px 0 0 20px;
+}
+
+.td1{
+	width:20px;
+}
+
+.option input{
+	background-color:#1dc9d3;
+}
+
+.TBname{
+	padding:9px 0 0 0;
+}
+
+.todoListTable{
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight:bold;
+}
+
+.addCK{
+	background-color: #ccf3f3;
+	border-left:1px solid #ccf3f3;
+	border-right:1px solid #ccf3f3;
+	border-bottom:1px solid #ccf3f3;
+	border-top:1px solid #ccf3f3;
+}
+
+/* checkbox */
+.custom-control-input-green:focus~.custom-control-label::before {
+  border-color: #28a745 !important;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+}
+
+.custom-control-input-green:checked~.custom-control-label::before {
+  border-color: #28a745 !important;
+  background-color: #28a745 !important;
+}
+
+.custom-control-input-green:focus:not(:checked)~.custom-control-label::before {
+  border-color: #5bd778 !important;
+}
+
+.custom-control-input-green:not(:disabled):active~.custom-control-label::before {
+  background-color: #d6f5dd !important;
+  border-color: #d6f5dd !important;
 }
 
 
@@ -422,71 +495,8 @@
 	  $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
     </script>
 
-
-<!--	<script>
-    	$(document).ready(function() {
-    		$("#addToDoTitle").submit(function(event) {
-    			event.preventDefault();
-    			console.log("addToDo submit");
-
-    			var planner_id = $("#planner_id").val();
-    			var todo_title = $("#todo_title").val();
-     			var getRecentTodoTypeId = $(".getRecentTodoTypeId").val();
-    			
-    			var form = {
-    					planner_id : planner_id,
-    					todo_title : todo_title,
-     					getRecentTodoTypeId : getRecentTodoTypeId
-    			};
-    				
-    			$.ajax({
-    				type : "POST",
-    				url : $(this).attr("action"),
-    				cache : false,
-    				data : JSON.stringify(form),
-    				contentType : 'application/json; charset=utf-8',
-    	            beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-    	                 console.log("header 실행 "+header+token)
-    	                 //console.log(sentence.toLowerCase());
-    	                 xhr.setRequestHeader(header, token);
-    	            },
-    				success : function(result){
-    					if(result == "SUCCESS"){
-    						console.log("success");
-    						
-    						var htmls="";
-
-    						    htmls +='<div class="container"><div class="row">'
-    							htmls +='<div class="col-sm-3"><div class="dropdown"><button type="button" class="btn dropdown-toggle" data-toggle="dropdown"></button>'
-    							htmls +='<div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" >수정</a>'
-    							htmls +='<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${getRecentTodoTypeId}">삭제</a></div></div>'
-    							htmls +='<table class="table table-bordered"><tr><td colspan="3">${getRecentTodoTypeId }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>'
-    							htmls +='<c:forEach var="todoName" items="${todoName }"><input class="here" type="hidden" class="todo_type_id" value="${todoName.todo_type_id }">'
-    							htmls +='<c:if test="${todoName.todo_type_id} eq ${getRecentTodoTypeId} }">'
-    							htmls +='<tr><td><p>${todoName.todo_name }</p></td>'
-    							htmls +='<td><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label></td>'
-    							htmls +='<td><a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a></td></tr></c:if></c:forEach>'
-    							htmls +='<tr><td colspan="3"><a class="makeForm" href="javascript:void(0);" onclick="function makeForm();">+ 체크리스트 추가</a></td></tr>'
-    							htmls +='</table></div></div></div>'
-
-    			        	$(".todoTable").append(htmls); 
-    						//$(location).attr('href', '${pageContext.request.contextPath}/todo');
-    						    location.reload();
-    					}  
-    				},
-    				error : function(e){
-    					console.log(e);
-    				}
-    				
-    			}); // ajax end
-    		}) // submit end
-    	});
-    </script> -->
-    
-
-
-
-	<script>
+<!-- TodoType(카테고리) 추가하기 기존 -->
+<!-- 	<script>
     	$(document).ready(function() {
     		$("#addToDoTitle").on('submit', function(event) {
     			event.preventDefault();
@@ -534,7 +544,7 @@
 
     			        	$(".todoTable").append(htmls); 
     						//$(location).attr('href', '${pageContext.request.contextPath}/todo');
-    						    location.reload();
+    						    //location.reload();
     					}  
     				},
     				error : function(e){
@@ -544,7 +554,70 @@
     			}); // ajax end
     		}) // submit end
     	});
-    </script> 
+    </script> --> 
+    
+    <script>
+    	$(document).ready(function() {
+    		$("#addToDoTitle").on('submit', function(event) {
+    			event.preventDefault();
+    			console.log("addToDoTitle submit");
+
+    			var planner_id = $("#planner_id").val();
+    			var todo_title = $("#todo_title").val();
+    			
+    			var form = {
+    					planner_id : planner_id,
+    					todo_title : todo_title
+    			};
+    				
+    			$.ajax({
+    				type : "POST",
+    				url : $(this).attr("action"),
+    				cache : false,
+    				data : JSON.stringify(form),
+    				contentType : 'application/json; charset=utf-8',
+    	            beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+    	                 console.log("header 실행 "+header+token)
+    	                 //console.log(sentence.toLowerCase());
+    	                 xhr.setRequestHeader(header, token);
+    	            },
+    				success : function(data){
+    					
+    					console.log(data);
+    					var todo_type_id = data.todo_type_id;
+    					var todo_title = data.todo_title;
+    					var planner_id = data.planner_id;
+		   		          		
+   		          		var htmls = '';
+              
+						htmls +='<div class="col-sm-3"><div class="dropdown"><img src="resources/todo/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style="height: 20px;float: right;"/>'
+						htmls +='<div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" >수정</a>'
+						htmls +='<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${getRecentTodoTypeId}">삭제</a></div></div>'
+						htmls +='<table class="table table-bordered"><tr><td colspan="3">'+ todo_title +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>'
+						htmls +='<c:forEach var="todoName" items="${todoName }"><input class="here" type="hidden" class="todo_type_id" value="${todoName.todo_type_id }">'
+						htmls +='<c:if test="${todoName.todo_type_id} eq '+ todo_type_id +'">'
+						htmls +='<tr><td><p>${todoName.todo_name }</p></td>'
+						htmls += '<td><div class="label"><div class="custom-control custom-checkbox custom-checkbox-green"><input type="checkbox" class="custom-control-input custom-control-input-green" id="customCheck1"><label class="custom-control-label" for="customCheck1"></label></div></div></td>'
+						//htmls +='<td><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label></td>'
+						htmls +='<td><a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a></td></tr></c:if></c:forEach>'
+						htmls +='<tr><td colspan="3"><div class="container"><div class="row"><input type="button" class="makeForm btn-primary" name="'+ todo_type_id +'" value="+ 체크리스트 추가" /></div></div></td></tr></table></div>'
+						
+/* 						htmls += '<tr><td colspan="3">'+ data.todo_title +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>'
+
+						htmls +='<tr><td colspan="3"><a class="makeForm" href="javascript:void(0);" onclick="function makeForm();">+ 체크리스트 추가</a></td></tr>' */
+						
+						$("#todo_title").val('');
+    		            $("#divRow").append(htmls);
+    					
+    				},
+    				error : function(e){
+    					console.log(e);
+    				}
+    				
+    			}); // ajax end
+    		}) // submit end
+    	});
+    </script>
 
 	<script>
     	$(document).ready(function() {
@@ -559,12 +632,12 @@
     						
     				var htmls="";
 
-    			    htmls +='<form id="addToDo" method="POST">'
+    			    htmls +='<br /><form id="addToDo" method="POST">'
     			    htmls +='<input type="hidden" id="todo_type_id" name="todo_type_id" value="' + todo_type_id + '">'
     			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
     			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
     			    htmls +='<input type="text" id="todo_name" name="todo_name" placeholder="ex.카메라">'
-    			    htmls +='<button onclick="function addToDo();">완료</button></form>'
+    			    htmls +='<button id="todo_name_button" onclick="function addToDo();">완료</button></form>'
 
     			    $(tr).append(htmls);
     		});
@@ -602,10 +675,11 @@
     						console.log("success");
     						
     						var htmls="";
-
-						    htmls +='<tr><td><div class="label">'
-							htmls +='<label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label>'
-							htmls +='</div></td>'
+							
+    						htmls += '<tr><td><div class="label"><div class="custom-control custom-checkbox custom-checkbox-green"><input type="checkbox" class="custom-control-input custom-control-input-green" id="customCheck1"><label class="custom-control-label" for="customCheck1"></label></div></div></td>'
+						    //htmls +='<tr><td><div class="label">'
+							//htmls +='<label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label>'
+							//htmls +='</div></td>'
 							htmls +='<td ><p>' + todo_name + '</p></td>'
 							htmls +='<td class="option">'
 							htmls +='<input type="hidden" class="modi_todo_name" value="' + todo_type_id + '">'
@@ -626,38 +700,33 @@
     
     
     
- <script>
+<!--  <script>
        $(document).ready(function() {
           $(".listModify").one("click", function makeOption(event) {
              console.log("makeOption");
-
-                //var tr = $(this).parent().parent().siblings(".table").children().children().children().siblings(".option");
-                //var del_todo_id = $(".del_todo_name").val();
+         
+                //var tr = $(this).parent().parent().parent().find(".option");
+                var tr = $(this).parent();
+                var del_todo_name = $("#td").val();
                 
-                
-               var tr = $(this).parent().parent().parent().find(".option");
-                /*var del_todo_name = $(this).parent().parent().parent().find(".del_todo_name").attr("value");
-                //var del_todo_id = $(this).attr("value");
-                var modi_todo_name = $(this).parent().parent().parent().find(".option").children().attr("value");
-                //var modify_todo_name = $(this).siblings(".todoName").attr("value");
-                //var modify_todo_name = $(this).siblings().children(".option").children().attr("value"); */
-                      
                 var htmls="";
 
                      
                 //htmls +='<a class="modify" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_id + '"><input type="hidden" class="todo_Name" value="' + modify_todo_name + '">수정</a>/'
-                htmls +='<a class="modify">수정</a>/';      
+                htmls +='<a class="modify" href="'window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + del_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')'">수정</a>/';      
                 htmls +='<a class="delete">삭제</a>';
                 
                 $(tr).append(htmls)
                 
                 
-                var del_todo_name = $("input[name=modi_todo_id]").;
+                //var del_todo_name = $("input[name='del_todo_name']").value;
+                //var del_todo_name = $(".del_todo_name").val();
+              //var del_todo_name = $("#td").val();
                //var del_todo_name = document.getElementsByClassName("modi_todo_name").value;
-                console.log(del_todo_name);
-                $(".modify").attr("onclick",'window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + del_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')')
+              //console.log(del_todo_name);
+              //$(".modify").attr("onclick",'window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + del_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')')
                 /* $("img").attr("width", "500"); */
-                console.log(del_todo_name);
+              //console.log(del_todo_name);
 
 
                  
@@ -666,15 +735,50 @@
           });      
           
        });
+    </script> -->
+    
+ <script>
+
+ var makeOption;
+ var click = true;
+makeOption = function(id){
+    if (click) {
+			console.log("makeOption");
+			console.log(id);
+            
+            var tr = $(".option");
+            var del_todo_name = id;
+            
+            var htmls="";
+
+                 
+            //htmls +='<a class="modify" href="' + ${pageContext.request.contextPath }/todo/ + del_todo_id + '"><input type="hidden" class="todo_Name" value="' + modify_todo_name + '">수정</a>/'
+            //htmls +='<a class="modify" href='window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + del_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')'>수정</a>/';      
+            htmls +='<a class="modify">수정</a>';
+            htmls +='<a class="delete">삭제</a>';
+            
+            $(tr).append(htmls);
+
+          	$(".modify").attr("onclick",'window.open(\'${pageContext.request.contextPath}/todo_modify_view/' + del_todo_name + '\', \'popwin2\',\'width=300,height=200,left=300, top=120\')');
+        	
+          	click = !click;
+   } else {
+        console.log("중복됨");
+   }
+
+
+};
+
+
     </script>
     
     <script>
-	function openwin() {
-		window.open('about:blank','popwin',
-		  'width=1250,height=800,toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, left=300, top=120');
-  	document.formDate.submit();
-	}//function end
-</script>
+		function openwin() {
+			window.open('about:blank','popwin',
+			  'width=1250,height=800,toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, left=300, top=120');
+	  		document.formDate.submit();
+		}//function end
+	</script>
     
     
 
@@ -770,13 +874,11 @@
 		$(document).ready(function() {
 			$("input:checkbox").on('click', function() {
 				if ( $(this).prop('checked') ) {
-					//$(this).parent().parent().parent().addClass("selected");
-					//$(this).parent().siblings(".del_todo_name").addClass("selected");
 					$(this).parent().parent().parent().parent().children().children("p").addClass("selected");
+					//$(".TBtodoName").find("p").addClass("selected");
 				} else {
-					//$(this).parent().parent().parent().removeClass("selected");
-					//$(this).parent().siblings(".del_todo_name").removeClass("selected");
 					$(this).parent().parent().parent().parent().children().children("p").removeClass("selected");
+					//$(".TBtodoName").find("p").removeClass("selected");
 				} 
 			}); 
 		}); 
@@ -793,8 +895,8 @@
 
 	<br />
 	<div class="container">
-	<a class="headline" href="${pageContext.request.contextPath }/todo"><img class="todoImg" src="/resources/todo/checkImg.png">준비물</a><br />
-		<div class="row">
+	<a class="headline" href="${pageContext.request.contextPath }/todo"><img class="todoImg" src="/resources/todo/checkImg.png">준비물&nbsp;&nbsp;<span class="headline2">Todo List</span></a><br />
+<%-- 		<div class="row">
 			<div class="col-sm-12">
 				<select class="form-control" name="planner_id">
 					<c:forEach items="${plannerList }" var="planner">
@@ -802,13 +904,12 @@
 					</c:forEach>
 				</select>
 			</div>
-		</div>
-	</div>
+		</div> --%>
+	</div><br />
 
-	<br /><br />
 
  	<div class="container">
- 	<span class="inputTitle"><img class="checkImg2" src="/resources/todo/checkImg2.png">CATEGORY</span><span class="introduce"> 카테고리 제목을 입력하세요!</span>
+ 	<div class="inputTitle"><img class="checkImg2" src="/resources/todo/checkImg2.png">CATEGORY<span class="introduce"><span class="name">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}</span>&nbsp;님 만의 카테고리를 만들어보세요!</span></div>
  	
 		<%-- <span class="introduce"> "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}"님만의 카테고리를 만들어보세요!</span> --%>
 		<div class="row">
@@ -816,76 +917,43 @@
 				<div class="jb-table">
 					<div class="jb-table-row">
 						<form id="addToDoTitle" action="/addTodoType" method="POST">
-							<input type="hidden" class="getRecentTodoTypeId" value="${getRecentTodoTypeId }"> <input type="hidden" id="planner_id" value="${getPlannerId }">
-<!-- 							<div class="jb-table-cell"> <br />
-						 		<p>
-									<input type="text" id="todo_title" placeholder="ex.전자기기">
-								</p>
-								<input type="submit" value="카테고리 만들기">
-							</div> -->
+							<%-- <input type="hidden" class="getRecentTodoTypeId" value="${getRecentTodoTypeId }">--%> 
+							<input type="hidden" id="planner_id" value="${getPlannerId }"> 
 						
+						<br />
 						<div class="form__group field">
-						  <input type="text" id="todo_title" class="form__field" placeholder="ex.전자기기" name="name" required/>
-						  <label for="todo_title" class="form__label">Make Category</label>
+						  <input type="text" id="todo_title" class="form__field" placeholder=" " name="name" required/>
+						  <label for="todo_title" class="form__label">카테고리 제목을 입력해주세요!</label>
 						</div>
-						 <!-- <input type="submit" value="카테고리 만들기" style="float:right; margin:-30px 0 30px 0;"> -->
 						 
-<!-- <div class="wrapper">
-	<input type="submit" class="is_active" value="Submit" style="float:right; margin:-20px 0 20px 100px;">
-    <div class="success">
-    <svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 29.756 29.756" style="enable-background:new 0 0 29.756 29.756;" xml:space="preserve">
-      
-	<path d="M29.049,5.009L28.19,4.151c-0.943-0.945-2.488-0.945-3.434,0L10.172,18.737l-5.175-5.173   c-0.943-0.944-2.489-0.944-3.432,0.001l-0.858,0.857c-0.943,0.944-0.943,2.489,0,3.433l7.744,7.752   c0.944,0.943,2.489,0.943,3.433,0L29.049,8.442C29.991,7.498,29.991,5.953,29.049,5.009z"></path>
- 	</svg>
-    </div>
-</div>
-<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
-<script id="rendered-js">
-	let btn = document.querySelector("button");
-	
-	btn.addEventListener("click", active);
-	
-	function active() {
-	  btn.classList.toggle("is_active");
-	}
-</script>		 -->
-
-<div class="wrapper">
-	
-	<button class="" type="submit" style="float:right; margin:-20px 0 20px 100px;">
-	<span id="submitValue">Submit</span>
-    <div class="success">
-    <svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 29.756 29.756" style="enable-background:new 0 0 29.756 29.756;" xml:space="preserve">
-      
-	<path d="M29.049,5.009L28.19,4.151c-0.943-0.945-2.488-0.945-3.434,0L10.172,18.737l-5.175-5.173   c-0.943-0.944-2.489-0.944-3.432,0.001l-0.858,0.857c-0.943,0.944-0.943,2.489,0,3.433l7.744,7.752   c0.944,0.943,2.489,0.943,3.433,0L29.049,8.442C29.991,7.498,29.991,5.953,29.049,5.009z"></path>
- 	</svg>
-    </div>
-    </button>
-</div>
-<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
-<script id="rendered-js">
-	let btn = document.querySelector(".wrapper button");
-	
-	btn.addEventListener("click", active);
-	
-/* 	function active() {
-	if(#todo_title != ""){
-		btn.classList.toggle("is_active");
-	}else{
-		btn.classList.toggle("");
-	}
-	  
-	} */
-	
-	function active() {
-		if(result == "SUCCESS"){
-			btn.classList.toggle("is_active");
-		}else{
-			btn.classList.toggle("");
-		}
-		  
-		}
-</script>		 				 
+						<!-- submit button -->
+						<div class="wrapper">
+							<button class="" id="submitBT" type="submit">
+							<span><img class="sendImg" src="/resources/todo/send.png"></span>
+						    <div class="success">
+						    <svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 29.756 29.756" style="enable-background:new 0 0 29.756 29.756;" xml:space="preserve">
+						      
+							<path d="M29.049,5.009L28.19,4.151c-0.943-0.945-2.488-0.945-3.434,0L10.172,18.737l-5.175-5.173   c-0.943-0.944-2.489-0.944-3.432,0.001l-0.858,0.857c-0.943,0.944-0.943,2.489,0,3.433l7.744,7.752   c0.944,0.943,2.489,0.943,3.433,0L29.049,8.442C29.991,7.498,29.991,5.953,29.049,5.009z"></path>
+						 	</svg>
+						    </div>
+						    </button>
+						</div><br /><br />
+						
+						<!-- submit button -->
+						<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+						<script id="rendered-js">
+							let btn = document.querySelector("#addToDoTitle");
+							
+							btn.addEventListener("submit", active);
+							
+							let btn2 = document.querySelector(".wrapper button");
+							
+							btn2.addEventListener("click");	
+							
+							function active() {
+								btn2.classList.toggle("is_active"); 
+							}
+						</script>		 				 
 						 
 						 
 						<!-- form__group input box -->
@@ -899,72 +967,54 @@
 		</div>
 	</div>
 	<br />
-	
-<%-- 	<div class="container">
-		
-		<!-- &nbsp;&nbsp;<h4 style="font-family: 'yg-jalnan'">카테고리를 입력하세요</h4> -->
-		
-			
-			<span class="inputTitle"><img class="checkImg2" src="/resources/todo/checkImg2.png">CATEGORY</span>
-			<span class="introduction"> "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}"님만의 카테고리를 만들어보세요!</span>
-			<span class="introduce"><div >
-						<form id="addToDoTitle" action="/addTodoType" method="POST">
-						<input type="hidden" class="getRecentTodoTypeId" value="${getRecentTodoTypeId }"> <input type="hidden" id="planner_id" value="${getPlannerId }">
-						
-							
-							
-						 		
-								<input type="text" id="todo_title" placeholder="ex.전자기기">
-								
-								<input type="submit" value="카테고리 만들기">
-							
-						</form>
-			</div></span>
-			
-		
-	</div>
-	<br /> --%>
-	
-	
 
 	
 	<div class="todoTable container">
-	<span class="todoList"><img class="checkImg2" src="/resources/todo/checkImg2.png">TODO LIST</span>
-		<div class="row">
+	<span class="todoList"><img class="checkImg2" src="/resources/todo/checkImg2.png">TODO LIST</span><br />
+		<div class="row" id="divRow">
 			<c:forEach items="${todoTitle }" var="todoTitle">
 				<div class="col-sm-3">
 					<div class="dropdown">
-						<img src="resources/diary/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style='height: 20px;float: right;'/>	
+						<img src="resources/todo/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" />	
 						<div class="dropdown-menu dropdown-menu-right">
-							<button class="listModify dropdown-item" >수정</button>
+							<!-- <button class="listModify dropdown-item" >수정</button> -->
 							<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${todoTitle.todo_type_id}">카테고리 삭제</a>
 						</div>
 
-					<table class="table table-bordered">
+					<table id="TB" class="table">
 						<tr>
-							<td colspan="3">${todoTitle.todo_title } ${todoTitle.todo_type_id }</td>
+							<td colspan="3" class="TBcategory"><span class="TBtitle">${todoTitle.todo_title }</span></td>
 						</tr>	
-							
-						
-						
+											
 						<c:forEach var="todoName" items="${todoName }">
-						<input class="del_todo_name" type="hidden" name="del_todo_name" value="${todoName.todo_id }">
+						<input type="hidden" class="del_todo_name" name="del_todo_name" value="${todoName.todo_id }">
 						<c:if test="${todoName.todo_type_id eq todoTitle.todo_type_id }">	
 
 						<tr class="todoListTable">
-							<td>
-								<div class="label">
-								 <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label> 
- 								</div>
+							<td class="td1">
+    							<div class="label">
+								 <label class="checkbox-inline">
+									 <input type="checkbox" name="input_check" id="inlineCheckbox1" value='1'>
+									 <input type="hidden" name="input_check" id="input_check_hidden" value='0'/>
+								 </label>
+ 								</div>  
+<!--   <div class="checkbox-inline">
+<div class="custom-control custom-checkbox custom-checkbox-green">
+  <input type="checkbox" class="custom-control-input custom-control-input-green" name="input_check" id="inlineCheckbox1">
+  <label class="custom-control-label" for="inlineCheckbox1"></label>
+</div>
+	</div>  -->
 							</td>
 						
-							<td>
-								<p>${todoName.todo_name } ${todoName.todo_id }</p>
+							<td class="TBtodoName">
+								<p class="TBname">${todoName.todo_name } ${todoName.todo_id }</p>
 							</td>
 
 							<!-- ajax로 delete 처리 -->
 							<td class="option">
-								 <input type="hidden" id="${todoName.todo_id }" name="todo_id" value="${todoName.todo_id }"> 	
+								 <input type="hidden"  id="td" name="todo_name" value="${todoName.todo_name }"> 
+								 <!-- <button class="listModify" onclick="makeOption()">수정</button> -->
+								 <input type="button" id="listModify" value="수정" onclick="makeOption(${todoName.todo_id }); this.onclick='';" >
 								<%-- <a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a> --%>
 							</td>
 						</tr>
@@ -974,10 +1024,10 @@
 						
 						<tr>
 							<!-- form으로 insert 처리 -->
-							<td colspan="3">
+							<td class="addCK" colspan="3">
 								<div class="container">
 								<div class="row">
-									<input type="button" class="makeForm btn-primary" name="${todoTitle.todo_type_id }" value="+ 체크리스트 추가" />
+									<input type="image" class="makeForm" name="${todoTitle.todo_type_id }" src="resources/todo/plus.png" />
 								</div>
 								</div>
 							</td>
@@ -996,7 +1046,7 @@
 
 
 
-	<br /><br /><br /><br /><br /><br />
+<!-- 	<br /><br /><br /><br /><br /><br />
 	<div class="container">
 		<span class="recommend1"><img class="checkImg2" src="/resources/todo/checkImg2.png">혹시 잊어버린 물건은 없으신가요?</span>
 		<hr style="border: solid 1px light-grey; width: 100%;">
@@ -1009,10 +1059,10 @@
 			<li>추천 리스트 4</li>
 			<li>추천 리스트 5</li>
 		</ol>
-	</div>
+	</div> -->
 
 
-	<br /><br /><br /><br /><br /><br />
+<%-- 	<br /><br /><br /><br /><br /><br />
 	<div class="container">
 		<span class="recommend1"><img class="checkImg2" src="/resources/todo/checkImg2.png">이 상품이 필요하진 않으신가요?</span>  
 		<hr style="border: solid 1px light-grey; width: 100%;">
@@ -1024,7 +1074,7 @@
 					<table class="table table-borderless">
 						<tr class="table-light">
 							<td colspan="2">
-								<%-- <img width='100' src='${pdlist.img_path}'/> --%> <a
+								<img width='100' src='${pdlist.img_path}'/> <a
 								href="#"> <!-- <img class="pdImg" onload="randomImage()"/> -->
 									<img width='100' src="Blue.png" />
 							</a>
@@ -1079,7 +1129,7 @@
 				</div>
 			</c:forEach>
 		</div>
-	</div>
+	</div> --%>
 
 <!-- footer -->
 <%@ include file="/WEB-INF/views/includes/footer.jsp"%>

@@ -70,12 +70,6 @@ public class TodoServiceImpl implements TodoService {
 //		log.info("getRecentTodoTypeId()");
 //		return mapper.getRecentTodoTypeId();
 //	}
-	
-	@Override
-	public int getRecentTodoTypeId() {
-		log.info("getRecentTodoTypeId()");
-		return mapper.getRecentTodoTypeId();
-	}
 
 	@Override
 	public void addTodoType(TodoTypeVO todoTypeVO) {
@@ -99,6 +93,18 @@ public class TodoServiceImpl implements TodoService {
 	public TodoVO todo_view(int todo_id) {
 		log.info("todo_view()");
 		return mapper.todo_view(todo_id);
+	}
+
+	
+	@Override
+	public int getRecentTodoTypeId() {
+		log.info("getRecentTodoTypeId()");
+		return mapper.getRecentTodoTypeId();
+	}
+	
+	@Override
+	public TodoTypeVO getRecentTodoType(TodoTypeVO todoTypeVO) {
+		return mapper.getRecentTodoType(todoTypeVO);
 	}
 	
 //	@Override

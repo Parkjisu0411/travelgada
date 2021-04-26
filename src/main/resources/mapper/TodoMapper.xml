@@ -110,12 +110,18 @@
 		]]>
 	 </insert>
 	 
- 	 <select id="getRecentTodoTypeId" resultType="int">
+  	 <select id="getRecentTodoTypeId" resultType="int">
 		<![CDATA[
 			SELECT todo_type_id FROM todo_type ORDER BY todo_type_id DESC LIMIT 1
 		]]>
-	 </select>
+	 </select> 
 	 
+ 	 <select id="getRecentTodoType" resultMap="todoTypeMap">
+		<![CDATA[
+		select todo_type_id, todo_title, planner_id from todo_type order by todo_type_id desc LIMIT 1
+		]]>
+	 </select>
+
 	 <select id="todo_view" resultMap="todoMap">
    		<![CDATA[
    			select * from todo where todo_id = #{todo_id}
