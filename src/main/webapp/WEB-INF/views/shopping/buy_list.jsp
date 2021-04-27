@@ -48,10 +48,43 @@
 	.product-info {
 		display: inline-block;
 	}
+	
+	.page-area{
+		margin:auto;
+		text-align:center;
+	}
+	
+	.pagination{
+		border-radius: 5px;
+	}
+	
+	.page-link{
+		font-family: 'GongGothicMedium';
+		color: white;
+		font-size:12px;
+		background-color: #1dcad3;
+		width:50px;
+		border-radius: 5px;
+	}
+	
+	.page-link:hover {
+		background-color: #189fa6;
+		color: white;
+	}
+	
+	.selected {
+		background-color: #189fa6;
+		color: white;
+	}
 </style>
 <script type="text/javascript">
-	function movePage(pageNum, amount) {
-		var query = '?nowPage=' + pageNum + "&amount=" + amount;
+
+	function movePage(pageNum, amount, filter) {
+		if(filter) {
+			var query = '?nowPage=' + pageNum + "&amount=" + amount + "&dateFilter=" + filter;
+		} else {
+			var query = '?nowPage=' + pageNum + "&amount=" + amount + "&dateFilter=default";			
+		}
 		$.ajax({
 			type : "GET",
 			url : "/shopping/buy_list_page" + query,
@@ -60,21 +93,48 @@
 				console.log(buyListMap);
 				content = "";
 				for(var i = 0; i < buyListMap.buyList.length; i++) {
-					content += "<tr>";
-					content += "	<td>";
+					var date = new Date(buyListMap.buyList[i].buy.buy_date);
+					var year = date.getFullYear();
+					var month = date.getMonth() + 1;
+					if(month < 10) {
+						month = "0" + month;
+					} 
+					var day = date.getDate();
+					if(day < 10) {
+						day = "0" + day;
+					}
+					var dateString = year + "-" + month + "-" + day;
+					
+					content += "<tr class='row'>";
+					content += "	<td class='col-md-6'>";
 					content += "		<img class='product-img rounded' src='/resources/img/product/" + buyListMap.buyList[i].product.img_path + "' />";
 					content += "		<div class='product-info'>";
 					content += "			<strong>" + buyListMap.buyList[i].product_name + "</strong>";
 					content += "			<p>₩ " + buyListMap.buyList[i].price + "</p>";
 					content += "		</div>";
 					content += "	</td>";
-					content += "	<td><fmt:formatDate value='' pattern='yyyy.MM.dd'/></td>";
-					content += "	<td><a href='/shopping/buy_list/" + buyListMap.buyList[i].buy.buy_id + "'>" + buyListMap.buyList[i].buy.buy_id + "</a></td>";
-					content += "	<td>" + buyListMap.buyList[i].price + "</td>";
-					content += "	<td>구매확정</td>";
+					content += "	<td class='col-md-2'>" + dateString + "</td>";
+					content += "	<td class='col-md-2'><a href='/shopping/buy_list/" + buyListMap.buyList[i].buy.buy_id + "'>" + buyListMap.buyList[i].buy.buy_id + "</a></td>";
+					content += "	<td class='col-md-1'>" + buyListMap.buyList[i].price + "</td>";
+					content += "	<td class='col-md-1'>구매확정</td>";
 					content += "</tr>";
 				}
+				var pageContent = "";
+				if(buyListMap.pageMaker[0].prev) {
+					pageContent += "<li class='page-item'><a class='page-link' onclick='movePage(" + buyListMap.pageMaker[0].startPage - 1 + ", 10, \"" + buyListMap.pageMaker[0].cri.dateFilter + "\")'>prev</a></li>";
+				}
+				for(var i = buyListMap.pageMaker[0].startPage; i <= buyListMap.pageMaker[0].endPage; i++) {
+					if(i == buyListMap.pageMaker[0].cri.nowPage) {
+						pageContent += "<li class='page-item'><a class='page-link selected' onclick='movePage(" + i + ", 10, \"" + buyListMap.pageMaker[0].cri.dateFilter + "\")'>" + i + "</a></li>";
+					} else {
+						pageContent += "<li class='page-item'><a class='page-link' onclick='movePage(" + i + ", 10, \"" + buyListMap.pageMaker[0].cri.dateFilter + "\")'>" + i + "</a></li>";						
+					}
+				}
+				if(buyListMap.pageMaker[0].next) {
+					pageContent += "<li class='page-item'><a class='page-link' onclick='movePage(" + parseInt(buyListMap.pageMaker[0].endPage) + parseInt(1) + ", 10, \"" + buyListMap.pageMaker[0].cri.dateFilter + "\")'>next</a></li>";
+				}
 				$("tbody").html(content);
+				$("#pagination").html(pageContent);
 			},
 			error : function(e) {
 				console.log(e);
@@ -97,36 +157,36 @@
 					<div class="buy-list-area">
 						<div class="buy-search-area">
 							<div class="gada-btn-group">
-								<button class="btn gada-btn">1주일</button>
-								<button class="btn gada-btn">1개월</button>
-								<button class="btn gada-btn">3개월</button>
-								<button class="btn gada-btn">전체</button>
+								<button onclick="movePage(1, 10, 'week')" class="btn gada-btn">1주일</button>
+								<button onclick="movePage(1, 10, 'month')" class="btn gada-btn">1개월</button>
+								<button onclick="movePage(1, 10, '3month')" class="btn gada-btn">3개월</button>
+								<button onclick="movePage(1, 10, 'default')" class="btn gada-btn">전체</button>
 							</div>
 						</div>
 						<table class="table">
 							<thead>
-								<tr>
-									<th>상품정보</th>
-									<th>주문일자</th>
-									<th>주문번호</th>
-									<th>주문금액</th>
-									<th>주문상태</th>
+								<tr class="row">
+									<th class="col-md-8">상품정보</th>
+									<th class="col-md-1">주문일자</th>
+									<th class="col-md-1">주문번호</th>
+									<th class="col-md-1">주문금액</th>
+									<th class="col-md-1">주문상태</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="buyDetail" items="${buyListMap['buyList'] }">
-									<tr>
-										<td>
+									<tr class="row">
+										<td class="col-md-6">
 											<img class="product-img rounded" src="/resources/img/product/${buyDetail.product.img_path}" />
 											<div class="product-info">
 												<strong>${buyDetail.product_name }</strong>
 												<p>₩ ${buyDetail.product.price}</p>
 											</div>
 										</td>
-										<td><fmt:formatDate value="${buyDetail.buy.buy_date}" pattern="yyyy.MM.dd"/></td>
-										<td><a href="/shopping/buy_list/${buyDetail.buy.buy_id}">${buyDetail.buy.buy_id}</a></td>
-										<td>${buyDetail.price }</td>
-										<td>구매확정</td>
+										<td class="col-md-2"><fmt:formatDate value="${buyDetail.buy.buy_date}" pattern="yyyy.MM.dd"/></td>
+										<td class="col-md-2"><a href="/shopping/buy_list/${buyDetail.buy.buy_id}">${buyDetail.buy.buy_id}</a></td>
+										<td class="col-md-1">${buyDetail.price }</td>
+										<td class="col-md-1">구매확정</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -134,13 +194,18 @@
 					</div>
 					<div class="page-area">
 						<c:forEach var="pageMaker" items="${buyListMap['pageMaker'] }">
-							<ul class="pagination" style="padding:80px 350px;">	
+							<ul id="pagination" class="pagination" style="padding:80px 350px;">	
 						  		<c:if test="${pageMaker.prev}">
 					       			<li class="page-item"><a class="page-link" onclick="movePage(${pageMaker.startPage - 1}, 10)">prev</a></li>
 					     		</c:if>
 				
 					      		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-					         		<li class="page-item"><a class="page-link" onclick="movePage(${idx}, 10)">${idx}</a></li>
+					      			<c:if test="${idx eq pageMaker.cri.nowPage }">
+					      				<li class="page-item"><a class="page-link selected" onclick="movePage(${idx}, 10)">${idx}</a></li>
+					      			</c:if>
+					      			<c:if test="${idx ne pageMaker.cri.nowPage }">
+					      				<li class="page-item"><a class="page-link" onclick="movePage(${idx}, 10)">${idx}</a></li>
+					      			</c:if>
 					      		</c:forEach>
 					      
 					      		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">

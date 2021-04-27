@@ -233,9 +233,9 @@ public class ShoppingController {
    public ModelAndView buyList(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) {
 	  Map<String, List<? extends Object>> buyListMap = new HashMap<>();
 	  CriteriaVO cri = new CriteriaVO(1, 10);
-      List<BuyListVO> buyList = shoppingService.getBuyListByIdWithPage(memberDetails.getUsername(), cri.getNowPage(), cri.getAmount());
+      List<BuyListVO> buyList = shoppingService.getBuyListByIdWithPage(memberDetails.getUsername(), cri.getNowPage(), cri.getAmount(), "default");
       List<PageVO> pageMaker = new ArrayList<PageVO>();
-      pageMaker.add(new PageVO(cri, shoppingService.getBuyListTotal(memberDetails.getUsername())));
+      pageMaker.add(new PageVO(cri, shoppingService.getBuyListTotal(memberDetails.getUsername(), "default")));
       buyListMap.put("pageMaker", pageMaker);
       buyListMap.put("buyList", buyList);
       
@@ -251,8 +251,8 @@ public class ShoppingController {
 	   Map<String, List<? extends Object>> buyListMap = new HashMap<>();
 	   try {
 		   List<PageVO> pageMaker = new ArrayList<>();
-		   pageMaker.add(new PageVO(cri, shoppingService.getBuyListTotal(memberDetails.getUsername())));
-		   List<BuyListVO> buyList = shoppingService.getBuyListByIdWithPage(memberDetails.getUsername(), cri.getNowPage(), cri.getAmount());
+		   pageMaker.add(new PageVO(cri, shoppingService.getBuyListTotal(memberDetails.getUsername(), cri.getDateFilter())));
+		   List<BuyListVO> buyList = shoppingService.getBuyListByIdWithPage(memberDetails.getUsername(), cri.getNowPage(), cri.getAmount(), cri.getDateFilter());
 		   buyListMap.put("pageMaker", pageMaker);
 		   buyListMap.put("buyList", buyList);
 		   entity = new ResponseEntity<Map<String, List<? extends Object>>>(buyListMap, HttpStatus.OK);
