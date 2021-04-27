@@ -19,7 +19,13 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
-		
+		<!-- security-test -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- Mail -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
