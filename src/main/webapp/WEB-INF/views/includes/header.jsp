@@ -31,6 +31,21 @@
   <script type="text/javascript">
 
   </script>
+  
+ <script>
+	/* 검색어를 입력하지 않을 경우 */
+	$(document).ready(function() {
+			$(".search_icon_btn").click(function() {
+				var keyword = $("#keyword").val();
+				
+				if(keyword.length == 0){
+					alert("검색어를 입력해주세요!");
+					$("#keyword").focus();
+					return false;
+				}
+			});
+	});
+</script>
 
 </head>
 
@@ -79,7 +94,7 @@
         </ul>
         <form class="form-inline" action="${pageContext.request.contextPath}/search" method="get">
           <input id="keyword" style="margin: 5px !important;" class="form-control mr-sm-2 nav-form-control" type="text" aria-label="Search" name="keyword">
-          <button class="btn btn-outline-white btn-sm my-0 nav-btn" style="margin-left: -33px !important;" type="submit">
+          <button class="search_icon_btn btn btn-outline-white btn-sm my-0 nav-btn" style="margin-left: -33px !important;" type="submit">
             <i class="fas fa-search fa-lg"></i>
           </button>
         </form>

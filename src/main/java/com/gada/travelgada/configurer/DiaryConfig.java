@@ -14,8 +14,6 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 @AllArgsConstructor
 public class DiaryConfig {
-	
-	
 
 	@Bean
     public CommonsMultipartResolver commonsMultipartResolver() {

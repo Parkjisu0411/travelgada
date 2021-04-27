@@ -18,7 +18,7 @@ public class VisitorDao {
 		try {
 			Class.forName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
 		} catch (Exception e) {
-		System.out.println(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 

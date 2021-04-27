@@ -92,13 +92,37 @@ public class ShoppingServiceImpl {
 		return shoppingMapper.selectBuyListById(member_id);
 	}
 	
-	public int getBuyListTotal(String member_id) {
-		return shoppingMapper.selectBuyListTotal(member_id);
+	public int getBuyListTotal(String member_id, String dateFilter) {
+		String filter = "";
+		switch (dateFilter) {
+		case ("week"):
+			filter = "and B.buy_date >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+			break;
+		case ("month"):
+			filter = "and B.buy_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+			break;
+		case ("3month"):
+			filter = "and B.buy_date >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+			break;
+		}
+		return shoppingMapper.selectBuyListTotal(member_id, filter);			
 	}
 	
-	public List<BuyListVO> getBuyListByIdWithPage(String member_id, int pageNum, int amount) {
+	public List<BuyListVO> getBuyListByIdWithPage(String member_id, int pageNum, int amount, String dateFilter) {
+		String filter = "";
+		switch (dateFilter) {
+		case ("week"):
+			filter += " and B.buy_date >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+			break;
+		case ("month"):
+			filter += " and B.buy_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+			break;
+		case ("3month"):
+			filter += " and B.buy_date >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+			break;
+		}
 		pageNum = (pageNum - 1) * amount;
-		return shoppingMapper.selectBuyListByIdWithPage(member_id, pageNum, amount);
+		return shoppingMapper.selectBuyListByIdWithPage(member_id, pageNum, amount, filter);
 	}
 	
 	public List<BuyDetailVO> getBuyDetailList(String buy_id) {

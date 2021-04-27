@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta id="_csrf" name="_csrf" content="${_csrf.token}" />
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
 
@@ -30,14 +29,15 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+	
 <style>
 html, body {
 	width: 100%;
 	height: 100%;
 	margins: 0;
 	padding: 0;
-	/* background-color: #f5f5f5; */
 	font-family: 'IBMPlexSansKR-Light';
 	font-weight: bold;
 }
@@ -62,7 +62,7 @@ html, body {
 
 .diHover:hover, .plBox:hover {
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
-	transform:scale(1.02);
+	transform: scale(1.02);
 }
 
 /* 다이어리 이미지 */
@@ -87,8 +87,6 @@ html, body {
 
 #keyword_search {
 	height: 45px;
-	/* 	width: 50%; */
-	/* 	min-width: 100%; */
 	line-height: 70px;
 	background-color: transparent;
 	color: black;
@@ -183,121 +181,111 @@ html, body {
 .hash_color {
 	color: #303E57;
 }
-/* 여기 */
 /* 모달 스타일 */
-/* .dialogDi{
- 	height : 40px;
-} */
-
-/* .mainImg{
-    float: left;
-} */
-
-.Mcontent{
-/* 	padding:0px;
-	width:100% */
-	width:800px; 
-} 
-
-.dialogtext{
-	width:100%;
-  	height : 240px;
-  	font-weight: bold;
-  	overflow: auto;
-  	padding-right:20px;
-  	float:left;
-  	padding-left:10px;
+.Mcontent {
+	width: 800px;
 }
 
-pre{
+.dialogtext {
+	width: 100%;
+	height: 240px;
+	font-weight: bold;
+	overflow: auto;
+	padding-right: 20px;
+	float: left;
+	padding-left: 10px;
+}
+
+pre {
 	font-family: 'IBMPlexSansKR-Light';
 	font-weight: bold;
 	font-size: 16px;
 }
 
-  .dialogtext::-webkit-scrollbar {
-    width: 10px;
-  }
-  .dialogtext::-webkit-scrollbar-thumb {
-    background-color: #a1eef2;/*  연한 민트 */
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-  .dialogtext::-webkit-scrollbar-track {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  }
+.dialogtext::-webkit-scrollbar {
+	width: 10px;
+}
 
-.dialog-hashtag{
-	margin-top:10px;
-	text-align:right;
+.dialogtext::-webkit-scrollbar-thumb {
+	background-color: #a1eef2; /*  연한 민트 */
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.dialogtext::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.dialog-hashtag {
+	margin-top: 10px;
+	text-align: right;
 	overflow: auto;
-	width:100%;
-	padding-right:20px;
-	float:left;
-	height:50px;
+	width: 100%;
+	padding-right: 20px;
+	float: left;
+	height: 50px;
 }
 
-  .dialog-hashtag::-webkit-scrollbar {
-    width: 10px;
-  }
-  .dialog-hashtag::-webkit-scrollbar-thumb {
-    background-color: #a1eef2;
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-  .dialog-hashtag::-webkit-scrollbar-track {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  }
-
-.dialog-date{
-	width:100%;
-	height:40px;
-	margin-top:10px;
-	padding-right:20px;
-	text-align:right;
-	float:left;
+.dialog-hashtag::-webkit-scrollbar {
+	width: 10px;
 }
 
-.popup_img{
-	width: 100%; 
+.dialog-hashtag::-webkit-scrollbar-thumb {
+	background-color: #a1eef2;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.dialog-hashtag::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.dialog-date {
+	width: 100%;
+	height: 40px;
+	margin-top: 10px;
+	padding-right: 20px;
+	text-align: right;
+	float: left;
+}
+
+.popup_img {
+	width: 100%;
 	height: 400px;
 	object-fit: cover;
 	border-radius: 4px;
-	padding:0;
-}
-.close{
-	margin:10px 20px 10px 0;
-	/* padding-right:20px; */
-	/* width: 100%;  */
-	text-align:right;
-	outline:none;
+	padding: 0;
 }
 
-.close:hover{
+.close {
+	margin: 10px 20px 10px 0;
+	text-align: right;
+	outline: none;
+}
+
+.close:hover {
 	color: #1dcad3;
 }
 
-.dialog-profile{
-	margin-top:15px;
-	padding-left:10px;
-} 
+.dialog-profile {
+	margin-top: 15px;
+	padding-left: 10px;
+}
 
-.dialog-wrap{
-	width : 100%;
-	/* width : 350px; */
-	
-   	float: left;
+.dialog-wrap {
+	width: 100%;
+	float: left;
 }
 /* 모달 스타일 끝 */
 
 /* 일정 이미지 */
-.card-pl-img{
+.card-pl-img {
 	width: 90%;
 	height: 300px;
 	margin: 20px;
@@ -306,17 +294,8 @@ pre{
 	float: left;
 }
 
-/* .main-card-diary-img{
-	overflow:hidden
-} */
-
-/* .card-pl-img:hover, .main-card-diary-img:hover{
-	transform:scale(1.1);
-} */
-
-.city, .country, .date{
+.city, .country, .date {
 	font-family: 'GongGothicLight';
-	
 }
 </style>
 
@@ -360,7 +339,21 @@ $(document).ready(
 
 	});
 /* 해시태그 & 링크 끝 */
+</script>
 
+<script>
+/* 검색어를 입력하지 않을 경우 */
+$(document).ready(function() {
+		$(".search_icon").click(function() {
+			var keyword = $("#keyword_search").val();
+			
+			if(keyword.length == 0){
+				alert("검색어를 입력해주세요!");
+				$("#keyword_search").focus();
+				return false;
+			}
+		});
+});
 </script>
 
 </head>
@@ -376,7 +369,7 @@ $(document).ready(
 		<form action="${pageContext.request.contextPath}/search" method="get">
 			<input id="keyword_search" class="col-sm-11" type="text"
 				name="keyword" placeholder="검색어를 입력하세요." />
-			<button class="search_icon" type="submit" onclick="focusSearch()" >
+			<button class="search_icon" type="submit" >
 				<i class="fa fa-search search-icon-in"></i>
 			</button>
 		</form>
@@ -399,6 +392,7 @@ $(document).ready(
 
 		<br />
 		<br />
+		
 		<!-- 일정 searchPl -->
 		<span class="font_h">일정</span> 
 		<br /> 
@@ -413,9 +407,8 @@ $(document).ready(
 			<div class="row plBox" onclick="location.href='/search/${pl.member_id}/${pl.planner_id}';">
 				<div class="col-sm-6">
 					<img class="card-pl-img" src="/resources/img/planner/${ pl.planner_img_path}" onerror="this.src='/resources/img/profile/gada'">
-					<%-- <a href="/search/${pl.member_id}/${pl.planner_id}">일정사진</a> --%>
-					
 				</div> 
+				
 				<div class="col-sm-6">
 					<div class="box">
 						<br> 
@@ -439,7 +432,6 @@ $(document).ready(
 						</c:forEach>
 						<br /> <br />
 					</div>
-					<%-- <br /> <span class="star-prototype">${pl.satisfaction}</span> <br /> --%>
 					<br />
 				</div>
 			</div><!-- 일정 검색 -->
@@ -448,8 +440,7 @@ $(document).ready(
 		<!-- 반복 끝 -->
 		<!-- 일정 더보기 버튼 -->
 
-		<br />
-		<br />
+		<br /><br />
 		<!-- 다이어리 searchDi -->
 		<hr class="hr_search">
 		<br />
@@ -491,15 +482,11 @@ $(document).ready(
 						<!-- 다이어리 끝 -->
 
 						<!-- Modal -->
-						<!-- 여기  -->
 						<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
-							<!-- <div class="mySlides"> -->
 							<div class="modal-dialog modal-lg modal-dialog-centered">
 								<div class="modal-content">
-									<!-- 						<div class="modal-header">
-							</div> -->
 									<div class="row  ">
-									<div class="col-sm-6">
+										<div class="col-sm-6">
 											<img class="popup_img" src='resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'"/>
 										</div>
 										<div class="dialog-wrap col-sm-6">
@@ -511,37 +498,24 @@ $(document).ready(
 												${member.member_id}
 											</div>
 											<div class="dialogDi dialog-date">${di.diary_date}</div>
-											<div class="dialogtext"><pre>${di.text}</pre></div>
+											<div class="dialogtext" style="white-space:pre-wrap;">${di.text}</div>
 											<div class="dialogDi dialog-hashtag">
 												<span id="modal${di.diary_id}"></span>
 											</div>
 										</div>
 									</div>
-									<!-- <div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-							</div> -->
 								</div>
-								<!-- modal-content end -->
 							</div>
 						</div>
 					</c:forEach>
-					<!-- Modal end -->
 				</c:forEach>
-				<!-- 다이어리 반복 끝 -->
 			</c:forEach>
 		</div>
-		<!-- 다이어리 row end -->
-
 		<br />
-
-		<%-- <div class="btn_more">
-			<!-- 다이어리 더보기 버튼 -->
-			<button type="button" style ="background-color:#f5df4d" class="searchBtn btn btn-sm" onclick = "location.href = '${pageContext.request.contextPath}/searchDi?keyword=${keyword}' ">더보기</button>
-		</div> --%>
-
 	</div>
 	<!-- container end -->
+	
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
 
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>

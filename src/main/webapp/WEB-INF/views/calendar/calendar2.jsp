@@ -5,10 +5,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>달력</title>
-
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
 		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
 		crossorigin="anonymous" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -16,20 +13,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
     	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
     	crossorigin="anonymous"></script>
-	
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- <script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link
-		href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
-		rel="stylesheet">
-	
+	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
 
 	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
@@ -40,100 +28,105 @@
 	<link href="resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
     <link href="resources/calendar/css/datepicker2.css" rel="stylesheet" media="all">
 
+<title>달력</title>
+
 <style>
 /* 달력 생성 모달 */
-	/* 달력 아이콘 */
-	#calImg {
-		position: fixed;
-		right: 20px;
-		width: 25px;
-		height: 30px;
-	}
+/* 달력 아이콘 */
+#calImg {
+	position: fixed;
+	right: 20px;
+	width: 25px;
+	height: 30px;
+}
 
-	/* 모달 스타일 */
-	.modalInput{
-        margin-left: 20px;
-    }
+/* 모달 스타일 */
+.modalInput {
+	margin-left: 20px;
+}
 
-	.modal_input-style{
-		border: none;
-		font-size: 15px;
-		background-color: rgb(238, 237, 237);
-		outline: none;
-		height: 40px;
-		width: 270px;
-		border-radius: 15px;
-		padding-left: 20px;
-	}
+.modal_input-style {
+	border: none;
+	font-size: 15px;
+	background-color: rgb(238, 237, 237);
+	outline: none;
+	height: 40px;
+	width: 270px;
+	border-radius: 15px;
+	padding-left: 20px;
+}
 
-	.modal-submit{
-		border: none;
-		height: 40px;
-		width: 270px;
-		border-radius: 15px;
-		background-color: rgb(211, 211, 211);
-	}
+.modal-submit {
+	border: none;
+	height: 40px;
+	width: 270px;
+	border-radius: 15px;
+	background-color: rgb(211, 211, 211);
+}
 
-	.modalLabel{
-		margin:15px 10px 10px 10px;			
-		font-size: 12px;
-		color: black;
-		display: block;
-		height: 10px;
-		font-weight: bold;
-	}
-            
-	/* 모달 배경 투명 */
-	.modal-backdrop {
-		background-color: rgba(0,0,0,.0001) !important;
-	}
-	
-	.modal-dialog2{
-		position: fixed;
-		top:60px;
-		right: 60px;
-		width:310px;
-	}
+.modalLabel {
+	margin: 15px 10px 10px 10px;
+	font-size: 12px;
+	color: black;
+	display: block;
+	height: 10px;
+	font-weight: bold;
+}
+
+/* 모달 배경 투명 */
+.modal-backdrop {
+	background-color: rgba(0, 0, 0, .0001) !important;
+}
+
+.modal-dialog2 {
+	position: fixed;
+	top: 60px;
+	right: 60px;
+	width: 310px;
+}
 
 /* 모달 스타일 end */
 </style>
 
 <script>
-/* 플래너 생성 경고 */
-	$(document).ready(function(){
-		$(".modal-submit").click(function(){
-			if($("#planner_name").val().length==0){
+	/* 플래너 생성 경고 */
+	$(document).ready(function() {
+		$(".modal-submit").click(function() {
+			if ($("#planner_name").val().length == 0) {
 				alert("플래너 이름을 입력하세요!");
 				$("#planner_name").focus();
 				return false;
 			}//if end
-			if($("#input-start").val().length==0){
+			if ($("#input-start").val().length == 0) {
 				alert("여행 기간을 선택해주세요!");
 				$("#input-start").focus();
 				return false;
 			}//if end
-			if($("#input-end").val().length==0){
+			if ($("#input-end").val().length == 0) {
 				alert("여행 기간을 선택해주세요!");
 				$("#input-start").focus();
 				return false;
 			}//if end
-			if($("#schedule_content").val().length==0){
+			if ($("#schedule_content").val().length == 0) {
 				alert("나라를 입력하세요!");
 				$("#schedule_content").focus();
 				return false;
 			}//if end
 		});//click function end
 	});//ready function end
-/* 플래너 생성 경고 end */
+	/* 플래너 생성 경고 end */
 </script>
 
 <script>
 /* 엔드 날짜 클릭시 시작 날짜로 포거스가게 하기 */
 	$(document).ready(function(){
+		
 		$("#input-end-2").click(function(){
+			
 			$("#input-start-2").focus();
-		});//click function end
-	});//ready function end
+			
+		});
+	});
 /* 날짜 동시에 띄우기 end */
 </script>
 	

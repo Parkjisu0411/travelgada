@@ -4,21 +4,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
-
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
 	<meta charset="UTF-8">
 	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
 		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
 		crossorigin="anonymous" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -39,14 +34,15 @@
   
   	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
 	<!-- Bootstrap core JavaScript-->
 	<script src="/resources/assets/js/jquery.min.js"></script>
 	<script src="/resources/assets/js/popper.min.js"></script>
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
 
-	<title>${member.member_id}</title>
+	<title>${member.member_id} 회원</title>
 	
 <style>
 
@@ -75,34 +71,39 @@ html, body {
 	margin-left: auto;
 	margin-right: auto;
 }
-</style>
 
-<style>
+.headline{
+	font-size: 40px;
+	font-family: 'yg-jalnan';
+	color: white;
+	margin: 60px 20px 30px 20px;
+}
+
 /* 탈퇴된 경우 */
-  	.selected {
-	  	text-decoration:line-through grey;
-	  	color: red;
-  	}
+.selected {
+	text-decoration: line-through grey;
+	color: red;
+}
 /* 검색 창 */
- 	#searchMember{
-		text-align: right;
-	}
+#searchMember {
+	text-align: right;
+}
 /* 모달 색깔 */
-	.bg-modal{
-		background-color : black;
-	}
+.bg-modal {
+	background-color: black;
+}
 
 /* 검색 글자 색*/
-	#memberKeyword{
-		color : white;
-	}
+#memberKeyword {
+	color: white;
+}
 </style>
 
 </head>
 
 <body class="bg-theme bg-theme9">
 	
-		<!-- Start wrapper-->
+	<!-- Start wrapper-->
  	<div id="wrapper">
 		
 		<!--Start sidebar-wrapper-->
@@ -136,11 +137,13 @@ html, body {
 		<!--End sidebar-wrapper-->
 	
 		<div class="content-wrapper">
-			<div class="container-fluid">
+			<div class="container container-fluid">
+				
+				<div class="headline">${member.member_id }</div>
 
-				<h4 class="headline" style="font-family: 'yg-jalnan'">${member.member_id }</h4>
 				<hr />
 				<p class="view-more-p"></p>
+	
 				<div class="row">
 					<div class="col-md-4 member-profile member-profile">
 						<img class="rounded-circle member-img"

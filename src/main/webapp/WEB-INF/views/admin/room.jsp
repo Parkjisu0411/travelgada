@@ -40,6 +40,8 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
   
 	<title>회원 관리</title>
   

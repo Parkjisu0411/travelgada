@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
 	<title>방문자 통계</title>
 	<!-- simplebar CSS-->
 	<link href="/resources/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
@@ -48,6 +49,8 @@
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
 
 <style>
 text {
@@ -244,7 +247,6 @@ text {
  		<div class="content-wrapper">
 			<div class="container-fluid">
 
-
 			<h3> ${year}년 ${month}월 ${day}일</h3>
 			<br/>
 
@@ -310,11 +312,10 @@ text {
 					</div>
 				</div>
 				<!-- 차트 끝 -->
-
 	  
-		<!--start overlay-->
-		<div class="overlay toggle-menu"></div>
-		<!--end overlay-->
+				<!--start overlay-->
+				<div class="overlay toggle-menu"></div>
+				<!--end overlay-->
 		
     		</div><!-- End container-fluid-->
     	</div><!--End content-wrapper-->

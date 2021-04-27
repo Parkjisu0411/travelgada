@@ -23,6 +23,8 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+	
 <style>
 html, body {
 	width: 100%;
@@ -45,128 +47,116 @@ html, body {
 </style>
 
 <style>
-/* 여기 */
 /* 모달 스타일 */
-/* .dialogDi{
- 	height : 40px;
-} */
 
-/* .mainImg{
-    float: left;
-} */
-
-.Mcontent{
-/* 	padding:0px;
-	width:100% */
-	width:800px; 
-} 
-
-.dialogtext{
-	width:100%;
-  	height : 240px;
-  	font-weight: bold;
-  	overflow: auto;
-  	padding-right:20px;
-  	float:left;
-  	padding-left:10px;
+.Mcontent {
+	width: 800px;
 }
 
-  .dialogtext::-webkit-scrollbar {
-    width: 10px;
-  }
-  .dialogtext::-webkit-scrollbar-thumb {
-    background-color: #a1eef2;/*  연한 민트 */
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-  .dialogtext::-webkit-scrollbar-track {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  }
-
-.dialog-hashtag{
-	margin-top:10px;
-	text-align:right;
+.dialogtext {
+	width: 100%;
+	height: 240px;
+	font-weight: bold;
 	overflow: auto;
-	width:100%;
-	padding-right:20px;
-	float:left;
-	height:50px;
+	padding-right: 20px;
+	float: left;
+	padding-left: 10px;
 }
 
-  .dialog-hashtag::-webkit-scrollbar {
-    width: 10px;
-  }
-  .dialog-hashtag::-webkit-scrollbar-thumb {
-    background-color: #a1eef2;
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-  .dialog-hashtag::-webkit-scrollbar-track {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  }
-
-.dialog-date{
-	width:100%;
-	height:40px;
-	margin-top:10px;
-	padding-right:20px;
-	text-align:right;
-	float:left;
+.dialogtext::-webkit-scrollbar {
+	width: 10px;
 }
 
-.popup_img{
-	width: 100%; 
+.dialogtext::-webkit-scrollbar-thumb {
+	background-color: #a1eef2; /*  연한 민트 */
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.dialogtext::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.dialog-hashtag {
+	margin-top: 10px;
+	text-align: right;
+	overflow: auto;
+	width: 100%;
+	padding-right: 20px;
+	float: left;
+	height: 50px;
+}
+
+.dialog-hashtag::-webkit-scrollbar {
+	width: 10px;
+}
+
+.dialog-hashtag::-webkit-scrollbar-thumb {
+	background-color: #a1eef2;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.dialog-hashtag::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.dialog-date {
+	width: 100%;
+	height: 40px;
+	margin-top: 10px;
+	padding-right: 20px;
+	text-align: right;
+	float: left;
+}
+
+.popup_img {
+	width: 100%;
 	height: 400px;
 	object-fit: cover;
 	border-radius: 4px;
-	padding:0;
-}
-.close{
-	margin:10px 20px 10px 0;
-	/* padding-right:20px; */
-	/* width: 100%;  */
-	text-align:right;
-	outline:none;
+	padding: 0;
 }
 
-.close:hover{
+.close {
+	margin: 10px 20px 10px 0;
+	text-align: right;
+	outline: none;
+}
+
+.close:hover {
 	color: #1dcad3;
 }
 
-.dialog-profile{
-	margin-top:15px;
-	padding-left:10px;
-} 
+.dialog-profile {
+	margin-top: 15px;
+	padding-left: 10px;
+}
 
-.dialog-wrap{
-	width : 100%;
-	/* width : 350px; */
-	
-   	float: left;
+.dialog-wrap {
+	width: 100%;
+	float: left;
 }
 /* 모달 스타일 끝 */
-
-.main-card-diary-area{
+.main-card-diary-area {
 	background-color: #f5f5f5;
 }
 
-.diHover:hover{
+.diHover:hover {
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
-	transform:scale(1.02);
+	transform: scale(1.02);
 }
 </style>
 
 <style>
 #keyword_search{
 	height: 45px;
-/* 	width: 50%; */
-/* 	min-width: 100%; */
 	line-height: 70px;
 	background-color: transparent;
 	color: black;
@@ -261,15 +251,12 @@ html, body {
 	color:#303E57;
 }
 
-.dropdown-toggle{
+.searchDrop{
 	color:#303E57;
 	font-family: 'GongGothicMedium';
 }
 
 .drop{
-/* 	border: 2px solid #303E57;
-	background-color: transparent;
-	border-radius: 10px; */
 	border:none;
 	float: right;
 	background-color: #CFD2D3;
@@ -341,6 +328,21 @@ html, body {
 /* 해시태그 & 링크 끝 */
 </script>
 
+<script>
+/* 검색어를 입력하지 않을 경우 */
+$(document).ready(function() {
+		$(".search_icon").click(function() {
+			var keyword = $("#keyword_search").val();
+			
+			if(keyword.length == 0){
+				alert("검색어를 입력해주세요!");
+				$("#keyword_search").focus();
+				return false;
+			}
+		});
+});
+</script>
+
 </head>
 <body>
 
@@ -380,13 +382,13 @@ html, body {
 		<span class="font_h">다이어리&nbsp;&nbsp;&nbsp;</span> 
 		
 		<span class="dropdown">
-			<button class="dropdown-toggle drop" data-toggle="dropdown">정렬</button>
+			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">정렬</button>
 			<span class="dropdown-menu"> <a class="dropdown-item" 
 				href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">최신순</a>
 		</span>
 		
 		</span> &nbsp; <span class="dropdown">
-			<button class="dropdown-toggle drop" data-toggle="dropdown">기간</button>
+			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">기간</button>
 			<span class="dropdown-menu"> 
 				<a class="dropdown-item"
 					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=day">1일</a>
@@ -431,15 +433,11 @@ html, body {
 						<!-- 다이어리 끝 -->
 
 						<!-- Modal -->
-						<!-- 여기  -->
 						<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
-							<!-- <div class="mySlides"> -->
 							<div class="modal-dialog modal-lg modal-dialog-centered">
 								<div class="modal-content">
-									<!-- 						<div class="modal-header">
-							</div> -->
 									<div class="row  ">
-									<div class="col-sm-6">
+										<div class="col-sm-6">
 											<img class="popup_img" src='resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'"/>
 										</div>
 										<div class="dialog-wrap col-sm-6">
@@ -451,31 +449,23 @@ html, body {
 												${member.member_id}
 											</div>
 											<div class="dialogDi dialog-date">${di.diary_date}</div>
-											<div class="dialogtext"><pre>${di.text}</pre></div>
+											<div class="dialogtext" style="white-space:pre-wrap;">${di.text}</div>
 											<div class="dialogDi dialog-hashtag">
 												<span id="modal${di.diary_id}"></span>
 											</div>
 										</div>
 									</div>
-									<!-- <div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-							</div> -->
 								</div>
-								<!-- modal-content end -->
 							</div>
 						</div>
 					</c:forEach>
-					<!-- Modal end -->
 				</c:forEach>
-				<!-- 다이어리 반복 끝 -->
 			</c:forEach>
 		</div>
 		<br/><br/>
 
 		<div class="row">
 			<div class="paging">
-				<!-- 페이징 -->
 				<ul class="pagination">
 					<c:if test="${pageMaker.prev}">
 						<li class="page-item"><a class="page-link"
@@ -491,12 +481,12 @@ html, body {
 							href="/searchDi?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.endPage +1}">▶</a></li>
 					</c:if>
 				</ul>
-				<!-- 페이징 끝 -->
 			</div>
-			<!-- 다이어리 row end -->
 		</div>
 		<br />
 	</div>
+	
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
 	
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>

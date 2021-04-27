@@ -4,11 +4,9 @@
 <html lang="en">
 <head>
 
-	<meta charset="utf-8"/>
+	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
-	<meta charset="UTF-8">
 	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
   
@@ -30,7 +28,6 @@
   
   	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
 	<!-- Bootstrap core JavaScript-->
 	<script src="/resources/assets/js/jquery.min.js"></script>
@@ -40,28 +37,30 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
   
 	<title>회원 관리</title>
   
 <style>
 /* 탈퇴된 경우 */
-  	.selected {
-	  	text-decoration:line-through grey;
-	  	color: red;
-  	}
+.selected {
+	text-decoration: line-through grey;
+	color: red;
+}
 /* 검색 창 */
- 	#searchMember{
-		text-align: right;
-	}
+#searchMember {
+	text-align: right;
+}
 /* 모달 색깔 */
-	.bg-modal{
-		background-color : black;
-	}
+.bg-modal {
+	background-color: black;
+}
 
 /* 검색 글자 색*/
-	#memberKeyword{
-		color : white;
-	}
+#memberKeyword {
+	color: white;
+}
 </style>
 
 <script type="text/javascript">
@@ -161,6 +160,7 @@
 			success : function(result) {
 				console.log("result : " + result);
 				if (result == "SUCCESS") {
+					
 					$(tr).removeClass("selected");
 					$("#btn_"+member_id).children().remove();
 					$("#td_"+member_id).children().remove();
@@ -252,10 +252,10 @@
 	
 			<!-- 검색 -->
 			<div id="searchMember">
-			<form class="search-bar" action="${pageContext.request.contextPath}/search/member" method="get">			
-				<input id="memberKeyword" class="col-2" type="text" class="form-control" name="keyword" placeholder="회원 검색" value="${keyword}"/>
-				<button type="submit" class="searchM-btn btn-light"><i class="icon-magnifier"></i></button>
-			</form>
+				<form class="search-bar" action="${pageContext.request.contextPath}/search/member" method="get">			
+					<input id="memberKeyword" class="col-2" type="text" class="form-control" name="keyword" placeholder="회원 검색" value="${keyword}"/>
+					<button type="submit" class="searchM-btn btn-light"><i class="icon-magnifier"></i></button>
+				</form>
 			</div>
 			
 				<!-- member list 테이블 -->

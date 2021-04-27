@@ -22,7 +22,7 @@ public class SearchServiceImpl implements SearchService {
 	//통합 검색 일정 부분
 	@Override
 	public List<PlannerVO> searchPl(String keyword, int limit) {
-		log.info("ServiceImpl searchPl() - 통합 검색 일정 부분");
+		log.info("ServiceImpl searchPl();");
 			
 		return mapper.searchPl(keyword, limit);
 		
@@ -31,7 +31,7 @@ public class SearchServiceImpl implements SearchService {
 	//통합 검색 다이어리 부분
 	@Override
 	public List<MemberVO> searchDi(String keyword) {
-		log.info("ServiceImpl searchDi() - 통합 검색 다이어리 부분");
+		log.info("ServiceImpl searchDi();");
 		
 		return mapper.searchDi(keyword);
 	}
@@ -39,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
 	//일정 더보기
 	@Override
 	public List<PlannerVO> searchPlMore(String keyword, String sorter, int beforeLimit, int limit) {
-		log.info("ServiceImpl searchPlMore() - 일정 더보기");
+		log.info("ServiceImpl searchPlMore();");
 		
 		String order = null;
 		

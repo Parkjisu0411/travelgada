@@ -9,7 +9,7 @@
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>diary</title>
+	<title>다이어리</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -25,29 +25,20 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 
-<style>
-/* 여기 */
-/* 모달 스타일 */
-/* .dialogDi{
- 	height : 40px;
-} */
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
 
-/* .mainImg{
-    float: left;
-} */
+<style>
+
 html, body {
 	width: 100%;
 	height: 100%;
 	margins: 0;
 	padding: 0;
-	/* background-color: #f5f5f5; */
 	font-family: 'IBMPlexSansKR-Light';
 	font-weight: bold;
 }
 
 .Mcontent {
-	/* 	padding:0px;
-	width:100% */
 	width: 800px;
 }
 
@@ -130,8 +121,6 @@ pre {
 
 .close {
 	margin: 10px 20px 10px 0;
-	/* padding-right:20px; */
-	/* width: 100%;  */
 	text-align: right;
 	outline: none;
 }
@@ -140,12 +129,8 @@ pre {
 	color: #1dcad3;
 }
 
-/* .dialog-profile{
-	font-family: 'GongGothicMedium';
-} */
 .dialog-wrap {
 	width: 100%;
-	/* width : 350px; */
 	float: left;
 }
 /* 모달 스타일 끝 */
@@ -185,7 +170,6 @@ pre {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background-color: rgba(0, 0, 0, 0.2);
 }
 
 .masonry .grid img {
@@ -201,7 +185,6 @@ pre {
 	width: 50px;
 	padding-right:10px;
 	margin-right:10px;
-
 }
 
 .grid__title:hover{
@@ -227,12 +210,10 @@ pre {
 	right: 0;
 	top: 0;
 	bottom: 0;
-	/* padding: 10px; */
 	color: #fff;
 	display: flex;
 	flex-direction: column;
 	float: left;
-	/*   margin-top: 30px; */
 }
 
 .modal-click {
@@ -255,7 +236,6 @@ pre {
 	padding: 5px 15px;
 	margin: 1px;
 	float:left;
-	
 }
 
 .mt-auto {
@@ -270,12 +250,10 @@ pre {
 
 .writeBtn {
 	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
 	font-family: 'GongGothicMedium';
 	color: white;
 	font-size: 18px;
 	background-color: #1dcad3;
-	/* width:100px; */
 	border-radius: 15px;
 	overflow:hidden;
 }
@@ -327,10 +305,6 @@ pre {
 	background-color: #1dcad3;
 }
 
-#diaryDiv{
-	/* min-height:1200px; */
-}
-
 .di_hr{
 	font-family: 'Montserrat', sans-serif;  
 	color: #1dcad3; 
@@ -357,19 +331,21 @@ pre {
 <script type="text/javascript">
 /* 삭제 ajax */
 	$(document).ready(function() {
-		$(document).on("click", ".delete", function(event) {//※주의※		
+		$(document).on("click", ".delete", function(event) {//※주의※	
+			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+
+			var tr = $(this).parent().parent().parent().parent();
+			
+			event.preventDefault();
+			console.log("delete click");
+			
 			if (confirm("삭제하시겠습니까?")) {
-				event.preventDefault();
-				console.log("delete click");
-
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-
-				var tr = $(this).parent().parent().parent().parent();
-
 				$.ajax({
 					type : "DELETE",
 					url : $(this).attr("href"),
+					contentType : "application/json",
 					cache : false,
 					beforeSend : function(xhr) { /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
 						console.log("header 실행 " + header + token)
@@ -390,9 +366,7 @@ pre {
 		}); // event end
 	}); // ready end
 </script>
-
 <!-- 다른 플래너로 전환 -->
-
 
 <script>
 /* 작성 팝업 */
@@ -402,17 +376,6 @@ pre {
   		document.formDate.submit();
 	}//function end
 </script>
-
- <script type="text/javascript">
- /* select box 새로운 플래너 값 고정 */
-	$(document).ready(function(){
-		var currPlanner_id= ${other.planner_id};  
-		console.log("현재 플래너의 아이디 : "+ currPlanner_id);
-	
-		$("#selectDiary").val(currPlanner_id).prop("selected", true);
-	}); 
- 
-</script> 
 
 <script>
 /* 해시태그 & 링크 */
@@ -479,6 +442,32 @@ pre {
 	
 	});
 </script>
+
+<script>
+
+	function selectPlanner() {
+		
+		var planner_id = $("#selectDiary option:selected").val();
+		console.log(planner_id);
+
+		console.log("selectPlanner");
+		$.ajax({
+			type : "GET",
+			url : "/diary/" + planner_id,
+			cache : false,
+			success : function(result) {
+				console.log("success");
+				location.href="/diary_other";
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
+			}
+		});
+	} 
+
+
+</script>
 	
 </head>
 <body>
@@ -497,12 +486,9 @@ pre {
 		<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
 			<div class="row">
 				<div class="col-sm-10"> 
-					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'" onchange="location.href='${pageContext.request.contextPath}/diary_other/'+this.value">
+					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'" 
+						onchange="selectPlanner()">
 						<c:forEach var="di" items="${planner}">
-							<%-- <option value='${di.planner_id}' style="font-family: 'GongGothicMedium'">
-						  		${di.planner_name}&nbsp;&nbsp; ${di.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${di.end_date}
-							</option> --%>
-							
 							<c:if test="${di.planner_id eq planner_id}">
 								<option value='${di.planner_id}' style="font-family: 'GongGothicMedium'">
 							  		${di.planner_name}&nbsp;&nbsp; ${di.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${di.end_date}
@@ -540,61 +526,40 @@ pre {
 						<div class="grid__body" >
 							<div class="dropdown">
 								<div class="grid__title" data-toggle="dropdown">...</div>
-										<!-- <img src="resources/diary/dot3.png" /> -->
-								<div class="dropdown-menu">
-									<a class="dropdown-item"
-										onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}/${di.planner_id}',
-	    											'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
-									<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
-								</div>
+									<div class="dropdown-menu">
+										<a class="dropdown-item"
+											onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}/${di.planner_id}',
+		    											'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
+										<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
+									</div>
 								</div>
 							<div class="modal-click" data-toggle="modal" data-target="#myModal${di.diary_id}">
-							<!-- <div class="relative"> -->
-								<!--  <a class="grid__link" target="_blank" href="/" ></a> -->
-								<!--    <p class="grid__author"></p> -->
-								
-								
-							<!-- </div> -->
-							<div class="mt-auto">
-								<div class="hashtag-font"id="${di.diary_id}"></div>
+								<div class="mt-auto">
+									<div class="hashtag-font"id="${di.diary_id}"></div>
+								</div>
 							</div>
-							</div>
-							
 						</div><!-- grid_body -->
 					</div>
 
 					<!-- Modal -->
-					<!-- 여기  -->
 					<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
-						<!-- <div class="mySlides"> -->
 						<div class="modal-dialog modal-lg modal-dialog-centered">
 							<div class="modal-content ">
-								<!-- 						<div class="modal-header">
-							</div> -->
-							<div class="row  ">
+								<div class="row  ">
 									<div class="col-sm-6">
 										<img class="popup_img" src='/resources/diary/${di.img_path}'
 											onerror="this.src='/resources/img/main/logo3.png'"/>
 									</div> 
 									<div class="dialog-wrap col-sm-6 ">
-										<%-- 			<div class="dialogDi dialog-profile">
-									<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-									${member.member_id}								
-								</div> --%>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<div class="dialogDi dialog-date">${di.diary_date}</div>
-										<div class="dialogtext"><pre>${di.text}</pre></div>
+										<div class="dialogtext" style="white-space:pre-wrap;">${di.text}</div>
 										<div class="dialogDi dialog-hashtag">
 											<span id="modal${di.diary_id}"></span>
 										</div>
 									</div>
 								</div>
-								<!-- <div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-							</div> -->
 							</div> 
-							<!-- modal-content end -->
 						</div>
 					</div>
 				</c:forEach>
@@ -606,7 +571,6 @@ pre {
 		<div class="container">
 			<div class="row">
 				<div class="paging">
-					<!-- 페이징 -->
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
 							<li class="page-item">
@@ -624,12 +588,12 @@ pre {
 							</li>
 						</c:if>
 					</ul>
-					<!-- 페이징 끝 -->
 				</div>
-				<!-- 다이어리 row end -->
 			</div>
 		</div>
-		
+	
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
+	
 	<!-- footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>
 	

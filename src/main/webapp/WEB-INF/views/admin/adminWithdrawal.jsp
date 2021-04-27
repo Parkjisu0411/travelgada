@@ -5,7 +5,6 @@
 <html>
 <head>
 
-	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
@@ -43,27 +42,29 @@
 	<script src="/resources/assets/js/popper.min.js"></script>
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
 	
-	<title>탈퇴한 회원 관리</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+	
+	<title>탈퇴 회원 관리</title>
 
 <style>
 /* 탈퇴된 경우 */
-  	.selected {
-	  	text-decoration:line-through grey;
-	  	color: red;
-  	}
+.selected {
+	text-decoration: line-through grey;
+	color: red;
+}
 /* 검색 창 */
- 	#searchMember{
-		text-align: right;
-	}
+#searchMember {
+	text-align: right;
+}
 /* 모달 색깔 */
-	.bg-modal{
-		background-color : black;
-	}
+.bg-modal {
+	background-color: black;
+}
 
 /* 검색 글자 색*/
-	#memberKeyword{
-		color : white;
-	}
+#memberKeyword {
+	color: white;
+}
 </style>
 
 <script type="text/javascript">

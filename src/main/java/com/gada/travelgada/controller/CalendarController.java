@@ -2,14 +2,9 @@ package com.gada.travelgada.controller;
 
 import java.sql.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,9 +50,9 @@ public class CalendarController {
 		calendarService.planner_create(plannerVO);
 		
 		int id = calendarService.getPlanner_id();
-		log.info("가장 최근 작성된 플래너의 아이디 : "+id);
-		
 		Date schedule_date = plannerVO.getStart_date();
+		
+		log.info("가장 최근 작성된 플래너의 아이디 : "+id);
 		log.info("시작하는 날짜 = 스케줄 날짜 : "+schedule_date);
 		
 		scheduleVO.setPlanner_id(id);

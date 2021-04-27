@@ -9,45 +9,33 @@
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>diary</title>
+	<title>다이어리</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
-	
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
-
 	<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap" rel="stylesheet">
   
 	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+	
 <style>
 html, body {
 	width: 100%;
 	height: 100%;
 	margins: 0;
 	padding: 0;
-	/* background-color: #f5f5f5; */
 	font-family: 'IBMPlexSansKR-Light';
 	font-weight: bold;
 }
 
-/* 여기 */
 /* 모달 스타일 */
-/* .dialogDi{
- 	height : 40px;
-} */
-
-/* .mainImg{
-    float: left;
-} */
 .Mcontent {
-	/* 	padding:0px;
-	width:100% */
 	width: 800px;
 }
 
@@ -130,8 +118,6 @@ pre {
 
 .close {
 	margin: 10px 20px 10px 0;
-	/* padding-right:20px; */
-	/* width: 100%;  */
 	text-align: right;
 	outline: none;
 }
@@ -140,13 +126,8 @@ pre {
 	color: #1dcad3;
 }
 
-/* .dialog-profile{
-	font-family: 'GongGothicMedium';
-} */
 .dialog-wrap {
 	width: 100%;
-	/* width : 350px; */
-	/* 	padding: 20px 20px 20px 0; */
 	float: left;
 }
 /* 모달 스타일 끝 */
@@ -185,7 +166,6 @@ pre {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background-color: rgba(0, 0, 0, 0.2);
 }
 
 .masonry .grid img {
@@ -201,7 +181,6 @@ pre {
 	width: 50px;
 	padding-right:10px;
 	margin-right:10px;
-
 }
 
 .grid__title:hover{
@@ -227,11 +206,9 @@ pre {
 	right: 0;
 	top: 0;
 	bottom: 0;
-	/* padding: 10px; */
 	color: #fff;
 	display: flex;
 	flex-direction: column;
-	/*   margin-top: 30px; */
 }
 
 .modal-click {
@@ -268,12 +245,10 @@ pre {
 
 .writeBtn {
 	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
 	font-family: 'GongGothicMedium';
 	color: white;
 	font-size: 18px;
 	background-color: #1dcad3;
-	/* width:100px; */
 	border-radius: 15px;
 	overflow:hidden;
 }
@@ -325,10 +300,6 @@ pre {
 	background-color: #1dcad3;
 }
 
-#diaryDiv{
-	/* min-height:1200px; */
-}
-
 .di_hr{
 	font-family: 'Montserrat', sans-serif;  
 	color: #1dcad3; 
@@ -355,16 +326,17 @@ pre {
 <script type="text/javascript">
 /* 삭제 ajax */
 	$(document).ready(function() {
-		$(document).on("click", ".delete", function(event) {//※주의※		
+		$(document).on("click", ".delete", function(event) {//※주의※	
+			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+
+			var tr = $(this).parent().parent().parent().parent();
+			
+			event.preventDefault();
+			console.log("delete click");
+			
 			if (confirm("삭제하시겠습니까?")) {
-				event.preventDefault();
-				console.log("delete click");
-
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-
-				var tr = $(this).parent().parent().parent().parent();
-
 				$.ajax({
 					type : "DELETE",
 					url : $(this).attr("href"),
@@ -404,7 +376,8 @@ pre {
  <script type="text/javascript">
  /* select box 새로운 플래너 값 고정 */
 	$(document).ready(function(){
-		var currPlanner_id= ${other.planner_id};  
+		
+		var currPlanner_id= ${planner_id};  
 		console.log("현재 플래너의 아이디 : "+ currPlanner_id);
 	
 		$("#selectDiary").val(currPlanner_id).prop("selected", true);
@@ -478,6 +451,31 @@ pre {
 	});
 </script>
 
+<script>
+
+	function selectPlanner() {
+		
+		var planner_id = $("#selectDiary option:selected").val();
+		console.log(planner_id);
+	
+		console.log("selectPlanner");
+		$.ajax({
+			type : "GET",
+			url : "/diary/" + planner_id,
+			cache : false,
+			success : function(result) {
+				console.log("success");
+				location.href="/diary_other";
+			},
+			error : function(e) {
+				console.log(e);
+				alert("에러가 발생했습니다.");
+			}
+		});
+	} 
+
+</script>
+
 </head>
 <body>
 
@@ -495,12 +493,9 @@ pre {
 		<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
 			<div class="row">
 				<div class="col-sm-10"> 
-					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'" onchange="location.href='${pageContext.request.contextPath}/diary_other/'+this.value">
+					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'" 
+						onchange="selectPlanner()">
 						<c:forEach var="di" items="${planner}">
-							<%-- <option value='${di.planner_id}' style="font-family: 'GongGothicMedium'">
-						  		${di.planner_name}&nbsp;&nbsp; ${di.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${di.end_date}
-							</option> --%>
-							
 							<c:if test="${di.planner_id eq planner_id}">
 								<option value='${di.planner_id}' style="font-family: 'GongGothicMedium'">
 							  		${di.planner_name}&nbsp;&nbsp; ${di.start_date}&nbsp;&nbsp;~&nbsp;&nbsp;${di.end_date}
@@ -534,64 +529,42 @@ pre {
 					<div class="grid">
 						<img src='/resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'" />
 						<!-- 사진 -->
-						
 						<div class="grid__body" >
-						<div class="dropdown">
-									<div class="grid__title" data-toggle="dropdown">...</div>
-									<!-- <img src="resources/diary/dot3.png" /> -->
-									<div class="dropdown-menu">
-										<a class="dropdown-item"
-											onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}/${di.planner_id}',
-      											'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
-										<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
-									</div>
+							<div class="dropdown">
+								<div class="grid__title" data-toggle="dropdown">...</div>
+								<div class="dropdown-menu">
+									<a class="dropdown-item"
+										onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}/${di.planner_id}',
+     											'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
+									<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
 								</div>
+							</div>
 							<div class="modal-click" data-toggle="modal" data-target="#myModal${di.diary_id}">
-							<!-- <div class="relative"> -->
-								<!--  <a class="grid__link" target="_blank" href="/" ></a> -->
-								<!--    <p class="grid__author"></p> -->
-								
-								
-							<!-- </div> -->
-							<div class="mt-auto">
-								<div class="hashtag-font"id="${di.diary_id}"></div>
+								<div class="mt-auto">
+									<div class="hashtag-font"id="${di.diary_id}"></div>
+								</div>
 							</div>
-							</div>
-							
 						</div><!-- grid_body -->
 					</div>
-
-						<!-- Modal -->
-					<!-- 여기  -->
+					
+					<!-- Modal -->
 					<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
-						<!-- <div class="mySlides"> -->
 						<div class="modal-dialog modal-lg modal-dialog-centered">
 							<div class="modal-content ">
-								<!-- 						<div class="modal-header">
-							</div> -->
-							<div class="row  ">
+								<div class="row  ">
 									<div class="col-sm-6">
 										<img class="popup_img" src='/resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'"/>
 									</div>
 									<div class="dialog-wrap col-sm-6 ">
-										<%-- 			<div class="dialogDi dialog-profile">
-									<img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-									${member.member_id}								
-								</div> --%>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<div class="dialogDi dialog-date">${di.diary_date}</div>
-										<div class="dialogtext"><pre>${di.text}</pre></div>
+										<div class="dialogtext" style="white-space:pre-wrap;">${di.text}</div>
 										<div class="dialogDi dialog-hashtag">
 											<span id="modal${di.diary_id}"></span>
 										</div>
 									</div>
 								</div>
-								<!-- <div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-							</div> -->
 							</div> 
-							<!-- modal-content end -->
 						</div>
 					</div>
 				</c:forEach>
@@ -603,29 +576,28 @@ pre {
 		<div class="container">
 			<div class="row">
 				<div class="paging">
-					<!-- 페이징 -->
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
 							<li class="page-item">
-								<a class="page-link" href="/diary_other/${planner_id}?nowPage=${pageMaker.startPage - 1}">◀</a>
+								<a class="page-link" href="/diary_other?nowPage=${pageMaker.startPage - 1}">◀</a>
 							</li>
 						</c:if>
 						<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage}" var="idx">
 							<li class="page-item">
-								<a id ="${idx}" class="page-link" href="/diary_other/${planner_id}?nowPage=${idx}"></a>
+								<a id ="${idx}" class="page-link" href="/diary_other?nowPage=${idx}"></a>
 							</li>
 						</c:forEach>
 						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 							<li class="page-item">
-								<a class="page-link" href="/diary_other/${planner_id}?nowPage=${pageMaker.endPage +1}">▶</a>
+								<a class="page-link" href="/diary_other?nowPage=${pageMaker.endPage +1}">▶</a>
 							</li>
 						</c:if>
 					</ul>
-					<!-- 페이징 끝 -->
 				</div>
-				<!-- 다이어리 row end -->
 			</div>
 		</div>
+		
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
 		
 	<!-- footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>

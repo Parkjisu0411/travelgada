@@ -1,19 +1,20 @@
 package com.gada.travelgada.controller;
 
+import java.sql.Date;
+
 import java.text.ParseException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gada.travelgada.domain.CriteriaVO;
-import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PageVO;
 import com.gada.travelgada.domain.PlannerVO;
+import com.gada.travelgada.service.MainService;
 import com.gada.travelgada.service.PlannerService;
 import com.gada.travelgada.service.ScheduleService;
 import com.gada.travelgada.service.SearchService;
@@ -30,6 +31,7 @@ public class SearchController {
 	private SearchService searchService;
 	private ScheduleService scheduleService;
 	private PlannerService plannerService;
+	private MainService mainService;
 
 	//통합 검색 페이지
 	@GetMapping("/search")
@@ -40,10 +42,12 @@ public class SearchController {
 		Integer limit = searchService.getLimit(keyword, sorter, 0, 2);
 		log.info("============= limit : " + limit);
 		
-		if(limit==null) {
+		if(limit == null) {
 			mav.addObject("searchPl", searchService.searchPl(keyword ,0));
+			
 		}else {
 			mav.addObject("searchPl", searchService.searchPl(keyword ,limit));
+			
 		}
 		
 		mav.addObject("member", searchService.searchDi(keyword));
@@ -59,6 +63,7 @@ public class SearchController {
 	@GetMapping("/searchPl")
 	public ModelAndView searchPl(ModelAndView mav, @RequestParam("keyword") String keyword,
 			@RequestParam(value="sorter", required=false, defaultValue="basic") String sorter, CriteriaVO cri) {
+		
 		log.info("controller searchPl();");
 		
 		int amount = 4;
@@ -78,19 +83,21 @@ public class SearchController {
 			
 			if(limit == null) {
 				mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, 0, 0)); 
+				
 			}else {
 				mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, 0, limit)); 
 			}
 			
 		}else{
 			Integer beforeLimit = searchService.getLimit(keyword, sorter, beforPage ,amount);
-			
 			log.info("============= beforeLimit : " + beforeLimit);
 			
 			if(limit == null) {
 				mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, beforeLimit, 0)); 
+				
 			}else {
 				mav.addObject("plMore",searchService.searchPlMore(keyword, sorter, beforeLimit, limit));
+				
 			}
 			                                          		
 		}
@@ -130,14 +137,16 @@ public class SearchController {
 	
 	@GetMapping("/search/{member_id}/{planner_id}")
 	public ModelAndView getSchedule(ModelAndView mav, PlannerVO plannerVO) throws ParseException {
+		log.info("View schedule ===========");
 		
 		List<PlannerVO> plannerList = plannerService.getPlanner(plannerVO.getMember_id());
 		
-		log.info("View schedule ===========");
 		PlannerVO planner = plannerService.getPlannerById(plannerVO.getPlanner_id());
 		
 		List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
-		mav.addObject("planner_id", planner.getPlanner_id());
+		mav.addObject("planner", planner);
+		mav.addObject("country", mainService.getCountry());
+		
 		mav.addObject("plannerList", plannerList);
 		mav.addObject("dateList", dateList);
 		mav.addObject("countryList", scheduleService.getCountry(planner.getPlanner_id()));
@@ -151,6 +160,32 @@ public class SearchController {
 		mav.setViewName("search/searchSchedule");
 			
 		return mav;
+	}
+	
+	@GetMapping("/map/{member_id}/{planner_id}")
+	public ModelAndView getMap(@PathVariable("planner_id") int planner_id, @RequestParam("schedule_date") Date schedule_date, @PathVariable("member_id") String member_id, 
+			ModelAndView modelAndView) throws ParseException {
+		List<PlannerVO> plannerList = plannerService.getPlanner(member_id);
+		PlannerVO planner = null;
+		if(planner_id != 0) {
+			for(PlannerVO vo : plannerList) {
+				if(vo.getPlanner_id() == planner_id) {
+					planner = vo;
+				}
+			}
+		} else {
+			planner = plannerList.get(0);
+		}
+		List<String> dateList = DateCalculator.getDateList(planner.getStart_date(), planner.getEnd_date());
+		
+		modelAndView.addObject("scheduleList", scheduleService.getMap(planner_id, schedule_date));
+		modelAndView.addObject("dateList", dateList);
+		modelAndView.addObject("planner_id", planner_id);
+		modelAndView.addObject("schedule_date", schedule_date);
+		
+		modelAndView.setViewName("map/map2");
+
+		return modelAndView;
 	}
 	
 }

@@ -1,12 +1,10 @@
 package com.gada.travelgada.controller;
 
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,14 +34,13 @@ public class VisitorController {
 		String year = format1.format(time);
 		String month = format2.format(time);
 		String day = format3.format(time);
+		int total = visitorService.getTotal();
 		
 		log.info("오늘 날짜 : " + year+"년"+ month+"월"+ day+"일");
 		
 		mav.addObject("year",year);
 		mav.addObject("month",month);
 		mav.addObject("day",day);
-		
-		int total = visitorService.getTotal();
 		
 		//전체 회원 수 
 		mav.addObject("total", total);

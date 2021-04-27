@@ -28,6 +28,8 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/header.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
 
 <style>
 html, body {
@@ -86,8 +88,6 @@ html, body {
 <style>
 #keyword_search{
 	height: 45px;
-/* 	width: 50%; */
-/* 	min-width: 100%; */
 	line-height: 70px;
 	background-color: transparent;
 	color: black;
@@ -183,16 +183,13 @@ html, body {
 	color:#303E57;
 }
 
-.dropdown-toggle{
+.searchDrop{
 	color:#303E57;
 	font-family: 'GongGothicMedium';
 	 
 }
 
 .drop{
-/* 	border: 2px solid #303E57;
-	background-color: transparent;
-	border-radius: 10px; */
 	border:none;
 	float: right;
 	background-color: #CFD2D3;
@@ -230,6 +227,21 @@ html, body {
 }
 </style>
 
+<script>
+/* 검색어를 입력하지 않을 경우 */
+$(document).ready(function() {
+		$(".search_icon").click(function() {
+			var keyword = $("#keyword_search").val();
+			
+			if(keyword.length == 0){
+				alert("검색어를 입력해주세요!");
+				$("#keyword_search").focus();
+				return false;
+			}
+		});
+});
+</script>
+
 </head>
 <body>
 
@@ -264,7 +276,7 @@ html, body {
 		<span class="font_h">일정&nbsp;&nbsp;&nbsp;</span>
 		
 		<span class="dropdown">
-			<button class="dropdown-toggle drop" data-toggle="dropdown">정렬</button>
+			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">정렬</button>
 			<span class="dropdown-menu">
    	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=startDate">최신순</a>
    			</span>		
@@ -272,7 +284,7 @@ html, body {
 		 &nbsp;
 		 
 		<span class="dropdown">
-			<button class="dropdown-toggle drop" data-toggle="dropdown">기간</button>
+			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">기간</button>
 				<span class="dropdown-menu">
      		 		<a class="dropdown-item" 
      		 			href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=day">1일</a>
@@ -320,7 +332,6 @@ html, body {
 						</c:forEach>
 					</div>
 					<br/>
-				
 				</div>
 			</div>
 			<br/>
@@ -330,7 +341,6 @@ html, body {
 
 		<div class="row">
 			<div class="paging">
-				<!-- 페이징 -->
 				<ul class="pagination">
 					<c:if test="${pageMaker.prev}">
 						<li class="page-item"><a class="page-link"
@@ -345,10 +355,13 @@ html, body {
 						<li class="page-item"><a class="page-link"
 							href="searchPl?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.endPage+1}">▶</a></li>
 					</c:if>
-				</ul><!-- 페이징 끝 -->
-			</div><!-- 다이어리 row end -->
+				</ul>
+			</div>
 		</div><br/>
-	</div><!-- container end -->
+	</div>
+	<!-- container end -->
+	
+	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
 
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/includes/footer.jsp"%>

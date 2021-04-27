@@ -8,19 +8,17 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-<title>다이어리</title>
+	<title>다이어리 수정</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- 	
  	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+ 	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
  	
 <style>
-/*    table, th, td {
-    border: 1px solid #bcbcbc;
-  } */
+
 .modifyBtn {
 	text-align: right;
 }
@@ -34,23 +32,19 @@
 
 .fileStyle {
 	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
 	font-family: 'GongGothicMedium';
 	color: white;
 	font-size: 18px;
 	background-color: #1dcad3;
-	/* width:100px; */
 	border-radius: 5px;
 }
 
 #submitBtn {
 	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
 	font-family: 'GongGothicMedium';
 	color: white;
 	font-size: 18px;
 	background-color: #1dcad3;
-	/* width:100px; */
 	border-radius: 5px;
 }
 
@@ -159,18 +153,18 @@ textarea {
 </script>
 	
 <script>
-$(document).ready(function(){
-	$("#submitBtn").on("click",function(){
-	
-	  	 window.opener.name = "parentPage";
-		  document.myForm.target = "parentPage"; 
-		  
-		  $("#formDate").submit();
-		  self.close();
 
+	$(document).ready(function() {
+		$("#submitBtn").on("click", function() {
+
+			window.opener.name = "parentPage";
+			document.myForm.target = "parentPage";
+
+			$("#formDate").submit();
+			self.close();
+
+		});
 	});
-});
-
 </script>
 
 <script>
@@ -184,12 +178,7 @@ function checkCode(){
 		console.log("엔터");
 		event.returnValue=false;
 	}
-/* 	if(kcode == 32) {
-		console.log("스페이스바");
-		tag.append("#");
-		event.returnValue=false;
 
-	} */
 }
 </script>
 
@@ -197,9 +186,9 @@ function checkCode(){
 
 $(document).ready(function(){
 	 
-	  $('.tag-area').popover({content: "ex) #여행  #가다 ", placement: "bottom"}); 
+	$('.tag-area').popover({content: "ex) #여행  #가다 ", placement: "bottom"}); 
 	 
-	});
+});
 
 </script>
 
@@ -211,6 +200,7 @@ $(document).ready(function(){
 		
 		<input type="hidden" name="diary_id" value="${diary_view.diary_id}" />
 		<input type="hidden" name="planner_id" value="${planner.planner_id}" />
+		<input type="hidden" name="img_path" value="${diary_view.img_path}" />
 		<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}" />
 		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}" />
 
@@ -232,18 +222,18 @@ $(document).ready(function(){
 					</div>
 				</div>
 				<div class="col-sm-6 box">
-						<input type="file" class="form-control-file border fileStyle" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
-						<br />
-						<textarea class="text-area" rows="10" cols="55" name="text">${diary_view.text}</textarea>
-						<div class="tag-label" style="font-family: 'GongGothicMedium'">Tag</div>
-						<textarea id="hashtag" class="tag-area" rows="2" cols="55" name="hashtag" onkeydown="checkCode()">${diary_view.hashtag}</textarea>
-						<div class="modifyBtn">
-							<br/>
-							<input type="button" id="submitBtn" value="작성">
-						</div>
+					<input type="file" class="form-control-file border fileStyle" name="uploadfile" id="profile_pt" onchange="previewImage(this,'View_area')">
+					<br />
+					<textarea class="text-area" rows="10" cols="55" name="text">${diary_view.text}</textarea>
+					<div class="tag-label" style="font-family: 'GongGothicMedium'">Tag</div>
+					<textarea id="hashtag" class="tag-area" rows="2" cols="55" name="hashtag" onkeydown="checkCode()">${diary_view.hashtag}</textarea>
+					<div class="modifyBtn">
+						<br/>
+						<input type="button" id="submitBtn" value="작성">
 					</div>
 				</div>
 			</div>
+		</div>
 	</form>
 
 </body>

@@ -28,6 +28,7 @@ public class VisitorService {
 		List<Integer> list = new ArrayList<>();
 
 		for (int day = 1; day <= 31; day++) {
+			
 			int monthVisitor;
 			monthVisitor = mapper.getDayCount(year, month, day);
 			list.add(monthVisitor);
@@ -43,6 +44,7 @@ public class VisitorService {
 		List<Integer> list = new ArrayList<>();
 
 		for (int month = 1; month <= 12; month++) {
+			
 			int monthVisitor;
 			monthVisitor = mapper.getMonthCount(year, month);
 			list.add(monthVisitor);

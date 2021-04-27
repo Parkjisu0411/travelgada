@@ -4,22 +4,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css" integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg==" crossorigin="anonymous" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js" integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A==" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	
+	<!-- 달력 -->
+	<link href="resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+	<link href="resources/calendar/css/datepicker.css" rel="stylesheet" media="all">
+	
+	<!-- 폰트 -->
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+	
+	<title>달력</title>
 
-<title>달력</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css" integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg==" crossorigin="anonymous" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js" integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-<!-- 달력 -->
-<link href="resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-<link href="resources/calendar/css/datepicker.css" rel="stylesheet" media="all">
-
-<!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
-   
 <style>
 /* 플래너 생성 스타일*/
 
@@ -182,7 +182,7 @@
 				</div>
 				<div class="inputGroup">
 					<label class="calLabel" >나라</label>
-					<input list="country-list" id="country_name" name="country_name" class="input-style" placeholder="어디로 여행 갈까요?" />
+					<input list="country-list" id="country_name" name="country_name" class="input-style" placeholder="어디로 여행 갈까요?" autocomplete="off"/>
 					<datalist id="country-list">
 						<c:forEach var="country" items="${countryList }">
 							<option value="${country.country_name }">
