@@ -111,11 +111,15 @@
 .navbar-collapse.collapse.show {
 	background: #fe5000;
 	border-radius: .25rem;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .navbar-collapse.collapsing {
 	background: #fe5000;
 	border-radius: .25rem;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .navbar-toggler-icon {
