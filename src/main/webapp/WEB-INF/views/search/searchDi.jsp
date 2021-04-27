@@ -47,18 +47,9 @@ html, body {
 </style>
 
 <style>
-/* 여기 */
 /* 모달 스타일 */
-/* .dialogDi{
- 	height : 40px;
-} */
 
-/* .mainImg{
-    float: left;
-} */
 .Mcontent {
-	/* 	padding:0px;
-	width:100% */
 	width: 800px;
 }
 
@@ -135,8 +126,6 @@ html, body {
 
 .close {
 	margin: 10px 20px 10px 0;
-	/* padding-right:20px; */
-	/* width: 100%;  */
 	text-align: right;
 	outline: none;
 }
@@ -152,7 +141,6 @@ html, body {
 
 .dialog-wrap {
 	width: 100%;
-	/* width : 350px; */
 	float: left;
 }
 /* 모달 스타일 끝 */
@@ -169,8 +157,6 @@ html, body {
 <style>
 #keyword_search{
 	height: 45px;
-/* 	width: 50%; */
-/* 	min-width: 100%; */
 	line-height: 70px;
 	background-color: transparent;
 	color: black;
@@ -271,9 +257,6 @@ html, body {
 }
 
 .drop{
-/* 	border: 2px solid #303E57;
-	background-color: transparent;
-	border-radius: 10px; */
 	border:none;
 	float: right;
 	background-color: #CFD2D3;
@@ -450,15 +433,11 @@ $(document).ready(function() {
 						<!-- 다이어리 끝 -->
 
 						<!-- Modal -->
-						<!-- 여기  -->
 						<div class="modal fade" id="myModal${di.diary_id}" role="dialog">
-							<!-- <div class="mySlides"> -->
 							<div class="modal-dialog modal-lg modal-dialog-centered">
 								<div class="modal-content">
-									<!-- 						<div class="modal-header">
-							</div> -->
 									<div class="row  ">
-									<div class="col-sm-6">
+										<div class="col-sm-6">
 											<img class="popup_img" src='resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'"/>
 										</div>
 										<div class="dialog-wrap col-sm-6">
@@ -476,25 +455,17 @@ $(document).ready(function() {
 											</div>
 										</div>
 									</div>
-									<!-- <div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-							</div> -->
 								</div>
-								<!-- modal-content end -->
 							</div>
 						</div>
 					</c:forEach>
-					<!-- Modal end -->
 				</c:forEach>
-				<!-- 다이어리 반복 끝 -->
 			</c:forEach>
 		</div>
 		<br/><br/>
 
 		<div class="row">
 			<div class="paging">
-				<!-- 페이징 -->
 				<ul class="pagination">
 					<c:if test="${pageMaker.prev}">
 						<li class="page-item"><a class="page-link"
@@ -510,9 +481,7 @@ $(document).ready(function() {
 							href="/searchDi?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.endPage +1}">▶</a></li>
 					</c:if>
 				</ul>
-				<!-- 페이징 끝 -->
 			</div>
-			<!-- 다이어리 row end -->
 		</div>
 		<br />
 	</div>

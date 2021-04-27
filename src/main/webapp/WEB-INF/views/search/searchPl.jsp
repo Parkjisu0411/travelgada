@@ -88,8 +88,6 @@ html, body {
 <style>
 #keyword_search{
 	height: 45px;
-/* 	width: 50%; */
-/* 	min-width: 100%; */
 	line-height: 70px;
 	background-color: transparent;
 	color: black;
@@ -192,9 +190,6 @@ html, body {
 }
 
 .drop{
-/* 	border: 2px solid #303E57;
-	background-color: transparent;
-	border-radius: 10px; */
 	border:none;
 	float: right;
 	background-color: #CFD2D3;
@@ -337,7 +332,6 @@ $(document).ready(function() {
 						</c:forEach>
 					</div>
 					<br/>
-				
 				</div>
 			</div>
 			<br/>
@@ -347,7 +341,6 @@ $(document).ready(function() {
 
 		<div class="row">
 			<div class="paging">
-				<!-- 페이징 -->
 				<ul class="pagination">
 					<c:if test="${pageMaker.prev}">
 						<li class="page-item"><a class="page-link"
@@ -362,10 +355,11 @@ $(document).ready(function() {
 						<li class="page-item"><a class="page-link"
 							href="searchPl?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.endPage+1}">▶</a></li>
 					</c:if>
-				</ul><!-- 페이징 끝 -->
-			</div><!-- 다이어리 row end -->
+				</ul>
+			</div>
 		</div><br/>
-	</div><!-- container end -->
+	</div>
+	<!-- container end -->
 	
 	<%@ include file="/WEB-INF/views/includes/chat_icon.jsp" %>
 

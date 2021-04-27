@@ -1,28 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
 
-<title>달력</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
+		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
+		crossorigin="anonymous" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
+		integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	
+	<!-- 달력 -->
+	<link href="resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+	<link href="resources/calendar/css/datepicker.css" rel="stylesheet" media="all">
 
-   <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
-      integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
-      crossorigin="anonymous" />
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
-       integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
-       crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-   <!-- 달력 -->
-   <link href="resources/calendar/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-   <link href="resources/calendar/css/datepicker.css" rel="stylesheet" media="all">
+	<title>달력</title>
    
-<style type="text/css">
+<style>
 /* 플래너 생성 스타일*/
 /* 작성 버튼 부분 */
 .calRow {
@@ -92,42 +90,44 @@
 </style>
 
 <script>
-	/* 플래너 생성 경고 */
+/* 플래너 생성 경고 */
 	$(document).ready(function() {
 		$(".btn-submit").click(function() {
 			if ($("#planner_name").val().length == 0) {
 				alert("플래너 이름을 입력하세요!");
 				$("#planner_name").focus();
 				return false;
-			}//if end
+			}
 			if ($("#input-start").val().length == 0) {
 				alert("여행 기간을 선택해주세요!");
 				$("#input-start").focus();
 				return false;
-			}//if end
+			}
 			if ($("#input-end").val().length == 0) {
 				alert("여행 기간을 선택해주세요!");
 				$("#input-start").focus();
 				return false;
-			}//if end
+			}
 			if ($("#schedule_content").val().length == 0) {
 				alert("나라를 입력하세요!");
 				$("#schedule_content").focus();
 				return false;
-			}//if end
-		});//click function end
-	});//ready function end
+			}
+		});
+	});
 	/* 플래너 생성 경고 end */
 </script>
 
 <script>
 /* 엔드 날짜 클릭시 시작 날짜로 포거스가게 하기 */
    $(document).ready(function(){
+	   
       $("#input-end").click(function(){
+    	  
          $("#input-start").focus();
-      });//click function end
-   });//ready function end
-/* 날짜 동시에 띄우기 end */
+         
+      });
+   });
 </script>
    
 </head>

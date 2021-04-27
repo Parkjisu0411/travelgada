@@ -2,13 +2,10 @@ package com.gada.travelgada.controller;
 
 import java.util.List;
 
-import org.apache.ibatis.exceptions.IbatisException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,7 +73,7 @@ public class AdminController {
 
 	}// withdrawal end
 	
-	//회원 탈퇴 시키기
+	//회원 탈퇴
 	@PutMapping("/withdrawalMember")
 	public ResponseEntity<String> withdrawal(@RequestBody MemberVO memberVO, Model model) {
 		
@@ -90,17 +87,18 @@ public class AdminController {
 		int withdrawal_code = memberVO.getWithdrawal_code();
 		
 		try {
-				if(withdrawal_code == 0){
-					
-					adiminService.withdrawal(0 ,member_id, withdrawal_code);
-					entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-					
-				}else {
-					
-					adiminService.withdrawal(1, member_id, withdrawal_code);
-					entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			
+			if(withdrawal_code == 0){
 				
-				}
+				adiminService.withdrawal(0 ,member_id, withdrawal_code);
+				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+				
+			}else {
+				
+				adiminService.withdrawal(1, member_id, withdrawal_code);
+				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -143,9 +141,13 @@ public class AdminController {
 		List<ShippingLocVO> shippingList = null;
 		
 		try {
+			
 			shippingList = adiminService.getShippingLoc(memberVO.getMember_id());
+			
 		}catch(Exception e) {
+			
 			log.info(memberVO.getMember_id() + "의 배송지 목록이 없습니다.");
+			
 			shippingList.add(new ShippingLocVO());
 		}
 		
@@ -169,13 +171,13 @@ public class AdminController {
 		
 		mav.addObject("memberList",adiminService.searchWithdrawal(nowPage, cri.getAmount(),keyword));
 		mav.addObject("pageMaker", new PageVO(cri, total));
+		mav.addObject("keyword",keyword);
 		
 		//전체 회원 수 
 		mav.addObject("total", totalMember);
 		//탈퇴한 회원 수 
 		mav.addObject("withdrawal",adiminService.getWithdrawal());
-
-		mav.addObject("keyword",keyword);
+		
 		mav.setViewName("admin/adminWithdrawal");
 
 		return mav;

@@ -8,22 +8,17 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-<title>다이어리 작성</title>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet"><!-- 큰 영어 -->
-  
-<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
-
-<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+	<title>다이어리 작성</title>
 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet"><!-- 큰 영어 -->
+	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+		
 <style>
-/*    table, th, td {
-    border: 1px solid #bcbcbc;
-  } */
 
 .modifyBtn {
 	text-align: right;
@@ -38,23 +33,19 @@
 
 .fileStyle {
 	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
 	font-family: 'GongGothicMedium';
 	color: white;
 	font-size: 18px;
 	background-color: #1dcad3;
-	/* width:100px; */
 	border-radius: 5px;
 }
 
 #fileCheck {
 	border: solid 1px;
-	/* border-radius: 15px 15px 0 0; */
 	font-family: 'GongGothicMedium';
 	color: white;
 	font-size: 18px;
 	background-color: #1dcad3;
-	/* width:100px; */
 	border-radius: 5px;
 }
 
@@ -164,25 +155,26 @@ textarea{
 </script>
 
 <script>
-$(document).ready(function(){
-	
-	$("#fileCheck").on("click",function(e){
-	
- 	var uploadfile = $("#profile_pt").val();
-  	console.log(uploadfile);
-  	
-  	  if(uploadfile == ""){
-   	     alert("사진을 첨부해 주세요!");
-  	      return false;
-  	  }else{
-  		  window.opener.name = "parentPage";
-  		  document.myForm.target = "parentPage";
-  		  $("#submitBtn").submit();
-  		  self.close();
-  	  }
-   	 });
-	});
 
+	$(document).ready(function() {
+
+		$("#fileCheck").on("click", function(e) {
+
+			var uploadfile = $("#profile_pt").val();
+			console.log(uploadfile);
+
+			if (uploadfile == "") {
+				alert("사진을 첨부해 주세요!");
+				return false;
+			} else {
+				window.opener.name = "parentPage";
+				document.myForm.target = "parentPage";
+				$("#submitBtn").submit();
+				self.close();
+			}
+		});
+	});
+	
 </script>
 
 <script>
@@ -196,12 +188,6 @@ function checkCode(){
 		console.log("엔터");
 		event.returnValue=false;
 	}
-/* 	if(kcode == 32) {
-		console.log("스페이스바");
-		tag.append("#");
-		event.returnValue=false;
-
-	} */
 }
 </script>
 
@@ -209,9 +195,9 @@ function checkCode(){
 
 $(document).ready(function(){
 	 
-	  $('#hashtag').popover({content: "ex) #여행  #가다 ", placement: "bottom"}); 
+	$('#hashtag').popover({content: "ex) #여행  #가다 ", placement: "bottom"}); 
 	 
-	});
+});
 
 </script>
 

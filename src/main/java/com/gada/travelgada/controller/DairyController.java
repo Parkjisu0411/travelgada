@@ -1,13 +1,8 @@
 package com.gada.travelgada.controller;
 
 import java.io.File;
-
 import java.io.IOException;
-import java.util.List;
 
-import javax.servlet.http.HttpSessionEvent;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +23,6 @@ import com.gada.travelgada.domain.PageVO;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.service.DiaryService;
 import com.gada.travelgada.service.PlannerService;
-import com.gada.travelgada.service.UserCounter;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +39,7 @@ public class DairyController {
 
 	// 다이어리
 	@GetMapping("/diary")
-	public ModelAndView diary(ModelAndView mav, @AuthenticationPrincipal MemberDetails member, CriteriaVO cri) {
+	public ModelAndView diary(@AuthenticationPrincipal MemberDetails member, ModelAndView mav, CriteriaVO cri) {
 		log.info("controller diary();");
 		log.info("nowPage : "+cri.getNowPage());
 		log.info("planner_id============= : "+member.getPlanner_id());
@@ -77,14 +70,20 @@ public class DairyController {
 	}// diary end
 	
 	@GetMapping("/diary/{planner_id}")
-	public ResponseEntity<String> selectOtherPlanner(PlannerVO plannerVO, @AuthenticationPrincipal MemberDetails memberDetails) {
+	public ResponseEntity<String> selectOtherPlanner(@AuthenticationPrincipal MemberDetails memberDetails, PlannerVO plannerVO) {
+		
 		ResponseEntity<String> entity = null;
+		
 		try {
+			
 			memberDetails.setPlanner_id(plannerVO.getPlanner_id());
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			
 		} catch(Exception e) {
+			
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			
 		}
 		return entity;
 	}
@@ -108,10 +107,10 @@ public class DairyController {
 			
 		}else {
 		
-			mav.addObject("diary", diaryService.getDiaryOtherPaging(member.getPlanner_id(),nowPage, amount));
+			mav.addObject("diary", diaryService.getDiaryOtherPaging(planner_id,nowPage, amount));
 			mav.addObject("planner", plannerService.getPlanner(member.getUsername()));
 			mav.addObject("pageMaker", new PageVO(cri, total));
-			mav.addObject("planner_id", member.getPlanner_id());
+			mav.addObject("planner_id", planner_id);
 			mav.addObject("nowPage", cri.getNowPage());
 			
 			mav.setViewName("diary/diary_other");
@@ -140,18 +139,17 @@ public class DairyController {
 	@Transactional
 	@PostMapping("/diary_write")
 	public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO,
-			@AuthenticationPrincipal MemberDetails member, CriteriaVO cri) throws IllegalStateException, IOException {
+			@AuthenticationPrincipal MemberDetails member, CriteriaVO cri) 
+					throws IllegalStateException, IOException {
 		log.info("controller diary_write();");
 		
-		/* String img_path = file.getOriginalFilename(); */
 		int seq = diaryService.getImg_seq();
 		seq++;
 		String img_seq = Integer.toString(seq);
 		int amount = 20;
 		int nowPage = (cri.getNowPage() - 1) * amount;
 		int total = diaryService.getOtherTotal(member.getUsername(), diaryVO.getPlanner_id());
-		/* int planner_id = member.getPlanner_id(); */
-
+	
 		diaryVO.setImg_path(img_seq);
 		diaryService.writeDiary(diaryVO);
 		cri.setAmount(amount);
@@ -161,7 +159,6 @@ public class DairyController {
 		mav.addObject("diary", diaryService.getDiaryOtherPaging(diaryVO.getPlanner_id(),nowPage, amount));
 		mav.addObject("planner", plannerService.getPlanner(member.getUsername()));
 		mav.addObject("pageMaker", new PageVO(cri, total));
-		/* mav.addObject("other", diaryVO); */
 		mav.addObject("planner_id", diaryVO.getPlanner_id());
 		mav.addObject("nowPage", cri.getNowPage());
 		
@@ -190,27 +187,25 @@ public class DairyController {
 	@PostMapping("/diary_modify")
 	public ModelAndView diary_modify(ModelAndView mav, DiaryVO diaryVO, @RequestParam("uploadfile") MultipartFile file,
 			@RequestParam("currImg") String currImg, @AuthenticationPrincipal MemberDetails member, CriteriaVO cri)
-			throws IllegalStateException, IOException {
+					throws IllegalStateException, IOException {
+		
 		log.info("controller diary_modify()");
 		log.info(currImg);
+		log.info("플래너 아이디 : " + diaryVO.getPlanner_id());
 
 		String img_path = file.getOriginalFilename();
 		String img_seq = diaryVO.getImg_path();
-		log.info("+++++++++++++++++++++++++"+img_seq);
 		int amount = 20;
 		int nowPage = (cri.getNowPage() - 1) * amount;
 		int total = diaryService.getOtherTotal(member.getUsername(), diaryVO.getPlanner_id());
-		/* int planner_id = member.getPlanner_id(); */
 		
 		cri.setAmount(amount);
 		member.setPlanner_id(diaryVO.getPlanner_id());
-
-		log.info("플래너 아이디 : " + diaryVO.getPlanner_id());
 		
 		if (img_path.length() == 0) {
+			
 			diaryVO.setImg_path(currImg);
 			diaryService.modifyDiary(diaryVO);
-			/* file.transferTo(new File(FILE_SERVER_PATH, img_seq)); */
 
 		} else {
 			
@@ -226,7 +221,6 @@ public class DairyController {
 		mav.addObject("other", diaryVO);
 		mav.addObject("planner_id", diaryVO.getPlanner_id());
 		mav.addObject("nowPage", cri.getNowPage());
-		/* int now = cri.getNowPage(); */
 		
 		mav.setViewName("redirect:/diary");
 
@@ -237,14 +231,18 @@ public class DairyController {
 	// 다이어리 삭제
 	@DeleteMapping("/diary/{diary_id}")
 	public ResponseEntity<String> diary_delete(DiaryVO DiaryVO, Model model) {
+		
 		ResponseEntity<String> entity = null;
+		
 		log.info("controller diary_delete()");
 
 		try {
+			
 			diaryService.deleteDiary(DiaryVO.getDiary_id());
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 
@@ -253,16 +251,5 @@ public class DairyController {
 		return entity;
 
 	}// diary_delete end
-      
-	// 다이어리
-	@GetMapping("/sta")
-	public ModelAndView test(ModelAndView mav, @AuthenticationPrincipal MemberDetails member) {
-
-		mav.setViewName("diary/test");
-
-		return mav;
-
-	}// diary end
-	
 
 }// Controller end
