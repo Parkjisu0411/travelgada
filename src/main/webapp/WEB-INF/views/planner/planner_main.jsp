@@ -326,10 +326,36 @@
 		}
 	}
 	
+	function getDday() {
+		var now = new Date();
+		now = now.getTime();
+		
+		<c:forEach items="${plannerList}" var="planner">
+		 var date = '<c:out value="${planner.start_date}"/>';
+		 date = date.split("-");
+		 date = date[0]+ "," + date[1] + "," + date[2];
+		 date = new Date(date).getTime();
+		 
+		 var gap = now - date;
+		 var result = Math.floor(gap / (1000 * 60 * 60 * 24));
+		 
+		 if (result < 0) {
+			 var result = "D" + result;
+		 } else if (result > 0) {
+			 var result = "D+" + result;
+		 } else {
+			 var result = "D-DAY";
+		 }
+		 
+		 $("#" + '<c:out value="${planner.planner_id}"/>' + " .badge.dday").text(result);
+		</c:forEach>
+	}
+	
 	$(document).ready(function() {
 		$(".input-end").click(function() {
 			$(this).siblings(".input-start").focus();
 		})
+		getDday();
 	});
 	
 </script>
@@ -349,16 +375,14 @@
 			<br><br><br><br>
 			
 			<div class="row">
-				<c:forEach var="planner" items="${plannerList }">
+				<c:forEach var="planner" items="${plannerList }" varStatus="status">
 					<div class="col-md-4" id="${planner.planner_id }">
 						<div class="planner-area hvr-float-shadow">
 							<img class="card-pl-img planner-img" src="/resources/img/planner/${ planner.planner_img_path}"  onclick="selectPlanner(${planner.planner_id})" onerror="this.src='/resources/img/profile/gada'">
 							<img class="card-pl-img planner-preview-img" src="/resources/img/planner/${ planner.planner_img_path}" onerror="this.src='/resources/img/profile/gada'" style="display:none"/>				
 							<div class="planner-text-area">
 								<strong class="planner_name">${planner.planner_name }</strong>&nbsp; 
-								<span class="badge dday">
-									D - <c:out value="${DDayMap[planner.planner_id] }" />
-								</span>
+								<span id="${planner.planner_id}" class="badge dday"></span>
 								<br><br>
 								<span class="start_date">${planner.start_date }</span> ~ <span class="end_date">${planner.end_date }</span>
 								<div class="gada-btn-group">
@@ -397,5 +421,6 @@
 	<script src="resources/calendar/datepicker/moment.min.js"></script>
     <script src="resources/calendar/datepicker/daterangepicker.js"></script>
     <script src="resources/calendar/js/global.js"></script>
+
 </body>
 </html>

@@ -77,11 +77,6 @@
 	font-weight: 900;
 }
 
-.main-card-diary-profile-id:hover {
-	color: #000000;
-	text-decoration: underline 2px;
-}
-
 .main-card-diary-content-area {
 	margin: 0px 0px 6px;
 	white-space: nowrap;

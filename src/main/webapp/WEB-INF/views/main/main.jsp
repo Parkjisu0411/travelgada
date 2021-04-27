@@ -197,7 +197,7 @@
                   <div class="main-card-diary-content">
                     <div class="main-card-diary-profile">
                       <img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">
-                      <a class="main-card-diary-profile-id" href="#">${member.member_id}</a>
+                      <span class="main-card-diary-profile-id">${member.member_id}</span>
                     </div>
                     <div class="main-card-diary-hashtag-area">
                       <span class="main-card-diary-hashtag" id="${di.diary_id }"></span>
