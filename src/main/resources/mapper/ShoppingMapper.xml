@@ -72,13 +72,13 @@
 	
 	<select id="selectBuyListTotal" resultType="int">
 		<![CDATA[
-			select count(*) from buy B, buy_detail D where B.buy_id = D.buy_id and member_id = #{member_id}
+			select count(*) from buy B, buy_detail D where B.buy_id = D.buy_id and member_id = #{member_id} ${filter}
 		]]>
 	</select>
 	
 	<select id="selectBuyListByIdWithPage" resultMap="buyDetailMap">
 		<![CDATA[
-			select * from buy B, buy_detail D, product P where member_id = #{member_id} and D.buy_id = B.buy_id and D.product_id = P.product_id order by B.buy_date desc limit #{pageNum}, #{amount}
+			select * from buy B, buy_detail D, product P where member_id = #{member_id} and D.buy_id = B.buy_id and D.product_id = P.product_id ${filter} order by B.buy_date desc limit #{pageNum}, #{amount}
 		]]>
 	</select>
 	

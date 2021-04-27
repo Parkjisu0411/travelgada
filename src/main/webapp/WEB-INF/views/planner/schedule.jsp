@@ -293,6 +293,24 @@
 	  return new Promise(resolve=>setTimeout(resolve, ms));
 	}
 	
+	function inputCountry(obj) {
+		var date = $(obj).parent().parent().attr("id");
+		
+		var countryList = "<select class='form-control' id='change-country-select' name='country' onchange='selectCountry(this.value)'>";
+		countryList += "<c:forEach var='country' items='${country}'>";
+		countryList += "<option value='${country.country_name}|${country.longitude}|${country.latitude}'>${country.country_name}</option>";
+		countryList += "</c:forEach>";
+		countryList += "</select>";
+		
+		$("#" + date + " .date-area-country").css("display", "none");
+		$("#" + date + " .date-area").append(countryList);
+		$("#change-country-select").focus();
+		$("#change-country-select").blur(function() {
+			$("#" + date + " .date-area-country").css("display", "");
+			$(this).remove();
+		});
+	}
+	
 	function changeCountry(date, schedule_id) {
 		var thisCountry = $("#" + date + " .date-area-country").text();
 		console.log(thisCountry);
@@ -310,7 +328,7 @@
 		$("#" + date + " .date-area").append(countryList);
 		$("#change-country-select").focus();
 		$("#change-country-select").blur(function() {
-			$("#" + date + " .date-area-country").css("display", "");
+			$("#" + schedule_id).css("display", "");
 			$(this).remove();
 		});
 		
@@ -318,32 +336,71 @@
 	
 	function selectCountry(country, schedule_id) {
 		country = country.split("|");
-		var data = {
-				schedule_id : schedule_id,
+		if(schedule_id) {
+			var data = {
+					schedule_id : schedule_id,
+					schedule_content : country[0],
+					longitude : country[1],
+					latitude : country[2],
+					budget : -1
+			}
+			
+			console.log(data);
+			
+			$.ajax({
+				type : "PUT",
+				url : "/planner/schedule",
+				data : JSON.stringify(data),
+				contentType : "application/json",
+				cache : false,
+				beforeSend : function(xhr){
+	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				success : function(result) {
+					$("#change-country-select").remove();
+					$("#" + schedule_id).css("display", "");
+					$("#" + schedule_id).html(country[0]);
+					$("#" + schedule_id).siblings(".longitude").html(country[1]);
+					$("#" + schedule_id).siblings(".latitude").html(country[2]);
+				},
+				error : function(e) {
+					console.log(e);
+					alert("에러가 발생했습니다.");
+				}
+			})
+		} else {
+			var date = $("#change-country-select").parent().parent().attr("id");
+			var data = {
+				planner_id : ${planner.planner_id},
 				schedule_content : country[0],
 				longitude : country[1],
-				latitude : country[2]
-		}
-		
-		console.log(data);
-		
-		/* $.ajax({
-			type : "PUT",
-			url : "/planner/schedule",
-			data : JSON.stringify(data),
-			contentType : "application/json",
-			cache : false,
-			beforeSend : function(xhr){
-  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-			},
-			success : function(result) {
-				
-			},
-			error : function(e) {
-				console.log(e);
-				alert("에러가 발생했습니다.");
+				latitude : country[2],
+				schedule_type_id : 5,
+				schedule_date : date
 			}
-		}) */
+			$.ajax({
+	            type: "POST",
+	            url: "/planner/schedule",
+	            data : JSON.stringify(data),
+				contentType : "application/json",
+				cache : false,
+	            beforeSend : function(xhr){
+	  	             xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				},
+				success : function(result){
+					$("#" + result.schedule_date + " .date-area-country").css("display", "");
+					$("#" + result.schedule_date + " .date-area-country").html(result.schedule_content);
+					$("#" + result.schedule_date + " .date-area-country").attr("id", result.schedule_id);
+					$("#" + result.schedule_date + " .longitude").html(result.longitude);
+					$("#" + result.schedule_date + " .latitude").html(result.latitude);
+					$("#change-country-select").remove();
+				},
+				error : function(e){
+					console.log(e);
+				}
+	        });
+			
+		}
 	}
 	
 	//날짜 추가
@@ -354,9 +411,11 @@
 		var month = date.getMonth() + 1;
 		if(month < 10) {
 			month = "0" + month;
-		}
+		} 
 		var day = date.getDate();
-		
+		if(day < 10) {
+			day = "0" + day;
+		}
 		var next = year + "-" + month + "-" + day;
 		
 		var data = {
@@ -860,6 +919,18 @@
 	        	reOrderDB(date);
 	        }
 		});
+		
+		//국가 설정 체크
+		$(".date-area").each(function() {
+			if(!$(this).children(".date-area-country").length) {
+				var date = $(this).parent().attr("id");
+				var content = "";
+				content += "<p class='date-area-country' onclick='inputCountry(this)' >국가를 입력해주세요.</p>";
+				content += "<span class='longitude' style='display:none'></span>";
+				content += "<span class='latitude' style='display:none'></span>";
+				$(this).append(content);
+			}
+		})
 	});
 	
 	$(document).on("hover", ".content-box", function() {
@@ -920,31 +991,30 @@
 						<col width="10%" />
 					</colgroup>
 					<thead>
-						<tr class="table-schedule-hr row">
-							<th class="col-md-2"><i class="far fa-calendar-alt"></i> 날짜</th>
-							<th class="col-md-2"><i class="fas fa-city"></i> 도시</th>
-							<th class="col-md-2"><i class="fas fa-bus"></i> 교통</th>
-							<th class="col-md-2"><i class="fas fa-map-marked"></i> 일정</th>
-							<th class="col-md-2"><i class="fas fa-bed"></i> 숙소</th>
-							<th class="col-md-2"><i class="fas fa-money-check-alt"></i> 비용</th>
+						<tr class="table-schedule-hr">
+							<th><i class="far fa-calendar-alt"></i> 날짜</th>
+							<th><i class="fas fa-city"></i> 도시</th>
+							<th><i class="fas fa-bus"></i> 교통</th>
+							<th><i class="fas fa-map-marked"></i> 일정</th>
+							<th><i class="fas fa-bed"></i> 숙소</th>
+							<th><i class="fas fa-money-check-alt"></i> 비용</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="date" items="${dateList}" varStatus="idx">
-							<tr id="${date }" class="row">
-								<td class="date-area col-md-2">
+							<tr id="${date }">
+								<td class="date-area">
 									<p class="date-area-date">${date}</p>
 									<p class="date-area-day">DAY &nbsp;${idx.count }</p>
 									<c:forEach var="country" items="${countryList }">
 										<c:if test="${country.schedule_date eq date}">											
-											<p class="date-area-country" onclick="changeCountry('${date}', ${country.schedule_id })">${country.schedule_content }</p>
+											<p id="${country.schedule_id }" class="date-area-country" onclick="changeCountry('${date}', ${country.schedule_id })">${country.schedule_content }</p>
 											<span class='latitude' style='display:none'>${country.latitude }</span>
 											<span class='longitude' style='display:none'>${country.longitude }</span>
-											<span class='this_planner_id' style='display:none'>${country.planner_id }</span>
 										</c:if>
 									</c:forEach>
 								</td>
-								<td class="city-area col-md-2">
+								<td class="city-area">
 									<c:forEach var="city" items="${cityList }">
 										<c:if test="${city.schedule_date eq date }">
 											<div class="content-box" id="${city.schedule_id }">
@@ -955,7 +1025,7 @@
 									</c:forEach>
 									<div class="insert-btn" onclick="insertSchedule('city', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div>
 								</td>
-								<td class="vehicle-area col-md-2">
+								<td class="vehicle-area">
 									<c:forEach var="vehicle" items="${vehicleList }">
 										<c:if test="${vehicle.schedule_date eq date }">
 											<div class="content-box" id="${vehicle.schedule_id }" >
@@ -968,7 +1038,7 @@
 									</c:forEach>
 									<div class="insert-btn" onclick="insertSchedule('vehicle', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div>
 								</td>
-								<td class="schedule-area col-md-2">
+								<td class="schedule-area">
 									<c:forEach var="schedule" items="${scheduleList }">
 										<c:if test="${schedule.schedule_date eq date }">
 											<div class="sortable-order content-box" id="${schedule.schedule_id }">
@@ -982,7 +1052,7 @@
 									</c:forEach>
 									<div class="insert-btn ui-state-disabled" onclick="insertSchedule('schedule', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div>
 								</td>
-								<td class="hotel-area col-md-2">
+								<td class="hotel-area">
 									<c:forEach var="hotel" items="${hotelList }">
 										<c:if test="${hotel.schedule_date eq date }">
 											<div class="content-box" id="${hotel.schedule_id }">
@@ -995,7 +1065,7 @@
 									</c:forEach>
 									<div class="insert-btn" onclick="insertSchedule('hotel', '${date}', '${idx.count }')"><i class="fas fa-plus-circle"></i></div>
 								</td>
-								<td class="col-md-2 budget-area">
+								<td class="budget-area">
 									<span class="budget-total"><c:out value="${dayBudget[date] }"></c:out></span>
 									<span>₩</span>
 								</td>

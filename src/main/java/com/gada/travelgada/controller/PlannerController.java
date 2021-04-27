@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gada.travelgada.domain.CountryVO;
 import com.gada.travelgada.domain.MemberDetails;
 import com.gada.travelgada.domain.PlannerVO;
+import com.gada.travelgada.service.MainService;
 import com.gada.travelgada.service.PlannerService;
 
 import lombok.AllArgsConstructor;
@@ -26,9 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 public class PlannerController {
 	
 	private PlannerService plannerService;
+	private MainService mainService;
 	
 	@GetMapping("/planner")
 	public ModelAndView plannerMain(ModelAndView mav, @AuthenticationPrincipal MemberDetails memberDetails) {
+		mav.addObject("countryList", mainService.getCountry());
 		mav.addObject("plannerList", plannerService.getPlanner(memberDetails.getUsername()));
 		mav.addObject("DDayMap", plannerService.getDDay(memberDetails.getUsername()));
 		mav.setViewName("planner/planner_main");

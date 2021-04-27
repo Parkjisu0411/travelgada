@@ -107,6 +107,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 		if(scheduleVO.getSchedule_order() > 0) {
 			schedule.setSchedule_order(scheduleVO.getSchedule_order());
 		}
+		if(scheduleVO.getSchedule_content() != null) {
+			schedule.setSchedule_content(scheduleVO.getSchedule_content());
+			schedule.setLongitude(scheduleVO.getLongitude());
+			schedule.setLatitude(scheduleVO.getLatitude());
+		}
 		
 		mapper.updateSchedule(schedule);
 	}
