@@ -21,22 +21,28 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 public class ShoppingControllerTest {
-	
-    @Setter(onMethod_ = { @Autowired })
-    private WebApplicationContext ctx;
-    
-    @Autowired
-    private MockMvc mockMvc;
 
-    @Before
-    public void setup() {
-       this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
-    }
+	@Setter(onMethod_ = { @Autowired })
+	private WebApplicationContext ctx;
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@Before
+	public void setup() {
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+	}
+
+	@Test
+	public void testMain() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/shopping").param("product_type_id", "3")).andReturn()
+				.getModelAndView().getModelMap();
+	}
 
 	@Test
 	@WithUserDetails("gada")
-	public void testShoppingResult() throws Exception {
-		String shoppingResult = mockMvc.perform(MockMvcRequestBuilders.post("/shopping/order/result")
+	public void testPayment() throws Exception {
+		String payment = mockMvc.perform(MockMvcRequestBuilders.post("/shopping/order/result")
 				.param("buy_id", "imp_1234567890")
 				.param("shipping_loc_name", "집")
 				.param("paid_amount", "1900")
@@ -47,6 +53,6 @@ public class ShoppingControllerTest {
 				.param("accumulate_point", "95")
 				.param("used_point", "0")
 				).andReturn().getModelAndView().getViewName();
-		log.info(shoppingResult);
+		log.info(payment);
 	}
 }
