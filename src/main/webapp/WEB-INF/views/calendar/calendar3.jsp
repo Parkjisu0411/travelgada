@@ -182,7 +182,7 @@
 				</div>
 				<div class="inputGroup">
 					<label class="calLabel" >나라</label>
-					<input list="country-list" id="country_name" name="country_name" class="input-style" placeholder="어디로 여행 갈까요?" />
+					<input list="country-list" id="country_name" name="country_name" class="input-style" placeholder="어디로 여행 갈까요?" autocomplete="off"/>
 					<datalist id="country-list">
 						<c:forEach var="country" items="${countryList }">
 							<option value="${country.country_name }">
