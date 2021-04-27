@@ -26,11 +26,11 @@ public interface ShoppingMapper {
 	
 	public List<BuyVO> selectBuyById(String member_id);
 	
-	public int selectBuyListTotal(String member_id);
+	public int selectBuyListTotal(@Param("member_id") String member_id, @Param("filter") String filter);
 	
 	public List<BuyListVO> selectBuyListById(String member_id);
 	
-	public List<BuyListVO> selectBuyListByIdWithPage(@Param("member_id") String member_id, @Param("pageNum") int pageNum, @Param("amount") int amount);
+	public List<BuyListVO> selectBuyListByIdWithPage(@Param("member_id") String member_id, @Param("pageNum") int pageNum, @Param("amount") int amount, @Param("filter") String filter);
 	
 	public List<BuyDetailVO> selectBuyDetailById(String buy_id);
 	
