@@ -308,7 +308,27 @@ a{
 	.Rcnt:hover{
 		font-size:1em;
 	}
-		
+
+.formBT{
+	border:1px solid white;
+	border-radius:5px;
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight:bold;
+	color:white;
+	margin:123px 0 0 -12px;
+	background:#1DCAD3;
+}		
+
+#reply{
+	width: 860px;
+	border:1px solid #65dae0;
+	border-radius:7px;
+	
+}
+
+/* .answerList{
+	background:#f5f5f5;
+} */
 	
 	/* 검색 */
 	#board_keyword_search{
@@ -525,7 +545,7 @@ a{
 	<!-- 대댓글 작성 폼 생성 -->
 	<script>
     	$(document).ready(function() {
-    		$(".makeForm").on("click", function makeForm(event) {
+    		$(".makeForm").one("click", function makeForm(event) {
     			console.log("makeForm");
     			
    				var tr = $(this).parent().parent().parent();
@@ -539,8 +559,8 @@ a{
    			    htmls +='<input type="hidden" id="answer_id" name="answer_id" value="' + answer_id + '">'
    			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
    			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
-   			    htmls +='<textarea id="text" class="form-control col-sm-11" name="text" placeholder="댓글을 입력해주세요."></textarea></td></form>'
-   			    htmls +='<td><button onclick="function addReply();">완료</button></td></tr>'
+   			    htmls +='<textarea id="text" class="form-control col-sm-12" name="text" placeholder="댓글을 입력해주세요."></textarea></td></form>'
+   			    htmls +='<td><button class="formBT" onclick="function addReply();">완료</button></td></tr>'
 
    			    $(tr).after(htmls);
    			    
@@ -555,25 +575,35 @@ a{
     		$(".modifyAnswer").on("click", function makeForm(event) {
     			console.log("modifyAnswer");
     			
-   				var tr = $(this).parent().parent().parent();
+   				var tr = $(".answerTXT");
    				
        			var answer_id = $(this).attr("name");
+       			var text = $(this).attr("value");
    						
    				var htmls="";
    				
-   				htmls +='<tr class="answerList"><td>'
+
    			    htmls +='<form id="reply" method="POST" action="${pageContext.request.contextPath}/board/reply?${_csrf.parameterName}=${_csrf.token}">'
    			    htmls +='<input type="hidden" id="answer_id" name="answer_id" value="' + answer_id + '">'
    			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
    			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
-   			    htmls +='<textarea id="text" class="form-control col-sm-11" name="text" placeholder="댓글을 입력해주세요."></textarea></td></form>'
-   			    htmls +='<td><button onclick="function addReply();">완료</button></td></tr>'
-
-   			    $(tr).after(htmls);
+   			    htmls +='<textarea id="text" class="form-control col-sm-11" name="text" placeholder="댓글을 입력해주세요.">'+text+'</textarea></td></form>'
+   			    htmls +='<td><button onclick="function addReply();">완료</button>'
+				
+   			    if($('.answer_id').attr('value') == answer_id){
+   			    	$(tr).html(htmls);
+   			    }else{
+   			    	return;
+   			    }
+   			    
     		});
     	});
     </script>
-    
+
+
+
+
+   
 		<script>
 			function refreshDate(){
 			    $("#commLastTime").text(transferTime( $("#commLastTime").attr("class") ) );
@@ -733,7 +763,7 @@ a{
 				</sec:authorize>
 
 				<sec:authorize access="isAuthenticated()">
-					<button type="button" class="AnswerButton" onclick="window.location.href='${pageContext.request.contextPath }/board/answer/${bContentView.board_id}'" >답글 달기</button>
+					<button type="button" class="AnswerButton" onclick="window.location.href='${pageContext.request.contextPath }/board/answer/${bContentView.board_id}/${bContentView.board_type_id}'" >답글 달기</button>
 				</sec:authorize>
 				
 
@@ -745,16 +775,16 @@ a{
         				<input type="hidden" class="answer_id" name="answer_id" value="${answer.answer_id }"/>
 						<tr class="answerList" >
 							<%-- <td>${answer.answer_id }</td> --%>
-							<td><span class="reply"><img class="nav-profile-img" src='/resources/img/profile/${bImgPath.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">&nbsp;&nbsp; ${answer.member_id }</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="fmt"><span><fmt:formatDate value="${answer.answer_date }" pattern="yyyy/MM/dd hh:mm"/></span></span><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${answer.text }</div></td>
+							<td><span class="reply"><img class="nav-profile-img" src='/resources/img/profile/${bImgPath.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">&nbsp;&nbsp; ${answer.member_id }</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="fmt"><span><fmt:formatDate value="${answer.answer_date }" pattern="yyyy/MM/dd hh:mm"/></span></span><div class="answerTXT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${answer.text }</div></td>
 							
 							<td>
 								<c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answer.member_id }">
 									<span class="rpl"><img class="deleteImg" src="/resources/board/garbage.png"><button type="button" class="deleteAnswer">삭제</button></span>
-									<span class="rpl"><img class="modifyImg" src="/resources/board/pencil.png"><button type="button" class="modifyAnswer">수정</button></span>
-								</c:if>
+									<span class="rpl"><img class="modifyImg" src="/resources/board/pencil.png"><button type="button" class="modifyAnswer" value="${answer.text }" name="${answer.answer_id }">수정</button></span>
+								
 									<span class="rpl"><img class="commentImg" src="/resources/board/comment1.png">
 									<input type="button" class="makeForm" name="${answer.answer_id }" value="답글" /></span>
-
+								</c:if>
 							</td>
 						</tr>
 						</c:forEach>

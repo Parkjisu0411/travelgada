@@ -295,7 +295,23 @@ a{
 	.Rcnt:hover{
 		font-size:1em;
 	}
-		
+
+.formBT{
+	border:1px solid white;
+	border-radius:5px;
+	font-family: 'IBMPlexSansKR-Light';
+	font-weight:bold;
+	color:white;
+	margin:123px 0 0 -12px;
+	background:#1DCAD3;
+}		
+
+#reply{
+	width: 860px;
+	border:1px solid #65dae0;
+	border-radius:7px;
+	
+}		
 	
 	/* 검색 */
 	#board_keyword_search{
@@ -557,13 +573,13 @@ a{
    						
    				var htmls="";
    				
-   				htmls +='<tr><td colspan="4">'
+   				htmls +='<tr class="answerList"><td>'
    			    htmls +='<form id="reply" method="POST" action="${pageContext.request.contextPath}/board/reply?${_csrf.parameterName}=${_csrf.token}">'
    			    htmls +='<input type="hidden" id="answer_id" name="answer_id" value="' + answer_id + '">'
    			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
    			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
-   			    htmls +='<textarea id="text" class="form-control col-sm-11" name="text" placeholder="댓글을 입력해주세요."></textarea></td></form>'
-   			    htmls +='<td><button onclick="function addReply();">완료</button></td></tr>'
+   			    htmls +='<textarea id="text" class="form-control col-sm-12" name="text" placeholder="댓글을 입력해주세요."></textarea></td></form>'
+   			    htmls +='<td><button class="formBT" onclick="function addReply();">완료</button></td></tr>'
 
    			    $(tr).after(htmls);
     		});
@@ -799,10 +815,10 @@ a{
 								<c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username eq answer.member_id }">
 									<span class="rpl"><img class="deleteImg" src="/resources/board/garbage.png"><button type="button" class="deleteAnswer">삭제</button></span>
 									<span class="rpl"><img class="modifyImg" src="/resources/board/pencil.png"><button type="button" class="modifyAnswer">수정</button></span>
-								</c:if>
+								
 									<span class="rpl"><img class="commentImg" src="/resources/board/comment1.png">
 									<input type="button" class="makeForm" name="${answer.answer_id }" value="답글" /></span>
-
+								</c:if>
 							</td>
 						</tr>
 						</c:forEach>

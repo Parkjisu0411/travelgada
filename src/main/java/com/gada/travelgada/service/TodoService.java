@@ -26,6 +26,7 @@ public interface TodoService {
 	public void addTodoType(TodoTypeVO todoTypeVO);
 
 	public void addToDo(TodoVO todoVO);
+	public TodoVO getRecentTodo(TodoVO todoVO);
 
 	public void todo_name_modify(TodoVO todoVO);
 

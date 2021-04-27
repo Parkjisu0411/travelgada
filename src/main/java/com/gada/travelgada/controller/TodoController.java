@@ -117,7 +117,7 @@ public class TodoController {
 //	}
 	// TodoType(카테고리) 추가하기 
 	@PostMapping("/addTodoType")
-	public ResponseEntity<Map<String,String>> writeReply(@RequestBody TodoTypeVO todoTypeVO) {
+	public ResponseEntity<Map<String,String>> addTodoType(@RequestBody TodoTypeVO todoTypeVO) {
 		ResponseEntity<Map<String,String>> entity = null;
 		Map<String, String> data = new HashMap<>();
 		try {
@@ -160,20 +160,28 @@ public class TodoController {
 //	 }
 	
 	@PostMapping("/todo")
-	public ResponseEntity<String> addToDo(TodoVO todoVO, TodoTypeVO todoTypeVO) throws Exception {
-	   ResponseEntity<String> entity = null;
+	public ResponseEntity<Map<String,String>> addToDo(@RequestBody TodoVO todoVO) throws Exception {
+		ResponseEntity<Map<String,String>> entity = null;
+		Map<String, String> data = new HashMap<>();
 	   
 	   log.info("addToDo");
-	   log.info(todoVO.getTodo_name());
 	   
 	   try {
+//		   todoVO.setTodo_name(todo_name);
+//		   todoVO.setTodo_type_id(todo_type_id);
 		   todoVO.setTodo_name(todoVO.getTodo_name());
-		   todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());
+		   //todoVO.setTodo_type_id(todoTypeVO.getTodo_type_id());			// 에러 부분 해결 2 : todo_type_id가 todoVO에 있으므로 필요 X
+		   todoVO.setTodo_type_id(todoVO.getTodo_type_id());
+		   
 		   service.addToDo(todoVO);
-		   entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		}catch(Exception e){
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		   TodoVO todo = service.getRecentTodo(todoVO);
+		   data.put("todo_name",String.valueOf(todo.getTodo_name()));
+		   data.put("todo_type_id",String.valueOf(todo.getTodo_type_id()));
+		   entity = new ResponseEntity<Map<String,String>>(data, HttpStatus.OK);
+		} catch(Exception e) {
+			data.put("error", e.getMessage());
+			entity = new ResponseEntity<Map<String, String>>(data, HttpStatus.BAD_REQUEST);
+			log.info("ERROR Message : " + e.getMessage());
 		}
 	   
 	   return entity;

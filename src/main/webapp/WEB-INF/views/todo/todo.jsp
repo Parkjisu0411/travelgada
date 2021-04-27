@@ -323,7 +323,7 @@
 .sendImg{
 	width:27px;
 	height:27px;
-	padding:0 3px 0 0;
+	padding:0 2px 0 0;
 }
 
 .wrapper button span{
@@ -590,7 +590,7 @@ table{
 		   		          		
    		          		var htmls = '';
               
-						htmls +='<div class="col-sm-3"><div class="dropdown"><img src="resources/todo/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style="height: 20px;float: right;"/>'
+/*  						htmls +='<div class="col-sm-3"><div class="dropdown"><img src="resources/todo/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" style="height: 20px;float: right;"/>'
 						htmls +='<div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" >수정</a>'
 						htmls +='<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${getRecentTodoTypeId}">삭제</a></div></div>'
 						htmls +='<table class="table table-bordered"><tr><td colspan="3">'+ todo_title +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>'
@@ -600,11 +600,23 @@ table{
 						htmls += '<td><div class="label"><div class="custom-control custom-checkbox custom-checkbox-green"><input type="checkbox" class="custom-control-input custom-control-input-green" id="customCheck1"><label class="custom-control-label" for="customCheck1"></label></div></div></td>'
 						//htmls +='<td><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label></td>'
 						htmls +='<td><a class="delete" href="${pageContext.request.contextPath }/todo/${todoName.todo_id}">x</a></td></tr></c:if></c:forEach>'
-						htmls +='<tr><td colspan="3"><div class="container"><div class="row"><input type="button" class="makeForm btn-primary" name="'+ todo_type_id +'" value="+ 체크리스트 추가" /></div></div></td></tr></table></div>'
+						htmls +='<tr><td colspan="3"><div class="container"><div class="row"><input type="button" class="makeForm btn-primary" name="'+ todo_type_id +'" value="+ 체크리스트 추가" /></div></div></td></tr></table></div>'  */
 						
-/* 						htmls += '<tr><td colspan="3">'+ data.todo_title +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>'
-
-						htmls +='<tr><td colspan="3"><a class="makeForm" href="javascript:void(0);" onclick="function makeForm();">+ 체크리스트 추가</a></td></tr>' */
+						htmls += '<div class="col-sm-3"><div class="dropdown"><img src="resources/todo/dot.png" class="btn dropdown-toggle" data-toggle="dropdown" />'
+						htmls += '<div class="dropdown-menu dropdown-menu-right">'					
+						htmls += '<a class="titleDelete dropdown-item" href="${pageContext.request.contextPath }/todoTitle/${getRecentTodoTypeId}">카테고리 삭제</a>'
+						htmls += '</div><table id="TB" class="table"><tr><td colspan="3" class="TBcategory"><span class="TBtitle">'+ todo_title +'</span></td></tr>'
+						htmls += '<c:forEach var="todoName" items="${todoName }"><input type="hidden" class="del_todo_name" name="del_todo_name" value="${todoName.todo_id }">'
+						htmls += '<c:if test="${todoName.todo_type_id eq '+ todo_type_id +' }"><tr class="todoListTable">'					
+						htmls += '<td class="td1"><div class="label"><label class="checkbox-inline">'						
+						htmls += '<input type="checkbox" name="input_check" id="inlineCheckbox1" value="1">'							
+						htmls += '<input type="hidden" name="input_check" id="input_check_hidden" value="0"/></label></div> '							
+						htmls += '</td><td class="TBtodoName"><p class="TBname">${todoName.todo_name } ${todoName.todo_id }</p></td>'											
+						htmls += '<td class="option"><input type="hidden"  id="td" name="todo_name" value="${todoName.todo_name }">'						
+						htmls += '<input type="button" id="listModify" value="수정" onclick="makeOption(${todoName.todo_id }); this.onclick='';" ></td></tr></c:if></c:forEach>'						
+						htmls += '<tr><td class="addCK" colspan="3"><div class="container"><div class="row">'							
+						htmls += '<input type="image" class="makeForm" name="'+ todo_type_id +'" src="resources/todo/plus.png" /></div></div></td></tr></table></div></div>'
+						
 						
 						$("#todo_title").val('');
     		            $("#divRow").append(htmls);
@@ -637,7 +649,8 @@ table{
     			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
     			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
     			    htmls +='<input type="text" id="todo_name" name="todo_name" placeholder="ex.카메라">'
-    			    htmls +='<button id="todo_name_button" onclick="function addToDo();">완료</button></form>'
+    			    //htmls +='<button id="todo_name_button" onclick="addToDo()">완료</button></form>'
+    			    htmls +='<input type="submit" id="todo_name_button" value="완료"></form>'
 
     			    $(tr).append(htmls);
     		});
@@ -645,7 +658,7 @@ table{
     </script>
     
     
-    <script>
+<!--     <script>
     		function addToDo() {
     			
     			console.log("addToDo submit");
@@ -696,7 +709,86 @@ table{
     			}); // ajax end
     		}
     	
-    </script>
+    </script> -->
+
+<script>    
+//$(document).ready(function(){
+	$(document).on("submit", "#addToDo", function(event){	
+		event.preventDefault();				// 에러 부분 해결 1
+		console.log("addToDo submit");
+		
+		
+		var todo_name = $("#todo_name").val();
+		var todo_type_id = $("#todo_type_id").val();
+		
+		var form = {
+				todo_name : todo_name,
+				todo_type_id : todo_type_id
+		};
+		
+		$.ajax({
+			type : "POST",
+			url : "${pageContext.request.contextPath}/todo",
+			cache : false,
+			data : JSON.stringify(form),
+			contentType : 'application/json; charset=utf-8',
+            beforeSend : function(xhr){  
+                 console.log("header 실행 "+header+token)
+                 //console.log(sentence.toLowerCase());
+                 xhr.setRequestHeader(header, token);
+            },
+/* 			success : function(result){
+				if(result == "SUCCESS"){
+					console.log("success");
+					
+					var htmls="";
+					
+					//htmls += '<tr><td><div class="label"><div class="custom-control custom-checkbox custom-checkbox-green"><input type="checkbox" class="custom-control-input custom-control-input-green" id="customCheck1"><label class="custom-control-label" for="customCheck1"></label></div></div></td>'
+				    htmls +='<tr><td><div class="label">'
+					htmls +='<label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label>'
+					htmls +='</div></td>'
+					htmls +='<td ><p>' + todo_name + '</p></td>'
+					htmls +='<td class="option">'
+					htmls +='<input type="hidden" class="modi_todo_name" value="' + todo_type_id + '">'
+					htmls +='</td></tr>'
+					
+	        	$(tr).append(htmls); 
+					
+				}
+			},
+			error : function(e){
+				console.log(e);
+			} */ 
+			success : function(data){
+				
+				console.log(data);
+				
+				var tr = $(this).parent();
+				
+				var todo_name = data.todo_name;
+				var todo_type_id = data.todo_type_id;
+   		          		
+				var htmls="";
+				
+				//htmls += '<tr><td><div class="label"><div class="custom-control custom-checkbox custom-checkbox-green"><input type="checkbox" class="custom-control-input custom-control-input-green" id="customCheck1"><label class="custom-control-label" for="customCheck1"></label></div></div></td>'
+			    htmls +='<tr><td><div class="label">'
+				htmls +='<label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"></label>'
+				htmls +='</div></td>'
+				htmls +='<td ><p>' + todo_name + '</p></td>'
+				htmls +='<td class="option">'
+				htmls +='<input type="hidden" class="modi_todo_name" value="' + todo_type_id + '">'
+				htmls +='</td></tr>'
+				
+        		$(tr).append(htmls); 
+				
+			},
+			error : function(e){
+				console.log(e);
+			}	
+		}); // ajax end
+	}); // event end
+//}); // ready end
+</script>    
     
     
     

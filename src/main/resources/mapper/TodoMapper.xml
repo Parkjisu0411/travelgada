@@ -109,6 +109,12 @@
 			insert into todo (todo_type_id, todo_id, todo_name, complete_flag) values (#{todo_type_id}, get_seq('todo_seq'), #{todo_name}, 0)
 		]]>
 	 </insert>
+		 
+  	 <select id="getRecentTodo" resultMap="todoMap">
+		<![CDATA[
+			SELECT todo_name, todo_type_id FROM todo ORDER BY todo_id DESC LIMIT 1
+		]]>
+	 </select> 
 	 
   	 <select id="getRecentTodoTypeId" resultType="int">
 		<![CDATA[

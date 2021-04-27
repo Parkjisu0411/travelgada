@@ -188,5 +188,16 @@
 		]]>
 	</select>
 	
+	<select id="searchBoard" resultMap="BoardMap"> 
+		<![CDATA[ 
+			select s.* from (
+				select a.schedule_content,a.schedule_type_id,b.* from board b,answer a
+					where b.board_id = a.board_id ) s
+				where a.planner_name like CONCAT('%', #{keyword}, '%')
+				or a.schedule_content like CONCAT('%', #{keyword}, '%') 
+				order by a.planner_id desc LIMIT #{limit}
+		]]>
+	</select>
+	
 	
 </mapper>

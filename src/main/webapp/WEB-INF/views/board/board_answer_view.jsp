@@ -42,42 +42,79 @@
 		color: white;
 	}  
 
-	html, body {
-		width: 100%;
-		height: 100%;
-		margins: 0;
-		padding: 0;
-	}
+html, body {
+	width: 100%;
+	height: 100%;
+	margins: 0;
+	padding: 0;
+}
 
-    #title {
-        width: 100%;
-        margin: 3px 0;
-        outline: none;
-        text-align: left;
-        border-radius:0.2em;
-    	border:2px solid lightgrey;
-    }
+#title {
+	width: 1111px; 
+	margin: 3px 0;
+	outline: none;
+	text-align: left;
+	border-radius: 0.2em;
+	border: 2px solid lightgrey;
+	font-family: 'GongGothicMedium';
+	font-size:13pt;
+	height: 38px; 
+	margin: 4px 0;
+}
     
-    .headline{
-    	font-family: 'yg-jalnan';
-    	/* border-bottom: 1px solid lightgrey;
-    	padding-bottom:5px;
-    	width:130px;
-    	border-width:2px; */
-    }
-    
-    .btn-default{
-    	border-radius:0.2em;
-    	border:none;
-    	float:right;
-    }
-    
-    
-	#btitle{
-		font-family: 'yg-jalnan';
-		font-size:19px;
+	.headline{
+		font-family: 'GongGothicMedium';
+		color:#1DCAD3;
+		font-size:28pt;
+		/* line */
+		display: flex;
+		flex-basis: 100%;
+		align-items: center;
+		margin: 8px 0px;
 	}
+	
+/* line */	
+.headline::after {
+	content: "";
+	flex-grow: 1;
+	background: #1DCAD3;
+	height: 1px;
+	font-size: 0px;
+	line-height: 0px;
+	margin: 0px 16px;
+}
 
+img{
+	width:50px;
+	height:50px;
+	float:left;
+	margin:-2px 4px;
+}
+
+    
+
+#btitle {
+	float: right;
+	font-size: 19px;
+}
+
+	.ListButton, #submitBtn{
+		width:70px;
+		border-radius:1em;
+		border:none; 
+		float:right;
+		font-family: 'IBMPlexSansKR-Light';
+		color: white;
+		background:#1DCAD3;
+		height:30px;
+		margin:10px 1px;
+		font-weight:bold;
+	}
+	
+	#submitBtn:focus, button:focus{
+		border:0;
+		outline:none;
+	}
 </style>
 
 	<script type="text/javascript">
@@ -151,7 +188,7 @@
 	<div class="divider-header-blank"></div>
 	<div id="wrap">
 		<div class="container">
-			<h2 class="headline">답글 작성</h2>
+			<a class="headline" href="${pageContext.request.contextPath }/board"><img src="/resources/board/write1.png">답글 작성</a><br />
 			
 				<form id="addAnswer" action="${pageContext.request.contextPath}/board/${board_answer_view.board_id}" enctype="multipart/form-data">
 				<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
@@ -178,8 +215,8 @@
  						CKEDITOR.replace('text', ckeditor_config);
 					</script>
 				
-				<button type="button" class="btn-default text-primary" onclick="window.location.href='${pageContext.request.contextPath }/board/review'">목록</button>
-				<input type="submit" id="submitBtn" class="btn-default text-primary" value="완료"  />
+				<button type="button" class="ListButton" onclick="window.location.href='${pageContext.request.contextPath }/board/${btID}'">목록</button>
+				<input type="submit" id="submitBtn" value="완료"  />
 				</form>
 			
 		</div>

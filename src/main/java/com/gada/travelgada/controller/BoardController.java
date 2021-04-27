@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -287,13 +288,14 @@ public class BoardController {
    }
    
    // 답변 달기 view
-   @GetMapping("/board/answer/{board_id}")
-   public ModelAndView boardAnswerView(ModelAndView modelAndView, BoardVO boardVO) {
+   @GetMapping("/board/answer/{board_id}/{board_type_id}")
+   public ModelAndView boardAnswerView(ModelAndView modelAndView, Model model, BoardVO boardVO) {
 
       log.info("boardAnswerView");
 
 		modelAndView.setViewName("/board/board_answer_view");
 		modelAndView.addObject("board_answer_view", boardService.boardAnswerView(boardVO));
+		model.addAttribute("btID", boardVO.getBoard_type_id());
 		
 		return modelAndView;
 	}
@@ -392,5 +394,24 @@ public class BoardController {
          }
          
 
-   
+     @GetMapping("/searchBoard") 
+     public ModelAndView searchBoard(ModelAndView modelAndView, CriteriaVO cri, @AuthenticationPrincipal MemberDetails member, BoardVO boardVO) {
+ 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
+ 		
+ 		log.info("searchBoard");
+ 		
+ 		modelAndView.setViewName("/board/searchBoard");
+
+ 		modelAndView.addObject("boardReviewList", boardService.getReviewBoard(nowPage, cri.getAmount(), boardVO.getBoard_type_id() ));
+ 		modelAndView.addObject("boardNoticeList", boardService.getNotice());
+ 		modelAndView.addObject("getBoardTypeId", boardVO.getBoard_type_id());
+ 		
+ 		int total = boardService.getTotalReviewBoard(boardVO.getBoard_type_id());
+ 		log.info("total" + total);
+ 		modelAndView.addObject("pageMaker", new PageVO(cri, total));
+ 		
+ 		return modelAndView;
+     
+     }
+
 }
