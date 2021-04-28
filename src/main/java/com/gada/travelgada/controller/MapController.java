@@ -38,13 +38,6 @@ public class MapController {
 		return pathsToJson;
 	}
 	
-	@GetMapping("/all/paths/{planner_id}")
-	public List<ScheduleVO> getPathsToJson(@PathVariable("planner_id") int planner_id) {
-		List<ScheduleVO> allPathsToJson = scheduleService.getAllMap(planner_id);
-
-		return allPathsToJson;
-	}
-	
 	@GetMapping("/map/{planner_id}")
 	public ModelAndView getMap(@PathVariable("planner_id") int planner_id, @RequestParam("schedule_date") Date schedule_date, ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) throws ParseException {
 		List<PlannerVO> plannerList = plannerService.getPlanner(memberDetails.getUsername());
@@ -66,15 +59,6 @@ public class MapController {
 		modelAndView.addObject("schedule_date", schedule_date);
 		
 		modelAndView.setViewName("map/map");
-
-		return modelAndView;
-	}
-	
-	@GetMapping("/map/all/{planner_id}")
-	public ModelAndView getMap(@PathVariable("planner_id") int planner_id, ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails memberDetails) throws ParseException {
-		modelAndView.addObject("planner_id", planner_id);
-		
-		modelAndView.setViewName("map/map_all");
 
 		return modelAndView;
 	}

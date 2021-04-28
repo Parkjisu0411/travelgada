@@ -186,14 +186,14 @@
     <div class="container">
       <h2 class="main-section-headline" style="padding-top: 25px">가다에서 추억을 공유해 보세요<span class="main-diary-more-view" onclick="location.href='/diary'">더 보기</span></h2>
     </div>
-    <div class="container">
+    <div class="container" style="font-family: 'IBMPlexSansKR-Light';">
       <div class="row">
         <c:forEach var="member" items="${member}">
           <c:forEach var="pl" items="${member.plannerVO }">
             <c:forEach var="di" items="${pl.diaryVO }">
               <div class="col-md-4">
                 <div class="main-card-diary-area">
-                  <img src="resources/diary/${di.img_path}" class="main-card-diary-img" loading="lazy">
+                  <img src="resources/diary/${di.img_path}" class="main-card-diary-img">
                   <div class="main-card-diary-content">
                     <div class="main-card-diary-profile">
                       <img class="nav-profile-img" src='/resources/img/profile/${member.profile_img_path }' onerror="this.src='/resources/img/profile/default_profile_img.jpg'">

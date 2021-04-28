@@ -36,11 +36,4 @@ public class MainController {
 
 		return modelAndView;
 	}
-	
-	@GetMapping("/example")
-	public ModelAndView example(ModelAndView modelAndView) {
-		modelAndView.setViewName("example");
-
-		return modelAndView;
-	}
 }
