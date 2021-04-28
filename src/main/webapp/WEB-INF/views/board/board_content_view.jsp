@@ -503,34 +503,7 @@ a{
     	                 xhr.setRequestHeader(header, token);
     	            },
     				success : function(data){
-    					
-    					console.log(data);
-    					var answer_date = data.answer_date;
-    					var answer_id = data.answer_id;
-    					var board_id = data.board_id;
-    					var member_id = data.member_id;
-    					var text = data.text;
-    					var top_answer_id = data.top_answer_id;
-    					var username = "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}";
-		   		          		
-   		          		var a = '';
-
-						a+='<tr class="answerList">';
-						a+='<td>' + data.answer_id + '</td>';
-						a+='<td>' + data.member_id + '</td>';
-						a+='<td>' + data.answer_date + '</td>';
-						a+='<td>' + data.text + '</td>';
-						a+='<td><input type="button" class="makeForm btn-primary" name="'+ answer_id +'" value="답글" />';
-						a+='<button type="button" class="btn-default text-primary" onclick="window.location.href=\'${pageContext.request.contextPath }/board/modify/'+ board_id + '/'+ member_id + '\'">수정</button>';
-						a+='<button type="button" class="delete btn-default text-primary">삭제</button>';
-						a+='</td>';
-						a+='</tr>';
-    		    
-						$("textarea").val('');
-    		            $("#add").prepend(a);
-
-    					
-    					
+    					location.reload();
     				},
     				error : function(e){
     					console.log(e);
@@ -708,7 +681,7 @@ a{
 	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 	<!--Content -->
 	<div class="divider-header-blank"></div>
-	<div id="wrap">
+	
 		<div class="container">
 			<!-- <h2 class="headline" style="font-family: 'yg-jalnan'">BOARD CONTENT</h2> -->
 			
@@ -803,7 +776,7 @@ a{
           			 <input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}"/>
 					 <input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>	
 						<textarea id="text" class="form-control col-sm-12" name="text" placeholder="댓글을 입력해주세요."></textarea>
-              			<input type="submit" id="cmcnt-btn" name="cmcnt-btn" value="완료" onclick="check_id()" />
+              			<input type="submit" id="cmcnt-btn" name="cmcnt-btn" value="완료" />
         			</form>	
     			</div><br /><br />
     			

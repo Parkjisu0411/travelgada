@@ -174,8 +174,8 @@ img{
 			console.log("modify click");
 			
 			var board_id = $("#board_id").val(); 					
+			var text = CKEDITOR.instances["text"].getData();
 			var title = $("#title").val(); 
-			var text = $("#text").val(); 
 			var board_type_id = $("#bcategory").val(); 
 			
 			var form = {
