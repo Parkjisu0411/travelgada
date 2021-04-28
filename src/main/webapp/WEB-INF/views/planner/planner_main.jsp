@@ -32,6 +32,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login Form</title>
 <style>
+
+	#container-body {
+		min-height: 650px !important;
+	}
 	
 	/* 플래너 text */
 	.planner-text-area{
@@ -288,11 +292,6 @@
 	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 				},
 				success : function(result) {
-					$("#" + planner_id + " .planner_name").text(planner_name);
-					$("#" + planner_id + " .start_date").text(start_date);
-					$("#" + planner_id + " .end_date").text(end_date);
-					$("#" + planner_id + " div .planner-text-area").css("display", "");
-					$("#" + planner_id + " div .planner-modify-area").css("display", "none");
 				},
 				error : function(e) {
 					console.log(e);
@@ -323,6 +322,7 @@
 					}
 				})
 			}
+			location.reload();
 		}
 	}
 	
@@ -366,7 +366,7 @@
 	<%@ include file="/WEB-INF/views/includes/header.jsp"%>
 	<!--Content -->
 	<div id="wrap">
-		<div class="container">
+		<div class="container" id='container-body'>
 			<h2 class="headline">MY PLANNER</h2>
 			<br>
 			<div class="cal">
