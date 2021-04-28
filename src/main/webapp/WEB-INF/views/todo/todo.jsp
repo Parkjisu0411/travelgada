@@ -615,7 +615,7 @@ table{
 						htmls += '<td class="option"><input type="hidden"  id="td" name="todo_name" value="${todoName.todo_name }">'						
 						htmls += '<input type="button" id="listModify" value="수정" onclick="makeOption(${todoName.todo_id }); this.onclick='';" ></td></tr></c:if></c:forEach>'						
 						htmls += '<tr><td class="addCK" colspan="3"><div class="container"><div class="row">'							
-						htmls += '<input type="image" class="makeForm" name="'+ todo_type_id +'" src="resources/todo/plus.png" /></div></div></td></tr></table></div></div>'
+						htmls += '<input type="image" id="makeForm'+ todo_type_id +'" class="makeForm" onclick="makeForm('+ todo_type_id +');" name="'+ todo_type_id +'" src="resources/todo/plus.png" /></div></div></td></tr></table></div></div>'
 						
 						
 						$("#todo_title").val('');
@@ -631,7 +631,7 @@ table{
     	});
     </script>
 
-	<script>
+	<!-- <script>
     	$(document).ready(function() {
     		$(".makeForm").one("click", function makeForm(event) {
     			console.log("makeForm");
@@ -655,6 +655,32 @@ table{
     			    $(tr).append(htmls);
     		});
     	});
+    </script> -->
+    
+<script>
+    /*  	$(document).ready(function() {  */
+    		function makeForm(todo_type_id) {
+    			console.log("makeForm");
+    			
+    				var tr = $("#makeForm"+todo_type_id).parent();
+    			   // var todo_type_id = $(this).parent().parent().parent().parent().parent().parent().children("#here").attr("value");
+        			//var todo_type_id = $("input[name=todo_type_id]").val();
+        			var todo_type_id = todo_type_id;
+    			    console.log("여기가 나오는 것 맞니?"+todo_type_id);
+    				console.log(tr);		
+    				var htmls="";
+
+    			    htmls +='<br /><form id="addToDo" method="POST">'
+    			    htmls +='<input type="hidden" id="todo_type_id" name="todo_type_id" value="' + todo_type_id + '">'
+    			    htmls +='<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />'
+    			    htmls +='<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}"/>'
+    			    htmls +='<input type="text" id="todo_name" name="todo_name" placeholder="ex.카메라">'
+    			    //htmls +='<button id="todo_name_button" onclick="addToDo()">완료</button></form>'
+    			    htmls +='<input type="submit" id="todo_name_button" value="완료"></form>'
+
+    			    $(tr).append(htmls);
+    		};
+    	/* });  */
     </script>
     
     
@@ -1119,7 +1145,7 @@ makeOption = function(id){
 							<td class="addCK" colspan="3">
 								<div class="container">
 								<div class="row">
-									<input type="image" class="makeForm" name="${todoTitle.todo_type_id }" src="resources/todo/plus.png" />
+									<input type="image" id="makeForm${todoTitle.todo_type_id }" class="makeForm" onclick="makeForm(${todoTitle.todo_type_id });" name="${todoTitle.todo_type_id }" src="resources/todo/plus.png" />
 								</div>
 								</div>
 							</td>
