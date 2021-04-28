@@ -114,11 +114,11 @@ public class ScheduleController {
 	}
 	
 	@GetMapping("/planner/schedule/budget")
-	public ResponseEntity<Integer> getBudget(@RequestParam("schedule_date") String date) {
+	public ResponseEntity<Integer> getBudget(@RequestParam("schedule_date") String date, @RequestParam("planner_id") int planner_id) {
 		ResponseEntity<Integer> entity = null;
 		log.info("----------------------------- date >>" + date);
 		try {
-			entity = new ResponseEntity<Integer>(scheduleService.getBudgetByDate(Date.valueOf(date)), HttpStatus.OK);
+			entity = new ResponseEntity<Integer>(scheduleService.getBudgetByDate(planner_id, Date.valueOf(date)), HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<Integer>(0, HttpStatus.BAD_REQUEST);

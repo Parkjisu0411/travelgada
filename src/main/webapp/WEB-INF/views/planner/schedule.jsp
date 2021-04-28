@@ -571,7 +571,7 @@
 	function calBudget(date) {
 		$.ajax({
 			type : "GET",
-			url : "/planner/schedule/budget?schedule_date=" + date,
+			url : "/planner/schedule/budget?schedule_date=" + date + "&planner_id=" + ${planner.planner_id},
 			cache : false,
 			success : function(result) {
 				$("#" + date + " .budget-total").html(result);
@@ -662,7 +662,7 @@
 						case 1 :
 							content += "<div class='content-box' id=" + result.schedule_id + " >";
 							content += "    <span class='content'>" + result.schedule_content + "</span>";
-							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", '" + result.schedule_date + "', " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
+							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", \"" + result.schedule_date + "\", " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
 							content += "</div>";
 							$("#" + result.schedule_date + " .city-area .insert-btn").before(content);
 							break
@@ -674,7 +674,7 @@
 							} else {
 								content += "	<span class='budget' onclick='modifyBudget(" + result.schedule_id + ")'>(" + result.budget + "₩)</span>";
 							}
-							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", '" + result.schedule_date + "', " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
+							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", \"" + result.schedule_date + "\", " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
 							content += "</div>";
 							
 							$("#" + result.schedule_date + " .hotel-area .insert-btn").before(content);
@@ -687,7 +687,7 @@
 							} else {
 								content += "	<span class='budget' onclick='modifyBudget(" + result.schedule_id + ")'>(" + result.budget + "₩)</span>";
 							}
-							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", '" + result.schedule_date + "', " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
+							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", \"" + result.schedule_date + "\", " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
 							content += "</div>";
 							
 							$("#" + result.schedule_date + " .vehicle-area .insert-btn").before(content);
@@ -702,7 +702,7 @@
 								content += "	<span class='budget' onclick='modifyBudget(" + result.schedule_id + ")'>(" + result.budget + "₩)</span>";
 							}
 							content += "	<span class='order-control'>&nbsp;&nbsp;<i class='fas fa-bars'></i></span>";
-							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", '" + result.schedule_date + "', " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
+							content += "    <span class='delete-btn' onclick='deleteSchedule(" + result.schedule_id + ", \"" + result.schedule_date + "\", " + result.schedule_type_id + ")'><i class='far fa-trash-alt'></i></span>";
 							content += "</div>";
 							
 							$("#" + result.schedule_date + " .schedule-area .insert-btn").before(content);
@@ -764,6 +764,14 @@
 		if($(".insert-schedule-form").length) {
 			cancel();
 			await sleep(500);
+		}
+		if(!$("#" + date + " .latitude").text()) {
+			console.log($.messager);
+			alert("국가를 입력해주세요.");
+			setTimeout(function(){
+				inputCountry($("#" + date + " .date-area-country"));
+			});
+			return;
 		}
 		var schedule_type_id = getScheduleTypeId(schedule_type);
 		var type = parseKOR(schedule_type);
