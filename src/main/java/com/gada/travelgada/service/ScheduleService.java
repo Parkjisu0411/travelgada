@@ -39,6 +39,6 @@ public interface ScheduleService {
 	
 	public List<ScheduleVO> getAllMap(int planner_id);
 	
-	public int getBudgetByDate(Date date);
+	public int getBudgetByDate(int planner_id, Date date);
 
 }

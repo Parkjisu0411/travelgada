@@ -132,8 +132,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public int getBudgetByDate(Date date) {
-		return mapper.selectBudgetByDate(date);
+	public int getBudgetByDate(int planner_id, Date date) {
+		return mapper.selectBudgetByDate(planner_id, date);
 	}
 
 }

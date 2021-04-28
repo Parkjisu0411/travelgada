@@ -24,9 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gada.travelgada.domain.MemberVO;
 
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
@@ -40,11 +38,10 @@ public class MemberControllerTest {
     
     private MockMvc mockMvc;
 
-    @Before//미리 실행하는 것, 테스트 초기화를 의미한다.
+    @Before
     public void setup() {
        this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
-       //SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("username", "password", (Collection<? extends GrantedAuthority>) Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))));
-    }//이렇게 객체를 생성한대
+    }
     
     @Test
     public void signUpFormTest() throws Exception {
@@ -88,5 +85,4 @@ public class MemberControllerTest {
     	.andExpect(status().isOk())
     	.andDo(print());
     }
-    
 }
