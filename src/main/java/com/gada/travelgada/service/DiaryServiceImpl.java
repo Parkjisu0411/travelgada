@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.gada.travelgada.controller.DairyController;
+import com.gada.travelgada.controller.DiaryController;
 import com.gada.travelgada.domain.DiaryVO;
 import com.gada.travelgada.domain.PlannerVO;
 import com.gada.travelgada.mapper.DiaryMapper;
