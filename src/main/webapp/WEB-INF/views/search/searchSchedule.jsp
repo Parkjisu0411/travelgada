@@ -853,10 +853,10 @@
 		<!-- <h1>Schedule</h1> -->
 		<div class="headline"><span style="color: #303E57">&nbsp;&nbsp;" ${member_id} "</span> 님의 일정입니다.
 			
-			<button type="button" class="map-btn btn gada-btn" onclick="location.href='http://localhost:8282/map/${member_id}/${planner.planner_id}?schedule_date=${planner.start_date}'" >
+			<button type="button" class="map-btn btn gada-btn" onclick="location.href='/search/map/${member_id}/${planner.planner_id}?schedule_date=${planner.start_date}'" >
 			"${member_id} " 님의 지도 &nbsp;&nbsp; <i class="fas fa-map-marked-alt"></i></button>
+			
 		</div>
-		
 		<!-- <span class="bar">|</span><span class="introduction"> 가다와 함께 여행을 계획해 보세요!</span><br /><br /> -->
 		
 	</div>

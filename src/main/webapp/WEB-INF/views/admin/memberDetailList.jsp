@@ -113,7 +113,7 @@ html, body {
 			</div>
    				<ul class="sidebar-menu do-nicescrol">
       				<li>
-        				<a href="/admin">
+        				<a href="/admin/member">
           					<i class="zmdi zmdi-view-dashboard"></i> <span>회원 관리</span>
         				</a>
       				</li>

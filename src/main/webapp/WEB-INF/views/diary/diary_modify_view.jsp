@@ -201,8 +201,6 @@ $(document).ready(function(){
 		<input type="hidden" name="diary_id" value="${diary_view.diary_id}" />
 		<input type="hidden" name="planner_id" value="${planner.planner_id}" />
 		<input type="hidden" name="img_path" value="${diary_view.img_path}" />
-		<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}" />
-		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}" />
 
 		<div class="col-md-12 header">
 			<img class="nav-logo-img" src="/resources/img/main/logo.png" style="height: 25px;">

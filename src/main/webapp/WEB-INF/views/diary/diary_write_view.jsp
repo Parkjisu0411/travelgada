@@ -203,11 +203,9 @@ $(document).ready(function(){
 
 </head>
 <body>
-	<form id='submitBtn' name="myForm" action="${pageContext.request.contextPath}/diary_write?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+	<form id='submitBtn' name="myForm" action="${pageContext.request.contextPath}/diary?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 		
 		<input type="hidden" name="planner_id" value="${planner.planner_id}" />
-		<input type="hidden" id="_csrf" name="_csrf" value="${_csrf.token}" />
-		<input type="hidden" id="_csrf_header" name="_csrf_header" value="${_csrf.headerName}" />
 
 		<div class="col-md-12 header">
 			<img class="nav-logo-img" src="/resources/img/main/logo.png" style="height: 25px;">

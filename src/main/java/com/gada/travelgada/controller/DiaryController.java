@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -122,7 +123,7 @@ public class DiaryController {
 	}// end
 
 	// 다이어리 작성 페이지
-	@GetMapping("/diary_write_view")
+	@GetMapping("/diary_write")
 	public ModelAndView diary_write_view(ModelAndView mav, DiaryVO diaryVO) {
 		log.info("controller diary_write_view();");
 		
@@ -137,7 +138,7 @@ public class DiaryController {
    
 	// 다이어리 작성
 	@Transactional
-	@PostMapping("/diary_write")
+	@PostMapping("/diary")
 	public ModelAndView diary_write(@RequestParam("uploadfile") MultipartFile file, ModelAndView mav, DiaryVO diaryVO,
 			@AuthenticationPrincipal MemberDetails member, CriteriaVO cri) 
 					throws IllegalStateException, IOException {
@@ -169,7 +170,7 @@ public class DiaryController {
 	}// diary_write end
 
 	// 다이어리 수정 페이지
-	@GetMapping("/diary_modify_view/{diary_id}/{planner_id}")
+	@GetMapping("/diary_modify/{diary_id}/{planner_id}")
 	public ModelAndView diary_modify_view(ModelAndView mav, DiaryVO diaryVO) {
 		log.info("controller diary_write_view();");
 		

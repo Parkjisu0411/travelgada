@@ -385,9 +385,9 @@ $(document).ready(function() {
 			<button type="button" class="memu btn"
 				onclick="window.location.href='${pageContext.request.contextPath}/search?keyword=${keyword}'">통합</button>
 			<button type="button" class="memu btn "
-				onclick="window.location.href='${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic'">일정</button>
+				onclick="window.location.href='${pageContext.request.contextPath}/search/planner?keyword=${keyword}&sorter=basic'">일정</button>
 			<button type="button" class="memu btn "
-				onclick="window.location.href='${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic'">다이어리</button>
+				onclick="window.location.href='${pageContext.request.contextPath}/search/diary?keyword=${keyword}&sorter=basic'">다이어리</button>
 		</div>
 
 		<br />
@@ -396,7 +396,7 @@ $(document).ready(function() {
 		<!-- 일정 searchPl -->
 		<span class="font_h">일정</span> 
 		<br /> 
-		<a class="more" href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}"> 더보기 </a> <br />
+		<a class="more" href="${pageContext.request.contextPath}/search/planner?keyword=${keyword}"> 더보기 </a> <br />
 			
 		<c:if test="${empty searchPl}">
 			<span style="font-size: 22px">" ${keyword} "</span> 에 관한 일정이 없습니다.
@@ -404,7 +404,7 @@ $(document).ready(function() {
 			
 		<c:forEach items="${searchPl}" var="pl">
 			
-			<div class="row plBox" onclick="location.href='/search/${pl.member_id}/${pl.planner_id}';">
+			<div class="row plBox" onclick="location.href='/search/planner/${pl.member_id}/${pl.planner_id}';">
 				<div class="col-sm-6">
 					<img class="card-pl-img" src="/resources/img/planner/${ pl.planner_img_path}" onerror="this.src='/resources/img/profile/gada'">
 				</div> 
@@ -448,7 +448,7 @@ $(document).ready(function() {
 		<h5 class="font_h">다이어리</h5>
 
 		<br /> 
-		<a class="more" href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}"> 더보기 </a> 
+		<a class="more" href="${pageContext.request.contextPath}/search/diary?keyword=${keyword}"> 더보기 </a> 
 		<br />
 
 		<!-- 다이어리 반복 -->
