@@ -21,7 +21,7 @@ public class VisitorController {
 	
 	private VisitorService visitorService;
 
-	@GetMapping("/visitor")
+	@GetMapping("/admin/statistic/visitor")
 	public ModelAndView visitor(ModelAndView mav, HttpSession session) {
 		log.info("controller visitor();");
 		

@@ -265,9 +265,9 @@ $(document).ready(function() {
 			<button type="button" class="memu btn"
 				onclick="window.location.href='${pageContext.request.contextPath}/search?keyword=${keyword}'">통합</button>
 			<button type="button" class="memu btn "
-				onclick="window.location.href='${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic'">일정</button>
+				onclick="window.location.href='${pageContext.request.contextPath}/search/planner?keyword=${keyword}&sorter=basic'">일정</button>
 			<button type="button" class="memu btn "
-				onclick="window.location.href='${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic'">다이어리</button>
+				onclick="window.location.href='${pageContext.request.contextPath}/search/diary?keyword=${keyword}&sorter=basic'">다이어리</button>
 		</div>
 		
 		<br/><br/>
@@ -278,7 +278,7 @@ $(document).ready(function() {
 		<span class="dropdown">
 			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">정렬</button>
 			<span class="dropdown-menu">
-   	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=startDate">최신순</a>
+   	  			<a class="dropdown-item" href="${pageContext.request.contextPath}/search/planner?keyword=${keyword}&sorter=startDate">최신순</a>
    			</span>		
 		</span>
 		 &nbsp;
@@ -287,13 +287,13 @@ $(document).ready(function() {
 			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">기간</button>
 				<span class="dropdown-menu">
      		 		<a class="dropdown-item" 
-     		 			href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=day">1일</a>
+     		 			href="${pageContext.request.contextPath}/search/planner?keyword=${keyword}&sorter=day">1일</a>
     	  			<a class="dropdown-item" 
-    	  				href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=week">1주</a>
+    	  				href="${pageContext.request.contextPath}/search/planner?keyword=${keyword}&sorter=week">1주</a>
     	  			<a class="dropdown-item" 
-    	  				href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=month">1개월</a>
+    	  				href="${pageContext.request.contextPath}/search/planner?keyword=${keyword}&sorter=month">1개월</a>
     	  			<a class="dropdown-item" 
-    	  				href="${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=year">1년</a>
+    	  				href="${pageContext.request.contextPath}/search/planner?keyword=${keyword}&sorter=year">1년</a>
     			</span>		
 		</span>
 		<br/><br/>
@@ -304,7 +304,7 @@ $(document).ready(function() {
 		
 		<!-- 반복 -->
 		<c:forEach items="${plMore}" var="pl"> 
-			<div class="row plBox" onclick="location.href='/search/${pl.member_id}/${pl.planner_id}';">
+			<div class="row plBox" onclick="location.href='/search/planner/${pl.member_id}/${pl.planner_id}';">
 				<div class="col-sm-6">
 					<img class="card-pl-img" src="/resources/img/planner/${ pl.planner_img_path}" onerror="this.src='/resources/img/profile/gada'">
 					<%-- <a href="/search/${pl.member_id}/${pl.planner_id}">일정사진</a> --%>
@@ -344,16 +344,16 @@ $(document).ready(function() {
 				<ul class="pagination">
 					<c:if test="${pageMaker.prev}">
 						<li class="page-item"><a class="page-link"
-							href="searchPl?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.startPage-1}">◀</a></li>
+							href="/search/planner?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.startPage-1}">◀</a></li>
 					</c:if>
 					<c:forEach begin="${pageMaker.startPage }"
 						end="${pageMaker.endPage }" var="idx">
 						<li class="page-item"><a class="page-link"
-							href="searchPl?keyword=${keyword}&sorter=${sorter}&nowPage=${idx}">${idx}</a></li>
+							href="/search/planner?keyword=${keyword}&sorter=${sorter}&nowPage=${idx}">${idx}</a></li>
 					</c:forEach>
 					<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 						<li class="page-item"><a class="page-link"
-							href="searchPl?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.endPage+1}">▶</a></li>
+							href="/search/planner?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.endPage+1}">▶</a></li>
 					</c:if>
 				</ul>
 			</div>

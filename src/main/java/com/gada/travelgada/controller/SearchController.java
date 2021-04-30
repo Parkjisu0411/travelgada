@@ -60,7 +60,7 @@ public class SearchController {
 	}// search end
 	
 	//일정 더보기 
-	@GetMapping("/searchPl")
+	@GetMapping("/search/planner")
 	public ModelAndView searchPl(ModelAndView mav, @RequestParam("keyword") String keyword,
 			@RequestParam(value="sorter", required=false, defaultValue="basic") String sorter, CriteriaVO cri) {
 		
@@ -113,7 +113,7 @@ public class SearchController {
 	}// search end
 	
 	//다이어리 더보기
-	@GetMapping("/searchDi")
+	@GetMapping("/search/diary")
 	public ModelAndView searchDi(ModelAndView mav, @RequestParam("keyword") String keyword,
 			@RequestParam(value="sorter", required=false, defaultValue="basic") String sorter, CriteriaVO cri) {
 		log.info("controller searchDi();");
@@ -135,7 +135,7 @@ public class SearchController {
 
 	}// search end
 	
-	@GetMapping("/search/{member_id}/{planner_id}")
+	@GetMapping("/search/planner/{member_id}/{planner_id}")
 	public ModelAndView getSchedule(ModelAndView mav, PlannerVO plannerVO) throws ParseException {
 		log.info("View schedule ===========");
 		
@@ -162,7 +162,7 @@ public class SearchController {
 		return mav;
 	}
 	
-	@GetMapping("/map/{member_id}/{planner_id}")
+	@GetMapping("/search/map/{member_id}/{planner_id}")
 	public ModelAndView getMap(@PathVariable("planner_id") int planner_id, @RequestParam("schedule_date") Date schedule_date, @PathVariable("member_id") String member_id, 
 			ModelAndView modelAndView) throws ParseException {
 		List<PlannerVO> plannerList = plannerService.getPlanner(member_id);
