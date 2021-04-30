@@ -36,7 +36,7 @@ public class ScheduleController {
 	private PlannerService plannerService;
 	private MainService mainService;
 	
-	@GetMapping("/planner/schedule")
+	@GetMapping("/schedule")
 	public ModelAndView getSchedule(ModelAndView modelAndView, @AuthenticationPrincipal MemberDetails member) throws ParseException {
 		
 		List<PlannerVO> plannerList = plannerService.getPlanner(member.getUsername());
@@ -73,7 +73,7 @@ public class ScheduleController {
 		return modelAndView;
 	}
 	
-	@DeleteMapping("/planner/schedule/{schedule_id}")
+	@DeleteMapping("/schedule/{schedule_id}")
 	public ResponseEntity<String> deleteSchedule(ScheduleVO scheduleVO) {
 		ResponseEntity<String> entity = null;
 		try {
@@ -86,7 +86,7 @@ public class ScheduleController {
 		return entity;
 	}
 	
-	@PostMapping("/planner/schedule")
+	@PostMapping("/schedule")
 	public ResponseEntity<ScheduleVO> insertSchedule(@RequestBody ScheduleVO scheduleVO) {
 		ResponseEntity<ScheduleVO> entity = null;
 		try {
@@ -100,7 +100,7 @@ public class ScheduleController {
 		return entity;
 	}
 	
-	@PutMapping("/planner/schedule")
+	@PutMapping("/schedule")
 	public ResponseEntity<String> modifySchedule(@RequestBody ScheduleVO scheduleVO) {
 		ResponseEntity<String> entity = null;
 		try {
@@ -113,7 +113,7 @@ public class ScheduleController {
 		return entity;
 	}
 	
-	@GetMapping("/planner/schedule/budget")
+	@GetMapping("/schedule/budget")
 	public ResponseEntity<Integer> getBudget(@RequestParam("schedule_date") String date, @RequestParam("planner_id") int planner_id) {
 		ResponseEntity<Integer> entity = null;
 		log.info("----------------------------- date >>" + date);
