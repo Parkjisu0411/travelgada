@@ -82,7 +82,7 @@
 			
 			$.ajax({
 				type : "POST",
-				url : "/member/shipping",
+				url : "/shipping",
 				data : JSON.stringify(form),
 				contentType : "application/json",
 				cache : false,

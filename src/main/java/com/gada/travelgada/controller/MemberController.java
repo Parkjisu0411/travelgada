@@ -181,10 +181,15 @@ public class MemberController {
 		}
 		int ranNum = random.nextInt(8999) + 1000;
 		key += ranNum;
-		mailMessage.setSubject("GADA 인증번호 전송");
-		mailMessage.setText("인증 번호 : " + key);
-		javaMailSender.send(mailMessage);
-		
+		try {
+			mailMessage.setSubject("GADA 인증번호 전송");
+			mailMessage.setText("인증 번호 : " + key);
+			javaMailSender.send(mailMessage);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "메일 발송 실패";
+		}
 		return key;
 	}
 	

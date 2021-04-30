@@ -171,7 +171,7 @@
 									<br/>
 								</c:forEach>
 							</td>
-							<td><a href="/member/shipping" class="btn gada-btn">목록관리</a></td>
+							<td><a href="/shipping" class="btn gada-btn">목록관리</a></td>
 						</tr>
 					</table>
 				</div>
