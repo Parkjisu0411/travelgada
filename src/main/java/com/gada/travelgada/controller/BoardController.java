@@ -339,7 +339,7 @@ public class BoardController {
 
    
    // ck 에디터에서 파일 업로드
-         @PostMapping("/admin/goods/ckUpload")
+         @PostMapping("/board/ckupload")
          public void postCKEditorImgUpload(HttpServletRequest req, HttpServletResponse res, @RequestParam MultipartFile upload) throws Exception {
           log.info("post CKEditor img upload");
           

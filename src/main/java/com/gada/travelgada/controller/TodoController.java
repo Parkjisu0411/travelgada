@@ -116,7 +116,7 @@ public class TodoController {
 //		return entity;
 //	}
 	// TodoType(카테고리) 추가하기 
-	@PostMapping("/addTodoType")
+	@PostMapping("/todoTitle")
 	public ResponseEntity<Map<String,String>> addTodoType(@RequestBody TodoTypeVO todoTypeVO) {
 		ResponseEntity<Map<String,String>> entity = null;
 		Map<String, String> data = new HashMap<>();
@@ -187,7 +187,7 @@ public class TodoController {
 	   return entity;
 	 }
 	
-	 @GetMapping("todo_modify_view/{todo_id}")
+	 @GetMapping("/todo_modify/{todo_id}")
 	 public ModelAndView todo_modify_view(ModelAndView mav, TodoVO todoVO) {
 	    log.info("todo_modify_view();");
 

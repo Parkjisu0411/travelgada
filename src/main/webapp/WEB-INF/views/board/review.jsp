@@ -14,6 +14,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
 	rel="stylesheet">
@@ -301,7 +302,7 @@ a{
 							<div class="content2">
 							<c:forEach begin="1" end="${boardReviewList.bindent }">[답변]</c:forEach>
 							<a href="${pageContext.request.contextPath }/board/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">${boardReviewList.title }</a>			
-							<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>	
+							<a class="Rcnt" href="${pageContext.request.contextPath }/board/replyContent/${boardReviewList.board_id}/${boardReviewList.member_id}/${boardReviewList.board_type_id}">&nbsp;&nbsp;${boardReviewList.cnt }</a>
 							</div>
 						</td>
 						<td class="content2"><a href="#" onclick="delchk();">${boardReviewList.member_id }</a></td>
