@@ -29,7 +29,7 @@ public class ShippingController {
 	
 	private ShippingLocServiceImpl shippingLocService;
 	
-	@GetMapping("/member/shipping")
+	@GetMapping("/shipping")
 	public ModelAndView memberShippingLoc(ModelAndView mv, @AuthenticationPrincipal MemberDetails memberDetails) {
 		log.info("MyPage==========ShippingLoc==========");
 		mv.addObject("shippingList", memberService.getShippingLoc(memberDetails.getUsername()));
@@ -37,7 +37,7 @@ public class ShippingController {
 		return mv;
 	}
 	
-	@DeleteMapping("/member/shipping")
+	@DeleteMapping("/shipping")
 	public ResponseEntity<String> deleteShippingLoc(@RequestBody ShippingLocVO shippingLocVO) {
 		ResponseEntity<String> entity = null;
 		try {
@@ -51,7 +51,7 @@ public class ShippingController {
 		return entity;
 	}
 	
-	@PostMapping("/member/shipping")
+	@PostMapping("/shipping")
 	public ResponseEntity<String> saveShippingLoc(@RequestBody ShippingLocVO shippingLocVO) {
 		ResponseEntity<String> entity = null;
 		try {
@@ -64,13 +64,13 @@ public class ShippingController {
 		return entity;
 	}
 	
-	@GetMapping("/shipping/enroll")
+	@GetMapping("/shipping_write")
 	public ModelAndView enroll(ModelAndView mav) {
 		mav.setViewName("/member/shipping/enroll");
 		return mav;
 	}
 	
-	@PostMapping("/shipping/enroll")
+	@PostMapping("/shipping_write")
 	public ModelAndView modify(ModelAndView mav) {
 		mav.setViewName("/member/shipping/enroll");
 		return mav;

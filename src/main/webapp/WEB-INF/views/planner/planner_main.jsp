@@ -212,7 +212,7 @@
 			url : "/planner/" + planner_id,
 			cache : false,
 			success : function(result) {
-				location.href="/planner/schedule";
+				location.href="/schedule";
 			},
 			error : function(e) {
 				console.log(e);

@@ -349,7 +349,7 @@
 			
 			$.ajax({
 				type : "PUT",
-				url : "/planner/schedule",
+				url : "/schedule",
 				data : JSON.stringify(data),
 				contentType : "application/json",
 				cache : false,
@@ -380,7 +380,7 @@
 			}
 			$.ajax({
 	            type: "POST",
-	            url: "/planner/schedule",
+	            url: "/schedule",
 	            data : JSON.stringify(data),
 				contentType : "application/json",
 				cache : false,
@@ -465,7 +465,7 @@
 					};
 					$.ajax({
 						type : "PUT",
-						url : "/planner/schedule",
+						url : "/schedule",
 						data : JSON.stringify(data),
 						contentType : "application/json",
 						cache : false,
@@ -504,7 +504,7 @@
 				console.log(data);
 				$.ajax({
 					type : "PUT",
-					url : "/planner/schedule",
+					url : "/schedule",
 					data : JSON.stringify(data),
 					contentType : "application/json",
 					cache : false,
@@ -549,7 +549,7 @@
 			};
 			$.ajax({
 				type : "PUT",
-				url : "/planner/schedule",
+				url : "/schedule",
 				data : JSON.stringify(data),
 				contentType : "application/json",
 				cache : false,
@@ -571,7 +571,7 @@
 	function calBudget(date) {
 		$.ajax({
 			type : "GET",
-			url : "/planner/schedule/budget?schedule_date=" + date + "&planner_id=" + ${planner.planner_id},
+			url : "/schedule/budget?schedule_date=" + date + "&planner_id=" + ${planner.planner_id},
 			cache : false,
 			success : function(result) {
 				$("#" + date + " .budget-total").html(result);
@@ -613,7 +613,7 @@
 	function deleteSchedule(schedule_id, schedule_date, schedule_type_id) {
  		$.ajax({
 			type : "DELETE",	
-			url : "/planner/schedule/" + schedule_id,
+			url : "/schedule/" + schedule_id,
 			cache : false,
 			beforeSend : function(xhr){
 	  	            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
@@ -646,7 +646,7 @@
 		if(confirm("저장하시겠습니까?")) {
 			$.ajax({
 	            type: "POST",
-	            url: "/planner/schedule",
+	            url: "/schedule",
 	            data : jsonForm,
 	            dataType : "json",
 				contentType : "application/json",

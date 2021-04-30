@@ -65,7 +65,7 @@
 
 	//팝업
 	function enroll() {
-		var pop = window.open("/shipping/enroll", 'pop', "width=630,height=500, scrollbars=yes, resizable=yes");
+		var pop = window.open("/shipping_write", 'pop', "width=630,height=500, scrollbars=yes, resizable=yes");
 	}
 	//
 	//배송지 수정 팝업
@@ -87,8 +87,8 @@
 						shipping_loc_name : trObj.children().children("strong").text()
 				};
 				$.ajax({
-					type : 'DELETE', //method
-					url : "/member/shipping", //주소를 받아오는 것이 포인트.
+					type : 'DELETE',
+					url : "/shipping",
 					data : JSON.stringify(form),
 					contentType : "application/json",
 					cache : false,
@@ -158,7 +158,7 @@
 										<div class="btn-aroup">
 											<button type="button" class="btn btn-light delete" onclick="delete();"><i class="fas fa-times"></i></button>
 										</div>
-										<form name="${shipping_loc.shipping_loc_name }" action="/shipping/enroll" method="post" target="pop">
+										<form name="${shipping_loc.shipping_loc_name }" action="/shipping_write" method="post" target="pop">
 											<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 											<input type="hidden" class="name" name="shipping_loc_name" value="${shipping_loc.shipping_loc_name }" />
 											<input type="hidden" name="receiver" value="${shipping_loc.receiver }" />
