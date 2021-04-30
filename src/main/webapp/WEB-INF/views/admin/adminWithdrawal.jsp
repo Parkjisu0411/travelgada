@@ -1,26 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
 
+	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
-	<meta charset="UTF-8">
 	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
   
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css"
-		integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg=="
-		crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/daterangepicker.min.css" integrity="sha512-nmvKZG8E3dANbZAsJXpdK6IqpfEXbPNbpe3M3Us1qTipq74IpTRShbpCf8lJFapB7e0MkDbNDKxLjS1VWt2vVg==" crossorigin="anonymous" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js"
-    	integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A=="
-    	crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.21.1/jquery.daterangepicker.min.js" integrity="sha512-jM36zj/2doNDqDlSIJ+OAslGvZXkT+HrtMM+MMgVxCqax1AIm1XAfLuUFP7uMSavUxow+z/T2CRnSu7PDaYu2A==" crossorigin="anonymous"></script>
     	
 	<!-- simplebar CSS-->
  	<link href="/resources/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
@@ -32,17 +25,29 @@
 	<link href="/resources/assets/css/sidebar-menu.css" rel="stylesheet"/>
 	<!-- Custom Style-->
 	<link href="/resources/assets/css/app-style.css" rel="stylesheet"/>
-  
+	<!-- simplebar js -->
+	<script src="/resources/assets/plugins/simplebar/js/simplebar.js"></script>
+	<!-- sidebar-menu js -->
+	<script src="/resources/assets/js/sidebar-menu.js"></script>
+	<!-- animate CSS-->
+	<link href="/resources/assets/css/animate.css" rel="stylesheet" type="text/css"/>
+	<!-- Custom scripts -->
+	<script src="/resources/assets/js/app-script.js"></script>
+
   	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
 	<!-- Bootstrap core JavaScript-->
 	<script src="/resources/assets/js/jquery.min.js"></script>
 	<script src="/resources/assets/js/popper.min.js"></script>
 	<script src="/resources/assets/js/bootstrap.min.js"></script>
 	
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	
 	<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
+  
 	
 	<title>탈퇴 회원 관리</title>
 
@@ -92,7 +97,7 @@
 
 		$.ajax({
 			type : "PUT",
-			url : "/withdrawalMember",
+			url : "/admin/member/withdrawal",
 			cache : false,
 			contentType:'application/json; charset=utf-8',
 		          data: JSON.stringify(form), 
@@ -130,23 +135,28 @@
 			</div>
    				<ul class="sidebar-menu do-nicescrol">
       				<li>
-        				<a href="/admin">
-          					<i class="zmdi zmdi-view-dashboard"></i> <span>회원 관리</span>
+        				<a href="/admin/member">
+          					<i class="fas fa-user-cog"></i> <span>회원 관리</span>
+        				</a>
+      				</li>
+      				<li>
+        				<a href="/admin/room">
+          					<i class="fas fa-comment-dots"></i> <span>1:1 채팅 문의</span>
         				</a>
       				</li>
 					<li>
-						<a href="/visitor"> <i class="zmdi zmdi-invert-colors"></i>
-							<span>방문자 통계</span>
+						<a href="/admin/statistic/visitor">
+							<i class="fas fa-chart-line"></i> <span>방문자 통계</span>
 						</a>
 					</li>
 					<li>
 						<a href="/statistic/sales">
-							<i class="zmdi zmdi-format-list-bulleted"></i> <span>매출 통계</span>
+							<i class="fas fa-hand-holding-usd"></i> <span>매출 통계</span>
 						</a>
 					</li>
 					<li>
 						<a href="/statistic/destination">
-							<i class="zmdi zmdi-grid"></i> <span>여행지 통계</span>
+							<i class="fas fa-globe-americas"></i> <span>여행지 통계</span>
 						</a>
 					</li>
 				</ul>
@@ -157,14 +167,14 @@
 			<div class="container-fluid">
 			
 			<span class="headline" style="font-family: 'yg-jalnan'; font-size:30px;">
-				<a href="/admin">회원 관리</a>
+				<a href="/admin/member">회원 관리</a>
 			</span> &nbsp; 
 			
- 			<span><a href="/admin/withdrawal">탈퇴한 회원</a></span> &nbsp;&nbsp;
+ 			<span><a href="/admin/member/withdrawal">탈퇴한 회원</a></span> &nbsp;&nbsp;
 
 			<!-- 검색 -->
 			<div id="searchMember">
-			<form class="search-bar" action="${pageContext.request.contextPath}/search/memberWithdrawal" method="get">			
+			<form class="search-bar" action="${pageContext.request.contextPath}/admin/member/search/withdrawal" method="get">			
 				<input id="memberKeyword"class="col-2" type="text" class="form-control" name="keyword" placeholder="회원 검색" value="${keyword}"/>
 				<button type="submit" class="searchM-btn btn-light"><i class="icon-magnifier"></i></button>
 			</form>
@@ -196,7 +206,7 @@
 									<c:forEach items="${memberList}" var="member" varStatus="status">
 										<tr id = "tr_${member.member_id}">
 											<td>${member.member_name }</td>
-											<td><a href="/memberDetailList/${member.member_id }">${member.member_id }</a></td>
+											<td><a href="/admin/member/search/${member.member_id }">${member.member_id }</a></td>
 											<td>
 												<c:choose>
 				    								<c:when test="${member.sns_type eq null}">

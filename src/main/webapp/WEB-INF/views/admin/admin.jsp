@@ -25,7 +25,15 @@
 	<link href="/resources/assets/css/sidebar-menu.css" rel="stylesheet"/>
 	<!-- Custom Style-->
 	<link href="/resources/assets/css/app-style.css" rel="stylesheet"/>
-  
+	<!-- simplebar js -->
+	<script src="/resources/assets/plugins/simplebar/js/simplebar.js"></script>
+	<!-- sidebar-menu js -->
+	<script src="/resources/assets/js/sidebar-menu.js"></script>
+	<!-- animate CSS-->
+	<link href="/resources/assets/css/animate.css" rel="stylesheet" type="text/css"/>
+	<!-- Custom scripts -->
+	<script src="/resources/assets/js/app-script.js"></script>
+
   	<link rel="stylesheet" href="${contextPath}/resources/css/font.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/footer.css">
 	
@@ -90,7 +98,7 @@
 				
 		$.ajax({
 			type : "PUT",
-			url : "/withdrawalMember",
+			url : "/admin/member/withdrawal",
 			cache : false,
 			contentType:'application/json; charset=utf-8',
             data: JSON.stringify(form), 
@@ -149,7 +157,7 @@
 				
 		$.ajax({
 			type : "PUT",
-			url : "/withdrawalMember",
+			url : "/admin/member/withdrawal",
 			cache : false,
 			contentType:'application/json; charset=utf-8',
 			data: JSON.stringify(form), 
@@ -213,7 +221,7 @@
 			</div>
    				<ul class="sidebar-menu do-nicescrol">
       				<li>
-        				<a href="/admin">
+        				<a href="/admin/member">
           					<i class="fas fa-user-cog"></i> <span>회원 관리</span>
         				</a>
       				</li>
@@ -223,7 +231,7 @@
         				</a>
       				</li>
 					<li>
-						<a href="/visitor">
+						<a href="/admin/statistic/visitor">
 							<i class="fas fa-chart-line"></i> <span>방문자 통계</span>
 						</a>
 					</li>
@@ -245,14 +253,14 @@
 			<div class="container-fluid">
 			
 			<span class="headline" style="font-family: 'yg-jalnan'; font-size:30px;">
-				<a href="/admin">회원 관리</a>
+				<a href="/admin/member">회원 관리</a>
 			</span> &nbsp; 
 			
- 			<span><a href="/admin/withdrawal">탈퇴한 회원</a></span> &nbsp;&nbsp;
+ 			<span><a href="/admin/member/withdrawal">탈퇴한 회원</a></span> &nbsp;&nbsp;
 	
 			<!-- 검색 -->
 			<div id="searchMember">
-				<form class="search-bar" action="${pageContext.request.contextPath}/search/member" method="get">			
+				<form class="search-bar" action="${pageContext.request.contextPath}/admin/member/search" method="get">			
 					<input id="memberKeyword" class="col-2" type="text" class="form-control" name="keyword" placeholder="회원 검색" value="${keyword}"/>
 					<button type="submit" class="searchM-btn btn-light"><i class="icon-magnifier"></i></button>
 				</form>
@@ -282,7 +290,7 @@
 											<c:forEach items="${memberList}" var="member" varStatus="status">
 												<tr id = "tr_${member.member_id}">
 													<td>${member.member_name }</td>
-													<td><a href="/memberDetailList/${member.member_id }">${member.member_id }</a></td>
+													<td><a href="/admin/member/search/${member.member_id }">${member.member_id }</a></td>
 													<td>
 														<c:choose>
 						    								<c:when test="${member.sns_type eq null}">
