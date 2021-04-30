@@ -17,6 +17,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/img/main/logo.png">
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&display=swap"
 	rel="stylesheet">
@@ -279,7 +280,7 @@ img{
 							   shiftEnterMode : CKEDITOR.ENTER_P,
 							   height: 500,
 							  
-							   filebrowserUploadUrl :  '<c:url value="${pageContext.request.contextPath}/admin/goods/ckUpload" />?${_csrf.parameterName}=${_csrf.token}'
+							   filebrowserUploadUrl :  '<c:url value="${pageContext.request.contextPath}/board/ckupload" />?${_csrf.parameterName}=${_csrf.token}'
 								 
 							 }; 
  						CKEDITOR.replace('text', ckeditor_config 
