@@ -483,7 +483,7 @@ pre {
 	
 	<!-- 플래너 셀렉트, 다이어리 작성 -->
 	<div class = "gallery">
-		<form action ="${pageContext.request.contextPath}/diary_write_view" method="get" target="popwin" name="formDate">
+		<form action ="${pageContext.request.contextPath}/diary_write" method="get" target="popwin" name="formDate">
 			<div class="row">
 				<div class="col-sm-10"> 
 					<select class="form-control" name="planner_id" id="selectDiary" style="font-family: 'GongGothicMedium'" 
@@ -528,7 +528,7 @@ pre {
 								<div class="grid__title" data-toggle="dropdown">...</div>
 									<div class="dropdown-menu">
 										<a class="dropdown-item"
-											onclick="window.open('${pageContext.request.contextPath}/diary_modify_view/${di.diary_id}/${di.planner_id}',
+											onclick="window.open('${pageContext.request.contextPath}/diary_modify/${di.diary_id}/${di.planner_id}',
 		    											'popwin2','width=1000,height=650,left=450, top=220')">수정</a>
 										<a class="delete dropdown-item" href="/diary/${di.diary_id}">삭제</a>
 									</div>

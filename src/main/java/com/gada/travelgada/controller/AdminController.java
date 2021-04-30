@@ -30,7 +30,7 @@ public class AdminController {
 	private AdminService adiminService;
 
 	//회원
-	@GetMapping("/admin")
+	@GetMapping("/admin/member")
 	public ModelAndView admin(ModelAndView mav, CriteriaVO cri) {
 		log.info("controller admin();");
 		
@@ -51,7 +51,7 @@ public class AdminController {
 	}// admin end
 	
 	//탈퇴한 회원
-	@GetMapping("/admin/withdrawal")
+	@GetMapping("/admin/member/withdrawal")
 	public ModelAndView withdrawalList(ModelAndView mav, CriteriaVO cri) {
 		log.info("controller withdrawal();");
 		
@@ -74,7 +74,7 @@ public class AdminController {
 	}// withdrawal end
 	
 	//회원 탈퇴
-	@PutMapping("/withdrawalMember")
+	@PutMapping("/admin/member/withdrawal")
 	public ResponseEntity<String> withdrawal(@RequestBody MemberVO memberVO, Model model) {
 		
 		log.info("controller diary_delete()");
@@ -112,7 +112,7 @@ public class AdminController {
 	
 	
 	//검색
-	@GetMapping("/search/member")
+	@GetMapping("/admin/member/search")
 	public ModelAndView search(ModelAndView mav, @RequestParam("keyword") String keyword, CriteriaVO cri) {
 		log.info("controller search();");
 		log.info(keyword);
@@ -131,7 +131,7 @@ public class AdminController {
 	}// search end
 	
 	//회원 상세 정보
-	@GetMapping("/memberDetailList/{member_id}")
+	@GetMapping("/admin/member/search/{member_id}")
 	public ModelAndView memberDetailList(ModelAndView mav, MemberVO memberVO) {
 		log.info("controller memberDetailList();");
 		
@@ -160,7 +160,7 @@ public class AdminController {
 	}// memberDetailList end
 	
 	//탈퇴한 회원 검색
-	@GetMapping("/search/memberWithdrawal")
+	@GetMapping("/admin/member/search/withdrawal")
 	public ModelAndView memberWithdrawal(ModelAndView mav, @RequestParam("keyword") String keyword, CriteriaVO cri) {
 		log.info("controller search();");
 		log.info(keyword);

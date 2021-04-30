@@ -371,9 +371,9 @@ $(document).ready(function() {
 			<button type="button" class="memu btn"
 				onclick="window.location.href='${pageContext.request.contextPath}/search?keyword=${keyword}'">통합</button>
 			<button type="button" class="memu btn "
-				onclick="window.location.href='${pageContext.request.contextPath}/searchPl?keyword=${keyword}&sorter=basic'">일정</button>
+				onclick="window.location.href='${pageContext.request.contextPath}/search/planner?keyword=${keyword}&sorter=basic'">일정</button>
 			<button type="button" class="memu btn "
-				onclick="window.location.href='${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic'">다이어리</button>
+				onclick="window.location.href='${pageContext.request.contextPath}/search/diary?keyword=${keyword}&sorter=basic'">다이어리</button>
 		</div>
 
 		<br />
@@ -384,20 +384,20 @@ $(document).ready(function() {
 		<span class="dropdown">
 			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">정렬</button>
 			<span class="dropdown-menu"> <a class="dropdown-item" 
-				href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=basic">최신순</a>
+				href="${pageContext.request.contextPath}/search/diary?keyword=${keyword}&sorter=basic">최신순</a>
 		</span>
 		
 		</span> &nbsp; <span class="dropdown">
 			<button class="searchDrop dropdown-toggle drop" data-toggle="dropdown">기간</button>
 			<span class="dropdown-menu"> 
 				<a class="dropdown-item"
-					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=day">1일</a>
+					href="${pageContext.request.contextPath}/search/diary?keyword=${keyword}&sorter=day">1일</a>
 				<a class="dropdown-item"
-					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=week">1주</a>
+					href="${pageContext.request.contextPath}/search/diary?keyword=${keyword}&sorter=week">1주</a>
 				<a class="dropdown-item"
-					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=month">1개월</a>
+					href="${pageContext.request.contextPath}/search/diary?keyword=${keyword}&sorter=month">1개월</a>
 				<a class="dropdown-item"
-					href="${pageContext.request.contextPath}/searchDi?keyword=${keyword}&sorter=year">1년</a>
+					href="${pageContext.request.contextPath}/search/diary?keyword=${keyword}&sorter=year">1년</a>
 			</span>
 		</span> 
 		<br />
@@ -414,7 +414,7 @@ $(document).ready(function() {
 					<c:forEach items="${pl.diaryVO}" var="di">
 						<div class="col-md-3 ">
 							<div class="main-card-diary-area diHover">
-								<img src="resources/diary/${di.img_path}"
+								<img src="/resources/diary/${di.img_path}"
 									class="main-card-diary-img" loading="lazy" data-toggle="modal"
 									data-target="#myModal${di.diary_id}">
 								<div class="main-card-diary-content">
@@ -438,7 +438,7 @@ $(document).ready(function() {
 								<div class="modal-content">
 									<div class="row  ">
 										<div class="col-sm-6">
-											<img class="popup_img" src='resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'"/>
+											<img class="popup_img" src='/resources/diary/${di.img_path}' onerror="this.src='/resources/img/main/logo3.png'"/>
 										</div>
 										<div class="dialog-wrap col-sm-6">
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -469,16 +469,16 @@ $(document).ready(function() {
 				<ul class="pagination">
 					<c:if test="${pageMaker.prev}">
 						<li class="page-item"><a class="page-link"
-							href="/searchDi?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.startPage - 1}">◀</a></li>
+							href="/search/diary?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.startPage - 1}">◀</a></li>
 					</c:if>
 					<c:forEach begin="${pageMaker.startPage }"
 						end="${pageMaker.endPage }" var="idx">
 						<li class="page-item"><a class="page-link"
-							href="/searchDi?keyword=${keyword}&sorter=${sorter}&nowPage=${idx}">${idx}</a></li>
+							href="/search/diary?keyword=${keyword}&sorter=${sorter}&nowPage=${idx}">${idx}</a></li>
 					</c:forEach>
 					<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 						<li class="page-item"><a class="page-link"
-							href="/searchDi?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.endPage +1}">▶</a></li>
+							href="/search/diary?keyword=${keyword}&sorter=${sorter}&nowPage=${pageMaker.endPage +1}">▶</a></li>
 					</c:if>
 				</ul>
 			</div>
