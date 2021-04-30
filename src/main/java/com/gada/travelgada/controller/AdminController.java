@@ -2,6 +2,7 @@ package com.gada.travelgada.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -27,22 +28,23 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class AdminController {
 	
-	private AdminService adiminService;
-
+	@Autowired
+	private AdminService adminService;
+	
 	//회원
 	@GetMapping("/admin/member")
 	public ModelAndView admin(ModelAndView mav, CriteriaVO cri) {
 		log.info("controller admin();");
 		
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-		int total = adiminService.getTotal();
+		int total = adminService.getTotal();
 
-		mav.addObject("memberList",adiminService.getMemberList(nowPage, cri.getAmount()));
+		mav.addObject("memberList",adminService.getMemberList(nowPage, cri.getAmount()));
 		mav.addObject("pageMaker", new PageVO(cri, total));
 		//전체 회원 수 
 		mav.addObject("total", total);
 		//탈퇴한 회원 수 
-		mav.addObject("withdrawal",adiminService.getWithdrawal());
+		mav.addObject("withdrawal",adminService.getWithdrawal());
 		
 		mav.setViewName("admin/admin");
 		
@@ -56,16 +58,16 @@ public class AdminController {
 		log.info("controller withdrawal();");
 		
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-		int total = adiminService.getWithdrawal();
-		int totalMember = adiminService.getTotal();
+		int total = adminService.getWithdrawal();
+		int totalMember = adminService.getTotal();
 
-		mav.addObject("memberList",adiminService.getWithdrawalList(nowPage, cri.getAmount()));
+		mav.addObject("memberList",adminService.getWithdrawalList(nowPage, cri.getAmount()));
 		mav.addObject("pageMaker", new PageVO(cri, total));
 		
 		//전체 회원 수 
 		mav.addObject("total", totalMember);
 		//탈퇴한 회원 수 
-		mav.addObject("withdrawal",adiminService.getWithdrawal());
+		mav.addObject("withdrawal",adminService.getWithdrawal());
 		
 		mav.setViewName("admin/adminWithdrawal");
 		
@@ -90,12 +92,12 @@ public class AdminController {
 			
 			if(withdrawal_code == 0){
 				
-				adiminService.withdrawal(0 ,member_id, withdrawal_code);
+				adminService.withdrawal(0 ,member_id, withdrawal_code);
 				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 				
 			}else {
 				
-				adiminService.withdrawal(1, member_id, withdrawal_code);
+				adminService.withdrawal(1, member_id, withdrawal_code);
 				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 			
 			}
@@ -118,9 +120,9 @@ public class AdminController {
 		log.info(keyword);
 		
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-		int total = adiminService.searchTotal(keyword);
+		int total = adminService.searchTotal(keyword);
 		
-		mav.addObject("memberList",adiminService.search(nowPage, cri.getAmount(),keyword));
+		mav.addObject("memberList",adminService.search(nowPage, cri.getAmount(),keyword));
 		mav.addObject("pageMaker", new PageVO(cri, total));
 		mav.addObject("keyword",keyword);
 		
@@ -142,7 +144,7 @@ public class AdminController {
 		
 		try {
 			
-			shippingList = adiminService.getShippingLoc(memberVO.getMember_id());
+			shippingList = adminService.getShippingLoc(memberVO.getMember_id());
 			
 		}catch(Exception e) {
 			
@@ -151,8 +153,8 @@ public class AdminController {
 			shippingList.add(new ShippingLocVO());
 		}
 		
-		mav.addObject("point", PointCalculator.getCurrentPoint(adiminService.getPoint(memberVO.getMember_id())));
-		mav.addObject("member", adiminService.getMember(memberVO.getMember_id()));
+		mav.addObject("point", PointCalculator.getCurrentPoint(adminService.getPoint(memberVO.getMember_id())));
+		mav.addObject("member", adminService.getMember(memberVO.getMember_id()));
 		mav.addObject("shippingList", shippingList);
 		
 		return mav;
@@ -166,22 +168,21 @@ public class AdminController {
 		log.info(keyword);
 		
 		int nowPage = (cri.getNowPage() - 1) * cri.getAmount();
-		int total = adiminService.searchWidthTotal(keyword);
-		int totalMember = adiminService.getTotal();
+		int total = adminService.searchWidthTotal(keyword);
+		int totalMember = adminService.getTotal();
 		
-		mav.addObject("memberList",adiminService.searchWithdrawal(nowPage, cri.getAmount(),keyword));
+		mav.addObject("memberList",adminService.searchWithdrawal(nowPage, cri.getAmount(),keyword));
 		mav.addObject("pageMaker", new PageVO(cri, total));
 		mav.addObject("keyword",keyword);
 		
 		//전체 회원 수 
 		mav.addObject("total", totalMember);
 		//탈퇴한 회원 수 
-		mav.addObject("withdrawal",adiminService.getWithdrawal());
+		mav.addObject("withdrawal",adminService.getWithdrawal());
 		
 		mav.setViewName("admin/adminWithdrawal");
 
 		return mav;
 
 	}// memberWithdrawal end
-	
 }

@@ -114,22 +114,27 @@ html, body {
    				<ul class="sidebar-menu do-nicescrol">
       				<li>
         				<a href="/admin/member">
-          					<i class="zmdi zmdi-view-dashboard"></i> <span>회원 관리</span>
+          					<i class="fas fa-user-cog"></i> <span>회원 관리</span>
+        				</a>
+      				</li>
+      				<li>
+        				<a href="/admin/room">
+          					<i class="fas fa-comment-dots"></i> <span>1:1 채팅 문의</span>
         				</a>
       				</li>
 					<li>
-						<a href="/visitor"> <i class="zmdi zmdi-invert-colors"></i>
-							<span>방문자 통계</span>
+						<a href="/admin/statistic/visitor">
+							<i class="fas fa-chart-line"></i> <span>방문자 통계</span>
 						</a>
 					</li>
 					<li>
-						<a href="/statistic/sales">
-							<i class="zmdi zmdi-format-list-bulleted"></i> <span>매출 통계</span>
+						<a href="/admin/statistic/sales">
+							<i class="fas fa-hand-holding-usd"></i> <span>매출 통계</span>
 						</a>
 					</li>
 					<li>
-						<a href="/statistic/destination">
-							<i class="zmdi zmdi-grid"></i> <span>여행지 통계</span>
+						<a href="/admin/statistic/destination">
+							<i class="fas fa-globe-americas"></i> <span>여행지 통계</span>
 						</a>
 					</li>
 				</ul>
