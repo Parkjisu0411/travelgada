@@ -42,8 +42,7 @@ public class ShoppingServiceImpl {
 				order = "price desc";
 				break;
 			case("saleCountDesc") :
-				order = "count desc";
-				break;
+				return shoppingMapper.selectProductBySalesCount(product_type_id);
 			case("latestAsc") :
 				order = "added_date desc";
 				break;
@@ -64,8 +63,7 @@ public class ShoppingServiceImpl {
 				order = "price desc";
 				break;
 			case("saleCountDesc") :
-				order = "count desc";
-				break;
+				return shoppingMapper.selectProductBySalesCountWithPaging(product_type_id, page);
 			case("latestAsc") :
 				order = "added_date desc";
 				break;

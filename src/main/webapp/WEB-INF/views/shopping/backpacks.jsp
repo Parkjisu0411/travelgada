@@ -145,8 +145,8 @@
 			var product_type_id = $.urlParam("product_type_id");
 			var sorter = $.urlParam("sorter");
 			var urlQuery = "?product_type_id=" + product_type_id;
-			if(!$.urlParam("sorter") == "null") {
-				urlQuery += "&sorter=" + $.urlParam(sorter);
+			if(sorter) {
+				urlQuery += "&sorter=" + sorter;
 			}
 			urlQuery += "&page=" + page;
 			console.log(urlQuery);
@@ -206,7 +206,7 @@
 		<div class="gada-btn-group">
 			<a href="/shopping?product_type_id=1&sorter=salePriceAsc" class="btn gada-btn">낮은가격순</a>
 			<a href="/shopping?product_type_id=1&sorter=salePriceDesc" class="btn gada-btn">높은가격순</a>
-			<a href="#" class="btn gada-btn">판매량순</a>
+			<a href="/shopping?product_type_id=1&sorter=saleCountDesc" class="btn gada-btn">판매량순</a>
 			<a href="/shopping?product_type_id=1&sorter=latestAsc" class="btn gada-btn">최신순</a>
 		</div>
 		<hr />
