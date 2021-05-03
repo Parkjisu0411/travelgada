@@ -42,4 +42,9 @@ public interface ShoppingMapper {
 	
 	public void updateDeductionPoint(PointVO pointVO);
 	
+	public List<ProductVO> selectProductBySalesCount(int product_type_id);
+	
+	public List<ProductVO> selectProductBySalesCountWithPaging(@Param("product_type_id") int product_type_id, @Param("page") int page);
+	
+	
 }

@@ -372,8 +372,9 @@ html, body {
 		});
 
 		//Submit SignUpForm
-		$("#btnSubmit").click(function(event) {
+		$("#signup-form-submit").click(function(event) {
 			event.preventDefault();
+			console.log("submit");
 			if(!idFlag) {
 				$("#id").focus();
 				return false;
@@ -387,6 +388,7 @@ html, body {
 				$("#email").focus();
 				return false;
 			}
+			console.log("success");
 			
 			var form = {
 				member_id : $("#id").val(),
@@ -406,7 +408,7 @@ html, body {
 				success : function(result) {
 					if (result == "SUCCESS") {
 						alert("회원가입 완료.");
-						$(location).attr('href', '${pageContext.request.contextPath}/');
+						$(location).attr('href', '/member/login');
 					}
 				},
 				error : function(e) {
