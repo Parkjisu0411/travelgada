@@ -216,7 +216,7 @@ text {
 			</div>
    				<ul class="sidebar-menu do-nicescrol">
       				<li>
-        				<a href="/admin">
+        				<a href="/admin/member">
           					<i class="fas fa-user-cog"></i> <span>회원 관리</span>
         				</a>
       				</li>
@@ -226,7 +226,7 @@ text {
         				</a>
       				</li>
 					<li>
-						<a href="/visitor">
+						<a href="/admin/statistic/visitor">
 							<i class="fas fa-chart-line"></i> <span>방문자 통계</span>
 						</a>
 					</li>

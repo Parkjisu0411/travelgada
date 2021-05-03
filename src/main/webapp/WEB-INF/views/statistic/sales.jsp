@@ -271,9 +271,9 @@
 			<div class="brand-logo">
 				<a href="/" style="font-family:yg-jalnan"><img src="/resources/img/main/logo.png" class="logo-icon" alt="logo icon">가다</a>
 			</div>
-   				<ul class="sidebar-menu do-nicescrol">
+   				   				<ul class="sidebar-menu do-nicescrol">
       				<li>
-        				<a href="/admin">
+        				<a href="/admin/member">
           					<i class="fas fa-user-cog"></i> <span>회원 관리</span>
         				</a>
       				</li>
@@ -283,7 +283,7 @@
         				</a>
       				</li>
 					<li>
-						<a href="/visitor">
+						<a href="/admin/statistic/visitor">
 							<i class="fas fa-chart-line"></i> <span>방문자 통계</span>
 						</a>
 					</li>
