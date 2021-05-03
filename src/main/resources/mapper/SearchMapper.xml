@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="planner_name" column="planner_name" />
 		<result property="satisfaction" column="satisfaction" />
 		<result property="member_id" column="member_id" />
+		<result property="planner_img_path" column="planner_img_path" />
 
 		<collection property="diaryVO" resultMap="diaryMap"></collection>
 		<collection property="scheduleVO" resultMap="scheduleMap"></collection>
