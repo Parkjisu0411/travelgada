@@ -46,6 +46,18 @@
 		]]>
 	</select>
 	
+	<select id="selectProductBySalesCount" resultType="com.gada.travelgada.domain.ProductVO">
+		<![CDATA[
+			select * from product P, (select count(*) as count, product_id from buy_detail group by product_id) C where P.product_id = C.product_id and P.product_type_id = #{product_type_id} order by C.count desc limit 0, 9
+		]]>
+	</select>
+	
+	<select id="selectProductBySalesCountWithPaging" resultType="com.gada.travelgada.domain.ProductVO">
+		<![CDATA[
+			select * from product P, (select count(*) as count, product_id from buy_detail group by product_id) C where P.product_id = C.product_id and P.product_type_id = #{product_type_id} order by C.count desc limit ${page}, 9
+		]]>
+	</select>
+	
 	<select id="selectProduct" resultType="com.gada.travelgada.domain.ProductVO">
 		<![CDATA[
 			select * from product where product_id = #{product_id}

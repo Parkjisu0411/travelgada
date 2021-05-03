@@ -142,15 +142,15 @@
 	var page = 1;
 	$(window).scroll(function() {
 		if($(window).scrollTop() == $(document).height() - $(window).height()) {
+			
 			var product_type_id = $.urlParam("product_type_id");
 			var sorter = $.urlParam("sorter");
 			var urlQuery = "?product_type_id=" + product_type_id;
-			if(!$.urlParam("sorter") == "null") {
-				urlQuery += "&sorter=" + $.urlParam(sorter);
+			if(sorter) {
+				urlQuery += "&sorter=" + sorter;
 			}
 			urlQuery += "&page=" + page;
-			console.log(urlQuery);
-			
+			console.log("url >>" + urlQuery);
 			$.ajax({
 				type : "GET",
 				url : "/shopping/scroll" + urlQuery,
@@ -159,7 +159,6 @@
 				success : function(result) {
 					page = page + 1;
 					
-					console.log($(".row").length);
 					for(var i = 0; i < result.length; i++) {
 						var content = "";
 						content += "<div class='col-md-4'>";
@@ -206,7 +205,7 @@
 		<div class="gada-btn-group">
 			<a href="/shopping?product_type_id=4&sorter=salePriceAsc" class="btn gada-btn">낮은가격순</a>
 			<a href="/shopping?product_type_id=4&sorter=salePriceDesc" class="btn gada-btn">높은가격순</a>
-			<a href="#" class="btn gada-btn">판매량순</a>
+			<a href="/shopping?product_type_id=4&sorter=saleCountDesc" class="btn gada-btn">판매량순</a>
 			<a href="/shopping?product_type_id=4&sorter=latestAsc" class="btn gada-btn">최신순</a>
 		</div>
 		<hr />
