@@ -82,7 +82,7 @@ var destinationChart = null;
 function getDestinationMonthly(month) {
 	$.ajax({
 		type : "GET",
-		url : "/destination/" + ${year} + "/" + month,
+		url : "/admin/statistic/destination/" + ${year} + "/" + month,
 		cache : false,
 		success : function(result) {
 			var data = [];
@@ -152,7 +152,7 @@ function getDestinationMonthly(month) {
 
 function getDestinationTotalMap() {
     $.ajax({
-        url: "/destination/total",
+        url: "/admin/statistic/destination/total",
         method: 'GET',
         cache: false,
         contentType: "application/json; charset=utf-8",
@@ -203,7 +203,7 @@ function getDestinationTotalMap() {
 
 function getDestinationTotalTable() {
     $.ajax({
-        url: "/destination/total",
+        url: "/admin/statistic/destination/total",
         method: 'GET',
         cache: false,
         contentType: "application/json; charset=utf-8",
@@ -296,12 +296,12 @@ $(document).ready(function() {
 						</a>
 					</li>
 					<li>
-						<a href="/statistic/sales">
+						<a href="/admin/statistic/sales">
 							<i class="fas fa-hand-holding-usd"></i> <span>매출 통계</span>
 						</a>
 					</li>
 					<li>
-						<a href="/statistic/destination">
+						<a href="/admin/statistic/destination">
 							<i class="fas fa-globe-americas"></i> <span>여행지 통계</span>
 						</a>
 					</li>

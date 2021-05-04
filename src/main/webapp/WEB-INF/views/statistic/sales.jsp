@@ -71,7 +71,7 @@
 	function getProductSales(month) {
 		$.ajax({
 			type : "GET",
-			url : "/statistic/product?year=" + ${year} + "&month=" + month,
+			url : "/admin/statistic/sales/product?year=" + ${year} + "&month=" + month,
 			cache : false,
 			success : function(result) {
 				var data = [];
@@ -142,7 +142,7 @@
 	function getDailySales(month) {
 		$.ajax({
 			type : "GET",
-			url : "/statistic/dailySales?year=" + ${year} + "&month=" + month,
+			url : "/admin/statistic/sales/daily?year=" + ${year} + "&month=" + month,
 			cache : false,
 			success : function(result) {
 				var context = document.getElementById("chart-daily-sales").getContext("2d");
@@ -288,12 +288,12 @@
 						</a>
 					</li>
 					<li>
-						<a href="/statistic/sales">
+						<a href="/admin/statistic/sales">
 							<i class="fas fa-hand-holding-usd"></i> <span>매출 통계</span>
 						</a>
 					</li>
 					<li>
-						<a href="/statistic/destination">
+						<a href="/admin/statistic/destination">
 							<i class="fas fa-globe-americas"></i> <span>여행지 통계</span>
 						</a>
 					</li>

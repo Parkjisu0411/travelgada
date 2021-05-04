@@ -236,12 +236,12 @@
 						</a>
 					</li>
 					<li>
-						<a href="/statistic/sales">
+						<a href="/admin/statistic/sales">
 							<i class="fas fa-hand-holding-usd"></i> <span>매출 통계</span>
 						</a>
 					</li>
 					<li>
-						<a href="/statistic/destination">
+						<a href="/admin/statistic/destination">
 							<i class="fas fa-globe-americas"></i> <span>여행지 통계</span>
 						</a>
 					</li>
