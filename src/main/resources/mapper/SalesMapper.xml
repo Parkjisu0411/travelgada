@@ -2,7 +2,7 @@
 <!DOCTYPE mapper 
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.gada.travelgada.mapper.AdminMapper_sales"> 
+<mapper namespace="com.gada.travelgada.mapper.SalesMapper"> 
 
 	<resultMap type="com.gada.travelgada.domain.BuyVO" id="buyMap">
 		<result property="buy_id" column="buy_id"/>

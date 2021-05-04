@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.gada.travelgada.domain.ProductCountVO;
 
 @Mapper
-public interface AdminMapper_sales {
+public interface SalesMapper {
 	
 	public int selectBuyByMonth(@Param("year") String year, @Param("month") String month);
 	
