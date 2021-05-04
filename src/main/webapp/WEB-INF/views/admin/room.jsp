@@ -146,7 +146,7 @@
 	}
 	
 	function join(username){
-		window.open("/chat/" + username, username, "width=400px, height=600px");
+		window.open("/chat/" + username, username, "width=580px, height=540px");
 	}
 </script>
 </head>

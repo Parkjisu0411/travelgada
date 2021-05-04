@@ -48,30 +48,5 @@ public interface TodoMapper {
 
 	public TodoTypeVO getRecentTodoType(TodoTypeVO todoTypeVO);
 
-	
-	//public void addToDo(String todo_name, int getRecentTodoTypeId);
-
-	
-	
-	//public void addToDo(TodoVO todoVO, int getRecentTodoTypeId);
-
-	//public void addTodoType(int planner_id, String todo_title);
-
-	
-
-
-
-
-	//public void addToDoType(TodoTypeVO todoTypeVO);
-
-	//public void addToDo(String todo_name, int todo_type_id);
-
-	//public void addToDoType(TodoTypeVO todoTypeVO);
-
-	//public void addToDo(@Param("todo_name") String todo_name, @Param("todo_type_id") int todo_type_id);
-
-
-
-
-
+	public List<TodoTypeVO> getTodoByPlanner(int planner_id);
 }

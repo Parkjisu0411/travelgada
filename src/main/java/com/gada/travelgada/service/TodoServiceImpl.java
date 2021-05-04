@@ -112,48 +112,10 @@ public class TodoServiceImpl implements TodoService {
 	public TodoTypeVO getRecentTodoType(TodoTypeVO todoTypeVO) {
 		return mapper.getRecentTodoType(todoTypeVO);
 	}
+
+	@Override
+	public List<TodoTypeVO> getTodoByPlanner(int planner_id) {
+		return mapper.getTodoByPlanner(planner_id);
+	}
 	
-//	@Override
-//	public void addToDo(String todo_name, int getRecentTodoTypeId) {
-//		log.info("addToDo()");
-//		mapper.addToDo(todo_name, getRecentTodoTypeId);
-//	}
-
-	
-	
-//	@Override
-//	public void addToDo(TodoVO todoVO, int getRecentTodoTypeId) {
-//		log.info("addToDo()");
-//		mapper.addToDo(todoVO, getRecentTodoTypeId);		
-//	}
-
-
-
-//	@Override
-//	public void addTodoType(int planner_id, String todo_title) {
-//		log.info("addTodoType()");
-//		mapper.addTodoType(planner_id, todo_title);
-//	}
-//
-
-
-
-//	@Override
-//	public void addToDo(TodoTypeVO todoTypeVO, TodoVO todoVO) {
-//		log.info("addToDo()");
-//		mapper.addToDoType(todoTypeVO);
-//		mapper.addToDo(todoVO.getTodo_name(), todoTypeVO.getTodo_type_id());
-//	}
-
-//	@Override
-//	public void addToDo(TodoTypeVO todoTypeVO, TodoVO todoVO) {
-//		log.info("addToDo()");
-//		mapper.addToDoType(todoTypeVO);
-//		mapper.addToDo(todoVO.getTodo_name(), todoTypeVO.getTodo_type_id());		
-//	}
-
-
-	
-
-  
 }

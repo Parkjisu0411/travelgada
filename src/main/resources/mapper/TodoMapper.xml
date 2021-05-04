@@ -3,50 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gada.travelgada.mapper.TodoMapper">
-	 
-<!-- 	 <select id="getTodoTitle" resultType="com.gada.travelgada.domain.TodoTypeVO">
-		<![CDATA[
-			select todo_title, todo_type_id from todo_type where planner_id = #{planner_id}
-		]]>
-	 </select>
-	 
-	 <select id="getTodoName" resultType="com.gada.travelgada.domain.TodoVO">
-		<![CDATA[
-			select todo_name, todo_type_id, todo_id from todo
-		]]>
-	 </select>
-	 
-	 <select id="productList" resultType="com.gada.travelgada.domain.ProductVO">
-		<![CDATA[
-			select product_name, price, img_path from product
-		]]>
-	 </select>
-	 
-	 <delete id="delete_todoName">
-		<![CDATA[
-			delete from todo where todo_id = #{todo_id}
-		]]>
-	 </delete>
-	 
-	 
-	 <insert id="addToDo">
-		<![CDATA[
-			insert into 
-		]]>
-	 </insert> -->
-	 
-
-
-
-
-  
-   
    	<resultMap id="todoMap" type="com.gada.travelgada.domain.TodoVO">
        <result property="todo_id" column="todo_id"/>
        <result property="todo_name" column="todo_name"/>
        <result property="complete_flag" column="complete_flag"/>
        <result property="todo_type_id" column="todo_type_id"/>
-      
    </resultMap>
    
    <resultMap id="todoTypeMap" type="com.gada.travelgada.domain.TodoTypeVO">
@@ -55,12 +16,6 @@
       <result property="planner_id" column="planner_id"/>
       <collection property="todo" resultMap="todoMap"></collection>
    </resultMap>
-   
-<!--    <select id="todoList" resultMap="todoTypeMap">
-      <![CDATA[
-         select todo_name, complete_flag, todo_title from todo as a, todo_type as b where a.todo_type_id = b.todo_type_id
-      ]]>
-   </select>  -->
    
    	 <select id="getTodoTitle" resultMap="todoTypeMap">
 		<![CDATA[
@@ -110,9 +65,9 @@
 		]]>
 	 </insert>
 		 
-  	 <select id="getRecentTodo" resultMap="todoMap">
+  	 <select id="getRecentTodo" resultType="com.gada.travelgada.domain.TodoVO">
 		<![CDATA[
-			SELECT todo_name, todo_type_id FROM todo ORDER BY todo_id DESC LIMIT 1
+			SELECT * FROM todo ORDER BY todo_id DESC LIMIT 1
 		]]>
 	 </select> 
 	 
@@ -140,12 +95,6 @@
 		]]>
 	</update>	
 	 
-<!-- 	 <select id="getRecentTodoTypeId" resultMap="todoTypeMap">
-		<![CDATA[
-			select * from todo_type where todo_type_id = (select MAX(todo_type_id) from todo_type)
-		]]>
-	 </select> -->
-	 
 	<delete id="deleteTodoByPlannerId">
 		<![CDATA[
 			delete from todo where todo_type_id in (select todo_type_id from todo_type where planner_id = #{planner_id});
@@ -157,5 +106,11 @@
 			delete from todo_type where planner_id = #{planner_id};
 		]]>
 	</delete>
+	
+	<select id="getTodoByPlanner" resultMap="todoTypeMap">
+		<![CDATA[
+			select * from todo_type P, todo T where P.todo_type_id = T.todo_type_id and P.planner_id = #{planner_id} 
+		]]>
+	</select>
 
 </mapper>

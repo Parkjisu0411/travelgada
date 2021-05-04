@@ -26,6 +26,7 @@ public interface TodoService {
 	public void addTodoType(TodoTypeVO todoTypeVO);
 
 	public void addToDo(TodoVO todoVO);
+	
 	public TodoVO getRecentTodo(TodoVO todoVO);
 
 	public void todo_name_modify(TodoVO todoVO);
@@ -37,24 +38,5 @@ public interface TodoService {
 
 	public TodoTypeVO getRecentTodoType(TodoTypeVO todoTypeVO);
 	
-	//public void addToDo(String todo_name, int getRecentTodoTypeId);
-
-	
-	//public void addToDo(TodoVO todoVO, int getRecentTodoTypeId);
-
-	//public void addTodoType(int planner_id, String todo_title);
-
-	
-
-
-
-	//public void addToDo(TodoTypeVO todoTypeVO, TodoVO todoVO);
-
-	//public void addToDo(TodoTypeVO todoTypeVO, TodoVO todoVO);
-	
-	
-
-
-
-  
+	public List<TodoTypeVO> getTodoByPlanner(int planner_id);
 }

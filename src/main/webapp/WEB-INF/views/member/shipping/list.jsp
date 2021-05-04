@@ -96,7 +96,6 @@
 						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 					},
 					success : function(result) {
-						console.log("result: " + result);
 						if (result == "SUCCESS") {
 							$(trObj).remove();
 						}
