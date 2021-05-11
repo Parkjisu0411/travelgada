@@ -77,4 +77,4 @@ A special travel planner only for you.
 - [김보람](https://github.com/gulchichi)
 - [김슬기](https://github.com/seullkki)
 - [김종영](https://github.com/jongyeongsseu)
-- [박지수](
+- [박지수](https://github.com/Parkjisu0411)
