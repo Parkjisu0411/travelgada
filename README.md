@@ -1,8 +1,6 @@
 # 가다 GADA - Travel Gada
 
-<img width="150" alt="image-20210510170117237 복사본" src="https://user-images.githubusercontent.com/75013009/117630313-08848980-b1b6-11eb-9779-2d3e8f6f0e0f.png" align="left">       
-
-
+<img width="150" alt="image-20210510170117237 복사본" src="https://user-images.githubusercontent.com/75013009/117630313-08848980-b1b6-11eb-9779-2d3e8f6f0e0f.png". align="left">.           
 
 나만의 여행 플래너 제작 웹사이트     
 A special travel planner only for you.     
